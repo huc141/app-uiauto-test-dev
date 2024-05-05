@@ -1,0 +1,5 @@
+# 手机配置存放位置
+# 手机的识别码
+config_device_sn: VOA6AU89B6GAO7U4
+# 被测app包名
+config_apk_name: com.mcu.reolink

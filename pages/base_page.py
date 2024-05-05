@@ -1,17 +1,25 @@
 import re
+from common_tools.app_driver import driver as app_driver
+
+DEFAULT_SECONDS = 10
 
 
-class BasePage:  # 构造函数
+class BasePage:
+    # 构造函数
     def __init__(self, driver):
         self.driver = driver
 
     def click(self, element):  # 点击
-        if str(element).startswith("com"):  # 若开头是com则使用ID定位
-            self.driver(resourceId=element).click()  # 点击定位元素
-        elif re.findall("//", str(element)):  # 若//开头则使用正则表达式匹配后用xpath定位
-            self.driver.xpath(element).click()  # 点击定位元素
-        else:  # 若以上两种情况都不是，则使用描述定位
-            self.driver(description=element).click()  # 点击定位元素
+        self.driver.implicitly_wait(DEFAULT_SECONDS)
+        try:
+            if str(element).startswith("com"):  # 若开头是com则使用ID定位
+                self.driver(resourceId=element).click()  # 点击定位元素
+            elif re.findall("//", str(element)):  # 若//开头则使用正则表达式匹配后用xpath定位
+                self.driver.xpath(element).click()  # 点击定位元素
+            else:  # 若以上两种情况都不是，则使用描述定位
+                self.driver(description=element).click()  # 点击定位元素
+        except Exception as e:
+            raise e
 
     def click_text(self, element):  # 点击，根据文本定位
         self.driver(text=element).click()  # 点击定位元素
