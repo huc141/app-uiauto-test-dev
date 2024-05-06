@@ -31,6 +31,21 @@ class Driver:
             device_info = self._driver.device_info
             return device_info
 
+    # 安装app
+    def install_app(self, apk_local_path: str):
+        if self._driver:
+            self._driver.app_install(apk_local_path)
+
+    # 卸载reolink app
+    def uninstall_app(self):
+        if self._driver:
+            self._driver.app_uninstall(self._apk_name)
+
+    # 清除app缓存
+    def clear_app_cache(self):
+        if self._driver:
+            self._driver.app_clear(self._apk_name)
+
     def quit(self):
         self._driver.app_stop(self._apk_name)
 

@@ -19,7 +19,7 @@ class ReadYaml:
                 self.__raw_data[fname.split('.')[0]] = yaml.safe_load(stream)  # 获取文件名的前缀如case.yml中的case，作为__raw_data字典的键，值是从 YAML 文件加载得到的数据.
                 # safe_load是 PyYAML 库的函数，用于从打开的 YAML 文件流中加载数据。这里的 stream 是 open 函数返回的文件对象。
                 # yaml.safe_load 会将 YAML 格式的数据解析成 Python 对象，比如字典或列表。
-        print(self.__raw_data)
+        # print(self.__raw_data)
 
         self.config_device_sn = self.get_data('config_device_sn', '')
         self.config_apk_name = self.get_data('config_apk_name', '')
@@ -30,7 +30,7 @@ class ReadYaml:
         # return self.__raw_data[source][key] if key in self.__raw_data[source] else default
         # 改写为if-else更易读的结构
         if key in self.__raw_data[source]:  # self.__raw_data[source] 表示从类实例的 __raw_data 字典中获取一个名为 source 的子字典。
-            return self.__raw_data[source][key]  # self.__raw_data[source][key] 表示从 source 子字典中获取键为 key 的值。
+            return self.__raw_data[source][key]  # self.__raw_data[source][key] 表示从 source 子字典中获取键为 key 的value值。
         else:
             return default
 

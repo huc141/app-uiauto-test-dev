@@ -5,20 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c077db73-d056-43c3-9790-913cc6b8d70e" name="Changes" comment="comit">
-      <change afterPath="$PROJECT_DIR$/common_tools/app_driver.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common_tools/config.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common_tools/read_yaml.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/phone.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/device_list_page.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/temp/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/temp/test.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Pipfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apk_pkgs/Android-Reolink-P2PCN-4.45.0.2.20240506--release.apk" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/app-uiauto-test-dev.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/app-uiauto-test-dev.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common_tools/app_driver.py" beforeDir="false" afterPath="$PROJECT_DIR$/common_tools/app_driver.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common_tools/app_info.py" beforeDir="false" afterPath="$PROJECT_DIR$/common_tools/app_info.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/devices.py" beforeDir="false" afterPath="$PROJECT_DIR$/devices.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/base_page.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/base_page.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common_tools/read_yaml.py" beforeDir="false" afterPath="$PROJECT_DIR$/common_tools/read_yaml.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/phone.yml" beforeDir="false" afterPath="$PROJECT_DIR$/config/phone.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,7 +41,7 @@
     <option name="selectedUrlAndAccountId">
       <UrlAndAccount>
         <option name="accountId" value="3e3f8c79-9b5c-46d5-ba8e-4755893efac1" />
-        <option name="url" value="https://github.com/openatx/weditor" />
+        <option name="url" value="https://github.com/huc141/app-uiauto-test-dev.git" />
       </UrlAndAccount>
     </option>
   </component>
@@ -68,15 +63,16 @@
   "keyToString": {
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "Python.app_driver.executor": "Debug",
-    "Python.app_info.executor": "Debug",
+    "Python.app_info.executor": "Run",
     "Python.config.executor": "Run",
     "Python.devices.executor": "Run",
     "Python.read_yaml.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "master",
-    "last_opened_file_path": "H:/app-uiauto-test-dev",
-    "settings.editor.selected.configurable": "configurable.group.appearance"
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "D:/app-uiauto-test-dev/apk_pkgs",
+    "settings.editor.selected.configurable": "settings.sync"
   }
 }]]></component>
   <component name="PyConsoleOptionsProvider">
@@ -87,6 +83,11 @@
         <option name="myWorkingDirectory" value="$PROJECT_DIR$" />
       </console-settings>
     </option>
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\app-uiauto-test-dev\apk_pkgs" />
+    </key>
   </component>
   <component name="RunManager" selected="Python.app_info">
     <configuration name="app_driver" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
@@ -142,7 +143,6 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="SDK_NAME" value="Python 3.11 (embedded-automated-testing-dev)" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -178,6 +178,12 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Python.app_info" />
+      <item itemvalue="Python.devices" />
+      <item itemvalue="Python.app_driver" />
+      <item itemvalue="Python.read_yaml" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.app_driver" />

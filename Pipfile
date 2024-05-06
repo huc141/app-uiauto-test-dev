@@ -1,0 +1,21 @@
+[[source]]
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
+verify_ssl = true
+name = "pip_conf_index_global"
+
+[packages]
+pbr = ">=6.0.0"
+six = ">=1.16.0"
+pytest = ">=3.7.0"
+weditor = ">=0.7.3.dev5"
+tornado = ">=6.4"
+logzero = ">=1.7.0"
+pillow = ">=10.3.0"
+adbutils = ">=2.5.0"
+uiautomator2 = ">=3.0.10"
+requests = ">=2.31.0"
+
+[dev-packages]
+
+[requires]
+python_version = "3.11"
