@@ -2,9 +2,12 @@ from common_tools.app_driver import driver as app_driver
 from common_tools.read_yaml import read_yaml
 import time
 
+from pages.base_page import BasePage
 
-class AppInfo:
+
+class AppInfo(BasePage):
     def __init__(self, driver):
+        super().__init__(driver)
         self.driver = driver
 
     def uninstall_app(self):
