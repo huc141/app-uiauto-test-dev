@@ -2,7 +2,7 @@ pbr>=6.0.0
 setuptools>=68.2.0
 six>=1.16.0
 wheel>=0.41.2
-pytest==3.7.0
+pytest>=3.7.0
 weditor==0.7.3.dev5
 tornado>=6.4
 logzero>=1.7.0

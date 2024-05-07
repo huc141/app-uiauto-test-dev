@@ -1,16 +1,15 @@
 from pages.base_page import BasePage
-from common_tools.app_driver import driver as app_driver
 
 
 class TermsConditionsPop(BasePage):
-    def __init__(self, driver):
-        super().__init__(driver)
-        self.driver = driver
+    def __init__(self):
+        super().__init__()
+        self.agree_term_button = "com.mcu.reolink:id/agree_term_button"
 
-    def click_terms_conditions(self):
+    def click_terms_conditions_icon(self):
         """
         点击勾选启动页自动弹出的【声明与条款】单选按钮
         :return:
         """
-        if app_driver:
-            app_driver.
+        if self is not None:
+            return self.click_by_id(id_name=self.agree_term_button)
