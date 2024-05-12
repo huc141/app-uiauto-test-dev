@@ -23,6 +23,7 @@ class ReadYaml:
 
         self.config_device_sn = self.get_data('config_device_sn', '')
         self.config_apk_name = self.get_data('config_apk_name', '')
+        self.config_apk_local_path = self.get_data('apk_local_path')
 
     def get_data(self, key: str, default: str = '', source: str = 'phone') -> str:
         """Get specific config"""

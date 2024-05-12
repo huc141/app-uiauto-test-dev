@@ -1,19 +1,21 @@
 from pages.Terms_Conditions_pop import TermsConditionsPop
-import uiautomator2 as u2
-from common_tools.app_driver import driver as app_driver
+from common_tools.app_driver import driver
+import time
+from common_tools.app_driver import Driver
 
 
 class TestDemo:
-    def setup(self):
-        driver = u2.connect_usb("VOA6AU89B6GAO7U4")
-        driver.app_start("com.mcu.reolink")
-        self.welcome = TermsConditionsPop()
-        # app_driver.start()
+    def test_0(self):
+        driver.init_driver()
+        driver.uninstall_app()
+        driver.install_app()
+        # device.start("com.mcu.reolink")
 
     def test_01(self):
+        self.welcome = TermsConditionsPop()
         self.welcome.click_terms_conditions_icon()
+        time.sleep(2)
+        self.welcome.click_agree_continue_btn()
 
 
-t = TestDemo()
-t.setup()
-t.test_01()
+

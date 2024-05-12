@@ -3,10 +3,16 @@ from common_tools.read_yaml import read_yaml
 
 
 class Driver:
-    def __init__(self, device_sn: str, apk_name: str):
+    def __init__(self, device_sn: str, apk_name: str = '', apk_local_path: str = read_yaml.config_apk_local_path):
         self._device_sn = device_sn
         self._apk_name = apk_name
-        self._driver = u2.connect_usb(self._device_sn)  # 连接手机
+        self._apk_local_path = apk_local_path
+        self._driver = None
+
+    # 连接手机
+    def init_driver(self):
+        self._driver = u2.connect_usb(self._device_sn)
+        return self._driver
 
     # 启动reolink app
     def start(self):
@@ -32,13 +38,13 @@ class Driver:
             return device_info
 
     # 安装app
-    def install_app(self, apk_local_path: str):
+    def install_app(self):
         if self._driver:
-            self._driver.app_install(apk_local_path)
+            self._driver.app_install(self._apk_local_path)
 
     # 卸载reolink app
     def uninstall_app(self):
-        if self._driver:
+        if self._apk_name in self._driver.app_list():
             self._driver.app_uninstall(self._apk_name)
 
     # 清除app缓存
