@@ -7,12 +7,14 @@ from common_tools.app_driver import Driver
 class TestDemo:
     def test_0(self):
         driver.init_driver()
+        driver.clear_app_cache()
         driver.uninstall_app()
         driver.install_app()
-        # device.start("com.mcu.reolink")
+        # driver.start()
 
     def test_01(self):
         self.welcome = TermsConditionsPop()
+        time.sleep(2)
         self.welcome.click_terms_conditions_icon()
         time.sleep(2)
         self.welcome.click_agree_continue_btn()

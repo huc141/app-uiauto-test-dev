@@ -1,7 +1,7 @@
 # 手机配置存放位置
-# 手机的识别码
+# 手机的识别码：39261FDJG0060S,VOA6AU89B6GAO7U4
 config_device_sn: VOA6AU89B6GAO7U4
 # 被测app包名
 config_apk_name: com.mcu.reolink
 # 需要安装的app安装包存放位置
-apk_local_path: "H:\\app-uiauto-test-dev\\apk_pkgs\\Android-Reolink-P2PCN-4.45.0.2.20240506--release.apk"
+apk_local_path: "D:\\app-uiauto-test-dev\\apk_pkgs\\Android-Reolink-P2PCN-4.45.0.3.20240508--release.apk"

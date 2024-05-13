@@ -8,6 +8,6 @@ tornado>=6.4
 logzero>=1.7.0
 pillow>=10.3.0
 adbutils>=2.5.0
-uiautomator2>=3.0.10
+uiautomator2>=3.0.14
 requests>=2.31.0
 PyYAML>=6.0.1

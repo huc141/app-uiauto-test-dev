@@ -12,7 +12,7 @@ class TermsConditionsPop(BasePage):
         点击勾选启动页自动弹出的【声明与条款】单选按钮
         :return:
         """
-        self.click_by_id(id_name=self.agree_term_button)
+        return self.click_by_id(id_name=self.agree_term_button)
 
     def click_agree_continue_btn(self):
         """
