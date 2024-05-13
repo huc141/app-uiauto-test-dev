@@ -15,6 +15,7 @@ class TestDemo:
     def test_01(self):
         self.welcome = TermsConditionsPop()
         time.sleep(2)
+        # self.welcome.click_disagree_exit_btn()
         self.welcome.click_terms_conditions_icon()
         time.sleep(2)
         self.welcome.click_agree_continue_btn()
