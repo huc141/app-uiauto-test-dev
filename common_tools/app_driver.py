@@ -52,7 +52,7 @@ class Driver:
         if self._driver:
             self._driver.app_clear(self._apk_name)
 
-    def quit(self):
+    def stop(self):
         self._driver.app_stop(self._apk_name)
 
 
