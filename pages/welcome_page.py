@@ -1,7 +1,7 @@
 from pages.base_page import BasePage
 
 
-class TermsConditionsPop(BasePage):
+class WelcomePage(BasePage):
     def __init__(self, device_sn=None, apk_name=None):
         super().__init__(device_sn, apk_name)
         self.agree_term_button = "com.mcu.reolink:id/agree_term_button"
