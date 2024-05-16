@@ -2,6 +2,7 @@ import logging
 import uiautomator2 as u2
 from common_tools.read_yaml import read_yaml
 from common_tools.logger import logger
+import os
 
 
 class Driver:
@@ -83,6 +84,14 @@ class Driver:
     def stop(self):
         self._driver.app_stop(self._apk_name)
         logger.info("reolink app已停止运行")
+
+    def turn_off_wifi(self):
+        try:
+            result = os.system('adb shell cmd wifi set-wifi-enabled disabled')
+            logger.info("wifi关闭成功:%s", result)
+            return result
+        except Exception as err:
+            logger.error("wifi关闭失败，原因：%s", err)
 
 
 driver = Driver(device_sn=read_yaml.config_device_sn, apk_name=read_yaml.config_apk_name)

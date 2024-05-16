@@ -34,6 +34,7 @@ class TestWelcome:
         time.sleep(2)
         # 点击【同意并继续】按钮
         self.welcome.click_agree_continue_btn()
+        time.sleep(3)
         # 停止app
         driver.stop()
         # 清除app缓存
