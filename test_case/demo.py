@@ -38,3 +38,20 @@ class TestDemo:
         driver.stop()
         # 清除app缓存
         driver.clear_app_cache()
+
+
+"""
+命令行模式 
+
+        1）运行所有：pytest
+
+        2）运行指定模块：pytest -vs test_0616.py
+
+        3）运行指定目录：pytest -vs ./api_testcase
+
+        4）通过nodeID运行指定的测试函数：
+
+                pytest -vs ./testcase/test_0616.py::test_04_func
+
+                pytest -vs ./testcase/test_0616.py::TestLogin::test_04_func
+"""

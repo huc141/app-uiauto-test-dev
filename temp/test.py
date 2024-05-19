@@ -1,45 +1,39 @@
-# -*- coding:utf-8 -*-
-# @author: 软件测试凡哥
+class AssertUtil:
 
-from appium import webdriver
-from log.logging_test import logger
+    def __init__(self, assert_type, assert_text, expected_text=None):
+        self.assert_type = assert_type
+        self.assert_text = assert_text
+        self.expected_text = expected_text
 
+    def text_assert(self):
+        """
+        检查expected_text是否存在于text中
+        使用Python内置的count方法计算text中expected_text出现的次数
+        如果expected_text在text中出现，那么其出现次数应大于0
+        如果expected_text不在text中，断言将失败，并抛出一个AssertionError异常。异常的错误消息将包含期望的文本和实际的文本。
+        """
+        if self.expected_text is not None:
+            if self.assert_type == 'assert_text_in':
+                assert self.assert_text.count(
+                    self.expected_text) > 0, f"Expected text '{self.expected_text}' not found in '{self.assert_text}'"
 
-def android_driver():
-    desired_caps = {
-        "platformName": "Android",
-        "platformVersion": "10",
-        "deviceName": "PCT_AL10",
-        "appPackage": "com.ss.android.article.news",
-        "appActivity": ".activity.MainActivity",
-        "unicodeKeyboard": True,
-        "resetKeyboard": True,
-        "noReset": True,
-    }
-    logger.info("启动今日头条APP...")
-    driver = webdriver.Remote('http://127.0.0.1:4723/wd/hub', desired_caps)
-    return driver
+                print("Test passed successfully!!")
+            elif self.assert_type == 'assert_equal':
+                assert self.assert_text == self.expected_text, "实际值{}与期望值{}不相等".format(self.assert_text,
+                                                                                                 self.expected_text)
+                print("Test passed successfully!")
+            else:
+                print("expected_text值不为空时，assert_type类型{}有误".format(self.assert_type))
 
-
-def login_opera(driver):
-    """登录今日头条操作"""
-    logger.info("开始登陆今日头条APP...")
-    try:
-        driver.find_element_by_id("com.ss.android.article.news:id/cji").click()  # 点击【我知道了】
-        driver.find_element_by_id("android:id/button1").click()  # 点击权限管理-确定按钮
-        driver.find_element_by_xpath(
-            "//android.widget.TabWidget/android.widget.RelativeLayout[@index=3]").click()  # 点击未登录
-        driver.find_element_by_id("com.ss.android.article.news:id/a10").click()  # 未登录页点击登录按钮
-        driver.find_element_by_id("com.ss.android.article.news:id/bgh").click()  # 登录页点击“。。。”
-        driver.find_element_by_xpath("//android.widget.LinearLayout[@index=4]").click()  # 选择密码登录
-        driver.find_element_by_id("com.ss.android.article.news:id/bu").send_keys("18768124236")  # 输入账号
-        driver.find_element_by_id("com.ss.android.article.news:id/c5").send_keys("xiaoqq3915172")  # 输入密码
-        driver.find_element_by_id("com.ss.android.article.news:id/a2o").click()  # 点击登录
-    except Exception as e:
-        logger.error("登录错误，原因为：{}".format(e))
-    else:
-        logger.info("登陆成功...")
+        elif self.assert_type == 'assert_not_none':
+            assert self.assert_text, '期望值{}是None'.find(self.assert_text)
+        else:
+            print("expected_text值为空时，assert_type类型{}有误".format(self.assert_type))
 
 
-driver = android_driver()
-login_opera(driver)
+a = "assert_text_in"
+b = "hello world"
+c = "hello"
+
+d = AssertUtil(a, b, c)
+d.text_assert()

@@ -3,7 +3,6 @@ from logging.handlers import TimedRotatingFileHandler
 import time
 import os
 
-# os.chdir("..")  # 注意：修改pycharm运行配置后，注销该行代码。
 log_dir = os.path.join(os.getcwd(), 'log')
 level = logging.DEBUG
 
