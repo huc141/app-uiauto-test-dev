@@ -167,5 +167,12 @@ class Driver:
         except Exception as err:
             logger.error("wifi开启失败，原因：%s", err)
 
+    def get_element_info(self):
+        try:
+            element = self.init_driver().info
+            return element
+        except Exception as err:
+            return f"Exception occurred: {str(err)}"
+
 
 driver = Driver(device_sn=read_yaml.config_device_sn, apk_name=read_yaml.config_apk_name)

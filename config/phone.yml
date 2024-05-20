@@ -1,6 +1,6 @@
 # 手机配置存放位置
 # 手机的识别码：39261FDJG0060S,VOA6AU89B6GAO7U4
-config_device_sn: VOA6AU89B6GAO7U4
+config_device_sn: 39261FDJG0060S
 # 被测app包名
 config_apk_name: com.mcu.reolink
 # 需要安装的app安装包存放位置

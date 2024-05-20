@@ -1,5 +1,6 @@
 from pages.welcome_page import WelcomePage
 from common_tools.app_driver import driver
+from common_tools.assert_ui import assertui
 import time
 from common_tools.app_driver import Driver
 
@@ -32,10 +33,11 @@ class TestWelcome:
         # 点击同意【声明与条款】勾选框
         self.welcome.click_terms_conditions_icon()
         time.sleep(2)
+        assertui.assert_clickable('com.mcu.reolink:id/btn', True)
         # 点击【同意并继续】按钮
-        self.welcome.click_agree_continue_btn()
-        time.sleep(3)
-        # 停止app
-        driver.stop()
-        # 清除app缓存
-        driver.clear_app_cache()
+        # self.welcome.click_agree_continue_btn()
+        # time.sleep(3)
+        # # 停止app
+        # driver.stop()
+        # # 清除app缓存
+        # driver.clear_app_cache()
