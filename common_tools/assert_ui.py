@@ -12,6 +12,12 @@ class AssertUI:
         self._driver = driver.init_driver()
 
     def assert_clickable(self, id_name: str, expect: bool):
+        """
+        传入id_name元素id进行定位，传入expect期望值
+        :param id_name:元素id
+        :param expect: 期望值，只接受布尔值
+        :return:
+        """
         if not self._driver:
             logger.error("self._driver不存在")
             return

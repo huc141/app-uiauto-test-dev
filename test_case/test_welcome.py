@@ -27,11 +27,8 @@ class TestWelcome:
     """
 
     def test_agree_terms(self):
-        # 初始化欢迎页的页面对象
-        self.welcome = WelcomePage()
-        time.sleep(2)
-        # 点击同意【声明与条款】勾选框
-        self.welcome.click_terms_conditions_icon()
+        self.welcome = WelcomePage()  # 初始化欢迎页的页面对象
+        self.welcome.click_terms_conditions_icon()  # 点击勾选【声明与条款】勾选框
         time.sleep(2)
         assertui.assert_clickable('com.mcu.reolink:id/btn', True)
         # 点击【同意并继续】按钮
