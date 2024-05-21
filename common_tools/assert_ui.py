@@ -13,7 +13,7 @@ class AssertUI:
 
     def assert_clickable(self, id_name: str, expect: bool):
         """
-        传入id_name元素id进行定位，传入expect期望值
+        传入元素id进行定位，传入expect期望值。
         :param id_name:元素id
         :param expect: 期望值，只接受布尔值
         :return:
@@ -35,7 +35,24 @@ class AssertUI:
             _element_is_clickable = True
         else:
             _element_is_clickable = False
-        assert _element_is_clickable == expect, "断言元素是否可点击，实际值{}与期望值{}不相等".format(_element_is_clickable, expect)
+        assert _element_is_clickable == expect, "【断言失败】，实际值{}与期望值{}不相等".format(
+            _element_is_clickable, expect)
+
+    # 断言预期的元素是否可见：assertVisible
+
+    # 断言实际值是否包含预期值:assertIn
+
+    # 断言实际值是否不包含预期值:assertNotIn
+
+    # 断言实际值是否等于预期值:assertEqual、assertNotEqual
+
+    # 断言为真、假:assertTrue、assertFalse
+
+    # 断言实际值与预期值的大小关系(大于、小于、等于)：
+
+    # 断言预期文件是否存在:assert_output file_exist
+
+    # 断言长度:assertLen
 
 
 assertui = AssertUI()

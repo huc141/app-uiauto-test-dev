@@ -1,7 +1,9 @@
 import re
+import time
 from common_tools.app_driver import Driver
 from common_tools.app_driver import driver
 from common_tools.read_yaml import read_yaml
+from common_tools.logger import logger
 
 DEFAULT_SECONDS = 15
 
@@ -15,9 +17,19 @@ class BasePage:
     def click_by_id(self, id_name):
         """通过id定位单个元素"""
         try:
-            print("UI元素是否存在：↓↓↓↓↓↓↓")
-            print(self.driver(resourceId=id_name).exists())
-            self.driver(resourceId=id_name).click()
-        except Exception as e:
-            print("页面中没有找到id为%s的元素" % id_name)
-            raise e
+            time.sleep(3)
+            element = self.driver(resourceId=id_name)
+            if not element.exists():
+                logger.error("该点击元素：%s 不存在", id_name)
+                raise ValueError(f"该点击元素：{id_name} 不存在")
+
+            element.click()
+            time.sleep(3)
+        except ValueError as verr:  # 专门捕获并处理 ValueError 异常，可以在此处添加特定的处理逻辑。
+            logger.error("ValueError: %s", verr)
+            raise verr
+        except Exception as err:  # 捕获并处理所有其他类型的异常，确保程序不会因为未处理的异常而崩溃。
+            logger.error("页面中没有找到id为 %s 的元素，原因可能是：%s", id_name, err)
+            raise err
+
+        return self.driver

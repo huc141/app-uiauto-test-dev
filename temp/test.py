@@ -1,39 +1,25 @@
-class AssertUtil:
-
-    def __init__(self, assert_type, assert_text, expected_text=None):
-        self.assert_type = assert_type
-        self.assert_text = assert_text
-        self.expected_text = expected_text
-
-    def text_assert(self):
-        """
-        检查expected_text是否存在于text中
-        使用Python内置的count方法计算text中expected_text出现的次数
-        如果expected_text在text中出现，那么其出现次数应大于0
-        如果expected_text不在text中，断言将失败，并抛出一个AssertionError异常。异常的错误消息将包含期望的文本和实际的文本。
-        """
-        if self.expected_text is not None:
-            if self.assert_type == 'assert_text_in':
-                assert self.assert_text.count(
-                    self.expected_text) > 0, f"Expected text '{self.expected_text}' not found in '{self.assert_text}'"
-
-                print("Test passed successfully!!")
-            elif self.assert_type == 'assert_equal':
-                assert self.assert_text == self.expected_text, "实际值{}与期望值{}不相等".format(self.assert_text,
-                                                                                                 self.expected_text)
-                print("Test passed successfully!")
-            else:
-                print("expected_text值不为空时，assert_type类型{}有误".format(self.assert_type))
-
-        elif self.assert_type == 'assert_not_none':
-            assert self.assert_text, '期望值{}是None'.find(self.assert_text)
-        else:
-            print("expected_text值为空时，assert_type类型{}有误".format(self.assert_type))
-
-
-a = "assert_text_in"
-b = "hello world"
-c = "hello"
-
-d = AssertUtil(a, b, c)
-d.text_assert()
+# 获取预期结果 test_data["expected"]
+# 断言
+# 如果出现断言失败，需要将失败的用例记录到logger当中
+# 如果断言失败，会抛出一个异常，AssertionError
+# 如果不手动抛出异常，程序正常走不是走try就是except分支，测试用例都会全部显示通过；
+# 抛出异常就意味着程序运行错误，这条用例执行失败
+try:
+    print(res["msg"])
+    self.assertEqual(test_data["expected"], res["code"])
+    # 把实际结果写入excel数据，通过case_id获取行号
+    self.excel_handler.write(config.data_path,
+                             "register",
+                             test_data["case_id"] + 1,
+                             9,
+                             "测试通过")
+except AssertionError as e:  # 如果出现错误，就会执行except的代码
+    # 记录日志logger
+    self.logger.error("测试用例失败：{}".format(e))
+    # 把实际结果写入excel数据，通过case_id获取行号
+    self.excel_handler.write(config.data_path,
+                             "register",
+                             test_data["case_id"] + 1,
+                             9,
+                             "测试失败")
+    raise e  # 程序运行错误，抛出异常，就意味着这条用例执行失败
