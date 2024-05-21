@@ -27,9 +27,9 @@ class BasePage:
             time.sleep(3)
         except ValueError as verr:  # 专门捕获并处理 ValueError 异常，可以在此处添加特定的处理逻辑。
             logger.error("ValueError: %s", verr)
-            raise verr
+            raise
         except Exception as err:  # 捕获并处理所有其他类型的异常，确保程序不会因为未处理的异常而崩溃。
             logger.error("页面中没有找到id为 %s 的元素，原因可能是：%s", id_name, err)
-            raise err
+            raise
 
         return self.driver
