@@ -18,7 +18,7 @@ if __name__ == '__main__':
         ./reports 生成的allure报告的路径
         –clean 清空./reports路径原来的报告
     """
-    pytest.main(["-s", "./test_case", "--capture=sys"])
+    pytest.main(["-s", "./test_case/test_welcome.py", "--capture=sys"])
 
     # 调用allure生成报告
     os.system("allure generate ./report_allure_temps -o ./reports/{}.html --clean".format(time.strftime("%Y%m%d-%H%M%S")))
