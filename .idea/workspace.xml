@@ -4,16 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c077db73-d056-43c3-9790-913cc6b8d70e" name="Changes" comment="更新gitignore">
+    <list default="true" id="c077db73-d056-43c3-9790-913cc6b8d70e" name="Changes" comment="更新代码">
       <change afterPath="$PROJECT_DIR$/apk_pkgs/Android-Reolink-P2PCN-4.45.0.3.20240508--release.apk" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/log/log.2024-05-21.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/app-uiauto-test-dev.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/app-uiauto-test-dev.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app-UI自动化框架.xmind" beforeDir="false" afterPath="$PROJECT_DIR$/app-UI自动化框架.xmind" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pytest.ini" beforeDir="false" afterPath="$PROJECT_DIR$/pytest.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/run.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,12 +30,12 @@
     &quot;assignee&quot;: &quot;huc141&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/huc141/app-uiauto-test-dev.git",
-    "accountId": "6e980d89-10ef-4409-b57c-2bd10f4b623d"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/huc141/app-uiauto-test-dev.git&quot;,
+    &quot;accountId&quot;: &quot;6e980d89-10ef-4409-b57c-2bd10f4b623d&quot;
   }
-}]]></component>
+}</component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -266,7 +259,63 @@
       <option name="project" value="LOCAL" />
       <updated>1716358209662</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="更新">
+      <option name="closed" value="true" />
+      <created>1716358281986</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1716358281986</updated>
+    </task>
+    <task id="LOCAL-00006" summary="更新">
+      <option name="closed" value="true" />
+      <created>1716358301430</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1716358301430</updated>
+    </task>
+    <task id="LOCAL-00007" summary="更新allure报告主函数运行代码">
+      <option name="closed" value="true" />
+      <created>1716358336325</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1716358336325</updated>
+    </task>
+    <task id="LOCAL-00008" summary="删除无效文件">
+      <option name="closed" value="true" />
+      <created>1716358836062</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1716358836062</updated>
+    </task>
+    <task id="LOCAL-00009" summary="补充用例失败后的重试次数">
+      <option name="closed" value="true" />
+      <created>1716361446353</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1716361446353</updated>
+    </task>
+    <task id="LOCAL-00010" summary="新增项目依赖包：pytest-rerunfailures">
+      <option name="closed" value="true" />
+      <created>1716361483259</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1716361483259</updated>
+    </task>
+    <task id="LOCAL-00011" summary="更新代码">
+      <option name="closed" value="true" />
+      <created>1716373853362</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1716373853362</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -274,6 +323,12 @@
     <MESSAGE value="配置pytest.ini" />
     <MESSAGE value="comit" />
     <MESSAGE value="更新gitignore" />
-    <option name="LAST_COMMIT_MESSAGE" value="更新gitignore" />
+    <MESSAGE value="更新" />
+    <MESSAGE value="更新allure报告主函数运行代码" />
+    <MESSAGE value="删除无效文件" />
+    <MESSAGE value="补充用例失败后的重试次数" />
+    <MESSAGE value="新增项目依赖包：pytest-rerunfailures" />
+    <MESSAGE value="更新代码" />
+    <option name="LAST_COMMIT_MESSAGE" value="更新代码" />
   </component>
 </project>
