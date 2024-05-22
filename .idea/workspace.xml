@@ -4,16 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c077db73-d056-43c3-9790-913cc6b8d70e" name="Changes" comment="comit">
-      <change afterPath="$PROJECT_DIR$/Pipfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apk_pkgs/Android-Reolink-P2PCN-4.45.0.2.20240506--release.apk" afterDir="false" />
+    <list default="true" id="c077db73-d056-43c3-9790-913cc6b8d70e" name="Changes" comment="更新gitignore">
+      <change afterPath="$PROJECT_DIR$/apk_pkgs/Android-Reolink-P2PCN-4.45.0.3.20240508--release.apk" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/log/log.2024-05-21.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/app-uiauto-test-dev.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/app-uiauto-test-dev.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common_tools/app_driver.py" beforeDir="false" afterPath="$PROJECT_DIR$/common_tools/app_driver.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common_tools/app_info.py" beforeDir="false" afterPath="$PROJECT_DIR$/common_tools/app_info.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common_tools/read_yaml.py" beforeDir="false" afterPath="$PROJECT_DIR$/common_tools/read_yaml.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/phone.yml" beforeDir="false" afterPath="$PROJECT_DIR$/config/phone.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-UI自动化框架.xmind" beforeDir="false" afterPath="$PROJECT_DIR$/app-UI自动化框架.xmind" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pytest.ini" beforeDir="false" afterPath="$PROJECT_DIR$/pytest.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/run.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,14 +37,12 @@
     &quot;assignee&quot;: &quot;huc141&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">
-    <option name="selectedUrlAndAccountId">
-      <UrlAndAccount>
-        <option name="accountId" value="3e3f8c79-9b5c-46d5-ba8e-4755893efac1" />
-        <option name="url" value="https://github.com/huc141/app-uiauto-test-dev.git" />
-      </UrlAndAccount>
-    </option>
-  </component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/huc141/app-uiauto-test-dev.git",
+    "accountId": "6e980d89-10ef-4409-b57c-2bd10f4b623d"
+  }
+}]]></component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -67,6 +65,7 @@
     "Python.config.executor": "Run",
     "Python.devices.executor": "Run",
     "Python.read_yaml.executor": "Run",
+    "Python.run.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "master",
@@ -88,8 +87,12 @@
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\app-uiauto-test-dev\apk_pkgs" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\app-uiauto-test-dev\test_case" />
+      <recent name="D:\app-uiauto-test-dev\temp" />
+    </key>
   </component>
-  <component name="RunManager" selected="Python.app_info">
+  <component name="RunManager" selected="Python.run">
     <configuration name="app_driver" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="app-uiauto-test-dev" />
       <option name="ENV_FILES" value="" />
@@ -178,23 +181,47 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="run" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="app-uiauto-test-dev" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/run.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="Python.app_info" />
       <item itemvalue="Python.devices" />
+      <item itemvalue="Python.run" />
       <item itemvalue="Python.app_driver" />
       <item itemvalue="Python.read_yaml" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.app_driver" />
+        <item itemvalue="Python.run" />
         <item itemvalue="Python.read_yaml" />
+        <item itemvalue="Python.app_driver" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-09665e90c3a7-d3b881c8e49f-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-233.15026.15" />
+        <option value="bundled-python-sdk-babbdf50b680-746f403e7f0c-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-241.15989.155" />
       </set>
     </attachedChunks>
   </component>
@@ -231,12 +258,22 @@
       <option name="project" value="LOCAL" />
       <updated>1714471531831</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="更新gitignore">
+      <option name="closed" value="true" />
+      <created>1716358209662</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1716358209662</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="配置pytest.ini" />
     <MESSAGE value="comit" />
-    <option name="LAST_COMMIT_MESSAGE" value="comit" />
+    <MESSAGE value="更新gitignore" />
+    <option name="LAST_COMMIT_MESSAGE" value="更新gitignore" />
   </component>
 </project>
