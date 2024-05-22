@@ -1,7 +1,21 @@
 # -*- coding: utf-8 -*-
 import os
 import time
+from os.path import exists
+
 import pytest
+from common_tools.logger import logger
+
+# 定义allure的json临时文件目录路径
+path = './report_allure_temps'
+
+
+def make_dir():
+    logger.info("开始创建report_allure_temps文件夹")
+    if not exists(path):
+        os.mkdir(path)
+    logger.info("成功创建report_allure_temps文件夹")
+
 
 # 运行pytest测试框架的主函数
 if __name__ == '__main__':
@@ -18,8 +32,9 @@ if __name__ == '__main__':
         ./reports 生成的allure报告的路径
         –clean 清空./reports路径原来的报告
     """
+    make_dir()  # 初始化
     pytest.main(["-s", "./test_case/test_welcome.py", "--capture=sys"])
 
     # 调用allure生成报告
-    os.system("allure generate ./report_allure_temps -o ./reports/{}.html --clean".format(time.strftime("%Y%m%d-%H%M%S")))
-
+    os.system(
+        "allure generate ./report_allure_temps -o ./reports/{}.html --clean".format(time.strftime("%Y%m%d-%H%M%S")))
