@@ -11,3 +11,4 @@ adbutils>=2.5.0
 uiautomator2>=3.0.14
 requests>=2.31.0
 PyYAML>=6.0.1
+pytest-rerunfailures>=14.0
