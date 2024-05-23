@@ -12,6 +12,7 @@ class BasePage:
     # 构造函数
     def __init__(self, device_sn=read_yaml.config_device_sn, apk_name=read_yaml.config_apk_name):
         self.driver = Driver(device_sn, apk_name).init_driver()
+        # driver.init_driver()
         self.driver.wait_timeout = DEFAULT_SECONDS  # 设置全局等待超时时间为15秒
 
     def click_by_id(self, id_name):
