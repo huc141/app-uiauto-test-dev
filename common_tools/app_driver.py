@@ -3,6 +3,7 @@ import uiautomator2 as u2
 from common_tools.read_yaml import read_yaml
 from common_tools.logger import logger
 import os
+from appium import webdriver
 
 
 class Driver:
