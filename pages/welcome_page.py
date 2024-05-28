@@ -2,8 +2,8 @@ from pages.base_page import BasePage
 
 
 class WelcomePage(BasePage):
-    def __init__(self, device_sn=None, apk_name=None):
-        super().__init__(device_sn, apk_name)
+    def __init__(self):
+        super().__init__()
         self.agree_term_button = "com.mcu.reolink:id/agree_term_button"
         self.agree_continue_btn = "com.mcu.reolink:id/btn"
         self.disagree_exit_btn = "com.mcu.reolink:id/cancel_button"
