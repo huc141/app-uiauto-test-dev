@@ -48,9 +48,9 @@ class TestWelcome:
 
         4）通过nodeID运行指定的测试函数：
 
-                pytest -vs /test_case/test_welcome.py::TestWelcome::test_04_func
+                pytest -vs ./test_case/test_welcome.py::TestWelcome::test_install_apk
                 
-                        ① /testcase/test_welcome.py：当前test_welcome.py文件所在路径
+                        ① ./testcase/test_welcome.py：当前test_welcome.py文件所在路径
                         ② TestWelcome:类名
-                        ③ test_04_func：指TestLogin类中的你要运行的方法名
+                        ③ test_install_apk：指test_install_apk：TestWelcome类中的你要运行的方法名
 """
