@@ -9,7 +9,10 @@ class AssertUI:
         self.assert_text = assert_text  # 断言文本
         self.expect_test = expect_test  # 预期结果
         logger.info("UI断言初始化init_driver···")
-        self._driver = driver.init_driver()
+        if not driver._driver:  # 检查 driver 是否已经初始化
+            self.driver = driver.init_driver()
+        else:
+            self.driver = driver._driver
 
     def assert_clickable(self, id_name: str, expect: bool):
         """
@@ -18,17 +21,17 @@ class AssertUI:
         :param expect: 期望值，只接受布尔值
         :return:
         """
-        if not self._driver:
-            logger.error("self._driver不存在")
+        if not self.driver:
+            logger.error("self.driver不存在")
             return
 
-        if not self._driver(resourceId=id_name).exists():  # 验证该元素是否存在
+        if not self.driver(resourceId=id_name).exists():  # 验证该元素是否存在
             logger.error('需要点击的UI元素: %s, 不存在', id_name)
             assert False, f"元素 {id_name} 不存在"
 
         logger.info('需要点击的UI元素: %s, 存在', id_name)
-        element_is_clickable = self._driver(resourceId=id_name).info['clickable']  # 获取该元素的clickable属性
-        element_is_enable = self._driver(resourceId=id_name).info['enabled']  # 获取该元素的enabled属性
+        element_is_clickable = self.driver(resourceId=id_name).info['clickable']  # 获取该元素的clickable属性
+        element_is_enable = self.driver(resourceId=id_name).info['enabled']  # 获取该元素的enabled属性
 
         if element_is_enable and element_is_clickable:  # 如果两个属性均为True，则为真，否则为False
             logger.info('需要点击的元素： %s，当前已激活可点击状态', id_name)

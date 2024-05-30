@@ -28,12 +28,14 @@ class Driver:
     #         return None
 
     def init_driver(self):
+        if self._driver:  # 如果已经初始化，则直接返回现有的驱动
+            return self._driver
         while True:  # 创建一个无限循环，直到满足跳出条件
-            str1 = input("请输入数字选择：1 使用uiautomator2，2 使用appium，输入'q'退出：")
+            str1 = input("请输入数字选择：1 使用uiautomator2，2 使用appium: ")
 
-            if str1.lower() == 'q':  # 添加退出选项，不区分大小写
-                print("程序已退出。你终止了测试。")
-                break  # 使用break语句跳出循环，结束程序
+            # if str1.lower() == 'q':  # 添加退出选项，不区分大小写
+            #     print("程序已退出。你终止了测试。")
+            #     break  # 使用break语句跳出循环，结束程序
 
             if str1 == "1":
                 print(f"你输入了：{str1}，现在启动uiautomator2")

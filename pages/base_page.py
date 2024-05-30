@@ -11,7 +11,10 @@ DEFAULT_SECONDS = 15
 class BasePage:
     # 构造函数
     def __init__(self):
-        self.driver = driver.init_driver()
+        if not driver._driver:  # # 检查 driver 是否已经初始化
+            self.driver = driver.init_driver()
+        else:
+            self.driver = driver._driver
         self.driver.wait_timeout = DEFAULT_SECONDS  # 设置全局等待超时时间为15秒
 
     def click_by_id(self, id_name):

@@ -25,8 +25,10 @@ class TestWelcome:
     @allure.description("预期：正常退出app")
     @allure.testcase("https://pms.reolink.com.cn/index.php?m=testcase&f=view&caseID=54170&version=0")
     def test_disagree_terms(self):
+        driver.start()
         welcome = WelcomePage()  # 初始化欢迎页的页面对象
         welcome.click_disagree_exit_btn()  # 点击【不同意并退出】按钮
+        driver.stop()  # 停止app
         driver.clear_app_cache()  # 清除app缓存
 
     @allure.title("验证：验证同意隐私条款可正常进入app")
