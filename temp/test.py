@@ -1,46 +1,70 @@
-# while True:  # 创建一个无限循环，直到满足跳出条件
-#     str1 = input("请输入数字选择：1 使用uiautomator2，2 使用appium，输入'q'退出：")
-#
-#     if str1.lower() == 'q':  # 添加退出选项，不区分大小写
-#         print("程序已退出。你终止了测试。")
-#         break  # 使用break语句跳出循环，结束程序
-#
-#     if str1 == "1":
-#         print(f"你输入了：{str1}，现在启动uiautomator2")
-#         break  # 输入有效，执行相应操作后退出循环
-#     elif str1 == "2":
-#         print(f"你输入了：{str1}，现在启动appium")
-#         break  # 输入有效，执行相应操作后退出循环
-#     else:
-#         print("无效输入，请按照指示重新输入！")  # 无效输入时提醒用户重新输入
+import uiautomator2 as u2
+
+from common_tools.read_yaml import read_yaml
+
+# 在模块级别初始化Driver实例
+driver_instance = None
 
 
-import threading
-import time
+class Driver:
+    def __init__(self, device_sn: str, apk_name: str = '', apk_local_path: str = read_yaml.config_apk_local_path):
+        self._device_sn = device_sn
+        self._apk_name = apk_name
+        self._apk_local_path = apk_local_path
+        self._driver = None
 
-from common_tools.logger import logger
+    def init_driver(self):
+        # ...（保持init_driver的原有逻辑不变）
+        global driver_instance
+        driver_instance = self._driver
+        return driver_instance
+
+    # ...（Driver类的其他方法保持不变）
 
 
-def init_driver2(self):
-    while True:  # 创建一个无限循环，直到满足跳出条件
-        str1 = input("请输入数字选择：1 使用uiautomator2，2 使用appium，输入'q'退出：")
+def initialize_test_environment():
+    """初始化测试环境，确保Driver实例被创建并初始化"""
+    global driver_instance
+    if driver_instance is None:
+        driver = Driver(device_sn="39261FDJG0060S", apk_name="com.mcu.reolink")
+        driver.init_driver()
 
-        if str1.lower() == 'q':  # 添加退出选项，不区分大小写
-            print("程序已退出。你终止了测试。")
-            break  # 使用break语句跳出循环，结束程序
 
-        if str1 == "1":
-            print(f"你输入了：{str1}，现在启动uiautomator2")
-            logger.info("开始USB连接手机")
-            try:
-                self._driver = u2.connect_usb(self._device_sn)
-                logger.info("连接成功")
-                return self._driver
-            except Exception as err:
-                logger.error("连接失败，原因为：{}".format(err))
-            break  # 输入有效，执行相应操作后退出循环
-        elif str1 == "2":
-            print(f"你输入了：{str1}，现在启动appium")
-            break  # 输入有效，执行相应操作后退出循环
-        else:
-            print("无效输入，请按照指示重新输入！")  # 无效输入时提醒用户重新输入
+class BasePage:
+    def __init__(self):
+        global driver_instance
+        if driver_instance is None:
+            initialize_test_environment()
+        self.driver = driver_instance
+        self.driver.wait_timeout = 15
+
+    # ...（BasePage类的其他方法保持不变）
+
+
+class WelcomePage(BasePage):
+    def __init__(self):
+        super().__init__()
+        self.agree_term_button = "com.mcu.reolink:id/agree_term_button"
+        self.agree_continue_btn = "com.mcu.reolink:id/btn"
+        self.disagree_exit_btn = "com.mcu.reolink:id/cancel_button"
+
+    def click_terms_conditions_icon(self):
+        """
+        点击勾选启动页自动弹出的【声明与条款】单选按钮
+        :return:
+        """
+        return self.click_by_id(id_name=self.agree_term_button)
+
+
+class TestWelcome:
+
+    @classmethod
+    def setup_class(cls):
+        initialize_test_environment()
+
+    def test_install_apk(self):
+        # 使用共享的Driver实例
+        self.driver.uninstall_app()
+        self.driver.install_app()
+
+# 其他测试类同样可以访问driver_instance
