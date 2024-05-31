@@ -18,6 +18,7 @@ class TestWelcome:
         driver.install_app()  # 安装app
 
     def test_disagree_terms(self):
+        driver.start()
         welcome = WelcomePage()  # 初始化欢迎页的页面对象
         welcome.click_disagree_exit_btn()  # 点击【不同意并退出】按钮
         driver.clear_app_cache()  # 清除app缓存
@@ -53,4 +54,6 @@ class TestWelcome:
                         ① ./testcase/test_welcome.py：当前test_welcome.py文件所在路径
                         ② TestWelcome:类名
                         ③ test_install_apk：指test_install_apk：TestWelcome类中的你要运行的方法名
+        
+所有用例运行失败后会自动重试2次，每次重试前等待5s.
 """
