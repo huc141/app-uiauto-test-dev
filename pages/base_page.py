@@ -1,21 +1,25 @@
-import re
 import time
-from common_tools.app_driver import Driver
 from common_tools.app_driver import driver
-from common_tools.read_yaml import read_yaml
 from common_tools.logger import logger
 
 DEFAULT_SECONDS = 15
 
 
 class BasePage:
-    # 构造函数
     def __init__(self):
-        if not driver._driver:  # # 检查 driver 是否已经初始化
-            self.driver = driver.init_driver()
-        else:
-            self.driver = driver._driver
+        # if not driver._driver:  # # 检查 driver 是否已经初始化
+        #     self.driver = driver.init_driver()
+        # else:
+        #     self.driver = driver._driver
+        self.driver = driver.get_actual_driver()
         self.driver.wait_timeout = DEFAULT_SECONDS  # 设置全局等待超时时间为15秒
+
+    def find_element(self):
+        """
+        查找元素
+        :return:
+        """
+        pass
 
     def click_by_id(self, id_name):
         """通过id定位单个元素"""
@@ -34,6 +38,41 @@ class BasePage:
         except Exception as err:  # 捕获并处理所有其他类型的异常，确保程序不会因为未处理的异常而崩溃。
             logger.error("页面中没有找到id为 %s 的元素，原因可能是：%s", id_name, err)
             raise
+        # return self.driver
 
-        return self.driver
+    def click_by_xpath(self, xpath_expression):
+        """通过xpath定位"""
+        try:
+            time.sleep(3)
+            element = self.driver.xpath(xpath_expression)
+            if not element.exists:
+                logger.error("该点击元素：%s 不存在", xpath_expression)
+                raise ValueError(f"该点击元素：{xpath_expression} 不存在")
 
+            element.click()
+            time.sleep(3)
+        except ValueError as verr:  # 专门捕获并处理 ValueError 异常，可以在此处添加特定的处理逻辑。
+            logger.error("ValueError: %s", verr)
+            raise
+        except Exception as err:  # 捕获并处理所有其他类型的异常，确保程序不会因为未处理的异常而崩溃。
+            logger.error("页面中没有找到id为 %s 的元素，原因可能是：%s", xpath_expression, err)
+            raise
+
+    def input_text(self, text):
+        """
+        输入文本,不清空文本框内容，直接输入。
+        :element: 编辑框的xpath表达式
+        :text： 要输入的文本内容
+        :return:
+        """
+        try:
+            self.driver.send_keys(text)
+        except Exception as err:
+            logger.error(f"文本输入失败：{err}")
+
+    def input_text_clear(self):
+        """
+        清空文本框内容并输入。
+        :return:
+        """
+        pass

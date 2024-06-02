@@ -3,7 +3,7 @@ import uiautomator2 as u2
 from common_tools.read_yaml import read_yaml
 from common_tools.logger import logger
 import os
-from appium import webdriver
+# from appium import webdriver
 
 
 class Driver:
@@ -53,12 +53,32 @@ class Driver:
             else:
                 print("无效输入，请按照指示重新输入！")  # 无效输入时提醒用户重新输入
 
+    def get_actual_driver(self):
+        if not self._driver:
+            self.init_driver()
+        return self._driver
+
+    def __getattr__(self, item):
+        """
+        当试图访问 Driver 实例上不存在的属性或方法时，__getattr__ 会被调用。
+        它会在 self._driver 上查找该属性或方法，如果找到就返回。
+        如果 self._driver 还没有初始化或不存在该属性，则抛出 AttributeError。
+        :param item:
+        :return:
+        """
+        logger.info("正在访问 Driver 实例的一个不存在的属性，自动调用 __getattr__ 方法")
+        if not self._driver:
+            self.init_driver()
+        return getattr(self._driver, item)
+
     def start(self):
         """
         启动reolink app
         :return:
         """
         try:
+            if not self._driver:
+                self.init_driver()
             if self._driver:
                 logger.info("开始启动app···")
                 self._driver.app_start(self._apk_name)
@@ -145,7 +165,7 @@ class Driver:
         :return: 
         """
         try:
-            # 使用双引号将字符串包括在命令中
+            # 使用双引号将字符串包括在adb命令中
             adb_command = 'adb shell dumpsys wifi | findstr "Wi-Fi"'
             result = subprocess.run(adb_command, shell=True, capture_output=True, text=True, encoding='utf-8')
 
@@ -195,6 +215,10 @@ class Driver:
             logger.error("wifi开启失败，原因：%s", err)
 
     def get_element_info(self):
+        """
+        获取元素属性信息
+        :return:
+        """
         try:
             element = self.init_driver().info
             return element

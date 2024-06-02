@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from common_tools.app_driver import driver
-from common_tools.assert_ui import assertui
 import allure
 
 
@@ -17,6 +16,5 @@ class TestInstallApp:
         自动化用例编号：1001
         用例名称：验证安装app
         """
-        driver.init_driver()  # 连接手机
         driver.uninstall_app()  # 如果app存在则卸载app
         driver.install_app()  # 安装app

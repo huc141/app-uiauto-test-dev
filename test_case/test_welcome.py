@@ -46,4 +46,4 @@ class TestWelcome:
         assertui.assert_clickable('com.mcu.reolink:id/btn', True)  # 断言点击勾选框后【同意并继续】按钮的可点击状态
         welcome.click_agree_continue_btn()  # 点击【同意并继续】按钮
         driver.stop()  # 停止app
-        driver.clear_app_cache()  # 清除app缓存
+        # driver.clear_app_cache()  # 清除app缓存

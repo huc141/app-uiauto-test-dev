@@ -9,10 +9,11 @@ class AssertUI:
         self.assert_text = assert_text  # 断言文本
         self.expect_test = expect_test  # 预期结果
         logger.info("UI断言初始化init_driver···")
-        if not driver._driver:  # 检查 driver 是否已经初始化
-            self.driver = driver.init_driver()
-        else:
-            self.driver = driver._driver
+        self.driver = driver.get_actual_driver()
+        # if not driver._driver:  # 检查 driver 是否已经初始化
+        #     self.driver = driver.init_driver()
+        # else:
+        #     self.driver = driver._driver
 
     def assert_clickable(self, id_name: str, expect: bool):
         """
