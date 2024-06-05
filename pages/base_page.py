@@ -49,7 +49,6 @@ class BasePage:
 
     def click_by_xpath(self, xpath_expression, retries=2, is_click_again: Literal[True, False] = False):
         """
-
         :param xpath_expression: 通过xpath定位
         :param retries: 如果遇到权限弹窗，会自动处理, 如果处理了弹窗，则通过is_click_again参数来判断是否重新尝试点击xpath_expression元素.
         :param is_click_again: 接收布尔值，默认为False，代表处理了弹窗之后，不会尝试再次点击resource_id元素；若为True，则处理弹窗之后，再次重新点击xpath_expression元素
@@ -79,9 +78,38 @@ class BasePage:
                 raise
         return False
 
+    def get_toast(self, toast_text: str, reset=True, default="没有获取到toast提示"):
+        """
+        获取页面弹出的toast
+        :param toast_text: 需要检查的toast文案
+        :param reset: 默认为True，即清除缓存的Toast，传False则不清除。
+        :param default: 如果10s内没有获取到Toast，则返回此默认消息。
+        :return:
+        """
+        try:
+
+            # 尝试获取Toast消息
+            toast_message = self.driver.toast.get_message(wait_timeout=10, cache_timeout=10)
+            # 检查是否获取到Toast消息，如果没有则使用默认值
+            actual_message = toast_message if toast_message else default
+            # 验证Toast消息内容是否符合预期
+            if toast_text not in actual_message:
+                raise ValueError(f"预期的Toast文本：'{toast_text}' 未在实际Toast：'{actual_message}' 中找到")
+
+            # 根据配置决定是否重置Toast缓存
+            if reset:
+                self.driver.toast.reset()
+
+            return actual_message  # 成功匹配到Toast，返回其内容
+
+        except Exception as err:
+            # 确保在异常情况下也能访问到实际获取的Toast消息或默认值
+            toast_message = self.driver.toast.get_message(wait_timeout=10, cache_timeout=10, default=default)
+            raise ValueError(f"获取Toast失败，实际消息：'{toast_message}'，原因：{err}")
+
     def input_text(self, text):
         """
-        输入文本,不清空文本框内容，直接输入。
+        输入文本,不清空文本框内容，直接输入。调用该方法时不要开启atx悬浮窗。
         :element: 编辑框的xpath表达式
         :text： 要输入的文本内容
         :return:
