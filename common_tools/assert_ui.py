@@ -42,6 +42,8 @@ class AssertUI:
         assert _element_is_clickable == expect, "【断言失败】，实际值{}与期望值{}不相等".format(
             _element_is_clickable, expect)
 
+    # toast断言
+
     # 断言预期的元素是否可见：assertVisible
 
     # 断言实际值是否包含预期值:assertIn
