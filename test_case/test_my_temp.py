@@ -1,20 +1,9 @@
 from common_tools.app_driver import driver
+from pages.device_list_page import DeviceListPage
 
 
 class TestMyTemp:
-    def test_turn_off_wifi(self):
-        driver.init_driver()
-        driver.init_driver()
-        driver.turn_on_wifi()
-
-# import os
-#
-#
-# def get_device_list():
-#     a = os.system('adb shell cmd wifi set-wifi-enabled enabled')
-#     return a
-#
-#
-# log = get_device_list()
-#
-# print(log)
+    def test_add_device_by_uid(self):
+        driver.start()
+        device_list_page = DeviceListPage()  # 初始化设备列表对像
+        device_list_page.get_toast("111111")
