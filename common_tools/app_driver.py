@@ -71,6 +71,14 @@ class Driver:
             self.init_driver()
         return getattr(self._driver, item)
 
+    def stop(self):
+        """
+        停止app
+        :return:
+        """
+        self._driver.app_stop(self._apk_name)
+        logger.info("reolink app已停止运行")
+
     def start(self):
         """
         启动reolink app
@@ -80,6 +88,8 @@ class Driver:
             if not self._driver:
                 self.init_driver()
             if self._driver:
+                # 先停止reolink app
+                self.stop()
                 logger.info("开始启动app···")
                 self._driver.app_start(self._apk_name)
                 all_paks = self._driver.app_list()  # 列出所有正在运行的APP，返回一个列表
@@ -148,14 +158,6 @@ class Driver:
         if self._driver:
             self._driver.app_clear(self._apk_name)
             logger.info("清除reolink app缓存成功···")
-
-    def stop(self):
-        """
-        停止app
-        :return:
-        """
-        self._driver.app_stop(self._apk_name)
-        logger.info("reolink app已停止运行")
 
     def get_wifi_status(self):
         """
