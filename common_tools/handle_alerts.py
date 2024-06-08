@@ -7,7 +7,6 @@ DEFAULT_SECONDS = 15
 class HandleAlerts:
     def __init__(self):
         self.driver = driver.get_actual_driver()
-        self.driver.wait_timeout = DEFAULT_SECONDS  # 设置全局等待超时时间为15秒
 
     def handle_alerts(self):
         """
