@@ -6,4 +6,4 @@ class TestMyTemp:
     def test_add_device_by_uid(self):
         driver.start()
         device_list_page = DeviceListPage()  # 初始化设备列表对像
-        device_list_page.get_toast("111111")
+        device_list_page.take_screenshot()
