@@ -88,7 +88,7 @@ class Driver:
             if not self._driver:
                 self.init_driver()
             if self._driver:
-                # 先停止reolink app
+                # 先停止reolink app，再重新启动
                 self.stop()
                 logger.info("开始启动app···")
                 self._driver.app_start(self._apk_name)
