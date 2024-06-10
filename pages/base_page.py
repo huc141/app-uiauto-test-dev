@@ -1,9 +1,6 @@
-import logging
 import os
 import time
 from datetime import datetime
-
-import uiautomator2 as u2
 from uiautomator2.exceptions import XPathElementNotFoundError
 from common_tools.app_driver import driver
 from common_tools.logger import logger
@@ -124,10 +121,18 @@ class BasePage:
         logger.error(f"获取Toast失败，返回默认消息：'{default}'")
         return default
 
+    def auto_screenshot(self, file_path):
+        """
+        用例失败后自动截图，这个方法为临时方法，后面可能会取消掉
+        :param file_path: 截图文件的保存路径
+        :return:
+        """
+        self.driver.screenshot(file_path)
+
     def take_screenshot(self, device_type="Android"):
         """
-        屏幕截图
-        :param device_type: 设备类型，根据设备类型保存截图位置
+        屏幕截图，主要提供给写用例时需要主动截图的步骤进行调用。
+        :param device_type: 设备类型，根据设备类型保存截图位置，默认Android
         :return:
         """
         screenshot_save_path = os.path.join(os.getcwd(), 'screenshot/android')
@@ -152,7 +157,7 @@ class BasePage:
 
     def input_text(self, text):
         """
-        使用abd命令输入文本,不清空文本框内容，直接输入，不支持中文。
+        使用adb命令输入文本,不清空文本框内容，直接输入，不支持中文。
         :element: 编辑框的xpath表达式
         :text： 要输入的文本内容
         :return:
