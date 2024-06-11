@@ -155,6 +155,19 @@ class BasePage:
         else:
             raise ValueError("Unsupported device type. Please specify 'android' or 'ios'.")
 
+    def stop_screenrecord(self):
+        """
+        停止录制屏幕
+        """
+        self.driver.screenrecord.stop()
+        logger.info("Screen recording stopped")
+
+    def take_screenrecord(self):
+        timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+        video_name = f"{timestamp}.mp4"
+        self.driver.screenrecord(video_name)
+        logger.info(f"Screen recording started···")
+
     def input_text(self, text):
         """
         使用adb命令输入文本,不清空文本框内容，直接输入，不支持中文。
