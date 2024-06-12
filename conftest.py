@@ -13,17 +13,17 @@ d2 = driver.get_actual_driver()
 gr = GenerateReports()
 
 
-@pytest.fixture()
-def start():
-    try:
-        d2.start()
-    except Exception as err:
-        raise err
-    yield
-    try:
-        d2.stop()
-    except Exception as err:
-        raise err
+# @pytest.fixture()
+# def start():
+#     # try:
+#     #     d2.start()
+#     # except Exception as err:
+#     #     raise err
+#     yield
+#     try:
+#         d2.stop()
+#     except Exception as err:
+#         raise err
 
 
 @pytest.hookimpl(tryfirst=True, hookwrapper=True)
@@ -35,9 +35,10 @@ def pytest_runtest_makereport(item, call):
     if report.when == 'call':
         if report.failed or report.passed:
             logger.info("用例执行失败/成功，自动截图ing···")
-            test_name = item.name
-            file_path = './screen_record'
+            # test_name = item.name
+            file_path = './screen_record/'
             img = d2.screenshot()
+            test_name = driver.take_screenrecord(False)
             img_byte_arr = BytesIO()  # 将Image对象转换为字节流
             img.save(img_byte_arr, format='PNG')  # 将截图保存到BytesIO对象中，格式为PNG
             img_byte_arr = img_byte_arr.getvalue()  # 将截图保存到BytesIO对象中，格式为PNG

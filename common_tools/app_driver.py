@@ -1,8 +1,10 @@
 import subprocess
+from datetime import datetime
 import uiautomator2 as u2
 from common_tools.read_yaml import read_yaml
 from common_tools.logger import logger
 import os
+import subprocess
 # from appium import webdriver
 
 
@@ -12,6 +14,8 @@ class Driver:
         self._apk_name = apk_name
         self._apk_local_path = apk_local_path
         self._driver = None
+        self.record_proc = None
+        self.v_name = None
 
     # def init_driver(self):
     #     """
@@ -71,6 +75,50 @@ class Driver:
             self.init_driver()
         return getattr(self._driver, item)
 
+    def take_screenrecord(self, is_record: bool):
+        """
+        录屏
+        :param is_record: 开启或停止录屏
+        :return:
+        """
+        working_directory = './scrcpy_path'  # 获取scrcpy的路径，让cmd在scrcpy应用程序路径下执行
+        if is_record:
+            timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+            self.v_name = f"{timestamp}.mp4"
+            screen_record_path = './screen_record/'
+            cmd = f'scrcpy -r -N --record "{screen_record_path}{self.v_name}"'
+            print("这是录像文件的保存路径： " + cmd)
+            try:
+                logger.info("录屏开始···")
+                self.record_proc = subprocess.Popen(
+                    cmd, cwd=working_directory,
+                    creationflags=subprocess.CREATE_NEW_CONSOLE,
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE,
+                    shell=True
+                )
+                logger.info("录屏进程启动")
+            except Exception as err:
+                logger.error("录屏失败，原因可能是：{}".format(err))
+                raise err
+        else:
+            if self.record_proc:
+                self.record_proc.terminate()
+                try:
+                    stdout, stderr = self.record_proc.communicate(timeout=10)  # 等待子进程结束
+                    if self.record_proc.returncode != 0:
+                        logger.error(f"录屏停止失败，原因可能是：{stderr.decode()}")
+                        raise Exception(stderr.decode())
+                    logger.info("录屏结束···")
+                except subprocess.TimeoutExpired:
+                    self.record_proc.kill()
+                    logger.warning("录屏进程超时，已强制终止")
+                self.record_proc = None
+            else:
+                logger.warning("没有录屏进程正在运行")
+
+        return self.v_name if is_record else None
+
     def stop(self):
         """
         停止app
@@ -79,7 +127,7 @@ class Driver:
         self._driver.app_stop(self._apk_name)
         logger.info("reolink app已停止运行")
 
-    def start(self):
+    def start(self, is_record=False):
         """
         启动reolink app
         :return:
@@ -91,6 +139,7 @@ class Driver:
                 # 先停止reolink app，再重新启动
                 self.stop()
                 logger.info("开始启动app···")
+                self._driver.take_screenrecord(is_record)  # 启动录屏
                 self._driver.app_start(self._apk_name)
                 all_paks = self._driver.app_list()  # 列出所有正在运行的APP，返回一个列表
                 running_app = self._driver.app_current()  # 获取当前打开的APP信息，返回一个字典

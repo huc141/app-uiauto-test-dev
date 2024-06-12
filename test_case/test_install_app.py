@@ -16,5 +16,8 @@ class TestInstallApp:
         自动化用例编号：1001
         用例名称：验证安装app
         """
+        driver.start(True)
         driver.uninstall_app()  # 如果app存在则卸载app
         driver.install_app()  # 安装app
+        driver.stop()
+        assert False
