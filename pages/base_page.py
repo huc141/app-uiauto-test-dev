@@ -163,10 +163,20 @@ class BasePage:
         logger.info("Screen recording stopped")
 
     def take_screenrecord(self):
+        """
+        录屏
+        :return:
+        """
         timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
         video_name = f"{timestamp}.mp4"
-        self.driver.screenrecord(video_name)
-        logger.info(f"Screen recording started···")
+        cmd = 'scrcpy -r -N --record={}.mp4'.format(video_name)
+        try:
+            logger.info("录屏开始···")
+            os.system(cmd)
+        except Exception as err:
+            logger.error("录屏失败，原因可能是：{}".format(err))
+            raise err
+        logger.info(f"Screen recording stopped···")
 
     def input_text(self, text):
         """
