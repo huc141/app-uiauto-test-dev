@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import time
+
 from common_tools.app_driver import driver
 import allure
 
@@ -19,5 +21,6 @@ class TestInstallApp:
         driver.start(True)
         driver.uninstall_app()  # 如果app存在则卸载app
         driver.install_app()  # 安装app
+        time.sleep(5)
         driver.stop()
         assert False

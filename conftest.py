@@ -4,9 +4,8 @@ from common_tools.logger import logger
 from run import GenerateReports
 import allure
 import pytest
-import uiautomator2 as u2
 from common_tools.app_driver import driver
-from pages.base_page import BasePage
+from common_tools.screen_record import ScreenRecord, scr
 from common_tools.read_yaml import read_yaml
 
 d2 = driver.get_actual_driver()
@@ -36,9 +35,9 @@ def pytest_runtest_makereport(item, call):
         if report.failed or report.passed:
             logger.info("用例执行失败/成功，自动截图ing···")
             # test_name = item.name
-            file_path = './screen_record/'
+            file_path = '../screen_record/'  # 录像的保存路径
             img = d2.screenshot()
-            test_name = driver.take_screenrecord(False)
+            test_name = scr.take_screenrecord(False)
             img_byte_arr = BytesIO()  # 将Image对象转换为字节流
             img.save(img_byte_arr, format='PNG')  # 将截图保存到BytesIO对象中，格式为PNG
             img_byte_arr = img_byte_arr.getvalue()  # 将截图保存到BytesIO对象中，格式为PNG

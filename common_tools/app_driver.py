@@ -1,10 +1,10 @@
-import subprocess
-from datetime import datetime
 import uiautomator2 as u2
-from common_tools.read_yaml import read_yaml
-from common_tools.logger import logger
 import os
 import subprocess
+from datetime import datetime
+from common_tools.logger import logger
+from common_tools.read_yaml import read_yaml
+from common_tools.screen_record import ScreenRecord, scr
 # from appium import webdriver
 
 
@@ -16,20 +16,6 @@ class Driver:
         self._driver = None
         self.record_proc = None
         self.v_name = None
-
-    # def init_driver(self):
-    #     """
-    #     连接手机
-    #     :return:
-    #     """
-    #     logger.info("开始USB连接手机")
-    #     try:
-    #         self._driver = u2.connect_usb(self._device_sn)
-    #         logger.info("连接成功")
-    #         return self._driver
-    #     except Exception as err:
-    #         logger.error("连接失败，原因为：{}".format(err))
-    #         return None
 
     def init_driver(self):
         if self._driver:  # 如果已经初始化，则直接返回现有的驱动
@@ -81,13 +67,15 @@ class Driver:
         :param is_record: 开启或停止录屏
         :return:
         """
-        working_directory = './scrcpy_path'  # 获取scrcpy的路径，让cmd在scrcpy应用程序路径下执行
+        working_directory = os.path.abspath('../scrcpy_path')  # 获取scrcpy的路径，让cmd在scrcpy应用程序路径下执行
+        print("scrcpy的执行路径： " + working_directory)
         if is_record:
             timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
             self.v_name = f"{timestamp}.mp4"
-            screen_record_path = './screen_record/'
-            cmd = f'scrcpy -r -N --record "{screen_record_path}{self.v_name}"'
-            print("这是录像文件的保存路径： " + cmd)
+            screen_record_path = '../screen_record/'  # 录像的保存路径
+            cmd = f'scrcpy -m 1024 -r --no-audio --record {screen_record_path}/{self.v_name}'
+            print("这是输出的录像执行命令： " + cmd)
+            print("这是输出的录像保存路径：" + screen_record_path)
             try:
                 logger.info("录屏开始···")
                 self.record_proc = subprocess.Popen(
@@ -139,7 +127,7 @@ class Driver:
                 # 先停止reolink app，再重新启动
                 self.stop()
                 logger.info("开始启动app···")
-                self._driver.take_screenrecord(is_record)  # 启动录屏
+                scr.take_screenrecord(is_record)  # 启动录屏
                 self._driver.app_start(self._apk_name)
                 all_paks = self._driver.app_list()  # 列出所有正在运行的APP，返回一个列表
                 running_app = self._driver.app_current()  # 获取当前打开的APP信息，返回一个字典
@@ -208,7 +196,8 @@ class Driver:
             self._driver.app_clear(self._apk_name)
             logger.info("清除reolink app缓存成功···")
 
-    def get_wifi_status(self):
+    @staticmethod
+    def get_wifi_status():
         """
         函数获取当前手机的WiFi状态：
         Wi-Fi is enabled：WiFi已开启（不代表已经连上WiFi）
@@ -239,6 +228,7 @@ class Driver:
             logger.error(f"Exception occurred: {str(e)}")
             return f"Exception occurred: {str(e)}"
 
+    @staticmethod
     def turn_off_wifi(self):
         """
         关闭手机WiFi
@@ -252,6 +242,7 @@ class Driver:
         except Exception as err:
             logger.error("wifi关闭失败，原因：%s", err)
 
+    @staticmethod
     def turn_on_wifi(self):
         """
         开启手机WiFi(不一定会自动连上WiFi)
