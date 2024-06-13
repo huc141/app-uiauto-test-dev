@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import os
 from io import BytesIO
 from common_tools.logger import logger
 from run import GenerateReports
@@ -6,23 +7,10 @@ import allure
 import pytest
 from common_tools.app_driver import driver
 from common_tools.screen_record import ScreenRecord, scr
-from common_tools.read_yaml import read_yaml
+
 
 d2 = driver.get_actual_driver()
 gr = GenerateReports()
-
-
-# @pytest.fixture()
-# def start():
-#     # try:
-#     #     d2.start()
-#     # except Exception as err:
-#     #     raise err
-#     yield
-#     try:
-#         d2.stop()
-#     except Exception as err:
-#         raise err
 
 
 @pytest.hookimpl(tryfirst=True, hookwrapper=True)
@@ -33,17 +21,20 @@ def pytest_runtest_makereport(item, call):
     report = outcome.get_result()
     if report.when == 'call':
         if report.failed or report.passed:
-            logger.info("用例执行失败/成功，自动截图ing···")
+            logger.info("用例执行成功/失败，自动截图ing···")
             # test_name = item.name
-            file_path = '../screen_record/'  # 录像的保存路径
-            img = d2.screenshot()
+            file_path = os.path.join(os.getcwd(), 'screen_record')  # 录像的保存路径
+
+            img = d2.screenshot()  # 失败自动截图
             test_name = scr.take_screenrecord(False)
+            file_path2 = os.path.join(file_path, test_name)
+            print("file_path的文件路径： " + file_path2)
             img_byte_arr = BytesIO()  # 将Image对象转换为字节流
             img.save(img_byte_arr, format='PNG')  # 将截图保存到BytesIO对象中，格式为PNG
             img_byte_arr = img_byte_arr.getvalue()  # 将截图保存到BytesIO对象中，格式为PNG
             allure.attach(img_byte_arr, '自动截图',
                           allure.attachment_type.PNG)  # 将指定的内容作为附件添加到测试报告中。这里将截图的二进制数据作为附件，标题为“失败截图”，类型为PNG。
-            allure.attach.file(file_path, name=f"{test_name}_screenrecord", attachment_type=allure.attachment_type.MP4)
+            allure.attach.file(file_path2, name=f"{test_name}", attachment_type=allure.attachment_type.MP4)
 
 
 # 在所有测试用例运行完后调用，适合用于执行所有测试结束后的操作。
