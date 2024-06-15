@@ -4,7 +4,7 @@ import subprocess
 from datetime import datetime
 from common_tools.logger import logger
 from common_tools.read_yaml import read_yaml
-from common_tools.screen_record import ScreenRecord, scr
+from common_tools.screen_record import scr
 # from appium import webdriver
 
 
@@ -56,8 +56,8 @@ class Driver:
         :param item:
         :return:
         """
-        logger.info("正在访问 Driver 实例的一个不存在的属性，自动调用 __getattr__ 方法")
         if not self._driver:
+            logger.info("正在访问 Driver 实例的一个不存在的属性，自动调用 __getattr__ 方法")
             self.init_driver()
         return getattr(self._driver, item)
 
@@ -67,12 +67,13 @@ class Driver:
         :param is_record: 开启或停止录屏
         :return:
         """
-        working_directory = os.path.abspath('../scrcpy_path')  # 获取scrcpy的路径，让cmd在scrcpy应用程序路径下执行
+        # working_directory = os.path.abspath('../scrcpy_path')
+        working_directory = os.path.join(os.getcwd(), 'scrcpy_path')  # 获取scrcpy的路径，让cmd在scrcpy应用程序路径下执行
         print("scrcpy的执行路径： " + working_directory)
         if is_record:
             timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
             self.v_name = f"{timestamp}.mp4"
-            screen_record_path = '../screen_record/'  # 录像的保存路径
+            screen_record_path = os.path.join(os.getcwd(), 'screen_record')  # 录像的保存路径
             cmd = f'scrcpy -m 1024 -r --no-audio --record {screen_record_path}/{self.v_name}'
             print("这是输出的录像执行命令： " + cmd)
             print("这是输出的录像保存路径：" + screen_record_path)
