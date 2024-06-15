@@ -11,7 +11,8 @@ class ScreenRecord:
         self.record_proc = None
         self.v_name = None
 
-    def read_shared_v_name(self):
+    @staticmethod
+    def read_shared_v_name():
         try:
             with open("shared_v_name.txt", "r") as f:
                 v_name = f.read().strip()
