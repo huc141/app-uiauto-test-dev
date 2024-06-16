@@ -1,5 +1,4 @@
 import os
-import subprocess
 import time
 from datetime import datetime
 from uiautomator2.exceptions import XPathElementNotFoundError
@@ -13,12 +12,8 @@ DEFAULT_SECONDS = 15
 
 class BasePage:
     def __init__(self):
-        # if not driver._driver:  # # 检查 driver 是否已经初始化
-        #     self.driver = driver.init_driver()
-        # else:
-        #     self.driver = driver._driver
         self.driver = driver.get_actual_driver()
-        # self.driver.wait_timeout = DEFAULT_SECONDS
+        self.platform = driver.get_platform()
 
     def find_element_xpath(self, xpath_expression):
         """
@@ -26,7 +21,10 @@ class BasePage:
         :param xpath_expression: xpath表达式
         :return: 元素对象
         """
-        return self.driver.xpath(xpath_expression)
+        if self.platform == 'android':
+            return self.driver.xpath(xpath_expression)
+        elif self.platform == 'ios':
+            return self.driver(xpath=xpath_expression)
 
     def click_by_id(self, resource_id, retries=2, is_click_again: Literal[True, False] = False):
         """
@@ -36,15 +34,21 @@ class BasePage:
         :return:
         """
         for attempt in range(retries):
+            element = None
             try:
                 time.sleep(2)
-                element = self.driver(resourceId=resource_id)
+                if self.platform == 'android':
+                    element = self.driver(resourceId=resource_id)
+                elif self.platform == 'ios':
+                    element = self.driver(label=resource_id)
+
                 if not element.exists():
                     logger.error("该点击元素：%s 不存在", resource_id)
                     raise ValueError(f"该点击元素：{resource_id} 不存在")
 
                 element.click()
                 time.sleep(2)
+
                 if handle_alert.handle_alerts():
                     if is_click_again:
                         continue  # 如果is_click_again==True，则处理了权限弹窗后，重试点击操作
@@ -67,15 +71,21 @@ class BasePage:
         :return:
         """
         for attempt in range(retries):
+            element = None
             try:
                 time.sleep(2)
-                element = self.find_element_xpath(xpath_expression)
+                if self.platform == 'android':
+                    element = self.find_element_xpath(xpath_expression)
+                elif self.platform == 'ios':
+                    element = self.find_element_xpath(xpath_expression)
+
                 if not element.exists:
                     logger.error("该点击元素：%s 不存在", xpath_expression)
                     raise ValueError(f"该点击元素：{xpath_expression} 不存在")
 
                 element.click()
                 time.sleep(2)
+
                 if handle_alert.handle_alerts():
                     if is_click_again:
                         continue  # 如果is_click_again==True，则处理了权限弹窗后，重试点击操作
@@ -130,28 +140,34 @@ class BasePage:
         """
         self.driver.screenshot(file_path)
 
-    def take_screenshot(self, device_type="Android"):
+    def take_screenshot(self):
         """
         屏幕截图，主要提供给写用例时需要主动截图的步骤进行调用。
-        :param device_type: 设备类型，根据设备类型保存截图位置，默认Android
         :return:
         """
         screenshot_save_path = os.path.join(os.getcwd(), 'screenshot/android')
+        ios_screenshot_save_path = os.path.join(os.getcwd(), 'screenshot/iOS')
+
         # 确保保存目录存在
         if not os.path.exists(screenshot_save_path):
             os.makedirs(screenshot_save_path)
+        if not os.path.exists(ios_screenshot_save_path):
+            os.makedirs(ios_screenshot_save_path)
 
         # 获取当前时间并格式化为字符串
         timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
-        if device_type.lower() == 'android':
-            # 使用uiautomator2截图逻辑
+        if self.platform == 'android':
+            # 使用uiautomator2截图
             filename = f"{timestamp}-android.png"
             filepath = os.path.join(screenshot_save_path, filename)
             self.driver.screenshot(filepath)
             logger.info("Taking screenshot on Android device.")
-        elif device_type.lower() == 'ios':
-            # TODO: 处理iOS设备的截图
+        elif self.platform == 'ios':
+            # 处理iOS设备的截图
+            filename = f"{timestamp}-iOS.png"
+            filepath = os.path.join(ios_screenshot_save_path, filename)
+            self.driver.screenshot(filepath)
             print("Taking screenshot on iOS device.")
         else:
             raise ValueError("Unsupported device type. Please specify 'android' or 'ios'.")
@@ -163,15 +179,20 @@ class BasePage:
         :text： 要输入的文本内容
         :return:
         """
-        try:
-            self.driver.set_input_ime(True)
-            time.sleep(0.2)
-            self.driver.send_keys(text)
-            # for char in text:
-            #     os.system('adb shell input text {}'.format(text))
-            #     time.sleep(0.2)
-        except Exception as err:
-            logger.error(f"文本输入失败：{err}")
+        if self.platform == 'android':
+            try:
+                self.driver.set_input_ime(True)
+                time.sleep(0.2)
+                self.driver.send_keys(text)
+                # for char in text:
+                #     os.system('adb shell input text {}'.format(text))
+                #     time.sleep(0.2)
+            except Exception as err:
+                logger.error(f"文本输入失败：{err}")
+        else:
+            # TODO: wda的输入方法
+            logger.info("wda的输入方法，未完成···")
+            pass
 
     def input_text_clear(self):
         """

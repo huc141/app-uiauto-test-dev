@@ -4,9 +4,14 @@ from pages.base_page import BasePage
 class WelcomePage(BasePage):
     def __init__(self):
         super().__init__()
-        self.agree_term_button = "com.mcu.reolink:id/agree_term_button"
-        self.agree_continue_btn = "com.mcu.reolink:id/btn"
-        self.disagree_exit_btn = "com.mcu.reolink:id/cancel_button"
+        if self.platform == 'android':
+            self.agree_term_button = "com.mcu.reolink:id/agree_term_button"
+            self.agree_continue_btn = "com.mcu.reolink:id/btn"
+            self.disagree_exit_btn = "com.mcu.reolink:id/cancel_button"
+        elif self.platform == 'ios':
+            self.agree_term_button = "待定···"
+            self.agree_continue_btn = "待定···"
+            self.disagree_exit_btn = "待定···"
 
     def click_terms_conditions_icon(self):
         """

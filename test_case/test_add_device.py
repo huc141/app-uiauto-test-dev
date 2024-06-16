@@ -12,4 +12,3 @@ class TestAddDevice:
         add_device_page.click_manual_input()  # 点击“手动输入”按钮
         add_device_page.input_by_uid('952700Y005S613CC')  # 输入uid并点击下一步
         assert False
-
