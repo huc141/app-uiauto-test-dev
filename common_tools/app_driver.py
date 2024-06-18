@@ -1,10 +1,11 @@
 import uiautomator2 as u2
 import os
+import wda
 import subprocess
 from datetime import datetime
 from common_tools.logger import logger
 from common_tools.read_yaml import read_yaml
-from common_tools.screen_record import ScreenRecord, scr
+from common_tools.screen_record import scr
 # from appium import webdriver
 
 
@@ -14,6 +15,7 @@ class Driver:
         self._apk_name = apk_name
         self._apk_local_path = apk_local_path
         self._driver = None
+        self._platform = None
         self.record_proc = None
         self.v_name = None
 
@@ -21,25 +23,30 @@ class Driver:
         if self._driver:  # 如果已经初始化，则直接返回现有的驱动
             return self._driver
         while True:  # 创建一个无限循环，直到满足跳出条件
-            str1 = input("请输入数字选择：1 使用uiautomator2，2 使用appium: ")
-
-            # if str1.lower() == 'q':  # 添加退出选项，不区分大小写
-            #     print("程序已退出。你终止了测试。")
-            #     break  # 使用break语句跳出循环，结束程序
+            str1 = input("请输入数字选择：1 使用uiautomator2，2 使用Facebook-wda测试iOS: ")
 
             if str1 == "1":
                 print(f"你输入了：{str1}，现在启动uiautomator2")
                 logger.info("开始USB连接手机")
                 try:
                     self._driver = u2.connect_usb(self._device_sn)
+                    self._platform = 'android'
                     logger.info("连接成功")
                     return self._driver
                 except Exception as err:
                     logger.error("连接失败，原因为：{}".format(err))
                 break  # 输入有效，执行相应操作后退出循环
             elif str1 == "2":
-                print(f"你输入了：{str1}，现在启动appium")
-                break  # 输入有效，执行相应操作后退出循环
+                print(f"你输入了：{str1}，现在启动Facebook-wda")
+                logger.info("开始连接iOS设备")
+                try:
+                    self._driver = wda.Client('http://localhost:8100')  # 确保 WebDriverAgent 正在运行并监听该端口
+                    self._platform = 'ios'
+                    logger.info("连接成功")
+                    return self._driver
+                except Exception as err:
+                    logger.error("连接失败，原因为：{}".format(err))
+                break
             else:
                 print("无效输入，请按照指示重新输入！")  # 无效输入时提醒用户重新输入
 
@@ -47,6 +54,9 @@ class Driver:
         if not self._driver:
             self.init_driver()
         return self._driver
+
+    def get_platform(self):
+        return self._platform
 
     def __getattr__(self, item):
         """
@@ -56,8 +66,8 @@ class Driver:
         :param item:
         :return:
         """
-        logger.info("正在访问 Driver 实例的一个不存在的属性，自动调用 __getattr__ 方法")
         if not self._driver:
+            logger.info("正在访问 Driver 实例的一个不存在的属性，自动调用 __getattr__ 方法")
             self.init_driver()
         return getattr(self._driver, item)
 
@@ -67,12 +77,13 @@ class Driver:
         :param is_record: 开启或停止录屏
         :return:
         """
-        working_directory = os.path.abspath('../scrcpy_path')  # 获取scrcpy的路径，让cmd在scrcpy应用程序路径下执行
+        # working_directory = os.path.abspath('../scrcpy_path')
+        working_directory = os.path.join(os.getcwd(), 'scrcpy_path')  # 获取scrcpy的路径，让cmd在scrcpy应用程序路径下执行
         print("scrcpy的执行路径： " + working_directory)
         if is_record:
             timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
             self.v_name = f"{timestamp}.mp4"
-            screen_record_path = '../screen_record/'  # 录像的保存路径
+            screen_record_path = os.path.join(os.getcwd(), 'screen_record')  # 录像的保存路径
             cmd = f'scrcpy -m 1024 -r --no-audio --record {screen_record_path}/{self.v_name}'
             print("这是输出的录像执行命令： " + cmd)
             print("这是输出的录像保存路径：" + screen_record_path)
@@ -112,7 +123,10 @@ class Driver:
         停止app
         :return:
         """
-        self._driver.app_stop(self._apk_name)
+        if self._platform == 'android':
+            self._driver.app_stop(self._apk_name)
+        elif self._platform == 'ios':
+            self._driver.session().app_terminate(self._apk_name)
         logger.info("reolink app已停止运行")
 
     def start(self, is_record=False):
@@ -123,17 +137,25 @@ class Driver:
         try:
             if not self._driver:
                 self.init_driver()
+
             if self._driver:
-                # 先停止reolink app，再重新启动
-                self.stop()
+                self.stop()  # 先停止reolink app，再重新启动
                 logger.info("开始启动app···")
-                scr.take_screenrecord(is_record)  # 启动录屏
-                self._driver.app_start(self._apk_name)
-                all_paks = self._driver.app_list()  # 列出所有正在运行的APP，返回一个列表
-                running_app = self._driver.app_current()  # 获取当前打开的APP信息，返回一个字典
-                logger.info("app启动成功···")
-                logger.info("当前手机：%s 正在运行的app包名： %s" % (self._device_sn, running_app))
-                return all_paks, running_app
+                if self._platform == 'android':
+                    scr.take_screenrecord(is_record)  # 启动安卓录屏
+                    self._driver.app_start(self._apk_name)
+                    logger.info("安卓app启动成功···")
+                elif self._platform == 'ios':
+                    # TODO: 启动ios的录屏
+                    self._driver.session(self._apk_name)
+                    logger.info("iOS-app启动成功···")
+
+                if self._platform == 'android':
+                    all_paks = self._driver.app_list()  # 列出所有正在运行的APP，返回一个列表
+                    running_app = self._driver.app_current()  # 获取当前打开的APP信息，返回一个字典
+                    logger.info("当前手机：%s 正在运行的app包名： %s" % (self._device_sn, running_app))
+                    return all_paks, running_app
+
         except Exception as err:
             logger.error("APP启动失败，原因为：%s", err)
 

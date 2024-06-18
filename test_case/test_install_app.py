@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import time
-
 from common_tools.app_driver import driver
 import allure
 
@@ -18,9 +17,8 @@ class TestInstallApp:
         自动化用例编号：1001
         用例名称：验证安装app
         """
-        driver.start(True)
+        driver.start()
         driver.uninstall_app()  # 如果app存在则卸载app
         driver.install_app()  # 安装app
         time.sleep(5)
         driver.stop()
-        assert False

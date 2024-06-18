@@ -13,15 +13,18 @@ class TestWelcome:
         自动化用例编号：1001
         用例名称：验证安装卸载app
         """
+        driver.start()
         driver.init_driver()  # 连接手机
         driver.uninstall_app()  # 如果app存在则卸载app
         driver.install_app()  # 安装app
+        driver.stop()
 
     def test_disagree_terms(self):
         driver.start()
         welcome = WelcomePage()  # 初始化欢迎页的页面对象
         welcome.click_disagree_exit_btn()  # 点击【不同意并退出】按钮
         driver.clear_app_cache()  # 清除app缓存
+        driver.stop()
 
     def test_agree_terms(self):
         """
@@ -35,7 +38,6 @@ class TestWelcome:
         assertui.assert_clickable('com.mcu.reolink:id/btn', True)  # 断言点击勾选框后【同意并继续】按钮的可点击状态
         welcome.click_agree_continue_btn()  # 点击【同意并继续】按钮
         driver.stop()  # 停止app
-        driver.clear_app_cache()  # 清除app缓存
 
 
 """

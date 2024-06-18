@@ -5,28 +5,30 @@ from os.path import exists
 import pytest
 from common_tools.logger import logger
 
-# 定义allure的json临时文件目录路径
-path = './report_allure_temps'
+
+path = os.path.join(os.getcwd(), 'report_allure_temps')  # 定义allure的json临时文件目录路径
+reports_path = os.path.join(os.getcwd(), 'reports')  # 定义allure测试报告的保存路径
 
 
 class GenerateReports:
 
     @staticmethod
     def make_dir():
-        logger.info("开始创建report_allure_temps文件夹")
         if not exists(path):
             os.mkdir(path)
             logger.info("成功创建report_allure_temps文件夹")
         else:
-            print("report_allure_temps文件夹已存在")
+            logger.info("report_allure_temps文件夹已存在")
 
     @staticmethod
     def generate_report():
-        logger.info("正在生成allure-json文件，随后将自动生成测试报告，请在reports文件夹内查看")
-        time.sleep(3)  # 等待一段时间，确保所有JSON文件生成完成
+        logger.info("正在生成allure-json文件，测试报告生成后请在reports文件夹内查看")
+        # 等待一段时间，确保所有JSON文件生成完成
+        time.sleep(3)
         # pytest.main(["-s", "./test_case/test_add_device.py", "--capture=sys"])
         # 调用allure生成报告
-        os.system("allure generate ./report_allure_temps -o ./reports/{}.html --clean".format(time.strftime("%Y%m%d-%H%M%S")))
+        # os.system("allure generate ./report_allure_temps -o ./reports/{}.html --clean".format(time.strftime("%Y%m%d-%H%M%S")))
+        os.system(f"allure generate {path} -o {reports_path}/{time.strftime('%Y%m%d-%H%M%S')}.html --clean")
 
 
 # 运行pytest测试框架的主函数
