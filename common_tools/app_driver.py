@@ -22,7 +22,7 @@ class Driver:
     def init_driver(self):
         if self._driver:  # 如果已经初始化，则直接返回现有的驱动
             return self._driver
-        while True:  # 创建一个无限循环，直到满足跳出条件
+        while True:  # 选择测试安卓还是iOS
             str1 = input("请输入数字选择：1 使用uiautomator2，2 使用Facebook-wda测试iOS: ")
 
             if str1 == "1":
