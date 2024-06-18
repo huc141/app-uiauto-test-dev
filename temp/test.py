@@ -1,34 +1,26 @@
 # -*- coding: utf-8 -*-
 import os
+import time
 from os.path import exists
 
+from common_tools.app_driver import driver
 from common_tools.logger import logger
-
-path = '../screen_record/'
-
-abs_path = os.path.join(os.getcwd(), 'scrcpy_path')
-print("scrcpy的执行路径： " + abs_path)
+from pages.device_list_page import DeviceListPage
 
 
-v_name = "1111111.mp4"
-screen_record_path = os.path.join(os.getcwd(), 'screen_record')  # 录像的保存路径
-cmd = f'scrcpy -m 1024 -r --no-audio --record {screen_record_path}/{v_name}'
-print("这是输出的录像执行命令： " + cmd)
-print("这是输出的录像保存路径：" + screen_record_path)
+class TestAddDevice:
+    def test_add_device_by_uid(self):
+        driver.start()
+        device_list_page = DeviceListPage()  # 初始化设备列表对像
+        time.sleep(3)
+        device_list_page.click_by_xpath('//*[@resource-id="com.mcu.reolink:id/nav_menu_button"]')
+        device_list_page.click_by_xpath('//*[@resource-id="com.mcu.reolink:id/id_text_view"]')
+        time.sleep(6)
+        device_list_page.click_by_xpath('//android.widget.TextView[@text=""]')
+        time.sleep(3)
+        device_list_page.click_by_xpath('//android.widget.EditText')
+        time.sleep(3)
+        device_list_page.click_by_xpath('//android.widget.EditText[1]')
+        time.sleep(3)
+        device_list_page.input_text('1111')
 
-getcwd = os.getcwd()
-print(getcwd)
-
-
-v_name = '2020202.mp4'
-screen_record_path = os.path.join(os.getcwd(), 'screen_record')
-print("录像的保存路径: " + screen_record_path)
-
-cmd = f'scrcpy -m 1024 -r --no-audio --record {screen_record_path}\\{v_name}'
-
-print("cmd: " + cmd)
-
-
-# path2 = '../screen_record/'
-# content = os.listdir(abs_path)
-# print(content)
