@@ -11,42 +11,48 @@ from common_tools.screen_record import scr
 
 class Driver:
     def __init__(self, device_sn: str, apk_name: str = '', apk_local_path: str = read_yaml.config_apk_local_path):
-        self._device_sn = device_sn
-        self._apk_name = apk_name
-        self._apk_local_path = apk_local_path
+        self._device_sn = device_sn  # 手机序列号
+        self._apk_name = apk_name  # 被测包名
+        self._apk_local_path = apk_local_path  # apk包的所在路径
         self._driver = None
-        self._platform = None
-        self.record_proc = None
-        self.v_name = None
+        self._platform = None  # 被测平台：iOS/安卓
+        self.record_proc = None  # 录屏进程
+        self.v_name = None  # 录屏文件名
 
     def init_driver(self):
+        """
+        该方法用于初始化驱动，调用后会要求用户选择被测平台，根据被测平台启动不同的设备驱动
+        :return:
+        """
         if self._driver:  # 如果已经初始化，则直接返回现有的驱动
             return self._driver
-        while True:  # 选择测试安卓还是iOS
-            str1 = input("请输入数字选择：1 使用uiautomator2，2 使用Facebook-wda测试iOS: ")
 
-            if str1 == "1":
+        while True:
+            str1 = input("请输入数字选择：1 使用uiautomator2测试安卓，2 使用Facebook-wda测试iOS: ")  # 选择测试安卓还是iOS
+            if str1 == '1':
                 print(f"你输入了：{str1}，现在启动uiautomator2")
                 logger.info("开始USB连接手机")
                 try:
                     self._driver = u2.connect_usb(self._device_sn)
-                    self._platform = 'android'
-                    logger.info("连接成功")
+                    self._platform = "android"
+                    logger.info("安卓设备连接成功")
                     return self._driver
                 except Exception as err:
                     logger.error("连接失败，原因为：{}".format(err))
                 break  # 输入有效，执行相应操作后退出循环
-            elif str1 == "2":
+
+            elif str1 == '2':
                 print(f"你输入了：{str1}，现在启动Facebook-wda")
                 logger.info("开始连接iOS设备")
                 try:
                     self._driver = wda.Client('http://localhost:8100')  # 确保 WebDriverAgent 正在运行并监听该端口
-                    self._platform = 'ios'
-                    logger.info("连接成功")
+                    self._platform = "ios"
+                    logger.info("iOS设备连接成功")
                     return self._driver
                 except Exception as err:
                     logger.error("连接失败，原因为：{}".format(err))
                 break
+
             else:
                 print("无效输入，请按照指示重新输入！")  # 无效输入时提醒用户重新输入
 
@@ -77,7 +83,6 @@ class Driver:
         :param is_record: 开启或停止录屏
         :return:
         """
-        # working_directory = os.path.abspath('../scrcpy_path')
         working_directory = os.path.join(os.getcwd(), 'scrcpy_path')  # 获取scrcpy的路径，让cmd在scrcpy应用程序路径下执行
         print("scrcpy的执行路径： " + working_directory)
         if is_record:
@@ -85,8 +90,8 @@ class Driver:
             self.v_name = f"{timestamp}.mp4"
             screen_record_path = os.path.join(os.getcwd(), 'screen_record')  # 录像的保存路径
             cmd = f'scrcpy -m 1024 -r --no-audio --record {screen_record_path}/{self.v_name}'
-            print("这是输出的录像执行命令： " + cmd)
-            print("这是输出的录像保存路径：" + screen_record_path)
+            print("输出的录像执行命令： " + cmd)
+            print("输出的录像保存路径：" + screen_record_path)
             try:
                 logger.info("录屏开始···")
                 self.record_proc = subprocess.Popen(
