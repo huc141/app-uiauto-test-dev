@@ -130,9 +130,10 @@ class Driver:
         """
         if self._platform == 'android':
             self._driver.app_stop(self._apk_name)
+            logger.info(f"已停止APP：{self._apk_name}")
         elif self._platform == 'ios':
             self._driver.session().app_terminate(self._apk_name)
-        logger.info("reolink app已停止运行")
+        logger.info("app已停止运行")
 
     def start(self, is_record=False):
         """
