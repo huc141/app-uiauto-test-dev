@@ -5,9 +5,14 @@ from pages.base_page import BasePage
 class AddDevicePage(BasePage):
     def __init__(self):
         super().__init__()
-        self.manual_input_button = '//*[@resource-id="com.mcu.reolink:id/tv_input_uid_ip"]'
-        self.manual_input_uid = '//*[@resource-id="com.mcu.reolink:id/edit_text"]'
-        self.btn_next_step = '//*[@resource-id="com.mcu.reolink:id/btn_next"]'
+        if self.platform == 'android':
+            self.manual_input_button = '//*[@resource-id="com.mcu.reolink:id/tv_input_uid_ip"]'
+            self.manual_input_uid = '//*[@resource-id="com.mcu.reolink:id/edit_text"]'
+            self.btn_next_step = '//*[@resource-id="com.mcu.reolink:id/btn_next"]'
+        elif self.platform == 'ios':
+            self.manual_input_button = ''
+            self.manual_input_uid = ''
+            self.btn_next_step = ''
 
     def click_manual_input(self):
         """点击手动输入按钮"""

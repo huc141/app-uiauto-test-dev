@@ -1,7 +1,11 @@
 # 手机配置存放位置
-# 手机的识别码：39261FDJG0060S,VOA6AU89B6GAO7U4
-config_device_sn: 39261FDJG0060S
-# 被测app包名
-config_apk_name: com.mcu.reolink
+# 安卓测试手机的识别码：39261FDJG0060S,VOA6AU89B6GAO7U4, R5CX14WC3MV,
+# iPhone测试手机识别码：00008101-001E6C623ED0001E
+config_device_sn: 00008101-001E6C623ED0001E
+# 被测app包名：com.rnclient  com.mcu.reolink, com.reo.link
+config_apk_name: com.reo.link
 # 需要安装的app安装包存放位置
-apk_local_path: "D:\\app-uiauto-test-dev\\apk_pkgs\\Android-Reolink-P2PCN-4.45.0.3.20240508--release.apk"
+apk_local_path: "H:\\app-uiauto-test-dev\\apk_pkgs\\Android-Reolink-P2PCN-4.45.0.2.20240506--release.apk"
+
+# wda包名：
+wda_bundle_id: com.facebook.WebDriverAgentRunner.reo.xctrunner

@@ -1,3 +1,4 @@
+import time
 import uiautomator2 as u2
 import os
 import wda
@@ -17,7 +18,9 @@ class Driver:
         self._driver = None
         self._platform = None  # 被测平台：iOS/安卓
         self.record_proc = None  # 录屏进程
+        self._wda_process = None  # wda服务进程
         self.v_name = None  # 录屏文件名
+        self.wda_bundle_id = read_yaml.wda_bundle_id  # wda包名
 
     def init_driver(self):
         """
@@ -43,11 +46,24 @@ class Driver:
 
             elif str1 == '2':
                 print(f"你输入了：{str1}，现在启动Facebook-wda")
-                logger.info("开始连接iOS设备")
+                logger.info("开始使用tidevice启动WDA···")
                 try:
+                    self._wda_process = subprocess.Popen(
+                        ['tidevice', '-u', self._device_sn, 'wdaproxy', '-B', self.wda_bundle_id, '--port', '8100'],
+                        stdout=subprocess.PIPE,
+                        stderr=subprocess.PIPE
+                    )
+                    # os.system(f"tidevice -u {self._device_sn} wdaproxy -B {self.wda_bundle_id} --port 8100")
                     self._driver = wda.Client('http://localhost:8100')  # 确保 WebDriverAgent 正在运行并监听该端口
+                    time.sleep(6)  # 等待WDA服务启动
+                    status_info = self._driver.status()
+                    if "WebDriverAgent is ready to accept commands" in status_info.get("message", ""):
+                        print("WDA服务启动成功")
+                        logger.info("WDA服务启动成功")
+                    else:
+                        logger.error("WDA服务启动失败")
+                        print("WDA服务启动失败")
                     self._platform = "ios"
-                    logger.info("iOS设备连接成功")
                     return self._driver
                 except Exception as err:
                     logger.error("连接失败，原因为：{}".format(err))
@@ -63,6 +79,16 @@ class Driver:
 
     def get_platform(self):
         return self._platform
+
+    def _stop_wda(self):
+        """
+        停止wda服务
+        :return:
+        """
+        if self._wda_process:
+            self._wda_process.terminate()
+            self._wda_process.wait()
+            logger.info("WDA服务已停止")
 
     def __getattr__(self, item):
         """

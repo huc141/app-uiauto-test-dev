@@ -4,7 +4,7 @@ from common_tools.assert_ui import assertui
 import allure
 
 
-@allure.epic("项目：Android-Reolink-P2PCN-4.45.0.3.20240508")
+@allure.epic("项目：Reolink-P2PCN-4.45.0.3.20240508")
 @allure.feature("模块：APP欢迎页")
 class TestWelcome:
 
