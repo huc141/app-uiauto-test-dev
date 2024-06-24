@@ -6,21 +6,8 @@ from os.path import exists
 from common_tools.app_driver import driver
 from common_tools.logger import logger
 from pages.device_list_page import DeviceListPage
+import wda
 
-
-class TestAddDevice:
-    def test_add_device_by_uid(self):
-        driver.start()
-        device_list_page = DeviceListPage()  # 初始化设备列表对像
-        time.sleep(3)
-        device_list_page.click_by_xpath('//*[@resource-id="com.mcu.reolink:id/nav_menu_button"]')
-        device_list_page.click_by_xpath('//*[@resource-id="com.mcu.reolink:id/id_text_view"]')
-        time.sleep(6)
-        device_list_page.click_by_xpath('//android.widget.TextView[@text=""]')
-        time.sleep(3)
-        device_list_page.click_by_xpath('//android.widget.EditText')
-        time.sleep(3)
-        device_list_page.click_by_xpath('//android.widget.EditText[1]')
-        time.sleep(3)
-        device_list_page.input_text('1111')
-
+c = wda.Client('http://localhost:8100')  # 8100为启动WDA设置的端口号
+# c.app_current()  # 显示当前应用信息，主要用于获取bundleId，也可以使用tidevice ps 命令
+c.session().app_activate("com.apple.Preferences")  # 打开设置
