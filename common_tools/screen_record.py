@@ -34,17 +34,33 @@ class ScreenRecord:
             self.v_name = f"{timestamp}.mp4"
             screen_record_path = os.path.join(os.getcwd(), 'screen_record')  # 录像的保存路径
             cmd_start_record = f'scrcpy -m 1024 -r --no-audio --record {screen_record_path}\\{self.v_name}'
-            print("这是输出的录像执行命令： " + cmd_start_record)
+            cmd_start_ios_record = f't3 screenrecord {screen_record_path}\\{self.v_name}'
             print("这是输出的录像保存路径：" + screen_record_path)
 
             try:
+                from common_tools.app_driver import driver  # 延迟导入，消除循环导入driver
+                platform = driver.get_platform()
                 logger.info("录屏开始···")
-                self.record_proc = subprocess.Popen(
-                                                cmd_start_record, cwd=working_directory,
-                                                creationflags=subprocess.CREATE_NEW_CONSOLE,
-                                                shell=True
-                                            )
-                logger.info("录屏进程启动")
+
+                if platform == 'android':
+                    self.record_proc = subprocess.Popen(
+                        cmd_start_record, cwd=working_directory,
+                        creationflags=subprocess.CREATE_NEW_CONSOLE,
+                        shell=True
+                    )
+                    print("这是输出的安卓录像执行命令： " + cmd_start_record)
+                    logger.info("这是输出的安卓录像执行命令： " + cmd_start_record)
+
+                elif platform == 'ios':
+                    self.record_proc = subprocess.Popen(
+                        cmd_start_ios_record,
+                        creationflags=subprocess.CREATE_NEW_CONSOLE,
+                        shell=True
+                    )
+                    print("这是输出的iOS录像执行命令： " + cmd_start_ios_record)
+                    logger.info("这是输出的iOS录像执行命令： " + cmd_start_ios_record)
+                logger.info("录屏进程已启动")
+
                 # 将 v_name 写入共享文件
                 with open("shared_v_name.txt", "w") as f:
                     f.write(self.v_name)
