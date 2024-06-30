@@ -32,7 +32,6 @@ class HandleAlerts:
             elif self.platform == 'ios':
                 session = self.driver.session()
                 for button in ios_alert_buttons:
-                    # TODO: 未完成
                     if session(label=button).exists:
                         print(f"识别到iOS相关弹窗按钮: {button}")
                         time.sleep(2)
