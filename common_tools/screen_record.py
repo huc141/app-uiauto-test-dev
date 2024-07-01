@@ -27,7 +27,7 @@ class ScreenRecord:
         :return:
         """
         working_directory = os.path.join(os.getcwd(), 'scrcpy_path')  # 获取scrcpy的路径，让cmd在scrcpy应用程序路径下执行
-        print("scrcpy的执行路径： " + working_directory)
+        logger.info("scrcpy的执行路径： " + working_directory)
 
         if is_record:
             timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
@@ -35,11 +35,11 @@ class ScreenRecord:
             screen_record_path = os.path.join(os.getcwd(), 'screen_record')  # 录像的保存路径
             cmd_start_record = f'scrcpy -m 1024 -r --no-audio --record {screen_record_path}\\{self.v_name}'
             cmd_start_ios_record = f't3 screenrecord {screen_record_path}\\{self.v_name}'
-            print("这是输出的录像保存路径：" + screen_record_path)
+            logger.info("这是输出的录像保存路径：" + screen_record_path)
 
             try:
-                from common_tools.app_driver import driver  # 延迟导入，消除循环导入driver
-                platform = driver.get_platform()
+                from common_tools.app_driver import driver  # 延迟导入，消除循环导入driver产生报错
+                platform = driver.get_platform()  # 获取当前被测系统(iOS/Android/web)
                 logger.info("录屏开始···")
 
                 if platform == 'android':
@@ -48,8 +48,7 @@ class ScreenRecord:
                         creationflags=subprocess.CREATE_NEW_CONSOLE,
                         shell=True
                     )
-                    print("这是输出的安卓录像执行命令： " + cmd_start_record)
-                    logger.info("这是输出的安卓录像执行命令： " + cmd_start_record)
+                    logger.info("输出安卓录像执行命令： " + cmd_start_record)
 
                 elif platform == 'ios':
                     self.record_proc = subprocess.Popen(
@@ -57,13 +56,13 @@ class ScreenRecord:
                         creationflags=subprocess.CREATE_NEW_CONSOLE,
                         shell=True
                     )
-                    print("这是输出的iOS录像执行命令： " + cmd_start_ios_record)
-                    logger.info("这是输出的iOS录像执行命令： " + cmd_start_ios_record)
+                    logger.info("输出iOS录像执行命令： " + cmd_start_ios_record)
                 logger.info("录屏进程已启动")
 
                 # 将 v_name 写入共享文件
                 with open("shared_v_name.txt", "w") as f:
                     f.write(self.v_name)
+
             except Exception as err:
                 logger.error("录屏失败，原因可能是：{}".format(err))
                 raise err
@@ -73,8 +72,8 @@ class ScreenRecord:
                     if self.record_proc.poll() is None:
                         console_ctrl.send_ctrl_c(self.record_proc.pid)
                         self.record_proc.wait(timeout=10)  # 等待子进程结束
-                        logger.info("录屏结束···")
                         test_name = self.read_shared_v_name()
+                        logger.info("录屏结束···")
                         return test_name
                 except subprocess.TimeoutExpired:
                     self.record_proc.kill()

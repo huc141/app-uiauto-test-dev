@@ -51,18 +51,16 @@ class Driver:
                         stdout=subprocess.PIPE,
                         stderr=subprocess.PIPE
                     )
-                    # os.system(f"tidevice -u {self._device_sn} wdaproxy -B {self.wda_bundle_id} --port 8100")
                     self._driver = wda.Client('http://localhost:8100')  # 确保 WebDriverAgent 正在运行并监听该端口
+                    logger.info("等待WDA服务启动···")
                     time.sleep(6)  # 等待WDA服务启动
 
                     logger.info("正在获取WDA服务启动状态···")
                     status_info = self._driver.status()
                     if "WebDriverAgent is ready to accept commands" in status_info.get("message", ""):
-                        print("WDA服务启动成功")
                         logger.info("WDA服务启动成功")
                     else:
                         logger.error("WDA服务启动失败")
-                        print("WDA服务启动失败")
                     self._platform = "ios"
                     return self._driver
                 except Exception as err:
@@ -169,17 +167,9 @@ class Driver:
                     self._driver.app_start(self._apk_name)
                     logger.info("安卓app启动成功···")
                 elif self._platform == 'ios':
-                    # TODO: 启动ios的录屏
-                    scr.take_screenrecord(is_record)
+                    scr.take_screenrecord(is_record)  # 启动ios的录屏
                     self._driver.session().app_activate(self._apk_name)
                     logger.info("iOS-app启动成功···")
-
-                if self._platform == 'android':
-                    all_paks = self._driver.app_list()  # 列出所有正在运行的APP，返回一个列表
-                    running_app = self._driver.app_current()  # 获取当前打开的APP信息，返回一个字典
-                    logger.info("当前手机：%s 正在运行的app包名： %s" % (self._device_sn, running_app))
-                    return all_paks, running_app
-
         except Exception as err:
             logger.error("APP启动失败，原因为：%s", err)
 
@@ -190,9 +180,13 @@ class Driver:
         """
         try:
             if self._driver:
-                app_info = self._driver.app_info(self._apk_name)
-                logger.info("app信息获取成功···")
-                return app_info
+                if self._platform == 'android':
+                    app_info = self._driver.app_info(self._apk_name)
+                    logger.info("app信息获取成功···")
+                    return app_info
+                elif self._platform == 'ios':
+                    app_info = self._driver.app_current()
+                    return app_info
         except Exception as err:
             logger.error("APP信息获取失败，原因为：%s", err)
 

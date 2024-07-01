@@ -19,12 +19,11 @@ class ReadYaml:
                 self.__raw_data[fname.split('.')[0]] = yaml.safe_load(stream)  # 获取文件名的前缀如case.yml中的case，作为__raw_data字典的键，值是从 YAML 文件加载得到的数据.
                 # safe_load是 PyYAML 库的函数，用于从打开的 YAML 文件流中加载数据。这里的 stream 是 open 函数返回的文件对象。
                 # yaml.safe_load 会将 YAML 格式的数据解析成 Python 对象，比如字典或列表。
-        # print(self.__raw_data)
 
-        self.config_device_sn = self.get_data('config_device_sn', '')
-        self.config_apk_name = self.get_data('config_apk_name', '')
-        self.config_apk_local_path = self.get_data('apk_local_path')
-        self.wda_bundle_id = self.get_data('wda_bundle_id')
+        self.config_device_sn = self.get_data('config_device_sn', '')  # 获取手机序列号
+        self.config_apk_name = self.get_data('config_apk_name', '')  # 获取安装包名称
+        self.config_apk_local_path = self.get_data('apk_local_path')  # 获取安装包的本地地址
+        self.wda_bundle_id = self.get_data('wda_bundle_id')  # 获取wda安装包名称
 
     def get_data(self, key: str, default: str = '', source: str = 'phone') -> str:
         """Get specific config"""
