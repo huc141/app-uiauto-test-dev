@@ -8,7 +8,7 @@ import pytest
 from common_tools.app_driver import driver
 from common_tools.screen_record import scr
 
-d2 = driver.get_actual_driver()
+d2 = driver.get_actual_driver()  # 获取安卓/ios驱动
 gr = GenerateReports()
 
 
@@ -23,7 +23,7 @@ def pytest_runtest_makereport(item, call):
         if report.failed or report.passed:
             test_name = item.name
 
-            img = d2.screenshot()  # 失败自动截图
+            img = d2.screenshot()  # 失败自动截图(ios/安卓的截图调用的方法名称相同，由返回的d2驱动来控制)
             img_byte_arr = BytesIO()  # 将Image对象转换为字节流
             img.save(img_byte_arr, format='PNG')  # 将截图保存到BytesIO对象中，格式为PNG
             img_byte_arr = img_byte_arr.getvalue()  # 将截图保存到BytesIO对象中，格式为PNG

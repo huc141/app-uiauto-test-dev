@@ -132,14 +132,6 @@ class BasePage:
         logger.error(f"获取Toast失败，返回默认消息：'{default}'")
         return default
 
-    def auto_screenshot(self, file_path):
-        """
-        用例失败后自动截图，这个方法为临时方法，后面可能会取消掉
-        :param file_path: 截图文件的保存路径
-        :return:
-        """
-        self.driver.screenshot(file_path)
-
     def take_screenshot(self):
         """
         屏幕截图，主要提供给写用例时需要主动截图的步骤进行调用。
@@ -179,24 +171,41 @@ class BasePage:
         :text： 要输入的文本内容
         :return:
         """
-        if self.platform == 'android':
-            try:
+        try:
+            if self.platform == 'android':
                 self.driver.set_input_ime(True)
                 time.sleep(0.2)
                 self.driver.send_keys(text)
                 # for char in text:
                 #     os.system('adb shell input text {}'.format(text))
                 #     time.sleep(0.2)
-            except Exception as err:
-                logger.error(f"文本输入失败：{err}")
-        else:
-            # TODO: wda的输入方法
-            logger.info("wda的输入方法，未完成···")
-            pass
+            elif self.platform == 'ios':
+                # TODO: wda的输入方法
+                self.driver.set_text(text)
+                logger.info("wda的输入方法，未完成···")
+        except Exception as err:
+            logger.error(f"内容 {err} 输入失败···")
 
-    def input_text_clear(self):
+    def input_text_clear(self, text):
         """
         清空文本框内容并输入。
         :return:
         """
-        pass
+        try:
+            if self.platform == 'android':
+                self.driver.set_input_ime(True)
+                time.sleep(0.2)
+                self.driver.clear_text()
+                time.sleep(1)
+                self.driver.send_keys(text)
+                # for char in text:
+                #     os.system('adb shell input text {}'.format(text))
+                #     time.sleep(0.2)
+            elif self.platform == 'ios':
+                # TODO: wda的输入方法
+                self.driver.clear_text()
+                time.sleep(1)
+                self.driver.set_text(text)
+                logger.info("wda的输入方法，未完成···")
+        except Exception as err:
+            logger.error(f"内容 {err} 输入失败···")
