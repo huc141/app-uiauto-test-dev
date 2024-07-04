@@ -15,9 +15,36 @@ class BasePage:
         self.driver = driver.get_actual_driver()
         self.platform = driver.get_platform()
 
+    def is_element_exists(self, selector_type, element_value):
+        try:
+            if self.platform == 'android':
+                if selector_type == "text":
+                    return self.driver(text=element_value).exists(timeout=3)
+                elif selector_type == "resourceId":
+                    return self.driver(resourceId=element_value).exists(timeout=3)
+                elif selector_type == "xpath":
+                    return self.driver.xpath(element_value).exists(timeout=3)
+                else:
+                    raise ValueError("你可能输入了不支持的 selector type.")
+            elif self.platform == 'ios':
+                if selector_type == "text":
+                    # TODO: 待完成
+                    pass
+                elif selector_type == "resourceId":
+                    # TODO: 待完成
+                    pass
+                elif selector_type == "xpath":
+                    # TODO: 待完成
+                    pass
+                else:
+                    raise ValueError("你可能输入了不支持的 selector type.")
+        except Exception as err:
+            logger.error(f"元素未找到 {selector_type}: {element_value}. Error: {err}")
+            return False
+
     def find_element_xpath(self, xpath_expression):
         """
-        通过xpath找元素
+        通过xpath定位元素
         :param xpath_expression: xpath表达式
         :return: 元素对象
         """
