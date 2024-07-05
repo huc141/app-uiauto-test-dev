@@ -18,7 +18,9 @@ class AddDevicePage(BasePage):
             self.btn_next_step = '//*[@resource-id="com.mcu.reolink:id/btn_next"]'  # 按钮：下一步
 
             self.device_usage_method = '//*[@resource-id="com.mcu.reolink:id/tvTitle"]'  # 页面标题：选择设备的使用方式
-            self.device_network_access_Method = ''  # 页面标题：选择设备接入网络的方式
+
+            self.device_network_access_Method = '//*[@resource-id="com.mcu.reolink:id/tvTitle"]'  # 页面标题：选择网络接入方式
+            self.device_wifi_setted = ''
 
         elif self.platform == 'ios':
             self.manual_input_button = ''
@@ -61,11 +63,19 @@ class AddDevicePage(BasePage):
         判断页面是【选择设备的使用方式】 or 【选择网络接入方式】
         :return: bool
         """
-        # TODO: 待确定要不要专门写一个方法来判断是不是这两个页面，还是直接调用is_element_exists()
-        return self.is_element_exists("xpath", self.device_usage_method)
+        if self.is_element_exists("xpath", self.device_network_access_Method):
+            # 点击已配置wifi
+            pass
+        if self.is_element_exists("xpath", self.device_usage_method):
+            pass
 
     def click_manual_input(self, method='uid', identifier=None):
-        """点击手动输入按钮,并选择以何种方式添加设备，并自动输入uid/ip/授权链接，然后点击下一步"""
+        """
+        点击手动输入按钮,并选择以何种方式添加设备，并自动输入uid/ip/授权链接，然后点击下一步
+        :param method: 配网方式：uid、ip、授权链接
+        :param identifier: 对应的uid、ip、授权链接
+        :return:
+        """
         if method.lower() == "uid":
             self.input_by_uid(identifier)
         elif method.lower() == "ip":
