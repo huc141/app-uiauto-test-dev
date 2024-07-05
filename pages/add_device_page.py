@@ -18,9 +18,10 @@ class AddDevicePage(BasePage):
             self.btn_next_step = '//*[@resource-id="com.mcu.reolink:id/btn_next"]'  # 按钮：下一步
 
             self.device_usage_method = '//*[@resource-id="com.mcu.reolink:id/tvTitle"]'  # 页面标题：选择设备的使用方式
+            self.device_stand_alone_use = '//*[@resource-id="com.mcu.reolink:id/clSelf"]'  # 按钮：单机使用
 
             self.device_network_access_Method = '//*[@resource-id="com.mcu.reolink:id/tvTitle"]'  # 页面标题：选择网络接入方式
-            self.device_wifi_setted = ''
+            self.device_wifi_setted = '//*[@resource-id="com.mcu.reolink:id/llAlreadyConnectCard"]'  # 按钮：已配置wifi
 
         elif self.platform == 'ios':
             self.manual_input_button = ''
@@ -63,11 +64,14 @@ class AddDevicePage(BasePage):
         判断页面是【选择设备的使用方式】 or 【选择网络接入方式】
         :return: bool
         """
+        # 判断是否为【选择网络接入方式】页面
         if self.is_element_exists("xpath", self.device_network_access_Method):
             # 点击已配置wifi
-            pass
+            self.click_by_xpath(self.device_wifi_setted)
+
         if self.is_element_exists("xpath", self.device_usage_method):
-            pass
+            # 点击单机使用
+            self.click_by_xpath(self.device_stand_alone_use)
 
     def click_manual_input(self, method='uid', identifier=None):
         """
