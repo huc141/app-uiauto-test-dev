@@ -63,7 +63,7 @@ class BasePage:
         for attempt in range(retries):
             element = None
             try:
-                time.sleep(2)
+                time.sleep(1)
                 if self.platform == 'android':
                     element = self.driver(resourceId=resource_id)
                 elif self.platform == 'ios':
