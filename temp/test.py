@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-import sys
-from typing import Iterable
+import pytest
 import yaml
 import os
 
@@ -14,8 +13,10 @@ class ReadYaml:
         for fname in os.listdir(p):  # 该函数会返回一个包含指定目录下所有文件和子目录名称的列表。
             if fname.split('.')[-1] not in ['yml', 'yaml']:  # [-1]：这表示获取列表的最后一个元素，即文件扩展名。对于 'example.yml'，它会得到 'yml'。
                 continue
-            with open(file=os.path.join(p, fname), encoding='utf-8') as stream:  # 打开file文件，as stream：将打开的文件对象赋值给名为 stream 的变量
-                self.__raw_data[fname.split('.')[0]] = yaml.safe_load(stream)  # 获取文件名的前缀如case.yml中的case，作为__raw_data字典的键，值是从 YAML 文件加载得到的数据.
+            with open(file=os.path.join(p, fname),
+                      encoding='utf-8') as stream:  # 打开file文件，as stream：将打开的文件对象赋值给名为 stream 的变量
+                self.__raw_data[fname.split('.')[0]] = yaml.safe_load(
+                    stream)  # 获取文件名的前缀如case.yml中的case，作为__raw_data字典的键，值是从 YAML 文件加载得到的数据.
 
         self.config_device_sn = self.get_data('config_device_sn', '')  # 获取手机序列号
         self.config_apk_name = self.get_data('config_apk_name', '')  # 获取安装包名称
@@ -31,11 +32,39 @@ class ReadYaml:
         else:
             return default
 
-    def load_uids(self, uid_file_path: str):
+    def load_uids(self, uid_file_path='D:\\app-uiauto-test-dev\\config\\uids.yaml'):
         with open(uid_file_path, 'r') as file:
             data = yaml.safe_load(file)
-        return data.get('uids', [])
+            print(data.get('uids', {}))
+        return data.get('uids', {})
 
 
 read_yaml = ReadYaml()
 read_yaml.__init__()
+print("---------分割线---------------")
+data = read_yaml.load_uids()
+
+
+# @pytest.mark.parametrize("config", data.items())
+# def test_add_device_by_uid(config):
+#     driver.start(True)
+#     device_list_page = DeviceListPage()  # 初始化设备列表对像
+#     device_list_page.click_add_device_button()  # 点击设备列表右上角的添加按钮
+#     add_device_page = AddDevicePage()  # 初始化添加设备页面的对象
+#     add_device_page.click_manual_input(config['method'],
+#                                        config['identifier'],
+#                                        config['is_stand_alone'],
+#                                        config['is_net'],
+#                                        config['account'],
+#                                        config['passwd'])
+
+
+@pytest.mark.parametrize("config", data.items())
+def ttt(config):
+    print(config['method'],
+          config['identifier'],
+          config['is_stand_alone'],
+          config['is_net'],
+          config['account'],
+          config['passwd'])
+
