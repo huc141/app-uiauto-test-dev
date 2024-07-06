@@ -1,11 +1,8 @@
 uids:
-  - "uid1"
-  - "uid2"
-  - "uid3"
-  - "uid4"
-  - "uid5"
-  - "uid6"
-  - "uid7"
-  - "uid8"
-  - "uid9"
-  - "uid10"
+  uid1:
+    method: "uid"
+    identifier: "952700Y006TG1NQO"
+    is_stand_alone: True
+    is_net: True
+    account: "admin"
+    passwd: "reolink123"
