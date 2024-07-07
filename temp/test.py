@@ -3,6 +3,8 @@ import pytest
 import yaml
 import os
 
+from common_tools.logger import logger
+
 
 class ReadYaml:
     __raw_data = dict()
@@ -22,7 +24,7 @@ class ReadYaml:
         self.config_apk_name = self.get_data('config_apk_name', '')  # 获取安装包名称
         self.config_apk_local_path = self.get_data('apk_local_path')  # 获取安装包的本地地址
         self.wda_bundle_id = self.get_data('wda_bundle_id')  # 获取wda安装包名称
-        self.uids_file_list = self.get_data('uids', source='uids')  # 获取uid列表
+        self.uids_file_list = self.get_data('uids', source='uids')  # 获取uid
         print("---------------")
         print(self.uids_file_list)
 
@@ -32,7 +34,7 @@ class ReadYaml:
         else:
             return default
 
-    def load_uids(self, uid_file_path='D:\\app-uiauto-test-dev\\config\\uids.yaml'):
+    def load_uids(self, uid_file_path='H:\\app-uiauto-test-dev\\config\\uids.yaml'):
         with open(uid_file_path, 'r') as file:
             data = yaml.safe_load(file)
             print(data.get('uids', {}))
@@ -42,7 +44,17 @@ class ReadYaml:
 read_yaml = ReadYaml()
 read_yaml.__init__()
 print("---------分割线---------------")
-data = read_yaml.load_uids()
+uids_config = read_yaml.load_uids()
+
+
+@pytest.mark.parametrize("uid_config", uids_config.values(), ids=uids_config.keys())
+def ttt(uid_config):
+    print(uid_config['method'],
+          uid_config['identifier'],
+          uid_config['is_stand_alone'],
+          uid_config['is_net'],
+          uid_config['account'],
+          uid_config['passwd'])
 
 
 # @pytest.mark.parametrize("config", data.items())
@@ -59,12 +71,87 @@ data = read_yaml.load_uids()
 #                                        config['passwd'])
 
 
-@pytest.mark.parametrize("config", data.items())
-def ttt(config):
-    print(config['method'],
-          config['identifier'],
-          config['is_stand_alone'],
-          config['is_net'],
-          config['account'],
-          config['passwd'])
+def identify_page_type(self,
+                       is_stand_alone: bool = True,
+                       is_net: bool = True,
+                       account: str = 'admin',
+                       passwd: str = 'reolink123'):
+    """
+    判断页面是【选择设备的使用方式】 or 【选择网络接入方式】 or 【访问设备】的登录页
+    :param passwd: 登录密码
+    :param account: 设备登录账号
+    :param is_stand_alone: 是否单机使用。默认为是.
+    :param is_net: 是否网线接入，默认为是。
+    :return: 页面类型
+    """
+    try:
+        # 字典映射页面元素到处理方法
+        page_handlers = {
+            self.access_device_title: self._handle_access_device_login,
+            self.device_network_access_method_title: self._handle_network_access_method,
+            self.device_usage_method_title: self._handle_device_usage_method,
+            self.net_connection_example_title: self._handle_net_example
+        }
 
+        # 遍历字典，识别当前页面并调用相应的处理方法
+        for title, handler in page_handlers.items():
+            if self.is_element_exists('xpath', title):
+                logger.info(f"当前页面为【{title}】")
+                return handler(is_stand_alone, is_net, account, passwd)
+
+        logger.warning("未能识别当前页面类型")
+        return "unknown_page"
+
+    except Exception as e:
+        logger.error(f"识别页面类型时发生错误: {e}")
+        return "error"
+
+
+def _handle_device_usage_method(self, is_stand_alone, is_net, account, passwd):
+    """
+    处理选择设备使用方式页面的逻辑
+    :param is_stand_alone: 是否单机使用
+    :param is_net: 是否网线接入
+    """
+    if is_stand_alone:
+        self.click_device_stand_alone_use()
+    else:
+        self.click_device_connect_to_hub()
+    return self.identify_page_type(is_stand_alone, is_net, account, passwd)
+
+
+def _handle_network_access_method(self, is_stand_alone, is_net, account, passwd):
+    """
+    处理选择网络接入方式页面的逻辑
+    :param is_net: 是否网线接入
+    """
+    if is_net:
+        self.click_device_wire_connection()
+    else:
+        self.click_device_wifi_setted()
+    return self.identify_page_type(is_stand_alone, is_net, account, passwd)
+
+
+def _handle_net_example(self, *args):
+    """
+    处理选择网线接入后的示意图页面，点击下一步或者访问摄像机按钮
+    :param self:
+    :return:
+    """
+    page_example_btns = ["访问摄像机", "下一步"]
+    for btns in page_example_btns:
+        if self.is_element_exists('text', btns):
+            self.click_by_xpath(self.manual_input_button)
+        else:
+            logger.error("没有识别到这两个按钮")
+    return self.identify_page_type()
+
+
+def _handle_access_device_login(self, account, passwd, *args):
+    """
+    处理访问设备登录页的逻辑
+    :param account: 设备登录账号
+    :param passwd: 登录密码
+    """
+    self.access_device(account, passwd)
+    return "access_device_login"
