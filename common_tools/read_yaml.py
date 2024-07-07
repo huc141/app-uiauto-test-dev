@@ -35,7 +35,7 @@ class ReadYaml:
         else:
             return default
 
-    def load_uids(self, uid_file_path: str):
+    def load_uids(self, uid_file_path='H:\\app-uiauto-test-dev\\config\\uids.yaml'):
         with open(uid_file_path, 'r') as file:
             data = yaml.safe_load(file)
         return data.get('uids', [])
