@@ -1,8 +1,22 @@
 uids:
   uid1:
     method: "uid"
+    identifier: "952700Y006ZP1IJ5"
+    is_stand_alone: True
+    is_net: False
+    account: "admin"
+    passwd: "reolink123"
+  uid2:
+    method: "uid"
     identifier: "952700Y006TG1NQO"
     is_stand_alone: True
     is_net: True
+    account: "admin"
+    passwd: "reolink123"
+  uid3:
+    method: "uid"
+    identifier: "952700Y0061K137Z"
+    is_stand_alone: True
+    is_net: False
     account: "admin"
     passwd: "reolink123"
