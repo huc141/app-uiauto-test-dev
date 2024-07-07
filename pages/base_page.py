@@ -19,11 +19,11 @@ class BasePage:
         try:
             if self.platform == 'android':
                 if selector_type == "text":
-                    return self.driver(text=element_value).exists(timeout=3)
+                    return self.driver(text=element_value).exists
                 elif selector_type == "resourceId":
-                    return self.driver(resourceId=element_value).exists(timeout=3)
+                    return self.driver(resourceId=element_value).exists
                 elif selector_type == "xpath":
-                    return self.driver.xpath(element_value).exists(timeout=3)
+                    return self.driver.xpath(element_value).exists
                 else:
                     raise ValueError("你可能输入了不支持的 selector type.")
             elif self.platform == 'ios':
@@ -52,6 +52,43 @@ class BasePage:
             return self.driver.xpath(xpath_expression)
         elif self.platform == 'ios':
             return self.driver(xpath=xpath_expression)
+
+    def click_by_text(self, text, retries=2, is_click_again: Literal[True, False] = False):
+        """
+                :param text: 通过id定位单个元素，并进行点击。
+                :param retries: 如果遇到权限弹窗，会自动处理, 如果处理了弹窗，则通过is_click_again参数来判断是否重新尝试点击resource_id元素.
+                :param is_click_again: 接收布尔值，默认为False，代表处理了弹窗之后，不会尝试再次点击resource_id元素；若为True，则处理弹窗之后，再次重新点击resource_id元素
+                :return:
+                """
+        for attempt in range(retries):
+            element = None
+            try:
+                time.sleep(1)
+                if self.platform == 'android':
+                    element = self.driver(text=text)
+                elif self.platform == 'ios':
+                    element = self.driver(label=text)
+
+                if not element.exists():
+                    logger.error("该点击元素：%s 不存在", text)
+                    raise ValueError(f"该点击元素：{text} 不存在")
+
+                element.click()
+                time.sleep(2)
+
+                if handle_alert.handle_alerts():
+                    if is_click_again:
+                        continue  # 如果is_click_again==True，则处理了权限弹窗后，重试点击操作
+                    else:
+                        return True  # 如果is_click_again==False，则处理了权限弹窗后，不重试点击。
+                return True
+            except ValueError as verr:  # 专门捕获并处理 ValueError 异常，可以在此处添加特定的处理逻辑。
+                logger.error("ValueError: %s", verr)
+                raise
+            except Exception as err:  # 捕获并处理所有其他类型的异常，确保程序不会因为未处理的异常而崩溃。
+                logger.error("页面中没有找到id为 %s 的元素，原因可能是：%s", text, err)
+                raise
+        return False
 
     def click_by_id(self, resource_id, retries=2, is_click_again: Literal[True, False] = False):
         """
