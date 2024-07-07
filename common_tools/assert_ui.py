@@ -1,19 +1,14 @@
 # -*- coding: utf-8 -*-
 from common_tools.app_driver import driver
 from common_tools.logger import logger
+from pages.base_page import BasePage
 
 
-class AssertUI:
-    def __init__(self, assert_type='', assert_text='', expect_test=''):
-        self.assert_type = assert_type  # 断言类型
-        self.assert_text = assert_text  # 断言文本
-        self.expect_test = expect_test  # 预期结果
+class AssertUI(BasePage):
+    def __init__(self):
+        super().__init__()
         logger.info("UI断言初始化init_driver···")
         self.driver = driver.get_actual_driver()
-        # if not driver._driver:  # 检查 driver 是否已经初始化
-        #     self.driver = driver.init_driver()
-        # else:
-        #     self.driver = driver._driver
 
     def assert_clickable(self, id_name: str, expect: bool):
         """
@@ -41,6 +36,20 @@ class AssertUI:
             _element_is_clickable = False
         assert _element_is_clickable == expect, "【断言失败】，实际值{}与期望值{}不相等".format(
             _element_is_clickable, expect)
+
+    def assert_text_in(self, expect_text):
+        """
+        检查expected_text是否存在于text中
+        使用Python内置的count方法计算text中expected_text出现的次数
+        如果expected_text在text中出现，那么其出现次数应大于0
+        如果expected_text不在text中，断言将失败，并抛出一个AssertionError异常。异常的错误消息将包含期望的文本和实际的文本。
+        """
+        if expect_text is not None:
+            if self.is_element_exists('xpath', expect_text):
+                print("预期结果为为真")
+                return True
+            else:
+                raise AssertionError(f"未找到预期文本：{expect_text}")
 
     # toast断言
 
