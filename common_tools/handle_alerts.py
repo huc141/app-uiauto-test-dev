@@ -17,7 +17,7 @@ class HandleAlerts:
         定义并处理安卓/iOS常见弹窗
         """
         alert_buttons = [
-            'com.android.permissioncontroller:id/permission_allow_foreground_only_button'  # 系统权限弹窗：仅在使用该应用时允许
+            'com.android.permissioncontroller:id/permission_allow_foreground_only_button'  # 安卓系统权限弹窗：仅在使用该应用时允许
         ]
         ios_alert_buttons = [
             "使用App时允许", "好", "稍后", "稍后提醒", "确定", "允许", "以后"
@@ -34,7 +34,7 @@ class HandleAlerts:
                 for button in ios_alert_buttons:
                     if session(label=button).exists:
                         print(f"识别到iOS相关弹窗按钮: {button}")
-                        time.sleep(2)
+                        time.sleep(1)
                         session(label=button).tap()
                         logger.info(f"点击权限弹窗按钮: {button}")
                         return True
