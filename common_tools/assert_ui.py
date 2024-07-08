@@ -21,7 +21,7 @@ class AssertUI(BasePage):
             logger.error("self.driver不存在")
             return
 
-        if not self.driver(resourceId=id_name).exists():  # 验证该元素是否存在
+        if not self.driver(resourceId=id_name).exists:  # 验证该元素是否存在
             logger.error('需要点击的UI元素: %s, 不存在', id_name)
             assert False, f"元素 {id_name} 不存在"
 
