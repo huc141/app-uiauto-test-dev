@@ -16,50 +16,56 @@ class BasePage:
         self.platform = driver.get_platform()
 
     def is_element_exists(self, selector_type, element_value):
+        """
+        判断元素是否存在
+        :param selector_type: 安卓支持：text文本、id、xpath定位；iOS支持text(label)文本、id、xpath定位
+        :param element_value: 对应的文本、id、xpath值
+        :return: bool
+        """
         try:
-            if self.platform == 'android':
+            if self.platform == "android":
                 if selector_type == "text":
                     return self.driver(text=element_value).exists
-                elif selector_type == "resourceId":
+                elif selector_type == "id":
                     return self.driver(resourceId=element_value).exists
                 elif selector_type == "xpath":
                     return self.driver.xpath(element_value).exists
                 else:
                     raise ValueError("你可能输入了不支持的 selector type.")
-            elif self.platform == 'ios':
+
+            elif self.platform == "ios":
                 if selector_type == "text":
-                    # TODO: 待完成
-                    pass
-                elif selector_type == "resourceId":
-                    # TODO: 待完成
-                    pass
+                    return self.driver(label=element_value)
+                elif selector_type == "id":
+                    return self.driver(id=element_value)
                 elif selector_type == "xpath":
-                    # TODO: 待完成
-                    pass
+                    return self.driver.xpath(element_value)
                 else:
                     raise ValueError("你可能输入了不支持的 selector type.")
+
         except Exception as err:
             logger.error(f"元素未找到 {selector_type}: {element_value}. Error: {err}")
+
             return False
 
-    def find_element_xpath(self, xpath_expression):
+    def find_element_by_xpath(self, xpath_expression):
         """
         通过xpath定位元素
         :param xpath_expression: xpath表达式
-        :return: 元素对象
+        :return:
         """
-        if self.platform == 'android':
+        if self.platform == "android":
             return self.driver.xpath(xpath_expression)
-        elif self.platform == 'ios':
+        elif self.platform == "ios":
             return self.driver(xpath=xpath_expression)
 
     def click_by_text(self, text, retries=2, is_click_again: Literal[True, False] = False):
         """
-                :param text: 通过id定位单个元素，并进行点击。
-                :param retries: 如果遇到权限弹窗，会自动处理, 如果处理了弹窗，则通过is_click_again参数来判断是否重新尝试点击resource_id元素.
-                :param is_click_again: 接收布尔值，默认为False，代表处理了弹窗之后，不会尝试再次点击resource_id元素；若为True，则处理弹窗之后，再次重新点击resource_id元素
-                :return:
-                """
+        :param text: 通过文本定位单个元素，并进行点击。
+        :param retries: 如果遇到权限弹窗，会自动处理, 如果处理了弹窗，则通过is_click_again参数来判断是否重新尝试点击对应文本的元素.
+        :param is_click_again: 接收布尔值，默认为False，代表处理了弹窗之后，不会尝试再次点击text元素；若为True，则处理弹窗之后，再次重新点击text元素
+        :return:
+        """
         for attempt in range(retries):
             element = None
             try:
@@ -69,7 +75,7 @@ class BasePage:
                 elif self.platform == 'ios':
                     element = self.driver(label=text)
 
-                if not element.exists():
+                if not element.exists:
                     logger.error("该点击元素：%s 不存在", text)
                     raise ValueError(f"该点击元素：{text} 不存在")
 
@@ -106,7 +112,7 @@ class BasePage:
                 elif self.platform == 'ios':
                     element = self.driver(label=resource_id)
 
-                if not element.exists():
+                if not element.exists:
                     logger.error("该点击元素：%s 不存在", resource_id)
                     raise ValueError(f"该点击元素：{resource_id} 不存在")
 
@@ -131,7 +137,7 @@ class BasePage:
         """
         :param xpath_expression: 通过xpath定位
         :param retries: 如果遇到权限弹窗，会自动处理, 如果处理了弹窗，则通过is_click_again参数来判断是否重新尝试点击xpath_expression元素.
-        :param is_click_again: 接收布尔值，默认为False，代表处理了弹窗之后，不会尝试再次点击resource_id元素；若为True，则处理弹窗之后，再次重新点击xpath_expression元素
+        :param is_click_again: 接收布尔值，默认为False，代表处理了弹窗之后，不会尝试再次点击xpath_expression元素；若为True，则处理弹窗之后，再次重新点击xpath_expression元素
         :return:
         """
         for attempt in range(retries):
@@ -139,9 +145,9 @@ class BasePage:
             try:
                 time.sleep(2)
                 if self.platform == 'android':
-                    element = self.find_element_xpath(xpath_expression)
+                    element = self.find_element_by_xpath(xpath_expression)
                 elif self.platform == 'ios':
-                    element = self.find_element_xpath(xpath_expression)
+                    element = self.find_element_by_xpath(xpath_expression)
 
                 if not element.exists:
                     logger.error("该点击元素：%s 不存在", xpath_expression)
@@ -177,7 +183,7 @@ class BasePage:
         while time.time() - start_time < timeout:
             try:
                 # 尝试获取Toast文本内容
-                toast_message = self.find_element_xpath('//*[contains(@text,{})]'.format(toast_text))
+                toast_message = self.find_element_by_xpath('//*[contains(@text,{})]'.format(toast_text))
                 # 验证Toast消息内容是否符合预期
                 if toast_message:
                     logger.info(f"Toast message found: {toast_message}")
@@ -207,48 +213,49 @@ class BasePage:
         # 确保保存目录存在
         if not os.path.exists(screenshot_save_path):
             os.makedirs(screenshot_save_path)
+            logger.info("创建screenshot/android目录")
         if not os.path.exists(ios_screenshot_save_path):
             os.makedirs(ios_screenshot_save_path)
+            logger.info("创建screenshot/iOS目录")
 
         # 获取当前时间并格式化为字符串
         timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
-        if self.platform == 'android':
+        if self.platform == "android":
             # 使用uiautomator2截图
             filename = f"{timestamp}-android.png"
             filepath = os.path.join(screenshot_save_path, filename)
             self.driver.screenshot(filepath)
             logger.info("Taking screenshot on Android device.")
-        elif self.platform == 'ios':
+        elif self.platform == "ios":
             # 处理iOS设备的截图
             filename = f"{timestamp}-iOS.png"
             filepath = os.path.join(ios_screenshot_save_path, filename)
             self.driver.screenshot(filepath)
             print("Taking screenshot on iOS device.")
         else:
-            raise ValueError("Unsupported device type. Please specify 'android' or 'ios'.")
+            raise ValueError("可能碰到了不支持当前截图方法的设备类型. Please specify 'android' or 'ios'.")
 
-    def input_text(self, text):
+    def input_text(self, xpath_exp, text):
         """
         使用adb命令输入文本,不清空文本框内容，直接输入，不支持中文。
-        :element: 编辑框的xpath表达式
+        :xpath_exp: 编辑框的xpath表达式
         :text： 要输入的文本内容
         :return:
         """
         try:
-            if self.platform == 'android':
-                self.driver.set_input_ime(True)
-                time.sleep(0.2)
-                self.driver.send_keys(text)
+            if self.platform == "android":
+                self.driver.xpath(xpath_exp).set_text(text)
+                # self.driver.set_input_ime(True)
+                # time.sleep(0.2)
+                # self.driver.send_keys(text)
                 # for char in text:
                 #     os.system('adb shell input text {}'.format(text))
                 #     time.sleep(0.2)
-            elif self.platform == 'ios':
-                # TODO: wda的输入方法
-                self.driver.set_text(text)
-                logger.info("wda的输入方法，未完成···")
+            elif self.platform == "ios":
+                self.driver(xpath=xpath_exp).set_text(text)
         except Exception as err:
-            logger.error(f"内容 {err} 输入失败···")
+            logger.error(f"内容{text} 输入失败···，原因： {err} ")
 
     def input_text_clear(self, text):
         """

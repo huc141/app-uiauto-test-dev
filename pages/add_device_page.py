@@ -47,8 +47,7 @@ class AddDevicePage(BasePage):
         设备列表-添加设备：输入设备uid并点击下一步
         uid: 你要添加的设备UID
         """
-        self.click_by_xpath(self.manual_input_uid)
-        self.input_text(uid)
+        self.input_text(self.manual_input_uid, uid)
         self.click_by_xpath(self.btn_next_step)
 
     def input_by_ip(self, ip):
@@ -58,8 +57,7 @@ class AddDevicePage(BasePage):
         :return:
         """
         self.click_by_xpath(self.manual_ip)
-        self.click_by_xpath(self.manual_input_ip)
-        self.input_text(ip)
+        self.input_text(self.manual_input_ip, ip)
         self.click_by_xpath(self.btn_next_step)
 
     def input_by_authlink(self, authlink):
@@ -69,8 +67,7 @@ class AddDevicePage(BasePage):
         :return:
         """
         self.click_by_xpath(self.manual_authlink)
-        self.click_by_xpath(self.manual_input_authlink)
-        self.input_text(authlink)
+        self.input_text(self.manual_input_authlink, authlink)
         self.click_by_xpath(self.btn_next_step)
 
     def click_device_wire_connection(self):
@@ -115,11 +112,9 @@ class AddDevicePage(BasePage):
         """
         if account != 'admin':
             self.click_by_xpath(self.clear_device_account_btn)
-            self.click_by_xpath(self.device_account_text)
-            self.input_text(account)
+            self.input_text(self.device_account_text, account)
 
-        self.click_by_xpath(self.device_passwd_text)
-        self.input_text(passwd)
+        self.input_text(self.device_passwd_text, passwd)
         self.click_by_xpath(self.device_access_btn)
         logger.info("点击访问")
 
