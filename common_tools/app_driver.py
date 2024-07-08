@@ -44,7 +44,7 @@ class Driver:
 
             elif str1 == '2':
                 print(f"你输入了：{str1}，现在启动Facebook-wda")
-                logger.info("开始使用tidevice启动WDA···")
+                logger.info("开始使用tidevice启动WDA(请确保8100端口不被占用)···")
                 try:
                     self._wda_process = subprocess.Popen(
                         ['tidevice', '-u', self._device_sn, 'wdaproxy', '-B', self.wda_bundle_id, '--port', '8100'],
@@ -57,12 +57,14 @@ class Driver:
 
                     logger.info("正在获取WDA服务启动状态···")
                     status_info = self._driver.status()
-                    if "WebDriverAgent is ready to accept commands" in status_info.get("message", ""):
+                    message = "WebDriverAgent is ready to accept commands"
+                    if message in status_info.get("message", ""):
                         logger.info("WDA服务启动成功")
                     else:
                         logger.error("WDA服务启动失败")
                     self._platform = "ios"
                     return self._driver
+
                 except Exception as err:
                     logger.error("连接失败，原因为：{}".format(err))
                 break
@@ -143,12 +145,18 @@ class Driver:
         停止app
         :return:
         """
-        if self._platform == 'android':
-            self._driver.app_stop(self._apk_name)
+        try:
+            if self._platform == "android":
+                self._driver.app_stop(self._apk_name)
+            elif self._platform == "ios":
+                self._driver.session().app_terminate(self._apk_name)
+            else:
+                logger.error(f"未知的平台类型：{self._platform}")
+                return
+
             logger.info(f"已停止APP：{self._apk_name}")
-        elif self._platform == 'ios':
-            self._driver.session().app_terminate(self._apk_name)
-        logger.info("app已停止运行")
+        except Exception as err:
+            logger.error(f"停止app时发生错误：{err}")
 
     def start(self, is_record=False):
         """
@@ -162,16 +170,19 @@ class Driver:
             if self._driver:
                 self.stop()  # 先停止reolink app，再重新启动
                 logger.info("开始启动app···")
-                if self._platform == 'android':
-                    scr.take_screenrecord(is_record)  # 启动安卓录屏
+
+                scr.take_screenrecord(is_record)  # 启动安卓/iOS录屏, 是否启动取决于is_record参数值
+
+                if self._platform == "android":
                     self._driver.app_start(self._apk_name)
                     logger.info("安卓app启动成功···")
-                elif self._platform == 'ios':
-                    scr.take_screenrecord(is_record)  # 启动ios的录屏
+
+                elif self._platform == "ios":
                     self._driver.session().app_activate(self._apk_name)
                     logger.info("iOS-app启动成功···")
+
         except Exception as err:
-            logger.error("APP启动失败，原因为：%s", err)
+            logger.error(f"APP启动失败，原因为：{err}", )
 
     def get_app_info(self) -> dict:
         """
@@ -180,13 +191,15 @@ class Driver:
         """
         try:
             if self._driver:
-                if self._platform == 'android':
+                if self._platform == "android":
                     app_info = self._driver.app_info(self._apk_name)
                     logger.info("app信息获取成功···")
                     return app_info
-                elif self._platform == 'ios':
+
+                elif self._platform == "ios":
                     app_info = self._driver.app_current()
                     return app_info
+
         except Exception as err:
             logger.error("APP信息获取失败，原因为：%s", err)
 
@@ -195,11 +208,21 @@ class Driver:
         获取手机信息
         :return:
         """
+        device_info = None
         try:
             if self._driver:
-                device_info = self._driver.device_info
-                logger.info("获取手机信息成功···")
-                return device_info
+                if self._platform == "android":
+                    device_info = self._driver.device_info
+
+                elif self._platform == "ios":
+                    device_info = self._driver.device_info()
+
+                else:
+                    raise ValueError("不支持的平台")
+
+            logger.info("获取手机信息成功···")
+            return device_info
+
         except Exception as err:
             logger.error("获取手机信息失败，原因为：%s", err)
 
@@ -210,8 +233,14 @@ class Driver:
         """
         try:
             if self._driver:
-                self._driver.app_install(self._apk_local_path)
+                if self._platform == "android":
+                    self._driver.app_install(self._apk_local_path)
+
+                elif self._platform == "ios":
+                    udid_option = f"--udid {self._device_sn} " if self._device_sn else ""  # 条件表达式，用于根据 udid 的值来构建一个字符串
+                    os.system(f"tidevice {udid_option}install {self._apk_local_path}")
                 logger.info("app安装成功···")
+
         except Exception as err:
             logger.error("app安装失败，原因为：%s", err)
 
@@ -221,9 +250,14 @@ class Driver:
         :return:
         """
         try:
-            if self._apk_name in self._driver.app_list():
-                self._driver.app_uninstall(self._apk_name)
-                logger.info("卸载reolink app成功")
+            if self._platform == "android":
+                if self._apk_name in self._driver.app_list():
+                    self._driver.app_uninstall(self._apk_name)
+
+            elif self._platform == "ios":
+                os.system(f"tidevice uninstall {self._apk_name}")
+            logger.info("卸载reolink app成功")
+
         except Exception as err:
             logger.error("卸载app失败，原因：%s", err)
 
@@ -239,6 +273,7 @@ class Driver:
     @staticmethod
     def get_wifi_status():
         """
+        只能用于安卓
         函数获取当前手机的WiFi状态：
         Wi-Fi is enabled：WiFi已开启（不代表已经连上WiFi）
         Wi-Fi is disabled：WiFi已关闭
@@ -271,6 +306,7 @@ class Driver:
     @staticmethod
     def turn_off_wifi(self):
         """
+        只能用于安卓。
         关闭手机WiFi
         :return:
         """
@@ -285,6 +321,7 @@ class Driver:
     @staticmethod
     def turn_on_wifi(self):
         """
+        只能用于安卓。
         开启手机WiFi(不一定会自动连上WiFi)
         :return:
         """
@@ -295,17 +332,6 @@ class Driver:
             return result
         except Exception as err:
             logger.error("wifi开启失败，原因：%s", err)
-
-    def get_element_info(self):
-        """
-        获取元素属性信息
-        :return:
-        """
-        try:
-            element = self.init_driver().info
-            return element
-        except Exception as err:
-            return f"Exception occurred: {str(err)}"
 
 
 driver = Driver(device_sn=read_yaml.config_device_sn, apk_name=read_yaml.config_apk_name)
