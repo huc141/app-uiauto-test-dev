@@ -162,10 +162,10 @@ class BasePage:
                     else:
                         return True  # 如果is_click_again==False，则处理了权限弹窗后，不重试点击。
                 return True
-            except ValueError as verr:  # 专门捕获并处理 ValueError 异常，可以在此处添加特定的处理逻辑。
+            except ValueError as verr:
                 logger.error("ValueError: %s", verr)
                 raise
-            except Exception as err:  # 捕获并处理所有其他类型的异常，确保程序不会因为未处理的异常而崩溃。
+            except Exception as err:
                 logger.error("页面中没有找到id为 %s 的元素，原因可能是：%s", xpath_expression, err)
                 raise
         return False
@@ -221,24 +221,24 @@ class BasePage:
         # 获取当前时间并格式化为字符串
         timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
-        if self.platform == "android":
-            # 使用uiautomator2截图
+        if self.platform == "android":  # 处理安卓设备的截图
             filename = f"{timestamp}-android.png"
             filepath = os.path.join(screenshot_save_path, filename)
             self.driver.screenshot(filepath)
             logger.info("Taking screenshot on Android device.")
-        elif self.platform == "ios":
-            # 处理iOS设备的截图
+
+        elif self.platform == "ios":  # 处理iOS设备的截图
             filename = f"{timestamp}-iOS.png"
             filepath = os.path.join(ios_screenshot_save_path, filename)
             self.driver.screenshot(filepath)
             print("Taking screenshot on iOS device.")
+
         else:
             raise ValueError("可能碰到了不支持当前截图方法的设备类型. Please specify 'android' or 'ios'.")
 
     def input_text(self, xpath_exp, text):
         """
-        使用adb命令输入文本,不清空文本框内容，直接输入，不支持中文。
+        输入文本,不清空文本框内容。
         :xpath_exp: 编辑框的xpath表达式
         :text： 要输入的文本内容
         :return:
@@ -255,17 +255,23 @@ class BasePage:
                 #     time.sleep(0.2)
             elif self.platform == "ios":
                 self.driver(xpath=xpath_exp).set_text(text)
+
         except Exception as err:
             logger.error(f"内容{text} 输入失败···，原因： {err} ")
 
     def input_text_clear(self, xpath_exp, text):
         """
-        清空文本框内容并输入。
+        清空文本框内容后输入。
+        :param xpath_exp: 编辑框的xpath表达式
+        :param text: 要输入的文本内容
         :return:
         """
         try:
             time.sleep(0.2)
             if self.platform == "android":
+                self.driver.xpath(xpath_exp).click()
+                self.driver.clear_text()
+                time.sleep(0.2)
                 self.driver.xpath(xpath_exp).set_text(text)
                 # self.driver.set_input_ime(True)
                 # time.sleep(0.2)
@@ -276,6 +282,10 @@ class BasePage:
                 #     os.system('adb shell input text {}'.format(text))
                 #     time.sleep(0.2)
             elif self.platform == "ios":
+                # 还需要测试一下
+                self.driver(xpath=xpath_exp).clear_text()
+                time.sleep(0.2)
                 self.driver(xpath=xpath_exp).set_text(text)
+
         except Exception as err:
             logger.error(f"内容 {err} 输入失败···")

@@ -25,20 +25,20 @@ class TestWelcome:
     @allure.description("预期：填写预期结果")
     @allure.testcase("这里填写禅道上对应的某条自动化用例链接地址")
     def test_disagree_terms(self):
-        driver.start()
+        driver.start_app()
         welcome = WelcomePage()  # 初始化欢迎页的页面对象
         welcome.click_disagree_exit_btn()  # 点击【不同意并退出】按钮
-        driver.stop()  # 停止app
+        driver.stop_app()  # 停止app
         driver.clear_app_cache()  # 清除app缓存
 
     @allure.title("验证：同理")
     @allure.description("预期：同理")
     @allure.testcase("同理")
     def test_agree_terms(self):
-        driver.start()
+        driver.start_app()
         welcome = WelcomePage()  # 初始化欢迎页的页面对象
         welcome.click_terms_conditions_icon()  # 点击勾选【声明与条款】勾选框
         assertui.assert_clickable('com.mcu.reolink:id/btn', True)  # 断言点击勾选框后【同意并继续】按钮的可点击状态
         welcome.click_agree_continue_btn()  # 点击【同意并继续】按钮
-        driver.stop()  # 停止app
+        driver.stop_app()  # 停止app
         driver.clear_app_cache()  # 清除app缓存
