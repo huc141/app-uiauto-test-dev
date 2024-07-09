@@ -1,3 +1,33 @@
+## 本框架简介
+想放弃使用appium较为麻烦的配置，直接集成uiautomator2+Facebook-wda+playwright来分别实现对安卓、iOS、win、mac四端的UI自动化测试。
+并且在执行app自动化测试时，不依赖mac电脑，直接在win上驱动iPhone进行UI自动化。
+
+本框架的架构基于PO模式(PageObject)，使用三层模型:
+- Driver层：完成对各端驱动常用方法的二次封装，如：安卓/ios/web的驱动管理；
+- Page层：存放页面对象，通常一个UI界面封装一个对象类；
+- Case层：调用各个页面对象类，组合业务逻辑、形成测试用例。
+
+三层模型将Page层与Elements层存放在一起，各个页面对象文件同时包含当前页面中各个图标、按钮的resourceId、className等属性值，以便随时调用。
+
+1. [common_tools](common_tools)：封装公共的工具，管理不同端的驱动。
+2. [config](config)：配置文件，参数化。
+3. [debug](debug)：一些随时删除新增的调试脚本。
+4. [log](log)：执行日志。
+5. [pages](pages)：Page层：存放页面对象，通常一个UI界面封装一个对象类，具体情况具体分析。所有page类需要直接继承[base_page.py](pages%2Fbase_page.py)。
+6. [report_allure_temps](report_allure_temps)：测试报告的临时文件，每次执行测试会自动生成并删除先前的文件，一般不用管。
+7. [reports](reports)：按日期自动生成的测试报告。
+8. [scrcpy_path](scrcpy_path)：安卓截图工具
+9. [screen_record](screen_record)：生成的录屏文件存放在此处，测试报告的录屏文件会从这个路径下读取。
+10. [screenshot](screenshot)：提供给自动化测试人员的主动截图保存目录，会自动区分安卓还是iOS截图并分别保存。被动截图会自动附在测试报告文件里。
+11. [test_case](test_case)：自动化测试用例目录，建议按被测模块划分。具体怎么写比较合理呢？还没想好···
+12. [conftest.py](conftest.py)：
+13. [pytest.ini](pytest.ini)：pytest配置文件
+14. [requirements.txt](requirements.txt)：项目的相关依赖包
+15. [run.py](run.py)：
+16. [shared_v_name.txt](shared_v_name.txt)：录屏文件名，暂时先这样用。
+
+
+
 ## APP的UI自动化测试目的
 APP自动化测试的主要目的包括但不限于以下几点：
 
