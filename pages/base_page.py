@@ -244,6 +244,7 @@ class BasePage:
         :return:
         """
         try:
+            time.sleep(0.2)
             if self.platform == "android":
                 self.driver.xpath(xpath_exp).set_text(text)
                 # self.driver.set_input_ime(True)
@@ -257,26 +258,24 @@ class BasePage:
         except Exception as err:
             logger.error(f"内容{text} 输入失败···，原因： {err} ")
 
-    def input_text_clear(self, text):
+    def input_text_clear(self, xpath_exp, text):
         """
         清空文本框内容并输入。
         :return:
         """
         try:
-            if self.platform == 'android':
-                self.driver.set_input_ime(True)
-                time.sleep(0.2)
-                self.driver.clear_text()
-                time.sleep(1)
-                self.driver.send_keys(text)
+            time.sleep(0.2)
+            if self.platform == "android":
+                self.driver.xpath(xpath_exp).set_text(text)
+                # self.driver.set_input_ime(True)
+                # time.sleep(0.2)
+                # self.driver.clear_text()
+                # time.sleep(1)
+                # self.driver.send_keys(text)
                 # for char in text:
                 #     os.system('adb shell input text {}'.format(text))
                 #     time.sleep(0.2)
-            elif self.platform == 'ios':
-                # TODO: wda的输入方法
-                self.driver.clear_text()
-                time.sleep(1)
-                self.driver.set_text(text)
-                logger.info("wda的输入方法，未完成···")
+            elif self.platform == "ios":
+                self.driver(xpath=xpath_exp).set_text(text)
         except Exception as err:
             logger.error(f"内容 {err} 输入失败···")
