@@ -5,13 +5,13 @@ from common_tools.app_driver import driver
 from common_tools.read_yaml import read_yaml
 from common_tools.assert_ui import assertui
 
-uids_config = read_yaml.uids_file_list
+uids_config = read_yaml.uids_file_list  # 读取参数化文件
 
 
 class TestAddDevice:
     @pytest.mark.parametrize("uid_config", uids_config.values(), ids=uids_config.keys())
     def test_add_device_by_uid(self, uid_config):
-        driver.start(True)
+        driver.start_app(True)
         device_list_page = DeviceListPage()  # 初始化设备列表对像
         device_list_page.click_add_device_button()  # 点击设备列表右上角的添加按钮
         add_device_page = AddDevicePage()  # 初始化添加设备页面的对象
