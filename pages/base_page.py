@@ -289,3 +289,33 @@ class BasePage:
 
         except Exception as err:
             logger.error(f"内容 {err} 输入失败···")
+
+    def scroll_and_click_by_text(self, text_to_find='FE-W', max_attempts=10, scroll_pause=1):
+        """
+        在可滚动视图中查找并点击指定文本的元素。
+        :param text_to_find: 要查找的文本
+        :param max_attempts: 最大尝试次数
+        :param scroll_pause: 滚动后的暂停时间，秒
+        :return:
+        """
+        # TODO: 区分iOS/安卓平台,同时支持xpath查找
+        attempt = 0
+        while attempt < max_attempts:
+            try:
+                # 尝试直接查找并点击元素，避免不必要的滚动
+                element = self.driver(text=text_to_find)
+                if element.exists:
+                    element.click()
+                    logger.info(f"Clicked on '{text_to_find}' after {attempt + 1} attempts.")
+                    return True
+                else:
+                    self.driver(scrollable=True).scroll.toEnd()
+            except Exception as err:
+                logger.info(f"Error occurred: {err}")
+            # 如果未找到，尝试滚动查找
+            logger.info(f"正在滑动查找 '{text_to_find}'...")
+            time.sleep(scroll_pause)  # 等待页面稳定
+            attempt += 1
+
+        logger.info(f"找不到你要点击的元素： '{text_to_find}' 已经尝试了： {max_attempts} 次.")
+        return False
