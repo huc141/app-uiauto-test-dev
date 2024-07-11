@@ -290,15 +290,14 @@ class BasePage:
         except Exception as err:
             logger.error(f"内容 {err} 输入失败···")
 
-    def scroll_and_click_by_text(self, el_type, text_to_find='FE-W', max_attempts=10, scroll_pause=1):
+    def scroll_and_click_by_text(self, el_type, text_to_find, max_attempts=10, scroll_pause=1):
         """
         在可滚动视图中查找并点击指定文本的元素。
-        :param el_type: 元素定位类型，支持文本和xpath
+        :param el_type: 元素定位类型，支持文本text(label)和xpath
         :param text_to_find: 要查找的文本
         :param max_attempts: 最大尝试次数
         :param scroll_pause: 滚动后的暂停时间，秒
         """
-        # TODO: 需要兼容ios
         is_find = None
         attempt = 0
 
@@ -343,9 +342,31 @@ class BasePage:
 
                     attempt += 1
             elif self.platform == "ios":
-                pass
-        except Exception as e:
-            print(f"Error occurred: {e}")
+                while attempt < max_attempts:
+                    # 根据el_type初始化查找元素
+                    if el_type == "text":
+                        element = driver(label=text_to_find)
+                    elif el_type == "xpath":
+                        element = driver(xpath=text_to_find)
+                    else:
+                        raise ValueError("你可能输入了不支持的元素查找类型···")
+
+                    # 尝试查找元素
+                    if element.exists:
+                        print(f"元素已找到: '{text_to_find}'")
+                        element.click()
+                        print(f"Clicked on '{text_to_find}' directly.")
+                        return True
+
+                    # 滑动屏幕
+                    print(f"Scrolling to find '{text_to_find}'... 第{attempt + 1}次")
+                    driver.swipe_up()
+                    time.sleep(scroll_pause)  # 等待页面稳定
+
+                    attempt += 1
+
+        except Exception as err:
+            print(f"Error occurred: {err}")
 
         print(f"Failed to find and click on '{text_to_find}' after {max_attempts} attempts.")
         return False
