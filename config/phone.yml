@@ -2,8 +2,10 @@
 # iPhone测试手机识别码：3db17f31334a5dbbe98c6d03b110f9ae0115e352
 config_device_sn: 28131FDH2000K1
 
-# 被测app包名：com.rnclient  com.mcu.reolink, com.reo.link
-config_apk_name: com.mcu.reolink
+# 被测app包名
+# 安卓：com.mcu.reolink
+# iOS：com.reo.link
+config_apk_name: com.reo.link
 
 # 需要安装的app安装包存放位置
 apk_local_path: "H:\\app-uiauto-test-dev\\apk_pkgs\\Android-Reolink-P2PCN-4.45.0.2.20240506--release.apk"
