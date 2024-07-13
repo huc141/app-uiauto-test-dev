@@ -10,8 +10,12 @@ from pages.base_page import BasePage
 from common_tools.logger import logger
 import wda
 import time
+import subprocess
+import xml.etree.ElementTree as ET
+from collections import Counter
+import chardet
 
-# driver = u2.connect_usb("28131FDH2000K1")
+driver = u2.connect_usb("28131FDH2000K1")
 
 # driver = wda.Client('http://localhost:8100')
 
@@ -156,7 +160,6 @@ print("----------------------")
 #     return False
 print("-----------------------------------------")
 
-
 # ios-改进版
 # def scroll_and_click_by_text(driver, el_type='text', text_to_find='FE-W', max_attempts=10, scroll_pause=1):
 #     """
@@ -283,8 +286,109 @@ print("--------------------")
 #     print(f"Failed to find and click on '{text_to_find}' after {max_attempts} attempts.")
 #     return False
 
+print("------------------")
 
+
+# if __name__ == "__main__":
+#     driver = u2.connect_usb("28131FDH2000K1")
+#     # driver = wda.Client('http://localhost:8100')  # 或者使用其他连接方式，如d = u2.connect('设备IP') for WiFi
+#     scroll_and_click_by_text(driver, 'text', text_to_find='REOCYP-332-hhmmkk')
+
+# file = "H:\\app-uiauto-test-dev\\debug\\test.txt"
+#
+# driver.push(file, "/sdcard/")
+
+
+# def read_file_from_android(file_path):
+#     # 使用adb shell命令读取文件内容
+#     cmd = f'adb shell cat {file_path}'
+#     try:
+#         # 执行命令并获取输出
+#         output = subprocess.check_output(cmd, shell=True, text=True)
+#         return output
+#     except subprocess.CalledProcessError as e:
+#         print(f"Error: {e.output.strip()}")
+#         return None
+#
+#
+# # 示例：读取手机上的/sdcard/myfile.txt文件
+# file_content = read_file_from_android('/sdcard/test.txt')
+# if file_content:
+#     print(file_content)
+
+
+def get_all_elements_texts(driver, max_scrolls=2, scroll_pause=1):
+    """
+    获取当前页面的所有元素的text文本内容
+    :param scroll_pause:
+    :param max_scrolls:
+    :param driver: uiautomator2的Device对象
+    :return: 文本内容列表
+    """
+    texts = set()
+
+    for _ in range(max_scrolls):
+        # 获取页面的 XML 结构
+        page_source = driver.dump_hierarchy()
+
+        # 解析 XML 并提取所有元素的文本内容
+        root = ET.fromstring(page_source)
+
+        def parse_element(element):
+            text = element.attrib.get('text', '').strip()
+            if text:
+                texts.add(text)
+            for child in element:
+                parse_element(child)
+
+        parse_element(root)
+
+        # 滑动屏幕
+        driver.swipe_ext("up")
+        time.sleep(scroll_pause)  # 等待页面稳定
+
+    return list(texts)
+
+
+def save_texts_to_file(texts, file_path, exclude_texts=None):
+    """
+    将文本内容及其数量统计结果写入TXT文件
+    :param texts: 文本内容列表
+    :param file_path: TXT文件路径
+    :param exclude_texts: 要排除的文本内容列表
+    """
+    if exclude_texts is None:
+        exclude_texts = []
+
+    # 排除指定的文本，并确保唯一性
+    unique_texts = set(text for text in texts if text not in exclude_texts)
+
+    with open(file_path, 'w', encoding='utf-8') as f:
+        for text in sorted(unique_texts):
+            f.write(f"{text}\n")
+
+
+def count_lines_in_file(file_path):
+    """
+    统计TXT文件中的总行数，不包含空行
+    :param file_path: TXT文件路径
+    :return: 总行数
+    """
+    with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
+        lines = f.readlines()
+        non_empty_lines = [line for line in lines if line.strip()]
+        print(len(non_empty_lines)-1)
+    return len(non_empty_lines)-1
+
+
+# 使用示例
 if __name__ == "__main__":
     driver = u2.connect_usb("28131FDH2000K1")
-    # driver = wda.Client('http://localhost:8100')  # 或者使用其他连接方式，如d = u2.connect('设备IP') for WiFi
-    scroll_and_click_by_text(driver, 'text', text_to_find='REOCYP-332-hhmmkk')
+    texts = get_all_elements_texts(driver, max_scrolls=2)
+    exclude_texts = ['开', '关', '设置', 'Reolink TrackMix WiFi', '报警设置', '报警通知', '更多', '0', '退出登录设备',
+                     '删除']  # 替换为你想要排除的文本
+    save_texts_to_file(texts, 'elements_texts.txt', exclude_texts)
+    print("文本内容及其数量统计结果已保存到elements_texts.txt文件中。")
+    file_path = "H:\\app-uiauto-test-dev\\elements_texts.txt"
+    count_lines_in_file(file_path)
+
