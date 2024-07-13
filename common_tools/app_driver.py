@@ -128,10 +128,12 @@ class Driver:
 
                 if self._platform == "android":
                     self._driver.app_start(self._apk_name)
+                    time.sleep(1)
                     logger.info("安卓app启动成功···")
 
                 elif self._platform == "ios":
                     self._driver.session().app_activate(self._apk_name)
+                    time.sleep(1)
                     logger.info("iOS-app启动成功···")
 
         except Exception as err:
