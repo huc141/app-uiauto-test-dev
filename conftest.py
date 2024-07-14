@@ -13,6 +13,21 @@ d2 = driver.get_actual_driver()  # 获取安卓/ios驱动
 gr = GenerateReports()
 
 
+# 在整个测试会话开始时被调用一次。这里的“测试会话”指的是从pytest命令行工具启动测试到测试结束的整个过程，可能包含多个测试文件和成百上千的测试用例,
+# 适合那些跨测试文件的、需要在所有测试运行前准备好的资源设置.
+# def pytest_sessionstart(session):
+#     pass
+
+def pytest_runtest_setup(item):  # 在每个测试用例的setup之前调用。
+    # 开启录屏
+    pass
+
+
+def pytest_runtest_teardown(item):  # 在每个测试用例的teardown之后调用。
+    # 结束录屏
+    pass
+
+
 @pytest.hookimpl(tryfirst=True, hookwrapper=True)
 def pytest_runtest_makereport(item, call):
     # 后置处理
@@ -45,8 +60,7 @@ def pytest_runtest_makereport(item, call):
                 print(f"该【{test_name}】用例没有开启录屏")
 
 
-# 在所有测试用例运行完后调用，用于执行所有测试结束后的操作。
-def pytest_sessionfinish(session, exitstatus):
+def pytest_sessionfinish(session, exitstatus):  # 在所有测试用例运行完后调用，用于执行所有测试结束后的操作。
     # 所有用例执行完毕，自动生成allure测试报告
     logger.info("正在自动生成测试报告···")
     gr.generate_report()
