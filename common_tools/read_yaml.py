@@ -24,6 +24,7 @@ class ReadYaml:
         self.config_apk_local_path = self.get_data('apk_local_path')  # 获取安装包的本地地址
         self.wda_bundle_id = self.get_data('wda_bundle_id')  # 获取wda安装包名称
         self.uids_file_list = self.get_data('uids', source='uids')  # 获取uid列表
+        self.devices_config = self.get_data("devices", source="devices")  # 获取设备配置
 
     def get_data(self, key: str, default: str = '', source: str = 'phone') -> str:
         """Get specific config"""
@@ -35,11 +36,5 @@ class ReadYaml:
         else:
             return default
 
-    def load_uids(self, uid_file_path='H:\\app-uiauto-test-dev\\config\\uids.yaml'):
-        with open(uid_file_path, 'r') as file:
-            data = yaml.safe_load(file)
-        return data.get('uids', [])
-
 
 read_yaml = ReadYaml()
-# read_yaml.__init__()
