@@ -1,0 +1,59 @@
+devices:
+  device1:
+    name: "FE-W1"
+    pages:
+      page_remote_setting:
+        expected_texts:
+          - "FTPppp"
+          - "Wi-Fi"
+          - "侦测报警"
+          - "分享摄像机"
+          - "已联动的设备"
+          - "延时摄影"
+          - "手机推送"
+          - "摄像机录像"
+          - "显示"
+          - "灯"
+          - "邮件通知"
+          - "音频"
+          - "高级设置"
+          - "鸣笛"
+        excluded_texts:
+          - "开"
+          - "关"
+          - "设置"
+          - "报警设置"
+          - "报警通知"
+          - "更多"
+          - "0"
+          - "退出登录设备"
+          - "删除"
+  device2:
+    name: "Reolink TrackMix WiFi"
+    pages:
+      page_remote_setting:
+        expected_texts:
+          - "FTP"
+          - "Wi-Fi"
+          - "侦测报警"
+          - "分享摄像机"
+          - "已联动的设备"
+          - "延时摄影"
+          - "手机推送"
+          - "摄像机录像"
+          - "显示"
+          - "灯"
+          - "邮件通知"
+          - "音频"
+          - "高级设置"
+          - "鸣笛"
+        excluded_texts:
+          - "开"
+          - "关"
+          - "设置"
+          - "报警设置"
+          - "报警通知"
+          - "更多"
+          - "0"
+          - "退出登录设备"
+          - "删除"
