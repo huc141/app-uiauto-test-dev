@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import pytest
 from common_tools.app_driver import driver
 from pages.rn_device_setting_page.remote_setting import RemoteSetting
@@ -5,17 +6,24 @@ from common_tools.read_yaml import read_yaml
 from common_tools.assert_ui import assertui
 
 
-class TestRemoteSettingAudio:
-    def test_remote_setting_audio(self):
-        # Æô¶¯app£¬²¢¿ªÆôÂ¼ÆÁ
+devices_config = read_yaml.devices_config  # è¯»å–å‚æ•°åŒ–æ–‡ä»¶
+
+
+class TestRemoteSetting:
+    @pytest.mark.parametrize("device_name, device_config", devices_config.items())
+    def test_remote_setting_main_page(self, device_name, device_config):
+        # å¯åŠ¨appï¼Œå¹¶å¼€å¯å½•å±
         driver.start_app(True)
 
-        # ÔÚÉè±¸ÁĞ±í²éÕÒµ½¶ÔÓ¦Éè±¸²¢½øÈëÔ¶³ÌÅäÖÃ
-        RemoteSetting().scroll_click_remote_setting(device_name="Reolink TrackMix WiFi")
+        # è¯»å–yamlæ–‡ä»¶ä¸­è¿œç¨‹é…ç½®é¡µé¢å†…å®¹
+        remote_setting_page = device_config['pages']['page_remote_setting']
 
-        # »ñÈ¡µ±Ç°Ò³ÃæËùÓĞ¹¦ÄÜÏî²¢Ğ´ÈëtxtÎÄ¼şÖĞ£¬Í³¼Æ³ö¹¦ÄÜÊıÁ¿
+        # åœ¨è®¾å¤‡åˆ—è¡¨æŸ¥æ‰¾åˆ°å¯¹åº”è®¾å¤‡å¹¶è¿›å…¥è¿œç¨‹é…ç½®
+        RemoteSetting().scroll_click_remote_setting(device_name=device_config['name'])
 
-        # ¶ÁÈ¡Ô¤ÆÚ¹¦ÄÜÏî²¢±éÀú£¬Óë»ñÈ¡µ½µÄ¹¦ÄÜÏî½øĞĞÒ»Ò»±È¶ÔºÍÊıÁ¿ºË¶Ô
+        # è¯»å–é¢„æœŸåŠŸèƒ½é¡¹å¹¶éå†ï¼Œä¸è·å–åˆ°çš„åŠŸèƒ½é¡¹è¿›è¡Œä¸€ä¸€æ¯”å¯¹å’Œæ•°é‡æ ¸å¯¹
+        RemoteSetting().check_remote_setting_text(remote_setting_page["expected_texts"],
+                                                  remote_setting_page["excluded_texts"])
 
-        # ¶ÏÑÔ
-
+        # æ–­è¨€
+        assert True
