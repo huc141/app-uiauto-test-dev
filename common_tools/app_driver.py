@@ -124,7 +124,7 @@ class Driver:
                 self.stop_app()  # 先停止reolink app，再重新启动
                 logger.info("开始启动app···")
 
-                scr.take_screenrecord(is_record)  # 启动安卓/iOS录屏, 是否启动取决于is_record参数值
+                scr.take_screenrecord(is_record)  # 启动安卓/iOS录屏, 是否启动则取决于is_record参数值
 
                 if self._platform == "android":
                     self._driver.app_start(self._apk_name)
