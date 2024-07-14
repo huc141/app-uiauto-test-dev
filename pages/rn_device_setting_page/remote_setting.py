@@ -12,13 +12,14 @@ class RemoteSetting(BasePage):
         elif self.platform == 'ios':
             pass
 
-    def check_remote_setting_text(self, text_to_check):
+    def check_remote_setting_text(self, expected_text, exclude_texts):
         """
-        检查文本
-        :param text_to_check: 需要检查的预期文本
+        根据设备名，检查对应设备的远程配置功能是否和预期一致
+        :param expected_text: 需要检查的预期文本
+        :param exclude_texts: 需要排除的文本
         :return:
         """
-        self.scroll_and_click_by_text(el_type="text", text_to_find=text_to_check)
+        self.verify_page_text(expected_text=expected_text, exclude_texts=exclude_texts)
 
     def scroll_click_remote_setting(self, device_name):
         """
