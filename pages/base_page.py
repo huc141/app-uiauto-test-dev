@@ -576,7 +576,7 @@ class BasePage:
     def verify_page_text(self, expected_text, exclude_texts):
         # 获取页面所有功能名称
         texts = self.get_all_elements_texts()
-        file_path = "H:\\app-uiauto-test-dev\\elements_texts.txt"
+        file_path = "elements_texts.txt"
         # 将排除以及去重之后待比对的页面文案保存至文件中
         self.save_texts_to_file(texts, file_path, exclude_texts)
         logger.info(f"文本内容已保存到{file_path}文件中。")

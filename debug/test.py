@@ -330,6 +330,7 @@ def get_all_elements_texts(driver, max_scrolls=2, scroll_pause=1):
     for _ in range(max_scrolls):
         # 获取页面的 XML 结构
         page_source = driver.dump_hierarchy()
+        print(page_source)
 
         # 解析 XML 并提取所有元素的文本内容
         root = ET.fromstring(page_source)
@@ -389,6 +390,6 @@ if __name__ == "__main__":
                      '删除']  # 替换为你想要排除的文本
     save_texts_to_file(texts, 'elements_texts.txt', exclude_texts)
     print("文本内容及其数量统计结果已保存到elements_texts.txt文件中。")
-    file_path = "H:\\app-uiauto-test-dev\\elements_texts.txt"
+    file_path = "elements_texts.txt"
     count_lines_in_file(file_path)
 
