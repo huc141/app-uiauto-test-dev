@@ -389,6 +389,6 @@ if __name__ == "__main__":
                      '删除']  # 替换为你想要排除的文本
     save_texts_to_file(texts, 'elements_texts.txt', exclude_texts)
     print("文本内容及其数量统计结果已保存到elements_texts.txt文件中。")
-    file_path = "H:\\app-uiauto-test-dev\\elements_texts.txt"
+    file_path = "elements_texts.txt"
     count_lines_in_file(file_path)
 
