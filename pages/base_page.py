@@ -1,4 +1,5 @@
 import os
+import subprocess
 import time
 from datetime import datetime
 from uiautomator2.exceptions import XPathElementNotFoundError
@@ -576,7 +577,8 @@ class BasePage:
     def verify_page_text(self, expected_text, exclude_texts):
         # 获取页面所有功能名称
         texts = self.get_all_elements_texts()
-        file_path = "elements_texts.txt"
+        # 定义文件路径，需要校验的内容保存到根目录下的elements_texts.txt
+        file_path = os.path.abspath("../elements_texts.txt")
         # 将排除以及去重之后待比对的页面文案保存至文件中
         self.save_texts_to_file(texts, file_path, exclude_texts)
         logger.info(f"文本内容已保存到{file_path}文件中。")
@@ -598,3 +600,27 @@ class BasePage:
                 return False
         logger.info("功能比对齐全！")
         return True
+
+    def read_device_file(self, device_path):
+        """
+        读取手机中的文件内容
+        :param device_path: 设备中的文件路径
+        :return: 文件内容
+        """
+        if self.platform == "android":
+            file_content = self.driver.shell(f"cat {device_path}")
+            return file_content
+
+        elif self.platform == "ios":
+            command = f"tidevice fsync cat {device_path}"
+            # 执行命令并捕获输出
+            process = subprocess.run(command, shell=True, check=True,
+                                     stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                                     encoding='utf-8', errors='ignore')
+            # 如果命令成功执行returncode == 0，函数返回命令的标准输出内容（文件内容）
+            if process.returncode == 0:
+                logger.info("iPhone文件读取成功")
+                return process.stdout
+            else:
+                logger.info(f"读取文件失败: {process.stderr}")
+                return None
