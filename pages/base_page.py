@@ -485,123 +485,215 @@ class BasePage:
             logger.info(f"Failed to find and click on '{text_to_find}' after {max_attempts} attempts.")
             return False
 
-    def get_all_elements_texts(self, max_scrolls=2, scroll_pause=1):
-        """
-        获取当前页面的所有元素的text文本内容
-        :param scroll_pause: 滚动一次后的停止时间，秒
-        :param max_scrolls: 最大滚动屏幕的次数
-        :return: 文本内容列表
-        """
-        texts = set()
-        if self.platform == "android":
-            for _ in range(max_scrolls):
-                # 获取页面的 XML 结构
-                page_source = self.driver.dump_hierarchy()
-                logger.info("已获取页面XML")
-
-                # 解析 XML 并提取所有元素的文本内容
-                logger.info("提取XML所有元素的文本内容")
-                root = ET.fromstring(page_source)
-
-                def parse_element(element):
-                    text = element.attrib.get('text', '').strip()
-                    if text:
-                        texts.add(text)
-                    for child in element:
-                        parse_element(child)
-
-                parse_element(root)
-
-                # 滑动屏幕
-                driver.swipe_ext("up")
-                time.sleep(scroll_pause)  # 等待页面稳定
-
-            return list(texts)
-
-        elif self.platform == "ios":
-            for _ in range(max_scrolls):
-                # 获取页面的 XML 结构
-                page_source = driver.source()
-                logger.info("已获取页面XML")
-
-                # 解析 XML 并提取所有元素的文本内容
-                logger.info("提取XML所有元素的文本内容")
-                root = ET.fromstring(page_source)
-
-                def parse_element(element):
-                    text = element.attrib.get('label', '').strip()
-                    if text:
-                        texts.add(text)
-                    for child in element:
-                        parse_element(child)
-
-                parse_element(root)
-
-                # 滑动屏幕
-                driver.swipe(0.5, 0.8, 0.5, 0.2, 0.5)
-                time.sleep(scroll_pause)  # 等待页面稳定
-
-            return list(texts)
-
+    # def get_all_elements_texts(self, max_scrolls=2, scroll_pause=1):
+    #     """
+    #     获取当前页面的所有元素的text文本内容
+    #     :param scroll_pause: 滚动一次后的停止时间，秒
+    #     :param max_scrolls: 最大滚动屏幕的次数
+    #     :return: 文本内容列表
+    #     """
+    #     texts = set()
+    #     if self.platform == "android":
+    #         for _ in range(max_scrolls):
+    #             # 获取页面的 XML 结构
+    #             page_source = self.driver.dump_hierarchy()
+    #             logger.info("已获取页面XML")
+    #
+    #             # 解析 XML 并提取所有元素的文本内容
+    #             logger.info("提取XML所有元素的文本内容")
+    #             root = ET.fromstring(page_source)
+    #
+    #             def parse_element(element):
+    #                 text = element.attrib.get('text', '').strip()
+    #                 if text:
+    #                     texts.add(text)
+    #                 for child in element:
+    #                     parse_element(child)
+    #
+    #             parse_element(root)
+    #
+    #             # 滑动屏幕
+    #             driver.swipe_ext("up")
+    #             time.sleep(scroll_pause)  # 等待页面稳定
+    #
+    #         return list(texts)
+    #
+    #     elif self.platform == "ios":
+    #         for _ in range(max_scrolls):
+    #             # 获取页面的 XML 结构
+    #             page_source = driver.source()
+    #             logger.info("已获取页面XML")
+    #
+    #             # 解析 XML 并提取所有元素的文本内容
+    #             logger.info("提取XML所有元素的文本内容")
+    #             root = ET.fromstring(page_source)
+    #
+    #             def parse_element(element):
+    #                 text = element.attrib.get('label', '').strip()
+    #                 if text:
+    #                     texts.add(text)
+    #                 for child in element:
+    #                     parse_element(child)
+    #
+    #             parse_element(root)
+    #
+    #             # 滑动屏幕
+    #             driver.swipe(0.5, 0.8, 0.5, 0.2, 0.5)
+    #             time.sleep(scroll_pause)  # 等待页面稳定
+    #
+    #         return list(texts)
+    #
+    # @staticmethod
+    # def save_texts_to_file(texts, file_path, exclude_texts=None):
+    #     """
+    #     将文本内容及其数量统计结果写入TXT文件
+    #     :param texts: 文本内容列表
+    #     :param file_path: TXT文件路径
+    #     :param exclude_texts: 要排除的文本内容列表
+    #     """
+    #     if exclude_texts is None:
+    #         exclude_texts = []
+    #
+    #     # 排除指定的文本，并确保唯一性
+    #     unique_texts = set(text for text in texts if text not in exclude_texts)
+    #
+    #     with open(file_path, 'w', encoding='utf-8') as f:
+    #         for text in sorted(unique_texts):
+    #             f.write(f"{text}\n")
+    #
+    # @staticmethod
+    # def count_lines_in_file(file_path):
+    #     """
+    #     统计TXT文件中的总行数，不包含空行
+    #     :param file_path: TXT文件路径
+    #     :return: 总行数
+    #     """
+    #     with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
+    #         lines = f.readlines()
+    #         non_empty_lines = [line for line in lines if line.strip()]
+    #         print(len(non_empty_lines) - 2)  # 这里的减2在换了手机后可能需要实时调整因为识别出来的元素可能会多，也可能会少
+    #     return len(non_empty_lines) - 2
+    #
+    # def verify_page_text(self, expected_text, exclude_texts):
+    #     # 获取页面所有功能名称
+    #     texts = self.get_all_elements_texts()
+    #     # 定义文件路径，需要校验的内容保存到根目录下的elements_texts.txt
+    #     file_path = os.path.abspath("../elements_texts.txt")
+    #     # 将排除以及去重之后待比对的页面文案保存至文件中
+    #     self.save_texts_to_file(texts, file_path, exclude_texts)
+    #     logger.info(f"文本内容已保存到{file_path}文件中。")
+    #     # 统计获取到的页面功能名称数量
+    #     fun_num = self.count_lines_in_file(file_path)
+    #     logger.info(f"统计获取到的页面功能名称数量：{fun_num}")
+    #
+    #     # 读取elements_texts.txt文件的页面功能：
+    #     with open(file_path, 'r', encoding='utf-8') as file2:
+    #         file2_content = file2.readlines()
+    #
+    #     # 计算预期设备的预期页面的预期文案数量
+    #     count = len(expected_text)
+    #     logger.info(f"预期设备的预期页面的预期文案数量：{count}")
+    #
+    #     for line in expected_text:
+    #         if line not in file2_content or fun_num != count:
+    #             logger.info("功能可能不齐全！需要人工核查！")
+    #             return False
+    #     logger.info("功能比对齐全！")
+    #     return True
     @staticmethod
-    def save_texts_to_file(texts, file_path, exclude_texts=None):
+    def parse_and_extract_text(xml_content, exclude_texts=None):
         """
-        将文本内容及其数量统计结果写入TXT文件
-        :param texts: 文本内容列表
-        :param file_path: TXT文件路径
-        :param exclude_texts: 要排除的文本内容列表
+        解析并提取XML指定文本内容，必要时候，你可能需要更新当前方法的解析条件。
+        :param xml_content: 获取的xml内容
+        :param exclude_texts: 需要排除的文本
+        :return:
         """
         if exclude_texts is None:
             exclude_texts = []
 
-        # 排除指定的文本，并确保唯一性
-        unique_texts = set(text for text in texts if text not in exclude_texts)
+        texts = set()
 
-        with open(file_path, 'w', encoding='utf-8') as f:
-            for text in sorted(unique_texts):
-                f.write(f"{text}\n")
+        root = ET.fromstring(xml_content)
+        for elem in root.iter():
+            if (elem.attrib.get('package') == "com.mcu.reolink" and
+                    elem.attrib.get('class') == "android.widget.TextView" and
+                    elem.attrib.get('index') == "0" and
+                    elem.attrib.get('text') != "" and
+                    elem.attrib.get('resource-id') != 'com.mcu.reolink:id/device_name_tv' and
+                    elem.attrib.get('enabled') == "true"):
+                text = elem.attrib.get('text')
+                if text and text not in exclude_texts:
+                    texts.add(text)
 
-    @staticmethod
-    def count_lines_in_file(file_path):
+        return texts
+
+    def get_all_elements_texts1(self, exclude_texts, max_scrolls=2, scroll_pause=1):
         """
-        统计TXT文件中的总行数，不包含空行
-        :param file_path: TXT文件路径
-        :return: 总行数
+        获取当前页面的所有元素的text文本内容，并将去重后的XML内容写入文件
+        :param exclude_texts: 需要排除的文本内容
+        :param max_scrolls: 最大滚动次数
+        :param scroll_pause: 滚动后的暂停时间
+        :return: 文本内容列表
         """
-        with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
-            lines = f.readlines()
-            non_empty_lines = [line for line in lines if line.strip()]
-            print(len(non_empty_lines) - 2)  # 这里的减2在换了手机后可能需要实时调整因为识别出来的元素可能会多，也可能会少
-        return len(non_empty_lines) - 2
+        all_texts = set()
+
+        for _ in range(max_scrolls):
+            # 获取页面的 XML 结构
+            page_source = self.driver.dump_hierarchy()
+            logger.info("已获取页面XML")
+
+            # 解析XML并提取指定的文本内容
+            texts = self.parse_and_extract_text(
+                page_source,
+                exclude_texts=exclude_texts
+            )
+            all_texts.update(texts)
+
+            # 滑动屏幕
+            driver.swipe_ext("up")
+            time.sleep(scroll_pause)  # 等待页面稳定
+
+        # 将去重后的文本内容写入文件
+        output_path = os.path.abspath("../elements_texts.txt")
+        with open(output_path, 'w', encoding='utf-8') as f:
+            for text in sorted(all_texts):
+                f.write(text + '\n')
+
+        # 统计非空行数
+        with open(output_path, 'r', encoding='utf-8') as f:
+            non_empty_lines = sum(1 for line in f if line.strip())
+
+        print(f"总非空行数: {non_empty_lines}")
+
+        return list(all_texts)
 
     def verify_page_text(self, expected_text, exclude_texts):
         # 获取页面所有功能名称
-        texts = self.get_all_elements_texts()
-        # 定义文件路径，需要校验的内容保存到根目录下的elements_texts.txt
-        file_path = os.path.abspath("../elements_texts.txt")
-        # 将排除以及去重之后待比对的页面文案保存至文件中
-        self.save_texts_to_file(texts, file_path, exclude_texts)
-        logger.info(f"文本内容已保存到{file_path}文件中。")
-        # 统计获取到的页面功能名称数量
-        fun_num = self.count_lines_in_file(file_path)
-        logger.info(f"统计获取到的页面功能名称数量：{fun_num}")
+        texts = self.get_all_elements_texts1(exclude_texts)
+        print(f"获取的页面所有功能名称: {texts}")
+
+        # file_path = os.path.abspath("../elements_texts.txt")
 
         # 读取elements_texts.txt文件的页面功能：
-        with open(file_path, 'r', encoding='utf-8') as file2:
-            file2_content = file2.readlines()
+        # with open(file_path, 'r', encoding='utf-8') as file2:
+        #     file2_content = file2.readlines()
+
+        # 计算当前页面获取到的功能数量
+        page_fun_num = len(texts)
+        print(f"当前页面获取到的功能数量：{page_fun_num}")
 
         # 计算预期设备的预期页面的预期文案数量
         count = len(expected_text)
         logger.info(f"预期设备的预期页面的预期文案数量：{count}")
 
         for line in expected_text:
-            if line not in file2_content or fun_num != count:
+            if line not in texts or page_fun_num != count:
                 logger.info("功能可能不齐全！需要人工核查！")
                 return False
         logger.info("功能比对齐全！")
         return True
 
-    def read_device_file(self, device_path):
+    def read_phone_file(self, device_path):
         """
         读取手机中的文件内容
         :param device_path: 设备中的文件路径
