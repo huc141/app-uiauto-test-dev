@@ -325,71 +325,30 @@ def get_all_elements_texts(driver, max_scrolls=2, scroll_pause=1):
     :param driver: uiautomator2的Device对象
     :return: 文本内容列表
     """
-    texts = set()
+    xml_content_set = set()
 
     for _ in range(max_scrolls):
         # 获取页面的 XML 结构
         page_source = driver.dump_hierarchy()
         print(page_source)
 
-        # 解析 XML 并提取所有元素的文本内容
-        root = ET.fromstring(page_source)
-
-        def parse_element(element):
-            text = element.attrib.get('text', '').strip()
-            if text:
-                texts.add(text)
-            for child in element:
-                parse_element(child)
-
-        parse_element(root)
+        # 将每次读取的xml内容添加到集合中
+        xml_content_set.add(page_source)
 
         # 滑动屏幕
         driver.swipe_ext("up")
         time.sleep(scroll_pause)  # 等待页面稳定
 
-    return list(texts)
+        # 将每次读取的xml内容追加到文件中
+    with open("D:\\app-uiauto-test-dev\\debug\\destination4.xml", 'a', encoding='utf-8') as f:
+        for xml_content in xml_content_set:
+            f.write(xml_content + '\n')
 
-
-def save_texts_to_file(texts, file_path, exclude_texts=None):
-    """
-    将文本内容及其数量统计结果写入TXT文件
-    :param texts: 文本内容列表
-    :param file_path: TXT文件路径
-    :param exclude_texts: 要排除的文本内容列表
-    """
-    if exclude_texts is None:
-        exclude_texts = []
-
-    # 排除指定的文本，并确保唯一性
-    unique_texts = set(text for text in texts if text not in exclude_texts)
-
-    with open(file_path, 'w', encoding='utf-8') as f:
-        for text in sorted(unique_texts):
-            f.write(f"{text}\n")
-
-
-def count_lines_in_file(file_path):
-    """
-    统计TXT文件中的总行数，不包含空行
-    :param file_path: TXT文件路径
-    :return: 总行数
-    """
-    with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
-        lines = f.readlines()
-        non_empty_lines = [line for line in lines if line.strip()]
-        print(len(non_empty_lines)-1)
-    return len(non_empty_lines)-1
+    return list(xml_content_set)
 
 
 # 使用示例
 if __name__ == "__main__":
     driver = u2.connect_usb("28131FDH2000K1")
     texts = get_all_elements_texts(driver, max_scrolls=2)
-    exclude_texts = ['开', '关', '设置', 'Reolink TrackMix WiFi', '报警设置', '报警通知', '更多', '0', '退出登录设备',
-                     '删除']  # 替换为你想要排除的文本
-    save_texts_to_file(texts, 'elements_texts.txt', exclude_texts)
-    print("文本内容及其数量统计结果已保存到elements_texts.txt文件中。")
-    file_path = "elements_texts.txt"
-    count_lines_in_file(file_path)
-
+    print(f"共获取到 {len(texts)} 段XML内容")

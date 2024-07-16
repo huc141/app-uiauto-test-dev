@@ -7,7 +7,6 @@ import tidevice
 from tidevice import Device
 import wda
 
-
 # driver = u2.connect_usb("28131FDH2000K1")
 
 
@@ -41,26 +40,26 @@ import wda
 #     :param device_path: iPhone 设备中的文件路径
 #     :return: 文件内容
 #     """
-    # 连接设备
-    # device = tidevice.Device(device_udid)
+# 连接设备
+# device = tidevice.Device(device_udid)
 
-    # 使用 fsync cat 命令读取文件内容
-    # file_content = device.fsync("cat", device_path)
-    # os.system("tidevice fsync push H:\\app-uiauto-test-dev\\debug\\destination.xml /Downloads/destination.xml")
-    # os.system("tidevice fsync tree /Downloads/")
-    # file_content = os.system("tidevice fsync cat /Downloads/destination.xml")
-    # content = file_content.decode('utf-8')
+# 使用 fsync cat 命令读取文件内容
+# file_content = device.fsync("cat", device_path)
+# os.system("tidevice fsync push H:\\app-uiauto-test-dev\\debug\\destination.xml /Downloads/destination.xml")
+# os.system("tidevice fsync tree /Downloads/")
+# file_content = os.system("tidevice fsync cat /Downloads/destination.xml")
+# content = file_content.decode('utf-8')
 
-    # command = f"tidevice fsync cat {device_path}"
-    #
-    # # 执行命令并捕获输出
-    # process = subprocess.run(command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-    #                          encoding='utf-8', errors='ignore')
-    # if process.returncode == 0:
-    #     return process.stdout
-    # else:
-    #     print(f"读取文件失败: {process.stderr}")
-    #     return None
+# command = f"tidevice fsync cat {device_path}"
+#
+# # 执行命令并捕获输出
+# process = subprocess.run(command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+#                          encoding='utf-8', errors='ignore')
+# if process.returncode == 0:
+#     return process.stdout
+# else:
+#     print(f"读取文件失败: {process.stderr}")
+#     return None
 
 
 # 示例用法
