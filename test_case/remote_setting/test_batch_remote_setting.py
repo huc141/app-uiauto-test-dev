@@ -5,7 +5,6 @@ from pages.rn_device_setting_page.remote_setting import RemoteSetting
 from common_tools.read_yaml import read_yaml
 from common_tools.assert_ui import assertui
 
-
 devices_config = read_yaml.devices_config  # 读取参数化文件
 
 
@@ -22,8 +21,10 @@ class TestRemoteSetting:
         RemoteSetting().scroll_click_remote_setting(device_name=device_config['name'])
 
         # 读取预期功能项并遍历，与获取到的功能项进行一一比对和数量核对
-        RemoteSetting().check_remote_setting_text(remote_setting_page["expected_texts"],
-                                                  remote_setting_page["excluded_texts"])
-
+        page_fun = RemoteSetting().check_remote_setting_text(remote_setting_page["expected_texts"],
+                                                             remote_setting_page["excluded_texts"],
+                                                             remote_setting_page["xml_az_parse_conditions"],
+                                                             remote_setting_page["xml_ios_parse_conditions"]
+                                                             )
         # 断言
-        assert True
+        assert page_fun is True
