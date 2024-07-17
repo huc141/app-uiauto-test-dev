@@ -73,8 +73,11 @@ import wda
 #         print("文件内容如下：")
 #         print(content)
 # 获取指定路径的绝对路径
-path = "../elements_texts.txt"
+path = "./elements_texts.txt"
 abs_path = os.path.abspath(path)
+
+output_path = os.path.abspath("./elements_texts.txt")
 
 # 输出绝对路径
 print(abs_path)
+print(output_path)
