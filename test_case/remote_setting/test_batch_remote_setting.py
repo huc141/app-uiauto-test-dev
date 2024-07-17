@@ -3,9 +3,8 @@ import pytest
 from common_tools.app_driver import driver
 from pages.rn_device_setting_page.remote_setting import RemoteSetting
 from common_tools.read_yaml import read_yaml
-from common_tools.assert_ui import assertui
 
-devices_config = read_yaml.devices_config  # 读取参数化文件
+devices_config = read_yaml.devices_main_remote_setting_config  # 读取参数化文件
 
 
 class TestRemoteSetting:
