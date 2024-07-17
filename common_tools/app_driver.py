@@ -29,7 +29,7 @@ class Driver:
             return self._driver
 
         while True:
-            str1 = input("请输入数字选择：1 使用uiautomator2测试安卓，2 使用Facebook-wda测试iOS: ")
+            str1 = input("请输入数字选择：1 使用uiautomator2测试安卓，2 使用Facebook-wda测试iOS(!!!先确认yml文件中的APP包名!!!): ")
             if str1 == '1':
                 print(f"你输入了：{str1}，现在启动uiautomator2")
                 logger.info("开始USB连接手机")
