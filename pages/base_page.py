@@ -464,8 +464,7 @@ class BasePage:
         logger.info(f"还是没找到 '{text_to_find}' 元素，已经尝试了 {max_attempts} 次.")
         return False
 
-    @staticmethod
-    def parse_and_extract_text(xml_content, xml_parse_conditions, exclude_texts=None):
+    def parse_and_extract_text(self, xml_content, xml_parse_conditions, exclude_texts=None):
         """
         解析并提取XML指定文本内容（先这样写）
         :param xml_parse_conditions: iOS或安卓的xml解析条件，取自yaml文件
@@ -491,12 +490,12 @@ class BasePage:
                     match = False
                     break
             if match:
-                text = elem.attrib.get('text')
+                text = elem.attrib.get('text') if self.platform == "android" else elem.attrib.get('label')
                 if text and text not in exclude_texts:
                     texts.add(text)
         return texts
 
-    def get_all_elements_texts(self, exclude_texts, xml_az_parse_conditions, xml_ios_parse_conditions, max_scrolls=2,
+    def get_all_elements_texts(self, exclude_texts, xml_az_parse_conditions, xml_ios_parse_conditions, max_scrolls=1,
                                scroll_pause=1):
         """
         获取当前页面xml文件，解析出当前页面所有功能文案
