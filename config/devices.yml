@@ -30,6 +30,20 @@ devices:
           - "删除"
           - "布防"
           - "通道"
+        xml_az_parse_conditions:
+          package: "com.mcu.reolink"
+          class: "android.widget.TextView"
+          index: "0"
+          enabled: "true"
+          text: {not_equal: ""}
+          resource-id: {not_equal: "com.mcu.reolink:id/device_name_tv"}
+        xml_ios_parse_conditions:
+          package: "com.reo.link"
+          class: "android.widget.TextView"
+          index: "0"
+          enabled: "true"
+          label: ""
+          resource-id: "com.reo.link:id/device_name_tv"
   device2:
     name: "Reolink TrackMix WiFi"
     pages:
@@ -61,3 +75,17 @@ devices:
           - "删除"
           - "布防"
           - "通道"
+        xml_az_parse_conditions:
+          package: "com.mcu.reolink"
+          class: "android.widget.TextView"
+          index: "0"
+          enabled: "true"
+          text: { not_equal: "" }
+          resource-id: { not_equal: "com.mcu.reolink:id/device_name_tv" }
+        xml_ios_parse_conditions:
+          package: "com.reo.link"
+          class: "android.widget.TextView"
+          index: "0"
+          enabled: "true"
+          label: ""
+          resource-id: "com.reo.link:id/device_name_tv"
