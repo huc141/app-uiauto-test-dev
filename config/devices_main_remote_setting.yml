@@ -1,5 +1,34 @@
 devices:
   device1:
+    name: "small Home Hub"
+    pages:
+      page_remote_setting:
+        expected_texts:
+          - "设置"
+          - "事件消息"
+          - "文件加密"
+          - "small Home Hub"
+          - "设备"
+          - "编辑"
+          - "Reolink Video Doorbell WiFi"
+        excluded_texts:
+          - "开"
+          - "关"
+          - "报警设置"
+          - "报警通知"
+          - "更多"
+          - "0"
+          - "退出登录设备"
+          - "删除"
+          - "布防"
+          - "通道"
+        xml_az_parse_conditions:
+          package: "com.mcu.reolink"
+          class: "android.widget.TextView"
+        xml_ios_parse_conditions:
+          package: "com.reo.link"
+          class: "android.widget.TextView"
+  device2:
     name: "FE-W"
     pages:
       page_remote_setting:
@@ -44,7 +73,7 @@ devices:
           enabled: "true"
           label: ""
           resource-id: "com.reo.link:id/device_name_tv"
-  device2:
+  device3:
     name: "Reolink TrackMix WiFi"
     pages:
       page_remote_setting:
