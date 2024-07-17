@@ -1,20 +1,17 @@
-from appium import webdriver
-from appium.options.android import UiAutomator2Options
+import os
+import time
+import uiautomator2 as u2
+import xml.etree.ElementTree as ET
+from common_tools.logger import logger
 
-appium_server_url = 'http://localhost:4723'
-capabilities = {
-    'platformName': 'Android',
-    'automationName': 'uiautomator2',
-    'deviceName': '127.0.0.1:62001',
-    'appPackage': 'com.mcu.reolink',
-    'appActivity': 'com.android.bc.MainActivity'
-}
-capabilities_options = UiAutomator2Options().load_capabilities(capabilities)
+driver = u2.connect_usb("28131FDH2000K1")
+
+driver(text="显示").click()
 
 
-def test_driver():
-    webdriver.Remote(command_executor=appium_server_url, options=capabilities_options)
-    # webdriver.Remote(appium_server_url, options=UiAutomator2Options().load_capabilities(capabilities))
 
 
-test_driver()
+
+# 使用示例
+# if __name__ == "__main__":
+#     driver = u2.connect_usb("28131FDH2000K1")
