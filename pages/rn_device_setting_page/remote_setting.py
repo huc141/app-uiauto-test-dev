@@ -19,7 +19,7 @@ class RemoteSetting(BasePage):
         :param xml_az_parse_conditions: 安卓的远程配置主(一级)页面解析条件，用于排除无关文本，筛选出页面功能
         :param xml_ios_parse_conditions: iOS的远程配置主(一级)页面解析条件，用于排除无关文本，筛选出页面功能
         :param expected_text: 需要检查的预期文本
-        :param exclude_texts: 需要排除的文本
+        :param exclude_texts: 需要排除的文本(额外添加需要排除的文本)
         :return:
         """
         return self.verify_page_text(expected_text=expected_text,
