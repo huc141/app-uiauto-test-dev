@@ -27,7 +27,6 @@ devices:
           class: "android.widget.TextView"
         xml_ios_parse_conditions:
           package: "com.reo.link"
-          class: "android.widget.TextView"
   device2:
     name: "FE-W"
     pages:
@@ -71,8 +70,8 @@ devices:
           class: "android.widget.TextView"
           index: "0"
           enabled: "true"
-          label: ""
-          resource-id: "com.reo.link:id/device_name_tv"
+          label: { not_equal: "" }
+          resource-id: { not_equal: "com.mcu.reolink:id/device_name_tv" }
   device3:
     name: "Reolink TrackMix WiFi"
     pages:
@@ -116,5 +115,5 @@ devices:
           class: "android.widget.TextView"
           index: "0"
           enabled: "true"
-          label: ""
-          resource-id: "com.reo.link:id/device_name_tv"
+          label: { not_equal: "" }
+          resource-id: { not_equal: "com.mcu.reolink:id/device_name_tv" }
