@@ -25,10 +25,18 @@ devices:
         xml_az_parse_conditions:
           package: "com.mcu.reolink"
           class: "android.widget.TextView"
+          index: "0"
+          enabled: "true"
+          text: { not_equal: "" }
+          resource-id: { not_equal: "com.mcu.reolink:id/device_name_tv" }
         xml_ios_parse_conditions:
-          package: "com.reo.link"
+          type: "XCUIElementTypeStaticText"
+          index: "0"
+          label: {not_equal: ""}
+          x: {not_equal: "0"}
+          accessible: {not_equal: "false"}
   device2:
-    name: "FE-W"
+    name: "FE-W2"
     pages:
       page_remote_setting:
         expected_texts:
@@ -58,6 +66,7 @@ devices:
           - "删除"
           - "布防"
           - "通道"
+          - "FE-W2"
         xml_az_parse_conditions:
           package: "com.mcu.reolink"
           class: "android.widget.TextView"
@@ -66,14 +75,11 @@ devices:
           text: {not_equal: ""}
           resource-id: {not_equal: "com.mcu.reolink:id/device_name_tv"}
         xml_ios_parse_conditions:
-          package: "com.reo.link"
-          class: "android.widget.TextView"
+          type: "XCUIElementTypeStaticText"
           index: "0"
-          enabled: "true"
-          label: { not_equal: "" }
-          resource-id: { not_equal: "com.mcu.reolink:id/device_name_tv" }
+          accessible: { not_equal: "false" }
   device3:
-    name: "Reolink TrackMix WiFi"
+    name: "Reolink TrackMix WiFi2"
     pages:
       page_remote_setting:
         expected_texts:
@@ -103,6 +109,7 @@ devices:
           - "删除"
           - "布防"
           - "通道"
+          - "Reolink TrackMix WiFi2"
         xml_az_parse_conditions:
           package: "com.mcu.reolink"
           class: "android.widget.TextView"
@@ -111,9 +118,6 @@ devices:
           text: { not_equal: "" }
           resource-id: { not_equal: "com.mcu.reolink:id/device_name_tv" }
         xml_ios_parse_conditions:
-          package: "com.reo.link"
-          class: "android.widget.TextView"
+          type: "XCUIElementTypeStaticText"
           index: "0"
-          enabled: "true"
-          label: { not_equal: "" }
-          resource-id: { not_equal: "com.mcu.reolink:id/device_name_tv" }
+          accessible: { not_equal: "false" }
