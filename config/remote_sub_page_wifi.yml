@@ -2,6 +2,7 @@ devices:
   device1:
     name: "Reolink TrackMix WiFi001"
     uid: "952700Y006ZP1IJ5"
+    model_type: "Reolink TrackMix WiFi"
     pages:
       sub_page_wifi:
         expected_page_title: "Wi-Fi"
@@ -46,8 +47,8 @@ devices:
           type: "XCUIElementTypeStaticText"
           index: "0"
           accessible: { not_equal: "false" }
-      page_choose_network_access_method:
-        page_title: "选择网络访问方式"
+      sub_page_wifi_speed_test:
+        page_title: "Wi-Fi Speed Test"
         expected_texts:
           - "Wi-Fi"
           - "以太网"
@@ -85,8 +86,9 @@ devices:
           index: "0"
           accessible: { not_equal: "false" }
   device2:
-    name: "Reolink TrackMix WiFi002"
+    name: "FE-W"
     uid: "952700Y006ZP1IJ2"
+    model_type: "FE-W"
     pages:
       page_remote_setting:
         page_title: "远程设置"
@@ -168,8 +170,9 @@ devices:
           index: "0"
           accessible: { not_equal: "false" }
   device3:
-    name: "Reolink TrackMix WiFi003"
+    name: "small Home Hub"
     uid: "952700Y006ZP1IJ3"
+    model_type: "Reolink Home Hub"
     pages:
       page_remote_setting:
         page_title: "远程设置"
