@@ -495,7 +495,7 @@ class BasePage:
                     texts.add(text)
         return texts
 
-    def get_all_elements_texts(self, exclude_texts, xml_az_parse_conditions, xml_ios_parse_conditions, max_scrolls=1,
+    def get_all_elements_texts(self, exclude_texts, xml_az_parse_conditions, xml_ios_parse_conditions, max_scrolls=2,
                                scroll_pause=1):
         """
         获取当前页面xml文件，解析出当前页面所有功能文案
