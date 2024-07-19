@@ -1,0 +1,155 @@
+model: 'RLC-510A'
+desc: '设置>显示'
+page:
+  desc: '显示页面菜单'
+  nav_list:
+    - '垂直翻转'
+    - '水平翻转'
+    - '码流'
+    - '抗闪烁'
+    - '白天和黑夜'
+    - '亮度'
+    - '设备名称'
+    - '日期'
+    - '水印'
+    - '遮盖区域'
+    - '高级设置'
+    - '明暗设置'
+stream:
+  desc: '码流'
+  stream_mode:
+    desc: '码流模式'
+    clear:
+      desc: '清晰'
+      resolution:
+        desc: '分辨率'
+        default: '2560*1920'
+        options:
+          - '2560*1920'
+          - '2560*1440'
+          - '2560*1440'
+          - '2560*1440'
+      frame_rate:
+        desc: '帧率(fps)'
+        default: '30'
+        options:
+          - '30(默认)'
+          - '25'
+          - '22'
+          - '20'
+          - '18'
+          - '16'
+          - '15'
+          - '12'
+          - '10'
+          - '8'
+          - '6'
+          - '4'
+          - '2'
+      max_bit_rate:
+        desc: '最大码率(kbps)'
+        default: '6144'
+        options:
+          - '1536'
+          - '2048'
+          - '3072'
+          - '4096'
+          - '5120'
+          - '6144(默认)'
+          - '7168'
+          - '8192'
+      encoding_format:
+        desc: '编码格式'
+        default: 'H.264'
+        options:
+          - 'H.264'
+          - 'H.265'
+    fluent:
+      desc: '流畅'
+      resolution:
+        desc: '分辨率'
+        default: '640*480'
+        options:
+          - '640*480'
+      frame_rate:
+        desc: '帧率(fps)'
+        default: '10'
+        options:
+          - '15'
+          - '10(默认)'
+          - '7'
+          - '4'
+      max_bit_rate:
+        desc: '最大码率(kbps)'
+        default: '256'
+        options:
+          - '64'
+          - '128'
+          - '160'
+          - '192'
+          - '256(默认)'
+          - '384'
+          - '512'
+  frame_rate_mode:
+    desc: '帧率控制'
+    default: '自动'
+    options:
+      - '自动'
+      - '恒定'
+  bit_rate_mode:
+    desc: '码率模式'
+    default: '动态码率'
+    options:
+      - '固定码率'
+      - '动态码率'
+anti_flicker:
+  desc: '抗闪烁'
+  default: '50HZ'
+  options:
+    - '50HZ'
+    - '60HZ'
+    - '其他'
+    - '关闭'
+day_and_night:
+  desc: '白天和黑夜'
+  default: '自动'
+  options:
+    - '黑白'
+    - '彩色'
+    - '自动'
+device_name:
+  desc: '设备名称'
+  default: '右下'
+  options:
+    - '左上'
+    - '中上'
+    - '右上'
+    - '左下'
+    - '中下'
+    - '右下'
+    - '隐藏'
+date:
+  desc: '日期'
+  default: '中上'
+  options:
+    - '左上'
+    - '中上'
+    - '右上'
+    - '左下'
+    - '中下'
+    - '右下'
+    - '隐藏'
+advanced_setting:
+  desc: '高级设置'
+  nav:
+    - '阈值'
+bright_shade_setting:
+  desc: '明暗设置'
+  options:
+    - '白天彩色'
+    - '黑白'
+
+
+
+
+
