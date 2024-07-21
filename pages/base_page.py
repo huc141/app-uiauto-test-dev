@@ -292,7 +292,7 @@ class BasePage:
         except Exception as err:
             logger.error(f"内容 {err} 输入失败···")
 
-    def scroll_and_click_by_text(self, el_type, text_to_find, max_attempts=15, scroll_pause=0.5):
+    def scroll_and_click_by_text(self, text_to_find, el_type='text', max_attempts=5, scroll_pause=0.5):
         """
         在可滚动视图中查找并点击指定文本或xpath的元素。
         :param el_type: 元素定位类型，支持文本text(label)和xpath
@@ -305,42 +305,29 @@ class BasePage:
 
         try:
             if self.platform == "android":
-                # 根据类型初始化查找元素
-                if el_type == "text":
-                    element = self.driver(text=text_to_find)
-                    # 尝试直接滚动到指定文本
-                    logger.info(f"Attempting to scroll to '{text_to_find}' directly.")
-                    is_find = self.driver(scrollable=True).scroll.to(text=text_to_find)
-                elif el_type == "xpath":
-                    element = self.driver.xpath(text_to_find)
-                    self.driver(scrollable=True).fling.vert.toBeginning(max_swipes=1000)  # 滑动至顶部
-                else:
-                    raise ValueError("你可能输入了不支持的元素查找类型···")
-
-                # 检查元素是否存在
-                if element.exists:
-                    logger.info(f"元素已找到: '{text_to_find}'")
-                    element.click()
-                    logger.info(f"Clicked on '{text_to_find}' directly.")
-                    return True
 
                 # 如果直接滚动未找到，则尝试多次滚动查找
-                while attempt < max_attempts and not is_find:
-                    logger.info(f"Scrolling to find '{text_to_find}'... 第{attempt + 1}次")
-                    self.driver(scrollable=True).scroll(steps=200)
-                    time.sleep(scroll_pause)  # 等待页面稳定
-
-                    # 重新检查元素是否存在
-                    if type == "text":
+                while attempt < max_attempts:
+                    # 根据类型初始化查找元素
+                    if el_type == "text":
                         element = self.driver(text=text_to_find)
-                    elif type == "xpath":
+                    elif el_type == "xpath":
                         element = self.driver.xpath(text_to_find)
+                        # self.driver(scrollable=True).fling.vert.toBeginning(max_swipes=1000)  # 滑动至顶部
+                    else:
+                        raise ValueError("你可能输入了不支持的元素查找类型···")
 
+                    # 检查元素是否存在
                     if element.exists:
                         logger.info(f"元素已找到: '{text_to_find}'")
                         element.click()
-                        logger.info(f"Clicked on '{text_to_find}' after {attempt + 1} attempts.")
+                        logger.info(f"Clicked on '{text_to_find}' directly.")
                         return True
+
+                    # 滑动屏幕
+                    logger.info(f"Scrolling to find '{text_to_find}'... 第{attempt + 1}次")
+                    self.driver(scrollable=True).scroll(steps=150)
+                    time.sleep(scroll_pause)  # 等待页面稳定
 
                     attempt += 1
 
@@ -354,7 +341,7 @@ class BasePage:
                     else:
                         raise ValueError("你可能输入了不支持的元素查找类型···")
 
-                    # 尝试查找元素
+                    # 尝试查找元素并点击
                     if element.exists:
                         logger.info(f"元素已找到: '{text_to_find}'")
                         element.click()
