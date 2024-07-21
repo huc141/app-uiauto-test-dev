@@ -1,7 +1,7 @@
-model: 'RLC-510A'
+model: 'Reolink TrackMix WiFi'
 desc: '设置>显示'
 page:
-  desc: '显示页面菜单'
+  page_title: '显示'
   nav_list:
     - '垂直翻转'
     - '水平翻转'
@@ -16,13 +16,13 @@ page:
     - '高级设置'
     - '明暗设置'
 stream:
-  desc: '码流'
+  page_title: '码流'
   stream_mode:
     desc: '码流模式'
     clear:
-      desc: '清晰'
+      page_title: '清晰'
       resolution:
-        desc: '分辨率'
+        page_title: '分辨率'
         default: '2560*1920'
         options:
           - '2560*1920'
@@ -30,7 +30,7 @@ stream:
           - '2560*1440'
           - '2560*1440'
       frame_rate:
-        desc: '帧率(fps)'
+        page_title: '帧率(fps)'
         default: '30'
         options:
           - '30(默认)'
@@ -47,7 +47,7 @@ stream:
           - '4'
           - '2'
       max_bit_rate:
-        desc: '最大码率(kbps)'
+        page_title: '最大码率(kbps)'
         default: '6144'
         options:
           - '1536'
@@ -59,13 +59,13 @@ stream:
           - '7168'
           - '8192'
       encoding_format:
-        desc: '编码格式'
+        page_title: '编码格式'
         default: 'H.264'
         options:
           - 'H.264'
           - 'H.265'
     fluent:
-      desc: '流畅'
+      page_title: '流畅'
       resolution:
         desc: '分辨率'
         default: '640*480'
