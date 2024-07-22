@@ -36,19 +36,23 @@ class ReadYaml:
                                                                 source="devices_main_remote_setting")  # 获取设备配置
 
         # 定义一个函数来加载指定设备文件夹中的 YAML 文件
-        def load_wifi_parse_xml(device_dir):
-            yaml_file_path = os.path.join(device_dir, 'wifi_parse_xml.yml')
-            with open(yaml_file_path, 'r', encoding='utf-8') as file:
-                return yaml.safe_load(file)
+        def load_device_config(device_dir):
+            wifi_parse_xml_path = os.path.join(device_dir, 'wifi_parse_xml.yml')
+            wifi_path = os.path.join(device_dir, 'wifi.yml')
 
-        def load_wifi_sub_page(device_dir):
-            yaml_file_path = os.path.join(device_dir, 'wifi.yml')
-            with open(yaml_file_path, 'r', encoding='utf-8') as file:
-                return yaml.safe_load(file)
+            with open(wifi_parse_xml_path, 'r', encoding='utf-8') as wifi_parse_xml_file:
+                wifi_parse_xml_config = yaml.safe_load(wifi_parse_xml_file)
+
+            with open(wifi_path, 'r', encoding='utf-8') as wifi_file:
+                wifi_config = yaml.safe_load(wifi_file)
+
+            # 合并两个配置文件的内容
+            return {**wifi_parse_xml_config, **wifi_config}
 
         # 加载所有设备的 YAML 文件内容
-        self.wifi_configs = [load_wifi_parse_xml(device_dir) for device_dir in device_dirs]
-        self.wifi_sub_pages = [load_wifi_sub_page(device_dir) for device_dir in device_dirs]
+        self.device_configs = [load_device_config(device_dir) for device_dir in device_dirs]
+        # self.wifi_configs = [load_wifi_parse_xml(device_dir) for device_dir in device_dirs]
+        # self.wifi_sub_pages = [load_wifi_sub_page(device_dir) for device_dir in device_dirs]
 
     def get_data(self, key: str, default: str = '', source: str = 'phone') -> str:
         """Get specific config"""

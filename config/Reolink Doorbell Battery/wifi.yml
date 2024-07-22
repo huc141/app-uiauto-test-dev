@@ -1,16 +1,8 @@
-model: 'device2'
-desc: 'device2-desc'
+model: 'Reolink Doorbell Battery'
+desc: '设置>Wi-Fi'
 page:
   page_title: 'Wi-Fi'
   nav_list:
-    - item: 'Wi-Fi 频段偏好'
-      default: '自动'
-      option:
-        - '自动'
-        - '仅 5G'
-        - '仅 2.4G'
-        - '取消'
-      expected_result: []
     - item: 'Wi-Fi测速'
       default: []
       option:

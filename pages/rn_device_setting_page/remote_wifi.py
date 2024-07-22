@@ -49,7 +49,7 @@ class RemoteWiFi(BasePage):
             self.scroll_and_click_by_text('Wi-Fi')
 
     def check_remote_wifi_text(self, expected_text, exclude_texts,
-                                  xml_az_parse_conditions, xml_ios_parse_conditions):
+                               xml_az_parse_conditions, xml_ios_parse_conditions):
         """
         根据设备名，检查对应设备的远程配置功能是否和预期一致
         :param xml_az_parse_conditions: 安卓的远程配置页面解析条件，用于排除无关文本，筛选出页面功能
@@ -63,3 +63,25 @@ class RemoteWiFi(BasePage):
                                      xml_az_parse_conditions=xml_az_parse_conditions,
                                      xml_ios_parse_conditions=xml_ios_parse_conditions
                                      )
+
+    def access_in_wifi_band_preference(self):
+        """
+        进入wifi频段偏好页面
+        :return:
+        """
+        pass
+
+    def access_in_wifi_test(self):
+        """
+        进入wifi测试页面
+        :return:
+        """
+        pass
+
+    def access_in_add_network(self):
+        """
+        进入添加其他网络页面
+        :return:
+        """
+        pass
+
