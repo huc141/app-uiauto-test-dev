@@ -1,6 +1,6 @@
-device_list_name: "yulong-test-sd7"
+device_list_name: "device2-list-name"
 sub_name: ""
-access_mode: "single"
+access_mode: "in_hub"
 uid: "952700Y006ZP1IJ5"
 desc: '设置>Wi-Fi'
 sub_pages:
