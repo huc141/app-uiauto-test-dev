@@ -18,7 +18,7 @@ class RemoteWiFi(BasePage):
         """
         进入指定设备的远程配置的wifi页面.
         接入hub、nvr的设备名称在命名时不能过长导致省略隐藏。
-        :param device_name: 单机设备、hub、nvr的昵称(不是接入hub、nvr下的设备昵称)。
+        :param device_name: 设备列表里单机设备、hub、nvr的昵称。
         :param sub_name: 若设备接入了hub、nvr设备下的话，则该名称必填。
         :param access_mode: 设备接入方式，支持single、in_hub、in_nvr。明确设备是单机还是接入NVR下、接入hub下。
         :return:
