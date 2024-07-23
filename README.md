@@ -26,7 +26,60 @@
 15. [run.py](run.py)：
 16. [shared_v_name.txt](shared_v_name.txt)：录屏文件名，暂时先这样用。
 
+## yaml配置文件编写规范：
+- name：（必需）配置项名称
+- key：（可选）配置项唯一标识符，可以为空不用写
+- desc：（必需）配置项的描述，通常包括其功能和用途，以及入口路径
+- type：（必需）配置项的类型，说明其在界面的表现形式
+    - page：表示一个页面
+    - navigation：导航菜单，点击可以进入下一级页面
+    - switch：开关类型，点击开启或关闭
+    - popup：弹出菜单，点击显示选项列表
+    - text：纯文本显示，点击无反应
+    - checkbox: 多选按钮，点击选中或取消选中
+- items：（可选）当配置项类型为 `page` 时使用，列出子配置项
+- options：（可选）当配置项为`popup`或`checkbox`时使用，列出用户可以选择的选项
+- children：（可选）当配置项类型为 `navigation` 时使用，定义子级页面
 
+
+```yaml
+name: '主页面'
+key: 'main_page'
+desc: '这是主页面，包含多个菜单项'
+type: 'page'
+items:
+  - name: '菜单名称1'
+    key: 'popup_type_menu_name'
+    desc: '点击后出现弹窗的菜单'
+    type: 'popup'
+    options:
+      - '选项a'
+      - '选项b'
+  - name: '菜单名称2'
+    key: 'checkbox_type_menu_name'
+    desc: '点击后出现弹窗的菜单'
+    type: 'checkbox'
+    options:
+      - '选项a'
+      - '选项b'
+  - name: '菜单名称3'
+    key: 'switch_type_menu_name'
+    desc: '点击后切换开关状态的菜单'
+    type: 'switch'
+  - name: '菜单名称4'
+    key: 'text_type_menu_name'
+    desc: '点击后无反应，仅显示文本信息的菜单'
+    type: 'text'
+  - name: '菜单名称5'
+    key: 'nav_type_menu_name'
+    desc: '点击后跳转到子页面的菜单'
+    type: 'navigation'
+    children:
+      name: '子页面'
+      desc: '子级页面的说明'
+      type: 'page'
+
+```
 
 ## APP的UI自动化测试目的
 APP自动化测试的主要目的包括但不限于以下几点：
