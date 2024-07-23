@@ -1,0 +1,179 @@
+# 页面定义
+pages:
+  - name: RemoteConfigPage
+    elements:
+      - name: WiFi
+        type: menu_item
+        locator:
+          method: text
+          value: "WiFi"
+        actions:
+          - type: click
+            expected_result:
+              type: page_loaded
+              value: "WiFiPage"
+      - name: Display
+        type: menu_item
+        locator:
+          method: text
+          value: "显示"
+        actions: []
+      - name: Audio
+        type: menu_item
+        locator:
+          method: text
+          value: "音频"
+        actions: []
+      - name: Light
+        type: menu_item
+        locator:
+          method: text
+          value: "灯"
+        actions: []
+
+  - name: WiFiPage
+    elements:
+      - name: WiFiBandPreference
+        type: menu_item
+        locator:
+          method: text
+          value: "Wi-Fi 频段偏好"
+        actions:
+          - type: click
+            expected_result:
+              type: dialog_opened
+              value: "WiFiBandPreferenceDialog"
+      - name: WiFiSpeedTest
+        type: menu_item
+        locator:
+          method: text
+          value: "Wi-Fi测速"
+        actions:
+          - type: click
+            expected_result:
+              type: page_loaded
+              value: "WiFiSpeedTestPage"
+      - name: AddOtherNetwork
+        type: menu_item
+        locator:
+          method: text
+          value: "添加其他网络"
+        actions:
+          - type: click
+            expected_result:
+              type: page_loaded
+              value: "EnterPasswordPage"
+
+  - name: WiFiBandPreferenceDialog
+    elements:
+      - name: Auto
+        type: radio_button
+        locator:
+          method: text
+          value: "自动"
+        actions:
+          - type: click
+            expected_result:
+              type: dialog_closed
+      - name: Only5G
+        type: radio_button
+        locator:
+          method: text
+          value: "仅5G"
+        actions:
+          - type: click
+            expected_result:
+              type: dialog_closed
+      - name: Only2_4G
+        type: radio_button
+        locator:
+          method: text
+          value: "仅2.4G"
+        actions:
+          - type: click
+            expected_result:
+              type: dialog_closed
+      - name: Cancel
+        type: button
+        locator:
+          method: text
+          value: "取消"
+        actions:
+          - type: click
+            expected_result:
+              type: dialog_closed
+
+  - name: WiFiSpeedTestPage
+    elements:
+      - name: StartTest
+        type: button
+        locator:
+          method: text
+          value: "开始测速"
+        actions:
+          - type: click
+            expected_result:
+              type: test_started
+
+  - name: EnterPasswordPage
+    elements:
+      - name: WiFiName
+        type: text_field
+        locator:
+          method: id
+          value: "wifi_name_input"
+        actions:
+          - type: input
+            expected_result:
+              type: text_entered
+      - name: WiFiPassword
+        type: text_field
+        locator:
+          method: id
+          value: "wifi_password_input"
+        actions:
+          - type: input
+            expected_result:
+              type: text_entered
+      - name: Cancel
+        type: button
+        locator:
+          method: text
+          value: "取消"
+        actions:
+          - type: click
+            expected_result:
+              type: page_loaded
+              value: "WiFiPage"
+      - name: Save
+        type: button
+        locator:
+          method: text
+          value: "保存"
+        actions:
+          - type: click
+            expected_result:
+              type: network_saved
+
+# 定位方法
+locator_methods:
+  - method: id
+  - method: text
+  - method: xpath
+  - method: class_name
+  - method: css_selector
+
+# 操作类型
+action_types:
+  - type: click
+  - type: input
+  - type: select
+
+# 预期结果类型
+expected_result_types:
+  - type: page_loaded
+  - type: dialog_opened
+  - type: dialog_closed
+  - type: test_started
+  - type: network_saved
+  - type: text_entered
