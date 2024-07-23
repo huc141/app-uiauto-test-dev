@@ -1,14 +1,28 @@
 model: 'Reolink Doorbell Battery'
-desc: '设置>Wi-Fi'
-page:
-  page_title: 'Wi-Fi'
-  nav_list:
-    - item: 'Wi-Fi测速'
-      default: []
+key: 'wifi_main_page'
+desc: '设置>Wi-Fi主页'
+page_title: 'Wi-Fi'
+type: 'page'
+items:
+  - name: 'Wi-Fi测速'
+    key: 'wifi_test_speed'
+    desc: '设置>Wi-Fi主页>Wi-Fi测速'
+    type: 'navigation'
+    sub_page:
+      name: 'Wi-Fi测速'
+      desc: '设置>Wi-Fi>Wi-Fi测速'
+      type: 'page'
       option:
         - '开始测速'
       expected_result: []
-    - item: '输入密码'
+  - name: '添加其他网络'
+    key: 'add_network'
+    desc: '设置>Wi-Fi>添加其他网络'
+    type: 'navigation'
+    sub_page:
+      name: '输入密码'
+      desc: '设置>Wi-Fi>添加其他网络>输入密码'
+      type: 'page'
       option:
         - 'wifi名称'
         - 'wifi密码'

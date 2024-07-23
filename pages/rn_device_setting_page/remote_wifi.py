@@ -64,11 +64,12 @@ class RemoteWiFi(BasePage):
                                      xml_ios_parse_conditions=xml_ios_parse_conditions
                                      )
 
-    def access_in_wifi_band_preference(self):
+    def access_in_wifi_band_preference(self, option_text):
         """
         进入wifi频段偏好页面
         :return:
         """
+        self.scroll_and_click_by_text(text_to_find=option_text)
         pass
 
     def access_in_wifi_test(self):

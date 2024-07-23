@@ -63,8 +63,7 @@ class TestAppBehavior:
     # 假设的辅助函数，用于执行WiFi测试
     def perform_wifi_test(self, device_list_name, model, access_mode):
         # 这个函数应该是实际执行WiFi测试的逻辑
-        # 这里只是返回一个模拟的结果
-        return "Success"
+        pass
 
     @pytest.mark.parametrize("device_config", device_configs)
     def test_wifi_parse(self, device_config):
