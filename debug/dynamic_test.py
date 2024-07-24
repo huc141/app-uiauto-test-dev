@@ -7,7 +7,7 @@ d = u2.connect()
 
 # 读取 YAML 文件，并赋值给pages列表
 with open("temp.yml", "r", encoding='utf-8') as file:
-    pages = yaml.safe_load(file)["pages"]
+    pages = yaml.safe_load(file)["app_structure"]
 
 
 # 定义元素操作函数
