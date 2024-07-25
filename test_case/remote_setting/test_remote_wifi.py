@@ -36,7 +36,6 @@ class TestRemoteWifi:
         """
         # 点击进入wifi频段偏好页面
 
-
         # 检查wifi频段偏好页面文案
 
         # 点击仅5G

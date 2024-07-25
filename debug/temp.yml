@@ -10,7 +10,7 @@ pages:
         actions:
           - type: click
             expected_result:
-              type: page_loaded
+              type: next_page
               value: "Wi-Fi"
       - name: 灯
         type: menu_item
@@ -20,7 +20,7 @@ pages:
         actions:
           - type: click
             expected_result:
-              type: page_loaded
+              type: next_page
               value: "灯"
 
   - page_name: Wi-Fi
@@ -45,7 +45,7 @@ pages:
         actions:
           - type: click
             expected_result:
-              type: page_loaded
+              type: next_page
               value: "Wi-Fi 测速"
 
       - name: 添加其他网络
@@ -56,7 +56,7 @@ pages:
         actions:
           - type: click
             expected_result:
-              type: page_loaded
+              type: next_page
               value: "输入密码"
 
   - page_name: Wi-Fi 频段偏好
@@ -155,7 +155,7 @@ pages:
         actions:
           - type: click
             expected_result:
-              type: page_loaded
+              type: next_page
               value: "Wi-Fi"
 
       - name: 保存
@@ -166,7 +166,7 @@ pages:
         actions:
           - type: click
             expected_result:
-              type: page_loaded
+              type: next_page
               value: "Wi-Fi"
 
 
@@ -183,7 +183,7 @@ action_types:
 
 # 预期结果类型
 expected_result_types:
-  - type: page_loaded
+  - type: next_page
   - type: dialog_opened
   - type: dialog_closed
   - type: test_started
