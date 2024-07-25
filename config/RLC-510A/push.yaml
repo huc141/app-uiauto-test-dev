@@ -1,0 +1,48 @@
+name: '手机推送'
+key: 'push_page'
+desc: '设置>手机推送'
+type: 'page'
+items:
+  - name: '手机推送'
+    key: 'push'
+    desc: '设置>手机推送>手机推送'
+    type: 'switch'
+  - name: '访客电话提醒'
+    key: 'visitor_phone_remind'
+    desc: '设置>手机推送>访客电话提醒'
+    type: 'switch'
+  - name: '设备通知铃声'
+    key: 'device_notify_ringtone'
+    desc: '设置>手机推送>设备通知铃声'
+    type: 'switch'
+  - name: '计划'
+    key: 'schedule'
+    desc: '设置>手机推送>计划'
+    type: 'navigation'
+    subpage:
+      name: '计划'
+      desc: '设置>手机推送>计划>计划'
+      type: 'page'
+      items:
+        - name: '报警类型'
+          desc: '设置>手机推送>计划>计划>报警类型'
+          type: 'checkbox'
+          options:
+            - '画面变动'
+            - '人'
+            - '车'
+            - '动物'
+            - '宠物'
+            - '包裹'
+  - name: '推送间隔 (秒)'
+    key: 'push_interval'
+    desc: '设置>手机推送>推送间隔 (秒)'
+    type: 'popup'
+    options:
+      - '20'
+      - '30'
+      - '60'
+      - '120'
+
+
+

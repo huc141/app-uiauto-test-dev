@@ -1,0 +1,44 @@
+name: '鸣笛'
+key: 'siren_page'
+desc: '设置>鸣笛'
+type: 'page'
+items:
+  - name: '鸣笛'
+    desc: '设置>鸣笛>鸣笛'
+    type: 'switch'
+  - name: '鸣笛声音'
+    desc: '设置>鸣笛>鸣笛声音'
+    type: 'navigation'
+    subpage:
+      - name: '鸣笛声音'
+        desc: '设置>鸣笛>鸣笛声音>鸣笛声音'
+        type: 'page'
+        items:
+          - name: '默认声音'
+            desc: '设置>鸣笛>鸣笛声音>鸣笛声音>默认声音'
+            type: 'text'
+          - name: '自定义声音'
+            desc: '设置>鸣笛>鸣笛声音>鸣笛声音>自定义声音'
+            type: 'navigation'
+            subpage:
+              name: '自定义'
+              desc: '设置>鸣笛>鸣笛声音>鸣笛声音>自定义声音>自定义'
+              type: 'page'
+  - name: '计划'
+    desc: '设置>鸣笛>计划'
+    type: 'navigation'
+    subpage:
+      - name: '计划'
+        desc: '设置>鸣笛>计划>计划'
+        type: 'page'
+        items:
+          - name: '报警类型'
+            desc: '设置>摄像机录像>计划>计划>报警类型'
+            type: 'checkbox'
+            options:
+              - '画面变动'
+              - '人'
+              - '车'
+              - '动物'
+              - '包裹'
+
