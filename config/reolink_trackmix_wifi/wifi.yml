@@ -1,23 +1,25 @@
+device_list_name: "yulong-test-sd7"
+name: 'Wi-Fi'
 model: 'Reolink TrackMix WiFi'
 desc: '设置>Wi-Fi'
-page:
-  page_title: 'Wi-Fi'
-  nav_list:
-    - item: 'Wi-Fi 频段偏好'
-      default: '自动'
-      option:
-        - '自动'
-        - '仅 5G'
-        - '仅 2.4G'
-        - '取消'
-      expected_result: []
-    - item: 'Wi-Fi测速'
-      default: []
-      option:
-        - '开始测速'
-      expected_result: []
-    - item: '输入密码'
-      option:
-        - 'wifi名称'
-        - 'wifi密码'
-      expected_result: []
+type: 'page'
+items:
+  - name: 'Wi-Fi 频段偏好'
+    key: 'wifi_band_preference'
+    desc: '设置>Wi-Fi>Wi-Fi 频段偏好'
+    type: 'navigation'
+    option:
+      - '自动'
+      - '仅 5G'
+      - '仅 2.4G'
+      - '取消'
+  - name: 'Wi-Fi测速'
+    key:
+    desc:
+    type: 'navigation'
+    option:
+      - '开始测速'
+  - name: '输入密码'
+    option:
+      - 'wifi名称'
+      - 'wifi密码'
