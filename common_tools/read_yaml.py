@@ -37,8 +37,8 @@ class ReadYaml:
 
         # 定义一个函数来加载指定设备文件夹中的 YAML 文件
         def load_device_config(device_dir):
-            wifi_parse_xml_path = os.path.join(device_dir, 'wifi_parse_xml.yml')
-            wifi_path = os.path.join(device_dir, 'wifi.yml')
+            wifi_parse_xml_path = os.path.join(device_dir, 'wifi_parse_xml.yaml')
+            wifi_path = os.path.join(device_dir, 'wifi.yaml')
 
             with open(wifi_parse_xml_path, 'r', encoding='utf-8') as wifi_parse_xml_file:
                 wifi_parse_xml_config = yaml.safe_load(wifi_parse_xml_file)

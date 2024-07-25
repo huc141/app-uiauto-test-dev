@@ -1,0 +1,33 @@
+device_list_name: "yulong-test-sd7"
+sub_name: ""
+access_mode: "single"
+menu_item: 'Wi-Fi'
+desc: '设置>Wi-Fi'
+type: 'page'
+items:
+  - menu_item: 'Wi-Fi 频段偏好'
+    key: 'wifi_band_preference'
+    desc: '设置>Wi-Fi>Wi-Fi 频段偏好'
+    type: 'popup'
+    options:
+      - '自动'
+      - '仅 5G'
+      - '仅 2.4G'
+      - '取消'
+  - menu_item: 'Wi-Fi测速'
+    key: 'wifi_speed_test'
+    desc: '设置>Wi-Fi>Wi-Fi测速'
+    type: 'navigation'
+    subpage:
+      name: 'Wi-Fi测速'
+      desc: '设置>Wi-Fi>Wi-Fi测速>Wi-Fi测速'
+      type: 'button'
+      options:
+        - '开始测速'
+  - menu_item: '添加其他网络'
+    key: 'input_password'
+    desc: '设置>Wi-Fi>Wi-Fi测速'
+    type: 'navigation'
+    options:
+      - 'wifi名称'
+      - 'wifi密码'
