@@ -37,17 +37,18 @@ class ReadYaml:
 
         # 定义一个函数来加载指定设备文件夹中的 YAML 文件
         def load_device_config(device_dir):
-            wifi_parse_xml_path = os.path.join(device_dir, 'wifi_parse_xml.yaml')
+            devices_list_path = os.path.join(device_dir, 'devices_list.yml')
             wifi_path = os.path.join(device_dir, 'wifi.yaml')
 
-            with open(wifi_parse_xml_path, 'r', encoding='utf-8') as wifi_parse_xml_file:
-                wifi_parse_xml_config = yaml.safe_load(wifi_parse_xml_file)
+            with open(devices_list_path, 'r', encoding='utf-8') as devices_list_path_file:
+                devices_list_config = yaml.safe_load(devices_list_path_file)
 
             with open(wifi_path, 'r', encoding='utf-8') as wifi_file:
                 wifi_config = yaml.safe_load(wifi_file)
 
             # 合并两个配置文件的内容
-            return {**wifi_parse_xml_config, **wifi_config}
+            return {**devices_list_config, **wifi_config}
+            # return wifi_config
 
         # 加载所有设备的 YAML 文件内容
         self.device_configs = [load_device_config(device_dir) for device_dir in device_dirs]

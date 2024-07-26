@@ -16,8 +16,8 @@ class TestRemoteWifi:
 
         # 设备列表中滚动查找到单机、nvr、hub并进入远程配置
         RemoteWiFi().access_in_remote_wifi(device_name=device_config['device_list_name'],
-                                           sub_name=device_config['sub_name'],
-                                           access_mode=device_config['access_mode'])
+                                           sub_name=device_config['sub_device_name'],
+                                           access_mode='access_mode')
         # 读取wifi_parse_xml.yml文件中wifi主页内容
         remote_wifi_page = device_config['sub_pages']['wifi']
 

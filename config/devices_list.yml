@@ -1,0 +1,12 @@
+devices:
+  - device_list_name: "yulong-test-sd7"
+    access_mode: "ipc"
+    sub_device_name: ""
+
+  - device_list_name: "small Home Hub"
+    access_mode: "hub"
+    sub_device_name: "RLC-1212A"
+
+  - device_list_name: "332---hmk NVR"
+    access_mode: "nvr"
+    sub_device_name: "Reolink Duo PoE"

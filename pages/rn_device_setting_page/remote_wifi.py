@@ -20,20 +20,20 @@ class RemoteWiFi(BasePage):
         接入hub、nvr的设备名称在命名时不能过长导致省略隐藏。
         :param device_name: 设备列表里单机设备、hub、nvr的昵称。
         :param sub_name: 若设备接入了hub、nvr设备下的话，则该名称必填。
-        :param access_mode: 设备接入方式，支持single、in_hub、in_nvr。明确设备是单机还是接入NVR下、接入hub下。
+        :param access_mode: 设备接入方式，支持ipc、hub、nvr。明确设备是单机还是接入NVR下、接入hub下。
         :return:
         """
         # 根据昵称在设备列表中滚动查找该设备并进入远程配置主页
         self.access_in_remote_setting(device_name)
 
         # 如果设备是单机：
-        if access_mode == 'single':
+        if access_mode == 'ipc':
             time.sleep(2)
             # 进入wifi主页
             self.scroll_and_click_by_text('Wi-Fi')
 
         # 如果设备接入了nvr：
-        elif access_mode == 'in_nvr' and sub_name is not None:
+        elif access_mode == 'nvr' and sub_name is not None:
             time.sleep(2)
             self.scroll_and_click_by_text(self.ivSelectChannelButton, el_type='xpath')
             # 选择通道并点击(但是设备接入nvr后不会显示wifi的远程配置)
@@ -41,7 +41,7 @@ class RemoteWiFi(BasePage):
             logger.info("设备接入了nvr，页面不显示WiFi功能")
 
         # 如果设备接入了hub：
-        elif access_mode == 'in_hub' and sub_name is not None:
+        elif access_mode == 'hub' and sub_name is not None:
             time.sleep(2)
             # 根据名称查找hub下的设备卡片，点击并进入hub下的设备的远程配置主页
             self.scroll_and_click_by_text(sub_name)
