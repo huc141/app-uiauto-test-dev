@@ -15,9 +15,9 @@ device_dirs = [os.path.join(config_root_dir, d) for d in os.listdir(config_root_
 print("每个设备文件夹的路径:")
 print(device_dirs)
 
-devices_list_path = os.path.join(os.getcwd(), 'config')
-wifi_parse_xml_path = os.path.join(devices_list_path, 'devices_list.yml')
-print(wifi_parse_xml_path)
+# devices_list_path = os.path.join(os.getcwd(), 'config')
+# wifi_parse_xml_path = os.path.join(devices_list_path, 'devices_list.yml')
+# print(wifi_parse_xml_path)
 
 
 # 定义一个函数来加载指定设备文件夹中的两个 YAML 文件
@@ -25,6 +25,8 @@ def load_device_config(device_dir):
     devices_list_path = os.path.join(os.getcwd(), 'config')
     wifi_parse_xml_path = os.path.join(devices_list_path, 'devices_list.yml')
     wifi_path = os.path.join(device_dir, 'wifi.yaml')
+
+    print(wifi_parse_xml_path)
 
     # 初始化配置字典
     wifi_parse_xml_config = {}
@@ -53,6 +55,8 @@ def load_device_config(device_dir):
 # # 加载所有设备的配置文件内容
 device_configs = [load_device_config(device_dir) for device_dir in device_dirs]
 print(device_configs)
+print('-------------------------------------')
+print(device_configs[0]['devices'])
 
 # wifi_configs = read_yaml.wifi_configs
 # wifi_sub_pages = read_yaml.wifi_sub_pages
