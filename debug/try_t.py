@@ -23,22 +23,22 @@ print(device_dirs)
 # 定义一个函数来加载指定设备文件夹中的两个 YAML 文件
 def load_device_config(device_dir):
     devices_list_path = os.path.join(os.getcwd(), 'config')
-    wifi_parse_xml_path = os.path.join(devices_list_path, 'devices_list.yml')
+    # wifi_parse_xml_path = os.path.join(devices_list_path, 'devices_list.yml')
     wifi_path = os.path.join(device_dir, 'wifi.yaml')
 
-    print(wifi_parse_xml_path)
+    # print(wifi_parse_xml_path)
 
     # 初始化配置字典
     wifi_parse_xml_config = {}
     wifi_config = {}
 
     # 尝试加载 devices_list.yml 文件
-    if os.path.exists(wifi_parse_xml_path):
-        try:
-            with open(wifi_parse_xml_path, 'r', encoding='utf-8') as wifi_parse_xml_file:
-                wifi_parse_xml_config = yaml.safe_load(wifi_parse_xml_file)
-        except Exception as e:
-            print(f"Error loading {wifi_parse_xml_path}: {e}")
+    # if os.path.exists(wifi_parse_xml_path):
+    #     try:
+    #         with open(wifi_parse_xml_path, 'r', encoding='utf-8') as wifi_parse_xml_file:
+    #             wifi_parse_xml_config = yaml.safe_load(wifi_parse_xml_file)
+    #     except Exception as e:
+    #         print(f"Error loading {wifi_parse_xml_path}: {e}")
 
     # 尝试加载 wifi.yaml 文件
     if os.path.exists(wifi_path):
@@ -56,7 +56,7 @@ def load_device_config(device_dir):
 device_configs = [load_device_config(device_dir) for device_dir in device_dirs]
 print(device_configs)
 print('-------------------------------------')
-print(device_configs[0]['devices'])
+# print(device_configs[0]['devices'])
 
 # wifi_configs = read_yaml.wifi_configs
 # wifi_sub_pages = read_yaml.wifi_sub_pages
