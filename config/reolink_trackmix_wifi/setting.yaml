@@ -116,7 +116,6 @@ hub:
       desc: '设置>高级设置'
       type: 'navigation'
 
-
 nvr:
   name: '设置'
   key: 'setting_page'
@@ -171,5 +170,3 @@ nvr:
       key: 'advanced_setting'
       desc: '设置>高级设置'
       type: 'navigation'
-
-

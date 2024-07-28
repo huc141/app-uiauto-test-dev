@@ -482,6 +482,9 @@ class BasePage:
                     texts.add(text)
         return texts
 
+    def get_all_texts(self, resource_id):
+        all_texts = []
+
     def get_all_elements_texts(self, exclude_texts, xml_az_parse_conditions, xml_ios_parse_conditions, max_scrolls=2,
                                scroll_pause=1):
         """

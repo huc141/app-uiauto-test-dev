@@ -7,78 +7,51 @@ import tidevice
 from tidevice import Device
 import wda
 
+import importlib
+import os
 
-# def get_all_elements_texts_ios(driver, scroll_pause=1):
-#     """
-#     获取当前页面的所有元素的text文本内容
-#     :param scroll_pause:
-#     :param max_scrolls:
-#     :param driver: uiautomator2的Device对象
-#     :return: 文本内容列表
-#     """
-#     xml_content_set = set()
-#
-#     # for _ in range(max_scrolls):
-#     # 获取页面的 XML 结构
-#     page_source = driver.source()
-#     print(page_source)
-#
-#     # 将每次读取的xml内容添加到集合中
-#     xml_content_set.add(page_source)
-#
-#     # 滑动屏幕
-#     driver.swipe_up()
-#     time.sleep(scroll_pause)  # 等待页面稳定
-#
-#     # 将每次读取的xml内容追加到文件中
-#     with open("H:\\app-uiauto-test-dev\\debug\\destination4.xml", 'a', encoding='utf-8') as f:
-#         for xml_content in xml_content_set:
-#             f.write(xml_content + '\n')
-#
-#     return list(xml_content_set)
+d = u2.connect_usb()
 
 
-# def get_all_elements_texts_az(driver, max_scrolls=1, scroll_pause=1):
-#     """
-#     获取当前页面的所有元素的text文本内容
-#     :param scroll_pause:
-#     :param max_scrolls:
-#     :param driver: uiautomator2的Device对象
-#     :return: 文本内容列表
-#     """
-#     xml_content_set = set()
-#
-#     for _ in range(max_scrolls):
-#         # 获取页面的 XML 结构
-#         page_source = driver.dump_hierarchy()
-#         print(page_source)
-#
-#         # 将每次读取的xml内容添加到集合中
-#         xml_content_set.add(page_source)
-#
-#     # 滑动屏幕
-#     driver.swipe_ext("up")
-#     time.sleep(scroll_pause)  # 等待页面稳定
-#
-#     # 将每次读取的xml内容追加到文件中
-#     with open("D:\\app-uiauto-test-dev\\debug\\destination4.xml", 'a', encoding='utf-8') as f:
-#         for xml_content in xml_content_set:
-#             f.write(xml_content + '\n')
-#
-#     return list(xml_content_set)
-driver = u2.connect_usb("28131FDH2000K1")
+def get_all_texts(resource_id):
+    all_texts = []
+    previous_page_texts = []
+    retry_count = 0
 
-driver(scrollable=True).scroll.to(text="RLC-1212A")
+    while True:
+        # 获取当前页面所有元素的文本内容
+        current_texts = []
+        elements = d(resourceId=resource_id)
+        for element in elements:
+            text = element.get_text()
+            if text not in all_texts:  # 避免重复添加
+                current_texts.append(text)
 
-# element = driver(text='RLC-1212A')
-# element.click()
+        # 合并到所有文本列表
+        all_texts.extend(current_texts)
+
+        # 检查是否没有新的内容
+        if current_texts == previous_page_texts:
+            retry_count += 1
+            if retry_count >= 2:  # 连续两次滚动后没有新内容，认为获取完成
+                break
+        else:
+            retry_count = 0
+
+        previous_page_texts = current_texts
+
+        # 滚动页面
+        d(scrollable=True).scroll.vert.forward()
+        time.sleep(1)  # 等待滚动完成
+
+    return all_texts
 
 
-# 使用示例
-# if __name__ == "__main__":
-    # driver = u2.connect_usb("28131FDH2000K1")
-    # driver = wda.Client('http://localhost:8100')
+# 获取所有元素的文本内容
+resource_id = 'com.mcu.reolink:id/tv_remote_sub'  # 替换为实际的资源ID
+all_texts = get_all_texts(resource_id)
 
-    # texts = get_all_elements_texts_ios(driver)
-    # texts = get_all_elements_texts_az(driver)
-    # print(f"共获取到 {len(texts)} 段XML内容")
+# 输出所有获取到的文本内容
+print("获取到的所有文本内容：")
+for text in all_texts:
+    print(text)

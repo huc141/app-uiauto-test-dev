@@ -12,7 +12,10 @@ from common_tools.read_yaml import read_yaml
 # print(devices_config)
 # print('-------------------------------------')
 
-devices_config = read_yaml.load_device_config('reolink_trackmix_wifi')  # 读取参数化文件
+devices_config = read_yaml.load_device_config('reolink_trackmix_wifi', 'setting.yaml')  # 读取参数化文件
+print(devices_config)
+
+
 # print(devices_config)
 # name = devices_config['ipc']['items']
 # print(devices_config)
@@ -20,7 +23,7 @@ devices_config = read_yaml.load_device_config('reolink_trackmix_wifi')  # 读取
 
 # 修改方法以提取指定keys下的items的name，并将它们全部加入到列表中，然后统计这个列表的长度。
 
-def extract_all_names(file_path, keys_to_extract):
+def extract_all_names(yaml_content, keys_to_extract):
     """
     解析YAML文件，提取指定keys下的items的name，并全部加入到列表中。
 
@@ -33,10 +36,6 @@ def extract_all_names(file_path, keys_to_extract):
     """
     # 初始化空列表
     all_names = []
-
-    # 读取YAML文件
-    with open(file_path, 'r', encoding='utf-8') as file:
-        yaml_content = yaml.safe_load(file)
 
     # 遍历指定的keys
     for key in keys_to_extract:
@@ -51,9 +50,9 @@ def extract_all_names(file_path, keys_to_extract):
     return all_names
 
 
-# 调用方法，并传入上传的YAML文件路径和要提取的keys
-keys_to_extract = ['ipc']
-all_names = extract_all_names('D:\\app-uiauto-test-dev\\config\\reolink_trackmix_wifi\\setting.yaml', keys_to_extract)
+# # 调用方法，并传入上传的YAML文件路径和要提取的keys
+# keys_to_extract = ['ipc']
+all_names = extract_all_names(devices_config, ['ipc'])
 all_names_count = len(all_names)
 print(all_names)
 print(all_names_count)

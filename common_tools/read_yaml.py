@@ -36,22 +36,22 @@ class ReadYaml:
                                                                 source="devices_main_remote_setting")  # 获取设备配置
 
     # 定义一个函数来加载指定设备文件夹中的 YAML 文件
-    def load_device_config(self, device_dir):
+    def load_device_config(self, device_dir, yaml_name):
         devices_fun_list = os.path.join(os.getcwd(), f'config/{device_dir}')
-        wifi_path = os.path.join(devices_fun_list, 'setting.yaml')
+        yaml_path = os.path.join(devices_fun_list, yaml_name)
 
         # with open(devices_list_path, 'r', encoding='utf-8') as devices_list_path_file:
         #     devices_list_config = yaml.safe_load(devices_list_path_file)
-        if os.path.exists(wifi_path):
+        if os.path.exists(yaml_path):
             try:
-                with open(wifi_path, 'r', encoding='utf-8') as wifi_file:
-                    wifi_config = yaml.safe_load(wifi_file)
+                with open(yaml_path, 'r', encoding='utf-8') as yaml_path_file:
+                    yaml_path_file_config = yaml.safe_load(yaml_path_file)
             except Exception as e:
-                print(f"Error loading {wifi_path}: {e}")
+                print(f"Error loading {yaml_path}: {e}")
 
         # 合并两个配置文件的内容
         # return {**devices_list_config, **wifi_config}
-        return wifi_config
+        return yaml_path_file_config
 
         # 加载所有设备的 YAML 文件内容
         # self.device_configs = [load_device_config(device_dir) for device_dir in device_dirs]
