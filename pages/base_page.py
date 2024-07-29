@@ -482,8 +482,64 @@ class BasePage:
                     texts.add(text)
         return texts
 
-    def get_all_texts(self, resource_id):
-        all_texts = []
+    def scroll_screen(self, max_scrolls=1):
+        """
+        滚动屏幕
+        :param max_scrolls: 最大滚动次数，默认1次
+        :return:
+        """
+
+        if self.platform == "android":
+            scroll_method = self.driver.swipe_ext
+            direction = "up"
+
+        elif self.platform == "ios":
+            scroll_method = driver.swipe_up
+        else:
+            raise ValueError("不支持当前平台")
+
+        for _ in range(max_scrolls):
+            if self.platform == "android":
+                scroll_method(direction)
+            else:
+                time.sleep(1)  # iOS平台需要短暂等待UI更新
+                scroll_method()
+
+    def get_all_texts(self, selector_type, selector, max_scrolls=2):
+        """
+        滚动获取当前页面所有指定文本
+        :param selector_type: 支持安卓className，resource-id定位，iOS的className定位
+        :param selector: 对应的value值
+        :param max_scrolls: 最大滚动次数
+        :return:
+        """
+        my_set = set()
+
+        def get_elements_texts():
+            if selector_type == 'id':
+                elements = self.driver(resourceId=selector)
+            elif selector_type == 'class':
+                elements = self.driver(className=selector)
+            return {element.get_text() for element in elements}
+
+        # 获取当前页面所有元素的文本内容
+        for _ in range(max_scrolls):
+            # 获取当前页面所有元素的文本内容
+            new_texts = get_elements_texts()
+            my_set.update(new_texts)
+
+            self.scroll_screen()
+            time.sleep(0.5)
+
+            # 检查滑动后页面是否有变化
+            new_texts = get_elements_texts()
+            if not new_texts - my_set:
+                break  # 如果滑动后没有新内容，退出循环
+
+            # 添加新获取的文本内容
+            my_set.update(new_texts)
+
+        return list(my_set)
 
     def get_all_elements_texts(self, exclude_texts, xml_az_parse_conditions, xml_ios_parse_conditions, max_scrolls=2,
                                scroll_pause=1):
