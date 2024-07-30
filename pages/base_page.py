@@ -516,11 +516,16 @@ class BasePage:
         my_set = set()
 
         def get_elements_texts():
-            if selector_type == 'id':
-                elements = self.driver(resourceId=selector)
-            elif selector_type == 'class':
-                elements = self.driver(className=selector)
-            return {element.get_text() for element in elements}
+            if self.platform == 'android':
+                if selector_type == 'id':
+                    elements = self.driver(resourceId=selector)
+                elif selector_type == 'class':
+                    elements = self.driver(className=selector)
+                return {element.get_text() for element in elements}
+
+            elif self.platform == 'ios':
+                elements = self.driver(className=selector).find_elements()
+                return {element.text for element in elements}
 
         # 获取当前页面所有元素的文本内容
         for _ in range(max_scrolls):
@@ -662,3 +667,11 @@ class BasePage:
             else:
                 logger.info(f"读取文件失败: {process.stderr}")
                 return None
+
+    def scroll_find_element(self):
+        """
+        滚动检查元素是否在当前页面
+        :return: bool
+        """
+        # TODO: 滚动检查元素是否在当前页面
+        pass

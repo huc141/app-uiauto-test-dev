@@ -11,6 +11,7 @@ import importlib
 import os
 
 d = u2.connect_usb()
+wd = wda.Client('http://localhost:8100')
 
 # def get_all_texts(resource_id):
 #     all_texts = []
