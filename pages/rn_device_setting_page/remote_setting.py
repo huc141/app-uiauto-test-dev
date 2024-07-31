@@ -28,13 +28,13 @@ class RemoteSetting(BasePage):
                                      xml_ios_parse_conditions=xml_ios_parse_conditions
                                      )
 
-    def extract_all_names(self, yaml_content, keys_to_extract):
+    def extract_yaml_names(self, yaml_content, key):
         """
-        解析YAML文件，提取指定keys下的items的name，并全部加入到列表中。
+        从给定的字典列表中提取指定键的值。
 
         参数:
-        file_path (str): YAML文件的路径。
-        keys_to_extract (list): 要提取的keys列表。
+        yaml_content: 包含字典的列表。
+        key (list): 要提取的键名。
 
         返回:
         list: 包含所有提取的name的列表。
@@ -43,18 +43,34 @@ class RemoteSetting(BasePage):
         all_names = []
 
         # 遍历指定的keys
-        for key in keys_to_extract:
-            # 获取每个key的items
-            items = yaml_content.get(key, {}).get('items', [])
-            # 遍历items，提取name并加入到列表中
-            for item in items:
-                name = item.get('name', '')
-                if name:  # 如果name存在，则加入到列表中
-                    all_names.append(name)
-
-        all_names_count = len(all_names)
-
+        for item in yaml_content:
+            if key in item:
+                all_names.append(item[key])
         return all_names
+
+    def scroll_check_funcs(self, texts):
+        """
+        遍历并判断功能项是否存在当前页面
+        :param texts: 存储了功能项名称的列表。
+        :return: bool
+        """
+        ele_exits = []
+        ele_not = []
+
+        for text in texts:
+            ele_status = self.is_element_exists(text)
+            if ele_status:
+                ele_exits.append(text)
+            elif not ele_status:
+                ele_not.append(text)
+
+        if len(ele_not) > 0:
+            logger.info(f"当前页面存在的功能有：{ele_exits}")
+            logger.info(f"当前页面缺失的功能有：{ele_not}")
+            return False
+        else:
+            logger.info(f"需校验的功能项均存在！-->{ele_exits}")
+            return True
 
     def scroll_click_remote_setting(self, device_name):
         """

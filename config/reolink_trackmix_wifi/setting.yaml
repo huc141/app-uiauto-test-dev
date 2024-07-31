@@ -1,3 +1,6 @@
+device_list_name: 'yulong-test-sd7'
+sub_name: ''
+
 ipc:
   name: '设置'
   key: 'setting_page'

@@ -17,33 +17,44 @@ class BasePage:
         self.driver = driver.get_actual_driver()
         self.platform = driver.get_platform()
 
-    def is_element_exists(self, selector_type, element_value):
+    def is_element_exists(self, element_value, selector_type='text', max_scrolls=2):
         """
         判断元素是否存在
         :param selector_type: 安卓支持：text文本、id、xpath定位；iOS支持text(label)文本、id、xpath定位
         :param element_value: 对应的文本、id、xpath值
+        :param max_scrolls: 最大滚动次数，默认两次
         :return: bool
         """
         try:
-            if self.platform == "android":
-                if selector_type == "text":
-                    return self.driver(text=element_value).exists
-                elif selector_type == "id":
-                    return self.driver(resourceId=element_value).exists
-                elif selector_type == "xpath":
-                    return self.driver.xpath(element_value).exists
-                else:
-                    raise ValueError("你可能输入了不支持的 selector type.")
+            def check_element():
+                if self.platform == "android":
+                    if selector_type == "text":
+                        return self.driver(text=element_value).exists
+                    elif selector_type == "id":
+                        return self.driver(resourceId=element_value).exists
+                    elif selector_type == "xpath":
+                        return self.driver.xpath(element_value).exists
+                    else:
+                        raise ValueError("你可能输入了不支持的 selector type.")
 
-            elif self.platform == "ios":
-                if selector_type == "text":
-                    return self.driver(label=element_value)
-                elif selector_type == "id":
-                    return self.driver(id=element_value)
-                elif selector_type == "xpath":
-                    return self.driver.xpath(element_value)
-                else:
-                    raise ValueError("你可能输入了不支持的 selector type.")
+                elif self.platform == "ios":
+                    if selector_type == "text":
+                        return self.driver(label=element_value)
+                    elif selector_type == "id":
+                        return self.driver(id=element_value)
+                    elif selector_type == "xpath":
+                        return self.driver.xpath(element_value)
+                    else:
+                        raise ValueError("你可能输入了不支持的 selector type.")
+
+            for _ in range(max_scrolls):
+                ele_status = check_element()
+                if ele_status:
+                    break
+                self.scroll_screen()
+                time.sleep(0.5)
+
+            return ele_status
 
         except Exception as err:
             logger.error(f"元素未找到 {selector_type}: {element_value}. Error: {err}")
@@ -482,16 +493,16 @@ class BasePage:
                     texts.add(text)
         return texts
 
-    def scroll_screen(self, max_scrolls=1):
+    def scroll_screen(self, max_scrolls=1, direction="up"):
         """
         滚动屏幕
+        :param direction: 屏幕的滚动方向：
         :param max_scrolls: 最大滚动次数，默认1次
         :return:
         """
 
         if self.platform == "android":
             scroll_method = self.driver.swipe_ext
-            direction = "up"
 
         elif self.platform == "ios":
             scroll_method = driver.swipe_up
@@ -502,7 +513,7 @@ class BasePage:
             if self.platform == "android":
                 scroll_method(direction)
             else:
-                time.sleep(1)  # iOS平台需要短暂等待UI更新
+                time.sleep(1)
                 scroll_method()
 
     def get_all_texts(self, selector_type, selector, max_scrolls=2):
@@ -513,6 +524,7 @@ class BasePage:
         :param max_scrolls: 最大滚动次数
         :return:
         """
+        # TODO: 需要和rn开发确定定位元素的方法，才好提取指定元素
         my_set = set()
 
         def get_elements_texts():
@@ -668,10 +680,13 @@ class BasePage:
                 logger.info(f"读取文件失败: {process.stderr}")
                 return None
 
-    def scroll_find_element(self):
+    def scroll_find_element(self, text):
         """
         滚动检查元素是否在当前页面
         :return: bool
         """
         # TODO: 滚动检查元素是否在当前页面
-        pass
+        if self.platform == "android":
+            return self.driver(text=text).exits
+        elif self.platform == "ios":
+            return self.driver(text=text).exits
