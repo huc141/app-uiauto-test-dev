@@ -12,11 +12,12 @@ from common_tools.read_yaml import read_yaml
 # print(devices_config)
 # print('-------------------------------------')
 
-devices_config = read_yaml.load_device_config('reolink_trackmix_wifi', 'setting.yaml')  # 读取参数化文件
+devices_config = read_yaml.load_device_config()  # 读取参数化文件
 print(devices_config)
 # 读取yaml文件中远程配置页面内
-remote_setting_page = devices_config['ipc']['items']
-# print(remote_setting_page)
+remote_setting_page = devices_config[0]['ipc']
+print('---------------------------------')
+print(remote_setting_page)
 
 
 # print(devices_config)
@@ -74,7 +75,76 @@ def extract_values(yaml_content, key):
 
 
 # 使用函数提取 "name" 键的值
-names = extract_values(remote_setting_page, "name")
+yaml_content = [
+     {
+          "name": "显示",
+          "key": "display",
+          "desc": "设置>显示",
+          "type": "navigation"
+     },
+     {
+          "name": "音频",
+          "key": "audio",
+          "desc": "设置>音频",
+          "type": "navigation"
+     },
+     {
+          "name": "灯",
+          "key": "light",
+          "desc": "设置>灯",
+          "type": "navigation"
+     },
+     {
+          "name": "侦测报警",
+          "key": "detection_alarm",
+          "desc": "设置>侦测报警",
+          "type": "navigation"
+     },
+     {
+          "name": "摄像机录像",
+          "key": "camera_recording",
+          "desc": "设置>摄像机录像",
+          "type": "navigation"
+     },
+     {
+          "name": "手机推送",
+          "key": "notification_push",
+          "desc": "设置>手机推送",
+          "type": "navigation"
+     },
+     {
+          "name": "邮件通知",
+          "key": "email_alert",
+          "desc": "设置>邮件通知",
+          "type": "navigation"
+     },
+     {
+          "name": "FTP",
+          "key": "ftp",
+          "desc": "设置>FTP",
+          "type": "navigation"
+     },
+     {
+          "name": "分享摄像机",
+          "key": "share_camera",
+          "desc": "设置>分享摄像机",
+          "type": "navigation"
+     },
+     {
+          "name": "延时摄影",
+          "key": "time_lapse",
+          "desc": "设置>延时摄影",
+          "type": "navigation"
+     },
+     {
+          "name": "高级设置",
+          "key": "advanced_setting",
+          "desc": "设置>高级设置",
+          "type": "navigation"
+     }
+]
+
+names = extract_values(yaml_content, "name")
 
 # 打印结果
 print(names)

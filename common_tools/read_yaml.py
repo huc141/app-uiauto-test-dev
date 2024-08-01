@@ -6,22 +6,17 @@ import os
 
 class ReadYaml:
     __raw_data = dict()
+    # 设备文件夹的根目录
+    config_root_dir = os.path.join(os.getcwd(), 'config')
 
     def __init__(self):
-        p = os.path.join(os.getcwd(), 'config')
-
-        # 设备文件夹的根目录
-        config_root_dir = p
-
-        # 获取每个设备文件夹的路径
-        device_dirs = [os.path.join(config_root_dir, d) for d in os.listdir(config_root_dir) if
-                       os.path.isdir(os.path.join(config_root_dir, d))]
+        # p = os.path.join(os.getcwd(), 'config')
 
         # 读取 config 文件夹下的所有 YAML 文件
-        for fname in os.listdir(p):
+        for fname in os.listdir(self.config_root_dir):
             if fname.split('.')[-1] not in ['yml', 'yaml']:
                 continue
-            with open(file=os.path.join(p, fname),
+            with open(file=os.path.join(self.config_root_dir, fname),
                       encoding='utf-8') as stream:
                 self.__raw_data[fname.split('.')[0]] = yaml.safe_load(
                     stream)
@@ -35,24 +30,27 @@ class ReadYaml:
         self.devices_main_remote_setting_config = self.get_data("devices", source="devices_main_remote_setting")  # 获取设备配置
 
     # 定义一个函数来加载指定设备文件夹中的 YAML 文件
-        def load_device_config(device_dir):
-            yaml_file_path = os.path.join(device_dir, 'setting.yaml')
+    def load_device_config(self, device_dir=None, yaml_file_name='setting.yaml'):
 
-            if os.path.exists(yaml_file_path):
+        if device_dir is None:
+            device_dirs = [os.path.join(self.config_root_dir, d) for d in os.listdir(self.config_root_dir) if
+                           os.path.isdir(os.path.join(self.config_root_dir, d))]
+        else:
+            device_dirs = [os.path.join(self.config_root_dir, device_dir)]
+
+        device_configs = []
+        for _dir in device_dirs:
+            yaml_path = os.path.join(_dir, yaml_file_name)
+            if os.path.exists(yaml_path):
                 try:
-                    with open(yaml_file_path, 'r', encoding='utf-8') as yaml_path_file:
-                        return yaml.safe_load(yaml_path_file)
+                    with open(yaml_path, 'r', encoding='utf-8') as file:
+                        config = yaml.safe_load(file)
+                        device_configs.append(config)
                 except Exception as e:
-                    print(f"Error loading {yaml_file_path}: {e}")
+                    print(f"Warning: {yaml_path} does not exist in {_dir}")
+                    print(f"Error loading {yaml_path}: {e}")
 
-            # 合并两个配置文件的内容
-            # return {**devices_list_config, **wifi_config}
-            # return yaml_path_file_config
-
-            # 加载所有设备的 YAML 文件内容
-            self.device_configs = [load_device_config(device_dir) for device_dir in device_dirs]
-            # self.wifi_configs = [load_wifi_parse_xml(device_dir) for device_dir in device_dirs]
-            # self.wifi_sub_pages = [load_wifi_sub_page(device_dir) for device_dir in device_dirs]
+        return device_configs
 
     def get_data(self, key: str, default: str = '', source: str = 'phone') -> str:
         """Get specific config"""

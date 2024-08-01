@@ -2,7 +2,7 @@ import yaml
 import os
 from common_tools.read_yaml import read_yaml
 
-devices_config = read_yaml.  # 读取参数化文件
+devices_config = read_yaml  # 读取参数化文件
 print(devices_config)
 # 读取yaml文件中远程配置页面内
 remote_setting_page = devices_config['ipc']['items']

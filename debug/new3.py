@@ -3,7 +3,7 @@ import pytest
 import yaml
 
 # 设备文件夹的根目录
-config_root_dir = 'D:\\app-uiauto-test-dev\\config'
+config_root_dir = 'H:\\app-uiauto-test-dev\\config'
 
 
 # 定义一个函数来加载指定设备文件夹中的 YAML 文件
@@ -23,6 +23,7 @@ def load_device_config(device_dir=None, yaml_file_name='setting.yaml'):
                     config = yaml.safe_load(file)
                     device_configs.append(config)
             except Exception as e:
+                print(f"Warning: {yaml_path} does not exist in {_dir}")
                 print(f"Error loading {yaml_path}: {e}")
 
     return device_configs

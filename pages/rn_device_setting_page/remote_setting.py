@@ -28,7 +28,7 @@ class RemoteSetting(BasePage):
                                      xml_ios_parse_conditions=xml_ios_parse_conditions
                                      )
 
-    def extract_yaml_names(self, yaml_content, key):
+    def extract_yaml_names(self, dict_list, key):
         """
         从给定的字典列表中提取指定键的值。
 
@@ -43,7 +43,7 @@ class RemoteSetting(BasePage):
         all_names = []
 
         # 遍历指定的keys
-        for item in yaml_content:
+        for item in dict_list:
             if key in item:
                 all_names.append(item[key])
         return all_names
