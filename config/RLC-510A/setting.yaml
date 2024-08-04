@@ -47,7 +47,7 @@ ipc:
       key: 'time_lapse'
       desc: '设置>延时摄影'
       type: 'navigation'
-    - name: '高级设置A'
+    - name: '高级设置'
       key: 'advanced_setting'
       desc: '设置>高级设置'
       type: 'navigation'

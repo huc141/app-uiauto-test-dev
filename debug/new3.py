@@ -1,33 +1,18 @@
 import os
+from typing import Literal
+
 import pytest
 import yaml
+import uiautomator2 as u2
+from common_tools.read_yaml import read_yaml
+from pages.rn_device_setting_page.remote_setting import RemoteSetting
 
-# 设备文件夹的根目录
-config_root_dir = 'H:\\app-uiauto-test-dev\\config'
+# d = u2.connect_usb()
 
-
-# 定义一个函数来加载指定设备文件夹中的 YAML 文件
-def load_device_config(device_dir=None, yaml_file_name='setting.yaml'):
-    if device_dir is None:
-        device_dirs = [os.path.join(config_root_dir, d) for d in os.listdir(config_root_dir) if
-                       os.path.isdir(os.path.join(config_root_dir, d))]
-    else:
-        device_dirs = [os.path.join(config_root_dir, device_dir)]
-
-    device_configs = []
-    for _dir in device_dirs:
-        yaml_path = os.path.join(_dir, yaml_file_name)
-        if os.path.exists(yaml_path):
-            try:
-                with open(yaml_path, 'r', encoding='utf-8') as file:
-                    config = yaml.safe_load(file)
-                    device_configs.append(config)
-            except Exception as e:
-                print(f"Warning: {yaml_path} does not exist in {_dir}")
-                print(f"Error loading {yaml_path}: {e}")
-
-    return device_configs
-
-
-devices_config = load_device_config()
+devices_config = read_yaml.load_device_config(yaml_file_name='wifi.yaml')  # 读取参数化文件
 print(devices_config)
+
+remote_setting_wifi = devices_config[0]['ipc']['items'][0]['options']
+
+print('------------------')
+page_fun = RemoteSetting().scroll_check_funcs(remote_setting_wifi)
