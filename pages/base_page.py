@@ -19,12 +19,13 @@ class BasePage:
 
     def is_element_exists(self, element_value, selector_type='text', max_scrolls=2):
         """
-        判断元素是否存在
+        判断元素是否存在当前页面
         :param selector_type: 安卓支持：text文本、id、xpath定位；iOS支持text(label)文本、id、xpath定位
         :param element_value: 对应的文本、id、xpath值
         :param max_scrolls: 最大滚动次数，默认两次
         :return: bool
         """
+        ele_status = None
         try:
             def check_element():
                 if self.platform == "android":
@@ -88,9 +89,9 @@ class BasePage:
                 elif self.platform == 'ios':
                     element = self.driver(label=text)
 
-                if not element.exists:
-                    logger.error("该点击元素：%s 不存在", text)
-                    raise ValueError(f"该点击元素：{text} 不存在")
+                # if not element.exists:
+                #     logger.error("该点击元素：%s 不存在", text)
+                #     raise ValueError(f"该点击元素：{text} 不存在")
 
                 element.click()
                 time.sleep(2)
@@ -192,28 +193,8 @@ class BasePage:
         :param default: 如果10s内没有获取到Toast，则返回此默认消息
         :return:
         """
-        start_time = time.time()
-        while time.time() - start_time < timeout:
-            try:
-                # 尝试获取Toast文本内容
-                toast_message = self.find_element_by_xpath('//*[contains(@text,{})]'.format(toast_text))
-                # 验证Toast消息内容是否符合预期
-                if toast_message:
-                    logger.info(f"Toast message found: {toast_message}")
-                    return toast_message
-            except XPathElementNotFoundError:
-                pass
-
-            # 根据配置决定是否重置Toast缓存, 默认重置
-            if reset:
-                self.driver.toast.reset()
-
-            # 每隔0.5秒重新尝试获取一次toast消息
-            time.sleep(0.5)
-
-        # 确保在异常情况下也能访问到实际获取的Toast消息或默认值
-        logger.error(f"获取Toast失败，返回默认消息：'{default}'")
-        return default
+        # TODO: 待写
+        pass
 
     def take_screenshot(self):
         """
@@ -317,26 +298,26 @@ class BasePage:
         try:
             if self.platform == "android":
 
-                # 如果直接滚动未找到，则尝试多次滚动查找
+                # 如果未找到，则尝试滚动查找
                 while attempt < max_attempts:
                     # 根据类型初始化查找元素
                     if el_type == "text":
                         element = self.driver(text=text_to_find)
                     elif el_type == "xpath":
                         element = self.driver.xpath(text_to_find)
-                        # self.driver(scrollable=True).fling.vert.toBeginning(max_swipes=1000)  # 滑动至顶部
                     else:
-                        raise ValueError("你可能输入了不支持的元素查找类型···")
+                        raise ValueError("你可能输入了不支持的元素查找类型el_type···")
 
                     # 检查元素是否存在
                     if element.exists:
                         logger.info(f"元素已找到: '{text_to_find}'")
-                        element.click()
-                        logger.info(f"Clicked on '{text_to_find}' directly.")
+                        # element.click()
+                        self.click_by_text(text_to_find)
+                        logger.info(f"直接点击 '{text_to_find}'")
                         return True
 
                     # 滑动屏幕
-                    logger.info(f"Scrolling to find '{text_to_find}'... 第{attempt + 1}次")
+                    logger.info(f"正在尝试滚动查找 '{text_to_find}'... 第{attempt + 1}次")
                     self.driver(scrollable=True).scroll(steps=150)
                     time.sleep(scroll_pause)  # 等待页面稳定
 
@@ -350,17 +331,18 @@ class BasePage:
                     elif el_type == "xpath":
                         element = self.driver(xpath=text_to_find)
                     else:
-                        raise ValueError("你可能输入了不支持的元素查找类型···")
+                        raise ValueError("你可能输入了不支持的元素查找类型el_type···")
 
                     # 尝试查找元素并点击
                     if element.exists:
                         logger.info(f"元素已找到: '{text_to_find}'")
-                        element.click()
-                        logger.info(f"Clicked on '{text_to_find}' directly.")
+                        # element.click()
+                        self.click_by_text(text_to_find)
+                        logger.info(f"直接点击 '{text_to_find}'")
                         return True
 
                     # 滑动屏幕
-                    logger.info(f"Scrolling to find '{text_to_find}'... 第{attempt + 1}次")
+                    logger.info(f"正在尝试滚动查找 '{text_to_find}'... 第{attempt + 1}次")
                     self.driver.swipe_up()
                     time.sleep(scroll_pause)  # 等待页面稳定
 
@@ -369,40 +351,39 @@ class BasePage:
         except Exception as err:
             logger.info(f"Error occurred: {err}")
 
-        logger.info(f"Failed to find and click on '{text_to_find}' after {max_attempts} attempts.")
+        logger.info(f"没找到要点击的元素： '{text_to_find}' ，已经尝试了： {max_attempts} 次.")
         return False
 
     def access_in_remote_setting(self, text_to_find, el_type='text', max_attempts=15, scroll_pause=0.5):
         """
-        在设备列表中滚动查找指定设备名称,并点击远程设置按钮。
-        建议只使用text文本定位，因为最终找不到元素会直接按照文本点击一次。先这样写。
-        :param el_type: 元素查找类型，支持 文本text(label) 和 'xpath'.
+        在设备列表中滚动查找指定设备名称(支持单机、nvr、hub),并点击远程设置按钮。
+        :param el_type: 元素查找类型，支持 文本text(label).
         :param text_to_find: 要查找的文本
         :param max_attempts: 最大尝试次数
         :param scroll_pause: 滚动后的暂停时间，秒
         """
         attempt = 0
 
-        def find_and_click_android(element_selector):
-            element = self.driver.xpath(element_selector)
-            if element.exists:
-                element2 = self.driver.xpath(
+        def find_and_click_android(xpath_exp):
+            device_name = self.driver.xpath(xpath_exp)
+            if device_name.exists:
+                setting_element = self.driver.xpath(
                     f"//*[@text='{text_to_find}']/following-sibling::*[2][@clickable='true']")
-                if element2.exists:
-                    element2.click()
+                if setting_element.exists:
+                    setting_element.click()
                 else:
-                    element.click()
+                    device_name.click()
+                logger.info(f"尝试点击这个 '{text_to_find}' 元素右边的远程设置按钮")
                 time.sleep(2)
-                logger.info(f"尝试点击这个 '{text_to_find}' 元素右边的元素")
                 return True
             return False
 
-        def find_and_click_ios(element_selector):
-            element = self.driver.xpath(element_selector)
+        def find_and_click_ios(xpath_exp):
+            element = self.driver.xpath(xpath_exp)
             if element.exists and element.label == 'list device set':
                 element.click()
+                logger.info(f"尝试点击这个 '{text_to_find}' 元素右边的远程设置按钮")
                 time.sleep(2)
-                logger.info(f"尝试点击这个 '{text_to_find}' 元素右边的元素")
                 return True
             return False
 
@@ -410,8 +391,9 @@ class BasePage:
             if find_and_click_android(f"//*[@text='{text}']/following-sibling::*[1][@clickable='true']"):
                 return True
             else:
-                logger.info(f"没有找到目标元素右边的可点击元素: '{text}'")
-                self.driver(text=text).click()
+                logger.info(f"没有找到目标元素右边的远程设置按钮: '{text}'")
+                # self.driver(text=text).click()
+                self.click_by_text(text)
                 return True
 
         def find_and_click_ios_xpath(text):
@@ -422,8 +404,9 @@ class BasePage:
                     f"//*[contains(@name, '{text}')]/following-sibling::*[2][@visible='true' and @enabled='true']"):
                 return True
             else:
-                logger.info(f"没有找到目标元素右边的可点击元素: '{text}'")
-                self.driver(label=text).click()
+                logger.info(f"没有找到目标元素右边的远程设置按钮: '{text}'")
+                # self.driver(label=text).click()
+                self.click_by_text(text)
                 return True
 
         try:
@@ -462,36 +445,36 @@ class BasePage:
         logger.info(f"还是没找到 '{text_to_find}' 元素，已经尝试了 {max_attempts} 次.")
         return False
 
-    def parse_and_extract_text(self, xml_content, xml_parse_conditions, exclude_texts=None):
-        """
-        解析并提取XML指定文本内容（先这样写）
-        :param xml_parse_conditions: iOS或安卓的xml解析条件，取自yaml文件
-        :param xml_content: 获取的xml内容
-        :param exclude_texts: 需要排除的文本
-        :return:
-        """
-        if exclude_texts is None:
-            exclude_texts = []
-
-        texts = set()
-
-        root = ET.fromstring(xml_content)
-        for elem in root.iter():
-            match = True
-            for key, value in xml_parse_conditions.items():
-                elem_value = elem.attrib.get(key)
-                if isinstance(value, dict):
-                    if 'not_equal' in value and elem_value == value['not_equal']:
-                        match = False
-                        break
-                elif elem_value != value:
-                    match = False
-                    break
-            if match:
-                text = elem.attrib.get('text') if self.platform == "android" else elem.attrib.get('label')
-                if text and text not in exclude_texts:
-                    texts.add(text)
-        return texts
+    # def parse_and_extract_text(self, xml_content, xml_parse_conditions, exclude_texts=None):
+    #     """
+    #     解析并提取XML指定文本内容（先这样写）
+    #     :param xml_parse_conditions: iOS或安卓的xml解析条件，取自yaml文件
+    #     :param xml_content: 获取的xml内容
+    #     :param exclude_texts: 需要排除的文本
+    #     :return:
+    #     """
+    #     if exclude_texts is None:
+    #         exclude_texts = []
+    #
+    #     texts = set()
+    #
+    #     root = ET.fromstring(xml_content)
+    #     for elem in root.iter():
+    #         match = True
+    #         for key, value in xml_parse_conditions.items():
+    #             elem_value = elem.attrib.get(key)
+    #             if isinstance(value, dict):
+    #                 if 'not_equal' in value and elem_value == value['not_equal']:
+    #                     match = False
+    #                     break
+    #             elif elem_value != value:
+    #                 match = False
+    #                 break
+    #         if match:
+    #             text = elem.attrib.get('text') if self.platform == "android" else elem.attrib.get('label')
+    #             if text and text not in exclude_texts:
+    #                 texts.add(text)
+    #     return texts
 
     def scroll_screen(self, max_scrolls=1, direction="up"):
         """
@@ -558,103 +541,103 @@ class BasePage:
 
         return list(my_set)
 
-    def get_all_elements_texts(self, exclude_texts, xml_az_parse_conditions, xml_ios_parse_conditions, max_scrolls=2,
-                               scroll_pause=1):
-        """
-        获取当前页面xml文件，解析出当前页面所有功能文案
-        :param exclude_texts: 需要额外排除的文案
-        :param xml_az_parse_conditions: 安卓xml解析条件，取自yaml文件
-        :param xml_ios_parse_conditions: iOSxml解析条件，取自yaml文件
-        :param max_scrolls: 最大滚动次数
-        :param scroll_pause: 滚动后的停止时间，秒
-        :return:
-        """
-        all_texts = set()
+    # def get_all_elements_texts(self, exclude_texts, xml_az_parse_conditions, xml_ios_parse_conditions, max_scrolls=2,
+    #                            scroll_pause=1):
+    #     """
+    #     获取当前页面xml文件，解析出当前页面所有功能文案
+    #     :param exclude_texts: 需要额外排除的文案
+    #     :param xml_az_parse_conditions: 安卓xml解析条件，取自yaml文件
+    #     :param xml_ios_parse_conditions: iOSxml解析条件，取自yaml文件
+    #     :param max_scrolls: 最大滚动次数
+    #     :param scroll_pause: 滚动后的停止时间，秒
+    #     :return:
+    #     """
+    #     all_texts = set()
+    #
+    #     # 确认当前被测平台是安卓还是iOS
+    #     def get_page_source_and_parse(platform):
+    #         if platform == "android":
+    #             return self.driver.dump_hierarchy()
+    #         elif platform == "ios":
+    #             return self.driver.source()
+    #         else:
+    #             raise ValueError("不支持当前平台")
+    #
+    #     # 根据被测平台选用不同的滚动方法
+    #     def swipe_screen(platform):
+    #         if platform == "android":
+    #             self.driver.swipe_ext("up")
+    #         elif platform == "ios":
+    #             time.sleep(1)
+    #             self.driver.swipe_up()
+    #         else:
+    #             raise ValueError("不支持当前平台")
+    #
+    #     # 调用parse_and_extract_text解析方法将xml内容进行解析、去重
+    #     def extract_texts_and_update(platform, parse_conditions):
+    #         page_source = get_page_source_and_parse(platform)
+    #         logger.info("已获取页面XML")
+    #
+    #         texts = self.parse_and_extract_text(
+    #             xml_content=page_source,
+    #             xml_parse_conditions=parse_conditions,
+    #             exclude_texts=exclude_texts
+    #         )
+    #         all_texts.update(texts)
+    #
+    #     time.sleep(2)
+    #     parse_conditions = xml_az_parse_conditions if self.platform == "android" else xml_ios_parse_conditions
+    #
+    #     for _ in range(max_scrolls):
+    #         extract_texts_and_update(self.platform, parse_conditions)
+    #         swipe_screen(self.platform)
+    #         time.sleep(scroll_pause)  # 等待页面稳定
+    #
+    #     # 将去重后的文本内容写入文件
+    #     output_path = os.path.abspath("./elements_texts.txt")
+    #     with open(output_path, 'w', encoding='utf-8') as f:
+    #         for text in sorted(all_texts):
+    #             f.write(text + '\n')
+    #
+    #     # 统计非空行数
+    #     with open(output_path, 'r', encoding='utf-8') as f:
+    #         non_empty_lines = sum(1 for line in f if line.strip())
+    #
+    #     logger.info(f"总非空行数: {non_empty_lines}")
+    #
+    #     return list(all_texts)
 
-        # 确认当前被测平台是安卓还是iOS
-        def get_page_source_and_parse(platform):
-            if platform == "android":
-                return self.driver.dump_hierarchy()
-            elif platform == "ios":
-                return self.driver.source()
-            else:
-                raise ValueError("不支持当前平台")
-
-        # 根据被测平台选用不同的滚动方法
-        def swipe_screen(platform):
-            if platform == "android":
-                self.driver.swipe_ext("up")
-            elif platform == "ios":
-                time.sleep(1)
-                self.driver.swipe_up()
-            else:
-                raise ValueError("不支持当前平台")
-
-        # 调用parse_and_extract_text解析方法将xml内容进行解析、去重
-        def extract_texts_and_update(platform, parse_conditions):
-            page_source = get_page_source_and_parse(platform)
-            logger.info("已获取页面XML")
-
-            texts = self.parse_and_extract_text(
-                xml_content=page_source,
-                xml_parse_conditions=parse_conditions,
-                exclude_texts=exclude_texts
-            )
-            all_texts.update(texts)
-
-        time.sleep(2)
-        parse_conditions = xml_az_parse_conditions if self.platform == "android" else xml_ios_parse_conditions
-
-        for _ in range(max_scrolls):
-            extract_texts_and_update(self.platform, parse_conditions)
-            swipe_screen(self.platform)
-            time.sleep(scroll_pause)  # 等待页面稳定
-
-        # 将去重后的文本内容写入文件
-        output_path = os.path.abspath("./elements_texts.txt")
-        with open(output_path, 'w', encoding='utf-8') as f:
-            for text in sorted(all_texts):
-                f.write(text + '\n')
-
-        # 统计非空行数
-        with open(output_path, 'r', encoding='utf-8') as f:
-            non_empty_lines = sum(1 for line in f if line.strip())
-
-        logger.info(f"总非空行数: {non_empty_lines}")
-
-        return list(all_texts)
-
-    def verify_page_text(self, expected_text, exclude_texts,
-                         xml_az_parse_conditions, xml_ios_parse_conditions):
-        """
-        校验页面内容
-        :param xml_ios_parse_conditions: ios
-        :param xml_az_parse_conditions:
-        :param expected_text: 需要检查的预期文本
-        :param exclude_texts: 需要排除的文本
-        :return:
-        """
-        # 获取页面所有功能名称
-        texts = self.get_all_elements_texts(exclude_texts=exclude_texts,
-                                            xml_az_parse_conditions=xml_az_parse_conditions,
-                                            xml_ios_parse_conditions=xml_ios_parse_conditions
-                                            )
-        logger.info(f"获取的页面所有功能名称: {texts}")
-
-        # 计算当前页面获取到的功能数量
-        page_fun_num = len(texts)
-        logger.info(f"当前页面获取到的功能数量：{page_fun_num}")
-
-        # 计算预期设备 → 预期页面 → 预期文案数量
-        count = len(expected_text)
-        logger.info(f"预期设备的预期页面的预期文案数量：{count}")
-
-        for line in expected_text:
-            if line not in texts or page_fun_num != count:
-                logger.info("当前页面功能可能不齐全！需要人工核查！")
-                return False
-        logger.info("当前页面功能比对齐全！")
-        return True
+    # def verify_page_text(self, expected_text, exclude_texts,
+    #                      xml_az_parse_conditions, xml_ios_parse_conditions):
+    #     """
+    #     校验页面内容
+    #     :param xml_ios_parse_conditions: ios
+    #     :param xml_az_parse_conditions:
+    #     :param expected_text: 需要检查的预期文本
+    #     :param exclude_texts: 需要排除的文本
+    #     :return:
+    #     """
+    #     # 获取页面所有功能名称
+    #     texts = self.get_all_elements_texts(exclude_texts=exclude_texts,
+    #                                         xml_az_parse_conditions=xml_az_parse_conditions,
+    #                                         xml_ios_parse_conditions=xml_ios_parse_conditions
+    #                                         )
+    #     logger.info(f"获取的页面所有功能名称: {texts}")
+    #
+    #     # 计算当前页面获取到的功能数量
+    #     page_fun_num = len(texts)
+    #     logger.info(f"当前页面获取到的功能数量：{page_fun_num}")
+    #
+    #     # 计算预期设备 → 预期页面 → 预期文案数量
+    #     count = len(expected_text)
+    #     logger.info(f"预期设备的预期页面的预期文案数量：{count}")
+    #
+    #     for line in expected_text:
+    #         if line not in texts or page_fun_num != count:
+    #             logger.info("当前页面功能可能不齐全！需要人工核查！")
+    #             return False
+    #     logger.info("当前页面功能比对齐全！")
+    #     return True
 
     def read_phone_file(self, device_path):
         """
@@ -680,13 +663,3 @@ class BasePage:
                 logger.info(f"读取文件失败: {process.stderr}")
                 return None
 
-    def scroll_find_element(self, text):
-        """
-        滚动检查元素是否在当前页面
-        :return: bool
-        """
-        # TODO: 滚动检查元素是否在当前页面
-        if self.platform == "android":
-            return self.driver(text=text).exits
-        elif self.platform == "ios":
-            return self.driver(text=text).exits
