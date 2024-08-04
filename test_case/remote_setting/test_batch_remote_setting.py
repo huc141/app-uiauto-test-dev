@@ -5,7 +5,6 @@ from pages.rn_device_setting_page.remote_setting import RemoteSetting
 from common_tools.read_yaml import read_yaml
 
 devices_config = read_yaml.load_device_config()  # 读取参数化文件
-# print(devices_config)
 
 
 class TestRemoteSetting:
@@ -16,10 +15,10 @@ class TestRemoteSetting:
 
         # 读取yaml文件中远程配置页面内容
         remote_setting_page = device_config['ipc']['items']
-        print(remote_setting_page)
+        # print(remote_setting_page)
 
         # 在设备列表查找到对应设备并进入远程配置
-        RemoteSetting().scroll_click_remote_setting(device_name=device_config['device_list_name'])
+        RemoteSetting().scroll_click_remote_setting(device_list_name=device_config['device_list_name'])
 
         # 读取yaml文件中预期功能项
         page_fun_list = RemoteSetting().extract_yaml_names(remote_setting_page, 'name')
