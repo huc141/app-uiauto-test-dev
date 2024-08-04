@@ -16,19 +16,22 @@ class HandleAlerts:
         """
         定义并处理安卓/iOS常见弹窗
         """
-        alert_buttons = [
+        android_alert_buttons = [
             'com.android.permissioncontroller:id/permission_allow_foreground_only_button'  # 安卓系统权限弹窗：仅在使用该应用时允许
         ]
+
         ios_alert_buttons = [
             "使用App时允许", "好", "稍后", "稍后提醒", "确定", "允许", "以后"
         ]
+
         try:
             if self.platform == 'android':
-                for button in alert_buttons:
+                for button in android_alert_buttons:
                     if self.driver(resourceId=button).exists:
                         print(f"识别到安卓相关弹窗按钮: {button}")
                         self.driver(resourceId=button).click()
                         return True
+
             elif self.platform == 'ios':
                 session = self.driver.session()
                 for button in ios_alert_buttons:
@@ -38,7 +41,9 @@ class HandleAlerts:
                         session(label=button).tap()
                         logger.info(f"点击权限弹窗按钮: {button}")
                         return True
+
             return False
+
         except Exception as err:
             logger.error(f"处理权限弹窗失败，原因为：{err}")
             return False

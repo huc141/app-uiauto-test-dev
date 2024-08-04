@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from typing import Literal
+import time
 from common_tools.logger import logger
 from pages.base_page import BasePage
 
@@ -8,27 +8,29 @@ class RemoteSetting(BasePage):
     def __init__(self):
         super().__init__()
         if self.platform == 'android':
-            pass
+            self.ivSelectChannelButton = '//*[@resource-id="com.mcu.reolink:id/ivSelectChannelButton"]'  # nvr的通道按钮
+
         elif self.platform == 'ios':
-            pass
+            self.ivSelectChannelButton = '(//XCUIElementTypeButton)[2]'
 
-    def check_remote_setting_text(self, expected_text, exclude_texts,
-                                  xml_az_parse_conditions, xml_ios_parse_conditions):
-        """
-        根据设备名，检查对应设备的远程配置功能是否和预期一致
-        :param xml_az_parse_conditions: 安卓的远程配置主(一级)页面解析条件，用于排除无关文本，筛选出页面功能
-        :param xml_ios_parse_conditions: iOS的远程配置主(一级)页面解析条件，用于排除无关文本，筛选出页面功能
-        :param expected_text: 需要检查的预期文本
-        :param exclude_texts: 需要排除的文本(额外添加需要排除的文本)
-        :return:
-        """
-        return self.verify_page_text(expected_text=expected_text,
-                                     exclude_texts=exclude_texts,
-                                     xml_az_parse_conditions=xml_az_parse_conditions,
-                                     xml_ios_parse_conditions=xml_ios_parse_conditions
-                                     )
+    # def check_remote_setting_text(self, expected_text, exclude_texts,
+    #                               xml_az_parse_conditions, xml_ios_parse_conditions):
+    #     """
+    #     根据设备名，检查对应设备的远程配置功能是否和预期一致
+    #     :param xml_az_parse_conditions: 安卓的远程配置主(一级)页面解析条件，用于排除无关文本，筛选出页面功能
+    #     :param xml_ios_parse_conditions: iOS的远程配置主(一级)页面解析条件，用于排除无关文本，筛选出页面功能
+    #     :param expected_text: 需要检查的预期文本
+    #     :param exclude_texts: 需要排除的文本(额外添加需要排除的文本)
+    #     :return:
+    #     """
+    #     return self.verify_page_text(expected_text=expected_text,
+    #                                  exclude_texts=exclude_texts,
+    #                                  xml_az_parse_conditions=xml_az_parse_conditions,
+    #                                  xml_ios_parse_conditions=xml_ios_parse_conditions
+    #                                  )
 
-    def extract_yaml_names(self, dict_list, key):
+    @staticmethod
+    def extract_yaml_names(dict_list, key):
         """
         从给定的字典列表中提取指定键的值。
 
@@ -72,20 +74,47 @@ class RemoteSetting(BasePage):
             logger.info(f"需校验的功能项均存在！-->{ele_exits}")
             return True
 
-    def scroll_click_remote_setting(self, device_name):
+    def scroll_click_remote_setting(self, device_list_name):
         """
-        逐一滚动查找设备名称并点击远程设置按钮
-        :param device_name: 要查找的设备名称
+        逐一滚动查找设备在设备列表的名称并点击远程设置按钮
+        :param device_list_name: 要查找的设备名称
         :return:
         """
-        return self.access_in_remote_setting(text_to_find=device_name)
+        return self.access_in_remote_setting(text_to_find=device_list_name)
 
-    def access_in_wifi(self):
+    def access_in_remote_wifi(self, device_list_name, sub_name=None, access_mode='ipc'):
         """
-        点击WiFi，进入WiFi页
+        进入指定设备的远程配置的wifi页面.
+        接入hub、nvr的设备名称在命名时不能过长导致省略隐藏。
+        :param device_list_name: 设备列表里单机设备、hub、nvr的昵称。
+        :param sub_name: 若设备接入了hub、nvr设备下的话，则该名称必填。
+        :param access_mode: 设备接入方式，支持ipc、hub、nvr。明确设备是单机还是接入NVR下、接入hub下。
         :return:
         """
-        return self.scroll_and_click_by_text('Wi-Fi')
+        # 根据昵称在设备列表中滚动查找该设备并进入远程配置主页
+        self.access_in_remote_setting(device_list_name)
+
+        # 如果设备是单机：
+        if access_mode == 'ipc':
+            time.sleep(2)
+            # 进入wifi主页
+            self.scroll_and_click_by_text('Wi-Fi')
+
+        # 如果设备接入了nvr：
+        elif access_mode == 'nvr' and sub_name is not None:
+            time.sleep(2)
+            self.scroll_and_click_by_text(self.ivSelectChannelButton, el_type='xpath')
+            # 选择通道并点击(但是设备接入nvr后不会显示wifi的远程配置)
+            self.scroll_and_click_by_text(sub_name)
+            logger.info("设备接入了nvr，页面不显示WiFi功能")
+
+        # 如果设备接入了hub：
+        elif access_mode == 'hub' and sub_name is not None:
+            time.sleep(2)
+            # 根据名称查找hub下的设备卡片，点击并进入hub下的设备的远程配置主页
+            self.scroll_and_click_by_text(sub_name)
+            # 进入wifi主页
+            self.scroll_and_click_by_text('Wi-Fi')
 
     def access_in_display(self):
         """
@@ -177,5 +206,3 @@ class RemoteSetting(BasePage):
         :return:
         """
         return self.scroll_and_click_by_text('高级设置')
-
-
