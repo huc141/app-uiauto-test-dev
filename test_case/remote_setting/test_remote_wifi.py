@@ -1,50 +1,60 @@
 # -*- coding: utf-8 -*-
-import os
 import pytest
 from common_tools.app_driver import driver
 from common_tools.read_yaml import read_yaml
 from pages.rn_device_setting_page.remote_wifi import RemoteWiFi
+from pages.rn_device_setting_page.remote_setting import RemoteSetting
 
-device_configs = read_yaml.device_configs  # 读取参数化文件
+devices_config = read_yaml.load_device_config(yaml_file_name='wifi.yaml')  # 读取参数化文件
 
 
 class TestRemoteWifi:
-    @pytest.mark.parametrize("device_config", device_configs)
+    @pytest.mark.parametrize("device_config", devices_config)
     def test_remote_wifi_page(self, device_config):
         # 启动app，并开启录屏
         driver.start_app(True)
 
         # 设备列表中滚动查找到单机、nvr、hub并进入远程配置
-        RemoteWiFi().access_in_remote_wifi(device_name=device_config['device_list_name'],
-                                           sub_name=device_config['sub_device_name'],
-                                           access_mode='access_mode')
-        # 读取wifi_parse_xml.yml文件中wifi主页内容
-        remote_wifi_page = device_config['sub_pages']['wifi']
+        remote_setting_wifi = device_config['ipc']['items']
 
-        # 读取预期功能项并遍历，与获取到的功能项进行一一比对和数量核对
-        page_fun = RemoteWiFi().check_remote_wifi_text(remote_wifi_page["expected_texts"],
-                                                       remote_wifi_page["excluded_texts"],
-                                                       remote_wifi_page["xml_az_parse_conditions"],
-                                                       remote_wifi_page["xml_ios_parse_conditions"])
+        # 在远程设置主页点击‘Wi-Fi’菜单项进入Wi-Fi页
+        RemoteSetting().access_in_remote_wifi(device_list_name=device_config['device_list_name'])
+
+        # 读取yaml文件中预期功能项
+        page_fun_list = RemoteSetting().extract_yaml_names(remote_setting_wifi, 'name')
+
+        # 遍历并滚动查找当前页面指定元素，判断是否存在
+        page_fun = RemoteSetting().scroll_check_funcs(page_fun_list)
+
         # 断言
         assert page_fun is True
 
-    def wifi_band_preference_test(self):
-        """
-        测试wifi频段偏好
-        :return:
-        """
-        # 点击进入wifi频段偏好页面
+        # 测试WiFi频段偏好
+        wifi_band_preference_text = device_config['ipc']['items']
+        wifi_band_preference_test(wifi_band_preference_text[0]['options'])
 
-        # 检查wifi频段偏好页面文案
 
-        # 点击仅5G
+# 辅助函数
+def wifi_band_preference_test(text_list):
+    """
+    测试wifi频段偏好
+    :return:
+    """
+    # 点击进入wifi频段偏好页面
+    RemoteWiFi().access_in_wifi_band_preference()
 
-        # 点击进入wifi频段偏好页面
+    # 检查wifi频段偏好页面文案
+    page_fun_list = RemoteSetting().scroll_check_funcs(text_list)
 
-        # 点击仅2.4G
+    # 断言
+    assert page_fun_list is True
 
-        # 点击进入wifi频段偏好页面
+    # TODO: 点击仅5G
 
-        # 点击 自动
-        pass
+    # TODO: 点击进入wifi频段偏好页面
+
+    # TODO: 点击仅2.4G
+
+    # TODO: 点击进入wifi频段偏好页面
+
+    # TODO: 点击 自动
