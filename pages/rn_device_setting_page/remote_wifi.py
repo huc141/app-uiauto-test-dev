@@ -3,6 +3,7 @@ import time
 from typing import Literal
 from common_tools.logger import logger
 from pages.base_page import BasePage
+from pages.rn_device_setting_page.remote_setting import RemoteSetting
 
 
 class RemoteWiFi(BasePage):
@@ -14,12 +15,33 @@ class RemoteWiFi(BasePage):
         elif self.platform == 'ios':
             pass
 
-    def access_in_wifi_band_preference(self, option_text='Wi-Fi 频段偏好'):
+    def access_in_wifi_band_preference(self, text_list, option_text='Wi-Fi 频段偏好'):
         """
-        进入wifi频段偏好页面
+        进入并测试wifi频段偏好页面
         :return:
         """
         self.scroll_and_click_by_text(text_to_find=option_text)
+
+        # 检查wifi频段偏好页面文案
+        page_fun_list = RemoteSetting().scroll_check_funcs(text_list)
+
+        # 断言
+        assert page_fun_list is True
+
+        # 关闭弹窗，返回Wi-Fi页
+        self.click_by_text('取消')
+
+        for i in text_list:
+            self.scroll_and_click_by_text(text_to_find=option_text)
+            time.sleep(0.5)
+            logger.info('点击 ' + i)
+            self.click_by_text(i)
+            time.sleep(0.5)
+            page_options = RemoteSetting().scroll_check_funcs(i)
+            if i != '取消':
+                assert page_options is True
+            elif i == '取消':
+                assert page_options is False
 
     def access_in_wifi_test(self):
         """

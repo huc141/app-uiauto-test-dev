@@ -56,23 +56,37 @@ class RemoteSetting(BasePage):
         :param texts: 存储了功能项名称的列表。
         :return: bool
         """
-        ele_exits = []
-        ele_not = []
+        ele_exists = []
+        ele_not_exists = []
 
-        for text in texts:
-            ele_status = self.is_element_exists(text)
-            if ele_status:
-                ele_exits.append(text)
-            elif not ele_status:
-                ele_not.append(text)
+        if isinstance(texts, list):
+            # 如果 texts 是一个列表，遍历列表中的每个功能项名称
+            for text in texts:
+                ele_status = self.is_element_exists(text)
+                if ele_status:
+                    ele_exists.append(text)
+                else:
+                    ele_not_exists.append(text)
 
-        if len(ele_not) > 0:
-            logger.info(f"当前页面存在的功能有：{ele_exits}")
-            logger.info(f"当前页面缺失的功能有：{ele_not}")
-            return False
-        else:
-            logger.info(f"需校验的功能项均存在！-->{ele_exits}")
-            return True
+            if len(ele_not_exists) > 0:
+                logger.info(f"当前页面存在的功能有：{ele_exists}")
+                logger.info(f"当前页面缺失的功能有：{ele_not_exists}")
+                return False
+            else:
+                logger.info(f"需校验的功能项均存在！-->{ele_exists}")
+                return True
+
+        elif isinstance(texts, str):
+            # 如果 texts 是一个单一的文本，在当前页面滚动查找该文本是否存在
+            ele_status = self.is_element_exists(texts)
+            if not ele_status:
+                logger.info(f"当前页面缺失的功能有：{texts}")
+                return False
+            else:
+                logger.info(f"需校验的功能项均存在！-->{texts}")
+                return True
+
+
 
     def scroll_click_remote_setting(self, device_list_name):
         """

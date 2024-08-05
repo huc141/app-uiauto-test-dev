@@ -15,4 +15,6 @@ print(devices_config)
 remote_setting_wifi = devices_config[0]['ipc']['items'][0]['options']
 
 print('------------------')
-page_fun = RemoteSetting().scroll_check_funcs(remote_setting_wifi)
+# page_fun = RemoteSetting().scroll_check_funcs(remote_setting_wifi)
+
+print(remote_setting_wifi)
