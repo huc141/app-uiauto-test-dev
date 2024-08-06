@@ -86,8 +86,6 @@ class RemoteSetting(BasePage):
                 logger.info(f"需校验的功能项均存在！-->{texts}")
                 return True
 
-
-
     def scroll_click_remote_setting(self, device_list_name):
         """
         逐一滚动查找设备在设备列表的名称并点击远程设置按钮
