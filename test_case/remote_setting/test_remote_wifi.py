@@ -34,3 +34,5 @@ class TestRemoteWifi:
         RemoteWiFi().access_in_wifi_band_preference(wifi_band_preference_text[0]['options'])
 
         # 测试Wi-Fi测速
+        wifi_test_speed_text = device_config['ipc']['items'][1]['subpage']['text']
+        RemoteWiFi().access_in_wifi_test(wifi_test_speed_text)

@@ -17,7 +17,7 @@ class RemoteWiFi(BasePage):
 
     def access_in_wifi_band_preference(self, text_list, option_text='Wi-Fi 频段偏好'):
         """
-        进入并测试wifi频段偏好页面
+        进入并测试wifi频段偏好页面，验证操作内容存在，并点击
         :param text_list: 文本
         :param option_text: 菜单功能项，该方法默认进入【Wi-Fi 频段偏好】
         :return:
@@ -46,12 +46,24 @@ class RemoteWiFi(BasePage):
             elif i == '取消':
                 assert page_options is False
 
-    def access_in_wifi_test(self):
+    def access_in_wifi_test(self, text_list, option_text='Wi-Fi测速'):
         """
-        进入wifi测试页面
+        进入wifi测速页面，验证文本内容存在
         :return:
         """
-        pass
+        # 点击Wi-Fi测速功能项
+        self.scroll_and_click_by_text(text_to_find=option_text)
+
+        # 遍历文本，检查当前页面的文本内容
+        for i in text_list:
+            page_element_status = self.is_element_exists(element_value=i)
+            if page_element_status:
+                logger.info('元素 ' + i + '存在')
+                assert True
+            else:
+                logger.info('元素 ' + i + '缺失')
+                assert False
+
 
     def access_in_add_network(self):
         """
