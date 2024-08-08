@@ -45,11 +45,15 @@ ipc:
         key: 'input_password'
         desc: '设置>Wi-Fi>添加其他网络>输入密码'
         type: 'page'
-        options:
-          - 'wifi名称'
-          - 'wifi密码'
+        text:
           - '取消'
           - '保存'
+          - 'Wi-Fi名称'
+          - 'Wi-Fi密码'
+          - '输入密码'
+        options:
+          input_wifi_name: 'reolink-HMK_5G'
+          input_wifi_passw: '11111111'
 
 hub:
   name: 'Wi-Fi'

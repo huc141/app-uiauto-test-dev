@@ -36,3 +36,10 @@ class TestRemoteWifi:
         # 测试Wi-Fi测速
         wifi_test_speed_text = device_config['ipc']['items'][1]['subpage']['text']
         RemoteWiFi().access_in_wifi_test(wifi_test_speed_text)
+
+        # 测试添加其他网络
+        check_text_list = device_config['ipc']['items'][3]['subpage']['text']
+        switch_wifi = device_config['ipc']['items'][3]['subpage']['options']
+        RemoteWiFi().access_in_add_network(text_list=check_text_list,
+                                           wifi_name=switch_wifi['input_wifi_name'],
+                                           wifi_passw=['input_wifi_passw'])
