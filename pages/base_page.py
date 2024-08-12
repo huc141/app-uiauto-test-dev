@@ -238,7 +238,7 @@ class BasePage:
         :return:
         """
         try:
-            time.sleep(0.2)
+            time.sleep(0.5)
             if self.platform == "android":
                 self.driver.xpath(xpath_exp).set_text(text)
                 # self.driver.set_input_ime(True)
@@ -311,8 +311,8 @@ class BasePage:
                     # 检查元素是否存在
                     if element.exists:
                         logger.info(f"元素已找到: '{text_to_find}'")
-                        # element.click()
-                        self.click_by_text(text_to_find)
+                        element.click()
+                        # self.click_by_text(text_to_find)
                         logger.info(f"直接点击 '{text_to_find}'")
                         return True
 
@@ -336,8 +336,8 @@ class BasePage:
                     # 尝试查找元素并点击
                     if element.exists:
                         logger.info(f"元素已找到: '{text_to_find}'")
-                        # element.click()
-                        self.click_by_text(text_to_find)
+                        element.click()
+                        # self.click_by_text(text_to_find)
                         logger.info(f"直接点击 '{text_to_find}'")
                         return True
 
