@@ -12,6 +12,7 @@ class RemoteWiFi(BasePage):
         if self.platform == 'android':
             self.edit_wifi_name_text = '//*[@text="Wi-Fi名称"]'
             self.edit_wifi_passw_text = '//*[@text="Wi-Fi密码"]'
+            self.base_left_button = '//*[@resource-id="com.mcu.reolink:id/base_left_button"]'
 
         elif self.platform == 'ios':
             pass
@@ -40,7 +41,7 @@ class RemoteWiFi(BasePage):
             time.sleep(0.5)
             logger.info('点击 ' + i)
             self.click_by_text(i)
-            time.sleep(0.5)
+            time.sleep(1)
             page_options = RemoteSetting().scroll_check_funcs(i)  # 断言
             if i != '取消':
                 assert page_options is True
@@ -64,6 +65,8 @@ class RemoteWiFi(BasePage):
             else:
                 logger.info('元素 ' + i + '缺失')
                 assert False
+        # 返回Wi-Fi主页
+        self.scroll_and_click_by_text(text_to_find=self.base_left_button, el_type='xpath')
 
     def access_in_add_network(self, text_list, option_text='添加其他网络', wifi_name=None, wifi_passw=None):
         """
