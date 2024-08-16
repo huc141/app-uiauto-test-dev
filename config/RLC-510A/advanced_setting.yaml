@@ -1,24 +1,24 @@
-advanced_setting_page:
-  name: '高级设置'
-  desc: '高级设置页面-入口：设置>高级设置'
-  type: 'page'
-  items:
-    user_management:
+name: '高级设置'
+key: 'advanced_setting_page'
+desc: '设置-高级设置'
+type: 'page'
+items:
+  - name: '用户管理'
+    key: 'user_management'
+    desc: '设置>高级设置>用户管理'
+    type: 'navigation'
+    children:
       name: '用户管理'
-      desc: '设置>高级设置>用户管理'
-      type: 'navigation'
-      subpage:
-        name: '用户管理'
-        desc: '设置>高级设置>用户管理>用户管理页面'
-        type: 'page'
-    date_and_time:
+      desc: '设置>高级设置>用户管理>用户管理页面'
+      type: 'page'
+  - name: '日期和时间'
+    key: 'date_and_time'
+    desc: '设置>高级设置>日期和时间'
+    type: 'navigation'
+    children:
       name: '日期和时间'
-      desc: '设置>高级设置>日期和时间'
-      type: 'navigation'
-      subpage:
-        name: '日期和时间'
-        desc: '设置>高级设置>日期和时间>日期和时间页面'
-        type: 'page'
+      desc: '设置>高级设置>日期和时间>日期和时间页面'
+      type: 'page'
 
 
 
