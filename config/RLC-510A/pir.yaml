@@ -1,0 +1,18 @@
+pir_setting_page:
+  name: 'PIR 设置'
+  key: 'pir_setting_page'
+  desc: 'PIR 设置页面-入口：设置>PIR 设置'
+  type: 'page'
+  items:
+    pir_setting:
+      name: 'PIR 设置'
+      desc: '设置>PIR 设置>PIR 设置'
+      type: 'switch'
+    sensitivity:
+      name: '灵敏度'
+      desc: '设置>PIR 设置>灵敏度'
+      type: 'navigation'
+      subpage:
+        name: '灵敏度'
+        desc: '设置>PIR 设置>灵敏度>灵敏度'
+        type: 'page'

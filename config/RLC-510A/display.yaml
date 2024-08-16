@@ -1,214 +1,241 @@
-name: '显示'
-key: 'display_page'
-desc: '设置>显示'
-type: 'page'
-items:
-  - name: '垂直翻转'
-    key: 'flip_vertical'
-    desc: '设置>显示>垂直翻转'
-    type: 'switch'
-  - name: '水平翻转'
-    key: 'flip_horizontal'
-    desc: '设置>显示>水平翻转'
-    type: 'switch'
-  - name: '码流'
-    key: 'stream'
-    desc: '设置>显示>码流'
-    type: 'navigation'
-    subpage:
+
+clear_page: &clear_page_anchor
+  name: '清晰'
+  desc: '设置>显示>码流>码流>清晰'
+  type: 'page'
+  items:
+    resolution:
+      name: '分辨率'
+      desc: '设置>显示>码流>码流>清晰>分辨率'
+      type: 'popup'
+      options:
+        - '2560*1920'
+        - '2560*1440'
+        - '2048*1536'
+        - '2304*1296'
+    frame_rate:
+      name: '帧率(fps)'
+      desc: '设置>显示>码流>码流>清晰>帧率(fps)'
+      type: 'popup'
+      options:
+        - '30(默认)'
+        - '25'
+        - '22'
+        - '20'
+        - '18'
+        - '16'
+        - '15'
+        - '12'
+        - '10'
+        - '8'
+        - '6'
+        - '4'
+        - '2'
+    max_bit_rate:
+      name: '最大码率(kbps)'
+      desc: '设置>显示>码流>码流>清晰>最大码率(kbps)'
+      type: 'popup'
+      options:
+        - '1536'
+        - '2048'
+        - '3072'
+        - '4096'
+        - '5120'
+        - '6144(默认)'
+        - '7168'
+        - '8192'
+    encoding_format:
+      name: '编码格式'
+      desc: '设置>显示>码流>码流>清晰>编码格式'
+      type: 'popup'
+      options:
+        - 'H.264'
+        - 'H.265'
+
+
+fluent_page: &fluent_page_anchor
+  name: '流畅'
+  desc: '设置>显示>码流>码流>流畅'
+  type: 'page'
+  items:
+    resolution:
+      name: '分辨率'
+      desc: '设置>显示>码流>码流>流畅>分辨率'
+      type: 'popup'
+      options:
+        - '640*480'
+    frame_rate:
+      name: '帧率(fps)'
+      desc: '设置>显示>码流>码流>流畅>帧率(fps)'
+      type: 'popup'
+      options:
+        - '15'
+        - '10(默认)'
+        - '7'
+        - '4'
+    max_bit_rate:
+      name: '最大码率(kbps)'
+      desc: '设置>显示>码流>码流>流畅>最大码率(kbps)'
+      type: 'popup'
+      options:
+        - '64'
+        - '128'
+        - '160'
+        - '192'
+        - '256(默认)'
+        - '384'
+        - '512'
+
+stream_page: &stream_page_anchor
+  name: '码流'
+  desc: '设置>显示>码流>码流'
+  items:
+    clear:
+      name: '清晰'
+      desc: '设置>显示>码流>码流>清晰'
+      key: 'clear'
+      type: 'navigation'
+      subpage: *clear_page_anchor
+    fluent:
+      name: '流畅'
+      desc: '设置>显示>码流>码流>流畅'
+      key: 'fluent'
+      type: 'navigation'
+      subpage: *fluent_page_anchor
+    frame_rate_mode:
+      name: '帧率控制'
+      desc: '设置>显示>码流>码流>帧率控制'
+      type: 'popup'
+      options:
+        - '自动'
+        - '恒定'
+    bit_rate_mode:
+      name: '码率模式'
+      desc: '设置>显示>码流>码流>码率模式'
+      type: 'popup'
+      options:
+        - '固定码率'
+        - '动态码率'
+
+
+private_mark_page: &private_mark_page_anchor
+  name: '遮盖区域'
+  desc: '设置>显示>遮盖区域>遮盖区域'
+  type: 'page'
+
+advanced_setting_page: &advanced_setting_page_anchor
+  name: '高级设置'
+  desc: '设置>显示>高级设置>高级设置'
+  type: 'page'
+  items:
+    threshold:
+      name: '阈值'
+      desc: '设置>显示>高级设置>阈值'
+      type: 'popup'
+
+
+bright_shade_setting_page: &bright_shade_setting_page_anchor
+  name: '明暗设置'
+  desc: '设置>显示>明暗设置>明暗设置'
+  type: 'page'
+  items:
+    daytime_colorful:
+      name: '白天彩色'
+      desc: '设置>显示>明暗设置>明暗设置>白天彩色'
+      type: 'switch'
+    black_and_white:
+      name: '黑白'
+      desc: '设置>显示>明暗设置>明暗设置>黑白'
+      type: 'switch'
+
+display_page:
+  name: '显示'
+  key: 'display_page'
+  desc: '设置>显示'
+  type: 'page'
+  items:
+    flip_vertical:
+      name: '垂直翻转'
+      desc: '设置>显示>垂直翻转'
+      type: 'switch'
+    flip_horizontal:
+      name: '水平翻转'
+      desc: '设置>显示>水平翻转'
+      type: 'switch'
+    stream:
       name: '码流'
-      desc: '设置>显示>码流>码流'
-      items:
-        - name: '清晰'
-          desc: '设置>显示>码流>码流>清晰'
-          key: 'clear'
-          type: 'navigation'
-          subpage:
-            name: '清晰'
-            desc: '设置>显示>码流>码流>清晰'
-            type: 'page'
-            items:
-              - name: '分辨率'
-                desc: '设置>显示>码流>码流>清晰>分辨率'
-                key: 'resolution'
-                type: 'popup'
-                options:
-                  - '2560*1920'
-                  - '2560*1440'
-                  - '2560*1440'
-                  - '2560*1440'
-              - name: '帧率(fps)'
-                desc: '设置>显示>码流>码流>清晰>帧率(fps)'
-                key: 'frame_rate'
-                type: 'popup'
-                options:
-                  - '30(默认)'
-                  - '25'
-                  - '22'
-                  - '20'
-                  - '18'
-                  - '16'
-                  - '15'
-                  - '12'
-                  - '10'
-                  - '8'
-                  - '6'
-                  - '4'
-                  - '2'
-              - name: '最大码率(kbps)'
-                desc: '设置>显示>码流>码流>清晰>最大码率(kbps)'
-                key: 'max_bit_rate'
-                type: 'popup'
-                options:
-                  - '1536'
-                  - '2048'
-                  - '3072'
-                  - '4096'
-                  - '5120'
-                  - '6144(默认)'
-                  - '7168'
-                  - '8192'
-              - name: '编码格式'
-                desc: '设置>显示>码流>码流>清晰>编码格式'
-                key: 'encoding_format'
-                type: 'popup'
-                options:
-                  - 'H.264'
-                  - 'H.265'
-        - name: '流畅'
-          desc: '设置>显示>码流>码流>流畅'
-          key: 'fluent'
-          type: 'navigation'
-          subpage:
-            name: '流畅'
-            desc: '设置>显示>码流>码流>流畅'
-            type: 'page'
-            items:
-              - name: '分辨率'
-                desc: '设置>显示>码流>码流>流畅>分辨率'
-                key: 'resolution'
-                type: 'popup'
-                options:
-                  - '640*480'
-              - name: '帧率(fps)'
-                desc: '设置>显示>码流>码流>流畅>帧率(fps)'
-                key: 'frame_rate'
-                type: 'popup'
-                options:
-                  - '15'
-                  - '10(默认)'
-                  - '7'
-                  - '4'
-              - name: '最大码率(kbps)'
-                desc: '设置>显示>码流>码流>流畅>最大码率(kbps)'
-                key: 'max_bit_rate'
-                type: 'popup'
-                options:
-                  - '64'
-                  - '128'
-                  - '160'
-                  - '192'
-                  - '256(默认)'
-                  - '384'
-                  - '512'
-        - name: '帧率控制'
-          desc: '设置>显示>码流>码流>帧率控制'
-          key: 'frame_rate_mode'
-          type: 'popup'
-          options:
-            - '自动'
-            - '恒定'
-        - name: '码率模式'
-          desc: '设置>显示>码流>码流>码率模式'
-          key: 'bit_rate_mode'
-          type: 'popup'
-          options:
-            - '固定码率'
-            - '动态码率'
-  - name: '抗闪烁'
-    key: 'anti_flicker'
-    desc: '设置>显示>抗闪烁'
-    type: 'popup'
-    options:
-      - '50HZ'
-      - '60HZ'
-      - '其他'
-      - '关闭'
-  - name: '白天和黑夜'
-    key: 'day_and_night'
-    desc: '设置>显示>白天和黑夜'
-    type: 'popup'
-    options:
-      - '黑白'
-      - '彩色'
-      - '自动'
-  - name: '亮度'
-    key: 'brightness'
-    desc: '设置>显示>亮度'
-    type: 'slider'
-  - name: '设备名称'
-    key: 'device_name'
-    desc: '设置>显示>设备名称'
-    type: 'popup'
-    options:
-      - '左上'
-      - '中上'
-      - '右上'
-      - '左下'
-      - '中下'
-      - '右下'
-      - '隐藏'
-  - name: '日期'
-    key: 'date'
-    desc: '设置>显示>日期'
-    type: 'popup'
-    options:
-      - '左上'
-      - '中上'
-      - '右上'
-      - '左下'
-      - '中下'
-      - '右下'
-      - '隐藏'
-  - name: '水印'
-    key: 'watermark'
-    desc: '设置>显示>水印'
-    type: 'switch'
-  - name: '遮盖区域'
-    key: 'private_mark'
-    desc: '设置>显示>遮盖区域'
-    type: 'navigation'
-    subpage:
+      desc: '设置>显示>码流'
+      type: 'navigation'
+      subpage: *stream_page_anchor
+    anti_flicker:
+      name: '抗闪烁'
+      desc: '设置>显示>抗闪烁'
+      type: 'popup'
+      options:
+        - '50HZ'
+        - '60HZ'
+        - '其他'
+        - '关闭'
+    day_and_night:
+      name: '白天和黑夜'
+      desc: '设置>显示>白天和黑夜'
+      type: 'popup'
+      options:
+        - '黑白'
+        - '彩色'
+        - '自动'
+    brightness:
+      name: '亮度'
+      desc: '设置>显示>亮度'
+      type: 'slider'
+    device_name:
+      name: '设备名称'
+      desc: '设置>显示>设备名称'
+      type: 'popup'
+      options:
+        - '左上'
+        - '中上'
+        - '右上'
+        - '左下'
+        - '中下'
+        - '右下'
+        - '隐藏'
+    date:
+      name: '日期'
+      key: ''
+      desc: '设置>显示>日期'
+      type: 'popup'
+      options:
+        - '左上'
+        - '中上'
+        - '右上'
+        - '左下'
+        - '中下'
+        - '右下'
+        - '隐藏'
+    watermark:
+      name: '水印'
+      key: ''
+      desc: '设置>显示>水印'
+      type: 'switch'
+    private_mark:
       name: '遮盖区域'
-      desc: '设置>显示>遮盖区域>遮盖区域'
-      type: 'page'
-  - name: '高级设置'
-    key: 'advanced_setting'
-    desc: '设置>显示>高级设置'
-    type: 'navigation'
-    subpage:
+      desc: '设置>显示>遮盖区域'
+      type: 'navigation'
+      subpage: *private_mark_page_anchor
+    advanced_setting:
       name: '高级设置'
-      desc: '设置>显示>高级设置>高级设置'
-      type: 'page'
-      items:
-        - name: '阈值'
-          desc: '设置>显示>高级设置>阈值'
-          type: 'popup'
-  - name: '明暗设置'
-    key: 'bright_shade_setting'
-    desc: '设置>显示>明暗设置'
-    type: 'navigation'
-    subpage:
+      key: ''
+      desc: '设置>显示>高级设置'
+      type: 'navigation'
+      subpage: *advanced_setting_page_anchor
+    bright_shade_setting:
       name: '明暗设置'
-      desc: '设置>显示>明暗设置>明暗设置'
-      type: 'page'
-      items:
-        - name: '白天彩色'
-          desc: '设置>显示>明暗设置>明暗设置>白天彩色'
-          type: 'switch'
-        - name: '黑白'
-          desc: '设置>显示>明暗设置>明暗设置>黑白'
-          type: 'switch'
+      key: ''
+      desc: '设置>显示>明暗设置'
+      type: 'navigation'
+      subpage: *bright_shade_setting_page_anchor
+
 
 
 
