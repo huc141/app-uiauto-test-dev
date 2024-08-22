@@ -9,7 +9,6 @@ ipc:
     items:
       wifi_band_preference:
         name: 'Wi-Fi 频段偏好'
-        key: 'wifi_band_preference'
         desc: '设置>Wi-Fi>Wi-Fi 频段偏好'
         type: 'popup'
         options:
