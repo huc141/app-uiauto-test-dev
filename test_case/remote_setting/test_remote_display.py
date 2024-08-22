@@ -32,3 +32,34 @@ class TestRemoteDisplay:
 
         # 断言
         assert page_fun is True
+
+    @pytest.mark.parametrize("device_config", devices_config)
+    def test_remote_horizontal_flip(self, device_config):
+        # 启动app，并开启录屏
+        driver.start_app(True)
+
+        # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击‘显示’菜单项进入显示页
+        RemoteSetting().access_in_display(device_list_name=device_config['device_list_name'])
+
+        # 获取yaml文件指定配置
+        remote_items = device_config['ipc']['display']['items']
+
+        # 点击水平翻转按钮
+        BasePage().scroll_click_right_btn(text_to_find=remote_items['horizontal_flip']['name'])
+
+    @pytest.mark.parametrize("device_config", devices_config)
+    def test_remote_stream(self, device_config):
+        # 启动app，并开启录屏
+        driver.start_app(True)
+
+        # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击‘显示’菜单项进入显示页
+        RemoteSetting().access_in_display(device_list_name=device_config['device_list_name'])
+
+        # 获取yaml文件指定配置
+        remote_setting_display = device_config['ipc']['display']['items'].values()
+        remote_items = device_config['ipc']['display']['items']
+
+        # 点击码流菜单项，进入码流页面，验证文本内容
+
+
+
