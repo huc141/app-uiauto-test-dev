@@ -7,7 +7,7 @@ items:
     key: 'user_management'
     desc: '设置>高级设置>用户管理'
     type: 'navigation'
-    subpage:
+    children:
       name: '用户管理'
       desc: '设置>高级设置>用户管理>用户管理页面'
       type: 'page'
@@ -15,7 +15,7 @@ items:
     key: 'date_and_time'
     desc: '设置>高级设置>日期和时间'
     type: 'navigation'
-    subpage:
+    children:
       name: '日期和时间'
       desc: '设置>高级设置>日期和时间>日期和时间页面'
       type: 'page'

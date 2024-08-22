@@ -1,122 +1,154 @@
-name: '侦测报警'
-key: 'detection_alarm_page'
-desc: '设置>侦测报警页面'
-type: 'page'
-items:
-  - name: '非侦测区域'
-    key: 'non_detection_area'
-    desc: '设置>侦测报警>非侦测区域'
-    type: 'navigation'
-    subpage:
+sensitivity_motion_page: &sensitivity_motion_page_anchor
+  name: '灵敏度'
+  desc: '设置>侦测报警>灵敏度>移动侦测>灵敏度页面'
+  type: 'page'
+
+
+sensitivity_smart_page: &sensitivity_smart_page_anchor
+  name: '灵敏度'
+  desc: '设置>侦测报警>灵敏度>智能侦测>灵敏度页面'
+  type: 'page'
+  items:
+    person:
+      name: '人'
+      desc: '设置>侦测报警>灵敏度>人（选项）'
+      type: 'slider'
+    car:
+      name: '车'
+      desc: '设置>侦测报警>灵敏度>车（选项）'
+      type: 'slider'
+    animal:
+      name: '动物'
+      desc: '设置>侦测报警>灵敏度>动物（选项）'
+      type: 'slider'
+    pet:
+      name: '宠物'
+      desc: '设置>侦测报警>灵敏度>宠物（选项）'
+      type: 'slider'
+
+
+sensitivity_page: &sensitivity_page_anchor
+  name: '灵敏度'
+  desc: '设置>侦测报警>灵敏度>灵敏度'
+  type: 'page'
+  items:
+    motion_detection:
+      name: '移动侦测'
+      key: ''
+      desc: '设置>侦测报警>灵敏度>移动侦测'
+      type: 'navigation'
+      subpage: *sensitivity_motion_page_anchor
+    smart_detection:
+      name: '智能侦测'
+      desc: '设置>侦测报警>灵敏度>智能侦测'
+      type: 'navigation'
+      subpage: *sensitivity_smart_page_anchor
+
+
+alarm_delay_page: &alarm_delay_page_anchor
+  name: '延时报警'
+  desc: '设置>侦测报警>延时报警>延时报警'
+  type: 'page'
+  items:
+    human_movement:
+      name: '人形移动'
+      desc: '设置>侦测报警>灵敏度>人形移动（选项）'
+      type: 'slider'
+    car_movement:
+      name: '车辆移动'
+      desc: '设置>侦测报警>灵敏度>车辆移动（选项）'
+      type: 'slider'
+    animal:
+      name: '动物'
+      desc: '设置>侦测报警>灵敏度>动物（选项）'
+      type: 'slider'
+
+
+object_size_page: &object_size_page_anchor
+  name: '目标尺寸'
+  desc: '设置>侦测报警>灵敏度>目标尺寸>目标尺寸(页面）'
+  type: 'page'
+  items:
+    detection_target:
+      name: '检测目标'
+      desc: '设置>侦测报警>灵敏度>目标尺寸>目标尺寸(页面）>检测目标'
+      type: 'checkbox'
+      option:
+        - '人'
+        - '车'
+        - '动物'
+        - '宠物'
+
+
+detection_alarm_page:
+  name: '侦测报警'
+  key: 'detection_alarm_page'
+  desc: '设置>侦测报警页面'
+  type: 'page'
+  items:
+    non_detection_area:
       name: '非侦测区域'
-      desc: '设置>侦测报警>非侦测区域>非侦测区域页面'
-      type: 'page'
-  - name: '移动标记'
-    key: 'motion_mark'
-    desc: '设置>侦测报警>移动标记'
-    type: 'switch'
-  - name: '灵敏度'
-    key: 'sensitivity'
-    desc: '设置>侦测报警>灵敏度'
-    type: 'navigation'
-    items:
-      - name: '移动侦测'
-        key: 'motion_detection'
-        desc: '设置>侦测报警>灵敏度>移动侦测'
-        type: 'navigation'
-        subpage:
-          name: '灵敏度'
-          desc: '设置>侦测报警>灵敏度>移动侦测>灵敏度页面'
-          type: 'page'
-      - name: '智能侦测'
-        key: 'smart_detection'
-        desc: '设置>侦测报警>灵敏度>智能侦测'
-        type: 'navigation'
-        subpage:
-          name: '灵敏度'
-          desc: '设置>侦测报警>灵敏度>智能侦测>灵敏度页面'
-          type: 'page'
-          items:
-            - name: '人'
-              desc: '设置>侦测报警>灵敏度>人（选项）'
-              type: 'slider'
-            - name: '车'
-              desc: '设置>侦测报警>灵敏度>车（选项）'
-              type: 'slider'
-            - name: '动物'
-              desc: '设置>侦测报警>灵敏度>动物（选项）'
-              type: 'slider'
-  - name: '延时报警'
-    key: 'alarm_delay'
-    desc: '设置>侦测报警>延时报警'
-    type: 'navigation'
-    subpage:
+      desc: '设置>侦测报警>非侦测区域'
+      type: 'navigation'
+      subpage:
+        name: '非侦测区域'
+        desc: '设置>侦测报警>非侦测区域>非侦测区域页面'
+        type: 'page'
+    motion_mark:
+      name: '移动标记'
+      desc: '设置>侦测报警>移动标记'
+      type: 'switch'
+    sensitivity:
+      name: '灵敏度'
+      desc: '设置>侦测报警>灵敏度'
+      type: 'navigation'
+      subpage: *sensitivity_page_anchor
+    alarm_delay:
       name: '延时报警'
-      desc: '设置>侦测报警>延时报警>延时报警'
-      type: 'page'
-      items:
-        - name: '人形移动'
-          desc: '设置>侦测报警>灵敏度>人形移动（选项）'
-          type: 'slider'
-        - name: '车辆移动'
-          desc: '设置>侦测报警>灵敏度>车辆移动（选项）'
-          type: 'slider'
-        - name: '动物'
-          desc: '设置>侦测报警>灵敏度>动物（选项）'
-          type: 'slider'
-  - name: '目标尺寸'
-    key: 'object_size'
-    desc: '设置>侦测报警>目标尺寸'
-    type: 'navigation'
-    subpage:
+      desc: '设置>侦测报警>延时报警'
+      type: 'navigation'
+      subpage: *alarm_delay_page_anchor
+    object_size:
       name: '目标尺寸'
-      desc: '设置>侦测报警>灵敏度>目标尺寸>目标尺寸(页面）'
-      type: 'page'
-      items:
-        name: '检测目标'
-        desc: '设置>侦测报警>灵敏度>目标尺寸>目标尺寸(页面）>检测目标'
-        type: 'checkbox'
-        option:
-          - '人'
-          - '车'
-          - '动物'
-          - '宠物'
-  - name: '智能追踪'
-    key: 'auto_tracking'
-    desc: '设置>侦测报警>智能追踪'
-    type: 'switch'
-  - name: '追踪类型'
-    key: 'tracking_type'
-    desc: '设置>侦测报警>智能追踪>追踪类型'
-    type: 'popup'
-    options:
-      - '人'
-      - '车'
-      - '动物'
-      - '宠物'
-  - name: '追踪方式'
-    key: 'tracking_method'
-    desc: '设置>侦测报警>智能追踪>追踪方式'
-    type: 'popup'
-    options:
-      - '数码'
-      - '数码优先'
-      - 'PT优先'
-  - name: '目标静止'
-    key: 'object_static'
-    desc: '设置>侦测报警>目标静止'
-    type: 'popup'
-    options:
-      - '10 秒'
-      - '20 秒'
-      - '30 秒'
-      - '60 秒'
-  - name: '追踪方式'
-    key: 'object_disappear'
-    desc: '设置>侦测报警>目标消失'
-    type: 'popup'
-    options:
-      - '10 秒'
-      - '20 秒'
-      - '30 秒'
-      - '60 秒'
+      desc: '设置>侦测报警>目标尺寸'
+      type: 'navigation'
+      subpage: *object_size_page_anchor
+    auto_tracking:
+      name: '智能追踪'
+      desc: '设置>侦测报警>智能追踪'
+      type: 'switch'
+    tracking_type:
+      name: '追踪类型'
+      desc: '设置>侦测报警>智能追踪>追踪类型'
+      type: 'popup'
+      options:
+        - '人'
+        - '车'
+        - '动物'
+        - '宠物'
+    tracking_method:
+      name: '追踪方式'
+      desc: '设置>侦测报警>智能追踪>追踪方式'
+      type: 'popup'
+      options:
+        - '数码'
+        - '数码优先'
+        - 'PT优先'
+    object_static:
+      name: '目标静止'
+      desc: '设置>侦测报警>目标静止'
+      type: 'popup'
+      options:
+        - '10 秒'
+        - '20 秒'
+        - '30 秒'
+        - '60 秒'
+    object_disappear:
+      name: '追踪方式'
+      desc: '设置>侦测报警>目标消失'
+      type: 'popup'
+      options:
+        - '10 秒'
+        - '20 秒'
+        - '30 秒'
+        - '60 秒'

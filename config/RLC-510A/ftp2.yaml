@@ -1,39 +1,46 @@
-name: 'FTP'
-key: 'ftp_page'
-desc: '设置>FTP'
-type: 'page'
-items:
-  - name: 'FTP'
-    key: 'ftp'
-    desc: '设置>FTP>FTP'
-    type: 'switch'
-  - name: '计划'
-    key: 'schedule'
-    desc: '设置>FTP>计划'
-    type: 'navigation'
-    subpage:
+
+
+schedule_page: &schedule_page_anchor
+  name: '计划'
+  desc: '设置>FTP>计划>计划'
+  type: 'page'
+  items:
+    alarm_type:
+      name: '报警类型'
+      desc: '设置>FTP>计划>计划>报警类型'
+      type: 'checkbox'
+      options:
+        - '画面变动'
+        - '人'
+        - '车'
+        - '动物'
+        - '宠物'
+        - '包裹'
+
+
+
+ftp_page:
+  name: 'FTP'
+  desc: '设置>FTP'
+  type: 'page'
+  items:
+    ftp:
+      name: 'FTP'
+      desc: '设置>FTP>FTP'
+      type: 'switch'
+    schedule:
       name: '计划'
-      desc: '设置>FTP>计划>计划'
-      type: 'page'
-      items:
-        - name: '报警类型'
-          desc: '设置>FTP>计划>计划>报警类型'
-          type: 'checkbox'
-          options:
-            - '画面变动'
-            - '人'
-            - '车'
-            - '动物'
-            - '宠物'
-            - '包裹'
-  - name: 'FTP设置'
-    key: 'ftp_setting'
-    desc: '设置>FTP>FTP设置'
-    type: 'navigation'
-    subpage:
+      desc: '设置>FTP>计划'
+      type: 'navigation'
+      subpage: *schedule_page_anchor
+    ftp_setting:
       name: 'FTP设置'
-      desc: '设置>FTP>FTP设置>FTP设置'
-      type: 'page'
+      desc: '设置>FTP>FTP设置'
+      type: 'navigation'
+      subpage:
+        name: 'FTP设置'
+        desc: '设置>FTP>FTP设置>FTP设置'
+        type: 'page'
 
 
 
