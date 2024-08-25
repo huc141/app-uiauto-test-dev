@@ -294,6 +294,7 @@ class BasePage:
         """
         is_find = None
         attempt = 0
+        time.sleep(2)
 
         try:
             if self.platform == "android":
