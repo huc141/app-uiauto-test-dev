@@ -62,6 +62,21 @@ class AssertUI(BasePage):
     # 断言实际值是否等于预期值:assertEqual、assertNotEqual
 
     # 断言为真、假:assertTrue、assertFalse
+    def assert_bool(self, bool_value, expect_value=False):
+        """
+        断言真假
+        :param expect_value: 布尔值，默认断言为True
+        :param bool_value: 入参需要断言的bool值
+        :return:
+        """
+        if not self.driver:
+            logger.error("self.driver不存在")
+            return
+
+        if bool_value is expect_value:
+            return True
+        else:
+            return False
 
     # 断言实际值与预期值的大小关系(大于、小于、等于)：
 

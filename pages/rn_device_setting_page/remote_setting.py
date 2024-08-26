@@ -52,7 +52,7 @@ class RemoteSetting(BasePage):
 
     def scroll_check_funcs(self, texts):
         """
-        遍历并判断功能项是否存在当前页面
+        遍历并判断功能项(名称)是否存在当前页面
         :param texts: 存储了功能项名称的列表。
         :return: bool
         """
