@@ -53,7 +53,7 @@ class RemoteSetting(BasePage):
     def scroll_check_funcs(self, texts):
         """
         遍历并判断功能项(名称)是否存在当前页面
-        :param texts: 存储了功能项名称的列表。
+        :param texts: 存储了预期功能项名称的列表。
         :return: bool
         """
         ele_exists = []
@@ -85,6 +85,57 @@ class RemoteSetting(BasePage):
             else:
                 logger.info(f"需校验的功能项均存在！-->{texts}")
                 return True
+
+    def scroll_check_funcs2(self, texts, selector, selector_type='id'):
+        """
+        遍历并判断功能项(名称)是否存在当前页面，同时比对数量是否正确。
+        :param selector_type: 元素的定位方式，默认根据id进行文本提取。
+        :param selector: 元素定位的具体id。
+        :param texts: 存储了预期功能项名称的列表。
+        :return:
+        """
+        # TODO: 待验证该方法是否可用
+        ele_exists = []  # 当前页面存在的功能
+        ele_not_exists = []  # 当前页面缺失的功能
+        try:
+            # 先滚动页面获取指定id的文本
+            actual_texts = self.get_all_texts(selector=selector, selector_type=selector_type)
+
+            if isinstance(texts, list):
+                # 如果 texts 是一个列表，遍历列表中的每个功能项名称
+                for text in texts:
+                    is_in_actual_texts = text in actual_texts
+                    if is_in_actual_texts:
+                        ele_exists.append(text)
+                    else:
+                        ele_not_exists.append(text)
+
+                # 检查是否list2中的所有元素都在list1中
+                all_elements_exist = all(ele_exists)
+                # 检查两个列表的长度是否相同
+                lengths_are_equal = len(actual_texts) == len(texts)
+
+                if all_elements_exist and lengths_are_equal:
+                    logger.info(f"需校验的功能项均存在！-->{texts}")
+                    return True
+                else:
+                    logger.info(f"当前页面存在的功能有：{ele_exists}")
+                    logger.info(f"当前页面缺失的功能有：{ele_not_exists}")
+                    return False
+
+            elif isinstance(texts, str):
+                # 如果 texts 是一个单一的文本，在当前页面滚动查找该文本是否存在
+                ele_status = self.is_element_exists(texts)
+                if not ele_status:
+                    logger.info(f"当前页面缺失的功能有：{texts}")
+                    return False
+                else:
+                    logger.info(f"需校验的功能项均存在！-->{texts}")
+                    return True
+
+        except Exception as err:
+            logger.info(f"可能发生了错误: {err}")
+            return False
 
     def scroll_click_remote_setting(self, device_list_name):
         """
