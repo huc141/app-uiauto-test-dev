@@ -3,7 +3,6 @@ import pytest
 from common_tools.app_driver import driver
 from common_tools.read_yaml import read_yaml
 from pages.base_page import BasePage
-from common_tools.assert_ui import AssertUI
 from pages.rn_device_setting_page.remote_setting import RemoteSetting
 from pages.rn_device_setting_page.remote_display import RemoteDisplay
 
