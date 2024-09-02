@@ -33,6 +33,13 @@ class RemoteDisplay(BasePage):
         # 进入码流>清晰页面
         self.scroll_and_click_by_text(text_to_find=option_text)
 
+    def access_in_fluent(self, option_text='流畅'):
+        """
+        进入码流>流畅页面
+        :param option_text: 菜单功能项，该方法默认进入【码流>流畅】
+        :return:
+        """
+
     def click_resolution(self, option_text='分辨率'):
         """
         :param option_text: 菜单功能项，该方法默认点击【分辨率】
@@ -40,4 +47,23 @@ class RemoteDisplay(BasePage):
         """
         self.scroll_and_click_by_text(text_to_find=option_text)
 
+    def click_frame_rate(self, option_text='帧率(fps)'):
+        """
+        :param option_text: 菜单功能项，该方法默认点击【帧率(fps)】
+        :return:
+        """
+        self.scroll_and_click_by_text(text_to_find=option_text)
 
+    def click_max_bit_rate(self, option_text='最大码率(kbps)'):
+        """
+        :param option_text: 菜单功能项，该方法默认点击【最大码率(kbps)】
+        :return:
+        """
+        self.scroll_and_click_by_text(text_to_find=option_text)
+
+    def click_frame_rate_mode(self, option_text='帧率控制'):
+        """
+        :param option_text: 菜单功能项，该方法默认点击【帧率控制】
+        :return:
+        """
+        self.scroll_and_click_by_text(text_to_find=option_text)
