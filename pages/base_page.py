@@ -594,7 +594,7 @@ class BasePage:
                 return {element.get_text() for element in elements}
 
             elif self.platform == 'ios':
-                elements = self.driver(className=selector).find_elements()
+                elements = self.driver(id=selector).find_elements()
                 return {element.text for element in elements}
 
         # 获取当前页面所有元素的文本内容
