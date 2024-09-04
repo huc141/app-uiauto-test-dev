@@ -355,58 +355,59 @@ class BasePage:
         logger.info(f"没找到要点击的元素： '{text_to_find}' ，已经尝试了： {max_attempts} 次.")
         return False
 
-    def scroll_check_function(self, texts):
+    def iterate_and_click_popup_text(self, option_text_list, menu_text):
         """
-        遍历并判断功能项(名称)是否存在当前页面
-        :param texts: 存储了功能项名称的列表。
-        :return: bool
-        """
-        ele_exists = []
-        ele_not_exists = []
-
-        # 定义一个函数来处理文本内容
-        def remove_default_keyword(remove_text):
-            if "(默认)" in remove_text:
-                return remove_text.replace("(默认)", "").strip()
-            else:
-                return remove_text
-
-        if isinstance(texts, list):
-            # 如果 texts 是一个列表，遍历列表中的每个功能项名称
-            for text in texts:
-                check_text = remove_default_keyword(text)
-                ele_status = self.is_element_exists(check_text)
-                if ele_status:
-                    ele_exists.append(check_text)
-                else:
-                    ele_not_exists.append(check_text)
-
-            if len(ele_not_exists) > 0:
-                logger.info(f"当前页面存在的功能有：{ele_exists}")
-                logger.info(f"当前页面缺失的功能有：{ele_not_exists}")
-                return False
-            else:
-                logger.info(f"需校验的功能项均存在！-->{ele_exists}")
-                return True
-
-        elif isinstance(texts, str):
-            # 如果 texts 是一个单一的文本，在当前页面滚动查找该文本是否存在
-            check_text = remove_default_keyword(texts)
-            ele_status = self.is_element_exists(check_text)
-            if not ele_status:
-                logger.info(f"当前页面缺失的功能有：{check_text}")
-                return False
-            else:
-                logger.info(f"需校验的功能项均存在！-->{check_text}")
-                return True
-
-    def iterate_and_click_by_text(self, option_text_list, menu_text):
-        """
-        根据文本遍历，执行点击操作
+        根据文本遍历popup弹窗的单选项，执行点击操作
         :param option_text_list: 需要遍历的文本
-        :param menu_text: 需要点击的菜单功能项
+        :param menu_text: 需要点击的popup菜单功能项
         :return:
         """
+
+        def scroll_check_function(texts):
+            """
+            遍历并判断功能项(名称)是否存在当前页面
+            :param texts: 存储了功能项名称的列表。
+            :return: bool
+            """
+            ele_exists = []
+            ele_not_exists = []
+
+            # 定义一个函数来处理文本内容
+            def remove_default_keyword(remove_text):
+                if "(默认)" in remove_text:
+                    return remove_text.replace("(默认)", "").strip()
+                else:
+                    return remove_text
+
+            if isinstance(texts, list):
+                # 如果 texts 是一个列表，遍历列表中的每个功能项名称
+                for text in texts:
+                    check_text = remove_default_keyword(text)
+                    ele_status = self.is_element_exists(check_text)
+                    if ele_status:
+                        ele_exists.append(check_text)
+                    else:
+                        ele_not_exists.append(check_text)
+
+                if len(ele_not_exists) > 0:
+                    logger.info(f"当前页面存在的功能有：{ele_exists}")
+                    logger.info(f"当前页面缺失的功能有：{ele_not_exists}")
+                    return False
+                else:
+                    logger.info(f"需校验的功能项均存在！-->{ele_exists}")
+                    return True
+
+            elif isinstance(texts, str):
+                # 如果 texts 是一个单一的文本，在当前页面滚动查找该文本是否存在
+                check_text = remove_default_keyword(texts)
+                ele_status = self.is_element_exists(check_text)
+                if not ele_status:
+                    logger.info(f"当前页面缺失的功能有：{check_text}")
+                    return False
+                else:
+                    logger.info(f"需校验的功能项均存在！-->{check_text}")
+                    return True
+
         try:
             # 关闭popup弹窗
             self.click_by_text('取消')
@@ -419,11 +420,11 @@ class BasePage:
                 logger.info('点击 ' + i)
                 self.click_by_text(i)
                 time.sleep(1)
-                page_options = self.scroll_check_function(i)  # 断言
+                page_options = scroll_check_function(i)  # 断言
                 if i != '取消':
                     assert page_options is True
                 elif i == '取消':
-                    page_options = self.scroll_check_function(option_text_list[-2])
+                    page_options = scroll_check_function(option_text_list[-2])
                     assert page_options is True
         except Exception as err:
             logger.info(f"可能发生了错误: {err}")
@@ -582,7 +583,6 @@ class BasePage:
         :param max_scrolls: 最大滚动次数
         :return:
         """
-        # TODO: 需要和rn开发确定定位元素的方法，才好提取指定元素
         my_set = set()
 
         def get_elements_texts():
