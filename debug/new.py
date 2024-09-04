@@ -1,5 +1,8 @@
 import time
 
+from common_tools.read_yaml import read_yaml
+from pages.rn_device_setting_page.remote_setting import RemoteSetting
+
 # import wda
 #
 # c = wda.Client('http://localhost:8100')
@@ -67,25 +70,39 @@ import time
 # print(same_length)
 
 
-list1 = ['显示', '音频', '报警', '鸣笛']
-list2 = ['显示', '音频', '视频', 'pp', 'qq', 'aa']  # '视频' 不存在于 list1
+# list1 = ['显示', '音频', '报警', '鸣笛']
+# list2 = ['显示', '音频', '视频', 'pp', 'qq', 'aa']  # '视频' 不存在于 list1
+#
+# # 逐个检查list2中的元素是否在list1中
+# elements_in_list1 = []
+# for element in list2:
+#     is_in_list1 = element in list1
+#     elements_in_list1.append(is_in_list1)
+#
+#     # 如果元素不在list1中，则打印该元素
+#     if not is_in_list1:
+#         print(f"元素 '{element}' 不存在于 list1 中")
+#
+# # 检查是否list2中的所有元素都在list1中
+# all_elements_exist = all(elements_in_list1)
+#
+# # 检查两个列表的长度是否相同
+# lengths_are_equal = len(list1) == len(list2)
+#
+# print(f"所有元素都在list1中: {all_elements_exist}")
+# print(f"两个列表的长度是否一致: {lengths_are_equal}")
 
-# 逐个检查list2中的元素是否在list1中
-elements_in_list1 = []
-for element in list2:
-    is_in_list1 = element in list1
-    elements_in_list1.append(is_in_list1)
+devices_config = read_yaml.load_device_config()  # 读取参数化文件
+element_config = read_yaml.load_device_config(device_dir='../config/global_config', yaml_file_name='selector_data.yml')
+# idd = element_config['android']
+page_fun_list = ['音频', '显示']
+idd = RemoteSetting().extract_yaml_names(element_config, "setting")
 
-    # 如果元素不在list1中，则打印该元素
-    if not is_in_list1:
-        print(f"元素 '{element}' 不存在于 list1 中")
+page_fun2 = RemoteSetting().scroll_check_funcs2(texts=page_fun_list, selector='Cell_Title')
 
-# 检查是否list2中的所有元素都在list1中
-all_elements_exist = all(elements_in_list1)
-
-# 检查两个列表的长度是否相同
-lengths_are_equal = len(list1) == len(list2)
-
-print(f"所有元素都在list1中: {all_elements_exist}")
-print(f"两个列表的长度是否一致: {lengths_are_equal}")
+print(devices_config)
+print('-----------------------------')
+print(element_config)
+print(page_fun_list)
+print(page_fun2)
 
