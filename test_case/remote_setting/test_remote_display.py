@@ -79,12 +79,14 @@ class TestRemoteDisplay:
         # 点击清晰>分辨率选项，验证文本、执行操作
         RemoteDisplay().click_resolution()
         page_fun_resolution_text = RemoteSetting().scroll_check_funcs(remote_items['stream']['subpage']['clear']['subpage']['resolution']['text'])
-        BasePage().iterate_and_click_by_text(option_text_list=remote_items['stream']['subpage']['clear']['subpage']['resolution']['options'], menu_text='分辨率')
+        BasePage().iterate_and_click_popup_text(
+            option_text_list=remote_items['stream']['subpage']['clear']['subpage']['resolution']['options'],
+            menu_text='分辨率')
 
         # 点击清晰>帧率选项，验证文本
         RemoteDisplay().click_frame_rate()
         page_fun_frame_rate = RemoteSetting().scroll_check_funcs(remote_items['stream']['subpage']['clear']['subpage']['frame_rate']['text'])
-        BasePage().iterate_and_click_by_text(
+        BasePage().iterate_and_click_popup_text(
             option_text_list=remote_items['stream']['subpage']['clear']['subpage']['frame_rate']['options'],
             menu_text='帧率(fps)')
 
@@ -92,7 +94,7 @@ class TestRemoteDisplay:
         RemoteDisplay().click_max_bit_rate()
         page_fun_max_bit_rate = RemoteSetting().scroll_check_funcs(
             remote_items['stream']['subpage']['clear']['subpage']['max_bit_rate']['text'])
-        BasePage().iterate_and_click_by_text(
+        BasePage().iterate_and_click_popup_text(
             option_text_list=remote_items['stream']['subpage']['clear']['subpage']['max_bit_rate']['options'],
             menu_text='最大码率(kbps)')
         BasePage().scroll_and_click_by_text("保存")
@@ -106,7 +108,7 @@ class TestRemoteDisplay:
         RemoteDisplay().click_resolution()
         page_fun_fluent_resolution_text = RemoteSetting().scroll_check_funcs(
             remote_items['stream']['subpage']['fluent']['subpage']['resolution']['text'])
-        BasePage().iterate_and_click_by_text(
+        BasePage().iterate_and_click_popup_text(
             option_text_list=remote_items['stream']['subpage']['fluent']['subpage']['resolution']['options'],
             menu_text='分辨率')
 
@@ -114,7 +116,7 @@ class TestRemoteDisplay:
         RemoteDisplay().click_frame_rate()
         page_fun_fluent_frame_rate = RemoteSetting().scroll_check_funcs(
             remote_items['stream']['subpage']['fluent']['subpage']['frame_rate']['text'])
-        BasePage().iterate_and_click_by_text(
+        BasePage().iterate_and_click_popup_text(
             option_text_list=remote_items['stream']['subpage']['fluent']['subpage']['frame_rate']['options'],
             menu_text='帧率(fps)')
 
@@ -122,7 +124,7 @@ class TestRemoteDisplay:
         RemoteDisplay().click_max_bit_rate()
         page_fun_fluent_max_bit_rate = RemoteSetting().scroll_check_funcs(
             remote_items['stream']['subpage']['fluent']['subpage']['max_bit_rate']['text'])
-        BasePage().iterate_and_click_by_text(
+        BasePage().iterate_and_click_popup_text(
             option_text_list=remote_items['stream']['subpage']['fluent']['subpage']['max_bit_rate']['options'],
             menu_text='最大码率(kbps)')
         BasePage().scroll_and_click_by_text("保存")
