@@ -92,17 +92,17 @@ from pages.rn_device_setting_page.remote_setting import RemoteSetting
 # print(f"所有元素都在list1中: {all_elements_exist}")
 # print(f"两个列表的长度是否一致: {lengths_are_equal}")
 
-devices_config = read_yaml.load_device_config()  # 读取参数化文件
-element_config = read_yaml.load_device_config(device_dir='../config/global_config', yaml_file_name='selector_data.yml')
-# idd = element_config['android']
-page_fun_list = ['音频', '显示']
-idd = RemoteSetting().extract_yaml_names(element_config, "setting")
-
-page_fun2 = RemoteSetting().scroll_check_funcs2(texts=page_fun_list, selector='Cell_Title')
-
-print(devices_config)
-print('-----------------------------')
-print(element_config)
-print(page_fun_list)
-print(page_fun2)
+# devices_config = read_yaml.load_device_config()  # 读取参数化文件
+# element_config = read_yaml.load_device_config(device_dir='../config/global_config', yaml_file_name='selector_data.yml')
+# # idd = element_config['android']
+# page_fun_list = ['音频', '显示']
+# idd = RemoteSetting().extract_yaml_names(element_config, "setting")
+#
+# page_fun2 = RemoteSetting().scroll_check_funcs2(texts=page_fun_list, selector='Cell_Title')
+#
+# print(devices_config)
+# print('-----------------------------')
+# print(element_config)
+# print(page_fun_list)
+# print(page_fun2)
 
