@@ -4,10 +4,8 @@ from common_tools.app_driver import driver
 from pages.rn_device_setting_page.remote_setting import RemoteSetting
 from common_tools.read_yaml import read_yaml
 
-devices_config = read_yaml.load_device_config()  # 读取参数化文件
-element_config = read_yaml.load_device_config(device_dir='../config/global_config', yaml_file_name='selector_data.yml')
-# id = element_config['android']['setting']
-print(element_config)
+devices_config = read_yaml.load_device_config()  # 读取设备能力集参数化文件
+element_config = read_yaml.get_data(key="setting", source="selector_data")  # 读取全局配置
 
 
 class TestRemoteSetting:
@@ -29,9 +27,8 @@ class TestRemoteSetting:
         # 遍历并滚动查找当前页面指定元素，判断是否存在
         # page_fun = RemoteSetting().scroll_check_funcs(page_fun_list)
 
-        # page_fun2 = RemoteSetting().scroll_check_funcs2(texts=page_fun_list,
-        #                                                 selector=)
+        page_fun2 = RemoteSetting().scroll_check_funcs2(texts=page_fun_list, selector=element_config)
 
         # 断言
         # assert page_fun is True
-        # assert page_fun2 is True
+        assert page_fun2 is True

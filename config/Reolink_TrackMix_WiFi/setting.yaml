@@ -63,6 +63,10 @@ ipc:
       key: 'advanced_setting'
       desc: '设置>高级设置'
       type: 'navigation'
+    - name: '高级设置A'
+      key: 'advanced_setting'
+      desc: '设置>高级设置'
+      type: 'navigation'
 
 hub:
   name: '设置'

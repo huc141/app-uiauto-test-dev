@@ -97,9 +97,9 @@ class RemoteSetting(BasePage):
         :param texts: 存储了预期功能项名称的列表。
         :return:
         """
-        # TODO: 待验证该方法是否可用
         ele_exists = []  # 当前页面存在的功能
         ele_not_exists = []  # 当前页面缺失的功能
+
         try:
             # 先滚动页面获取指定id的文本
             actual_texts = self.get_all_texts(selector=selector, selector_type=selector_type)
@@ -113,7 +113,7 @@ class RemoteSetting(BasePage):
                     else:
                         ele_not_exists.append(text)
 
-                # 检查是否list2中的所有元素都在list1中
+                # 检查所有元素都在list1中
                 all_elements_exist = all(ele_exists)
                 # 检查两个列表的长度是否相同
                 lengths_are_equal = len(actual_texts) == len(texts)
@@ -121,6 +121,10 @@ class RemoteSetting(BasePage):
                 if all_elements_exist and lengths_are_equal:
                     logger.info(f"需校验的功能项均存在！-->{texts}")
                     return True
+                elif not lengths_are_equal:
+                    logger.info(f"当前页面存在的功能有：{ele_exists}")
+                    logger.info(f"当前页面功能数量与预期不符！可能存在非法能力集！")
+                    return False
                 else:
                     logger.info(f"当前页面存在的功能有：{ele_exists}")
                     logger.info(f"当前页面缺失的功能有：{ele_not_exists}")
