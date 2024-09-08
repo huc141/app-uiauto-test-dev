@@ -92,7 +92,7 @@ class RemoteSetting(BasePage):
     def scroll_check_funcs2(self, texts, selector, selector_type='id'):
         """
         遍历并判断功能项(名称)是否存在当前页面，同时比对数量是否正确。
-        :param selector_type: 元素的定位方式，默认根据id进行文本提取。
+        :param selector_type: 元素的定位方式，根据id进行文本提取。
         :param selector: 元素定位的具体id。
         :param texts: 存储了预期功能项名称的列表。
         :return:
@@ -113,20 +113,22 @@ class RemoteSetting(BasePage):
                     else:
                         ele_not_exists.append(text)
 
-                # 检查所有元素都在list1中
+                # 检查所有预期功能是否在actual_texts中，并检查两个列表的长度是否相同
                 all_elements_exist = all(ele_exists)
-                # 检查两个列表的长度是否相同
                 lengths_are_equal = len(actual_texts) == len(texts)
 
                 if all_elements_exist and lengths_are_equal:
-                    logger.info(f"需校验的功能项均存在！-->{texts}")
+                    logger.info(f"预期功能项均存在！-->{texts}")
                     return True
-                elif not lengths_are_equal:
-                    logger.info(f"当前页面存在的功能有：{ele_exists}")
-                    logger.info(f"当前页面功能数量与预期不符！可能存在非法能力集！")
+                elif len(actual_texts) > len(texts):
+                    unique_fun = [item for item in actual_texts if item not in texts]
+                    logger.info(f"当前页面实际功能项有：{actual_texts}")
+                    logger.info(f"预期功能项有：{ele_exists}")
+                    logger.info(f"当前页面多余的功能有：{unique_fun}，功能数量与预期不符！可能存在非法能力集！")
                     return False
                 else:
-                    logger.info(f"当前页面存在的功能有：{ele_exists}")
+                    logger.info(f"当前页面实际功能项有：{actual_texts}")
+                    logger.info(f"预期功能项有：{texts}")
                     logger.info(f"当前页面缺失的功能有：{ele_not_exists}")
                     return False
 

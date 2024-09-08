@@ -93,7 +93,7 @@ from pages.rn_device_setting_page.remote_setting import RemoteSetting
 # print(f"两个列表的长度是否一致: {lengths_are_equal}")
 
 devices_config = read_yaml.load_device_config()  # 读取参数化文件
-element_config = read_yaml.load_device_config(device_dir='../config/global_config', yaml_file_name='selector_data.yml')
+element_config = read_yaml.load_device_config(device_dir='../config/global_config', yaml_file_name='')
 # idd = element_config['android']
 page_fun_list = ['音频', '显示']
 idd = RemoteSetting().extract_yaml_names(element_config, "setting")
