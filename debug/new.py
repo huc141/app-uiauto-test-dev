@@ -1,7 +1,7 @@
-import time
-
-from common_tools.read_yaml import read_yaml
-from pages.rn_device_setting_page.remote_setting import RemoteSetting
+# import time
+#
+# from common_tools.read_yaml import read_yaml
+# from pages.rn_device_setting_page.remote_setting import RemoteSetting
 
 # import wda
 #
@@ -55,7 +55,6 @@ from pages.rn_device_setting_page.remote_setting import RemoteSetting
 # get_all_texts()
 
 
-
 # 定义列表
 # list1 = ['显示', '音频', '报警', '鸣笛']
 # list2 = ['显示', '音频']
@@ -92,17 +91,41 @@ from pages.rn_device_setting_page.remote_setting import RemoteSetting
 # print(f"所有元素都在list1中: {all_elements_exist}")
 # print(f"两个列表的长度是否一致: {lengths_are_equal}")
 
-devices_config = read_yaml.load_device_config()  # 读取参数化文件
-element_config = read_yaml.load_device_config(device_dir='../config/global_config', yaml_file_name='')
-# idd = element_config['android']
-page_fun_list = ['音频', '显示']
-idd = RemoteSetting().extract_yaml_names(element_config, "setting")
+# devices_config = read_yaml.load_device_config()  # 读取参数化文件
+# element_config = read_yaml.load_device_config(device_dir='../config/global_config', yaml_file_name='')
+# # idd = element_config['android']
+# page_fun_list = ['音频', '显示']
+# idd = RemoteSetting().extract_yaml_names(element_config, "setting")
+#
+# page_fun2 = RemoteSetting().scroll_check_funcs2(texts=page_fun_list, selector='Cell_Title')
+#
+# print(devices_config)
+# print('-----------------------------')
+# print(element_config)
+# print(page_fun_list)
+# print(page_fun2)
 
-page_fun2 = RemoteSetting().scroll_check_funcs2(texts=page_fun_list, selector='Cell_Title')
 
-print(devices_config)
-print('-----------------------------')
-print(element_config)
-print(page_fun_list)
-print(page_fun2)
 
+
+
+
+
+
+
+
+import random
+
+lucky_er = ['黄sir', '曾银', '刘娜', '何建祥', '罗少', '罗玉隆']
+module_list = ['预览1', '预览2', '预览3', '回放', '添加设备2+灯+WiFi配网', '初始化']
+
+# 打乱列表元素顺序
+random.shuffle(lucky_er)
+random.shuffle(module_list)
+
+# 开始匹配
+pairings = {lucky_er[i]: module_list[i] for i in range(min(len(lucky_er), len(module_list)))}
+
+# 输出结果
+formatted_output = "\n".join([f"{name}：【{module}】" for name, module in pairings.items()])
+print(formatted_output)
