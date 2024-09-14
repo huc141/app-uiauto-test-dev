@@ -67,3 +67,11 @@ class RemoteDisplay(BasePage):
         :return:
         """
         self.scroll_and_click_by_text(text_to_find=option_text)
+
+    def draw_privacy_mask(self, mode, id_or_xpath):
+        """
+        隐私遮盖区域，目前的操作策略是画1/4屏，然后画全屏
+        :param mode:
+        :param id_or_xpath:
+        :return:
+        """
