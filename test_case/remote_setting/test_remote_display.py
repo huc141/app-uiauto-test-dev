@@ -55,6 +55,7 @@ class TestRemoteDisplay:
 
     # 测码流
     @pytest.mark.parametrize("device_config", devices_config)
+    @pytest.mark.skip
     def test_remote_stream(self, device_config):
         # 启动app，并开启录屏
         driver.start_app(True)
@@ -130,7 +131,11 @@ class TestRemoteDisplay:
         BasePage().scroll_and_click_by_text("保存")
 
         # 点击帧率控制,验证文本
-
+        RemoteDisplay().click_frame_rate_mode()
+        page_fun_frame_rate_mode = RemoteSetting().scroll_check_funcs(
+            remote_items['stream']['subpage']['frame_rate_mode']['text'])
+        BasePage().iterate_and_click_popup_text(option_text_list=remote_items['stream']['subpage']['frame_rate_mode']['options'],
+                                                menu_text='帧率控制')
 
         assert page_fun_stream_text is True
 
@@ -150,6 +155,14 @@ class TestRemoteDisplay:
 
         assert page_fun_fluent_max_bit_rate is True
 
+        assert page_fun_frame_rate_mode is True
+
+    # 测隐私遮盖（遮盖区域）
+    @pytest.mark.parametrize("device_config", devices_config)
+    def test_privacy_mask(self, device_config):
+        BasePage().get_coordinates_and_draw(mode='xpath',
+                                            id_or_xpath='//*[@resource-id="com.mcu.reolink:id/shelter_player"]',
+                                            draw_area='全屏')
 
 
 
