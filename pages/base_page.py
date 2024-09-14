@@ -773,7 +773,8 @@ class BasePage:
 
             # 根据el_type初始化查找元素
             if el_type == "text":
-                element = self.driver(text=text_to_find) if self.platform == "android" else self.driver(label=text_to_find)
+                element = self.driver(text=text_to_find) if self.platform == "android" else self.driver(
+                    label=text_to_find)
             else:
                 raise ValueError("你可能输入了不支持的元素查找类型")
 
@@ -808,6 +809,155 @@ class BasePage:
                         time.sleep(scroll_pause)  # 等待页面稳定
 
                     attempt += 1
+
+        except Exception as err:
+            logger.info(f"可能发生了错误: {err}")
+            return False
+
+    def slider_seek_bar(self, slider_mode, id_or_xpath, direction, iteration=20):
+        """
+        对拖动条执行操作，支持上、下、左、右方向拖动
+        :param slider_mode: slider的定位方式，支持id或者xpath
+        :param id_or_xpath: id或者xpath的定位参数
+        :param direction: 方向，支持"left", "right", "up", "down"方向
+        :param iteration: 拖动次数，若是ios，则此处为移动“步数”，不支持定义拖动次数，
+        :return:
+        """
+        try:
+            if self.platform == "android":
+                if slider_mode == 'id':
+                    slider = self.driver(resourceId=id_or_xpath)
+                else:
+                    slider = self.driver.xpath(id_or_xpath)
+
+                # 按下并朝指定方向移动
+                for i in range(1, iteration):
+                    slider.swipe(direction)
+                    i += 1
+
+            if self.platform == "ios":
+                if slider_mode == 'id':
+                    slider = self.driver(accessibility_id=id_or_xpath)
+                else:
+                    slider = self.driver.xpath(id_or_xpath)
+
+                # 获取滑动条的当前位置
+                rect = slider.bounds
+
+                # 计算起点和终点
+                start_x = rect.x  # 滑块的坐标x起点
+                start_y = rect.y  # 滑块的坐标y起点
+
+                # 模拟拖动操作
+                self.driver.swipe(start_x, start_y, start_x + iteration, start_y, 0.5)  # 1秒完成滑动
+
+        except Exception as err:
+            logger.info(f"可能发生了错误: {err}")
+            return False
+
+    def get_coordinates_and_draw(self, mode, id_or_xpath, draw_area, num=0):
+        """
+        获取元素的xy轴坐标并画黑框遮盖
+        :param mode: 定位方式，支持id或者xpath
+        :param id_or_xpath: 可遮盖区域的id或者xpath的定位参数
+        :param draw_area: 需要遮盖的区域，支持[左上]、[左下]、[右上]、[右下]的1/4屏，以及[全屏]遮盖
+        :param num: 画框数量，默认为None，为none时需要指定遮盖区域draw_area
+        :return:
+        TODO: 控制画框数量
+        """
+        try:
+            if self.platform == "android":
+                if mode == 'id':
+                    element = self.driver(resourceId=id_or_xpath)
+                else:
+                    element = self.driver.xpath(id_or_xpath)
+
+                # 获取元素的边界坐标
+                bounds = element.info['bounds']
+
+                # 左上角坐标
+                top_left_x = bounds['left']
+                top_left_y = bounds['top']
+
+                # 左下角坐标
+                bottom_left_x = bounds['left']
+                bottom_left_y = bounds['bottom']
+
+                # 右上角坐标
+                top_right_x = bounds['right']
+                top_right_y = bounds['top']
+
+                # 右下角坐标
+                bottom_right_x = bounds['right']
+                bottom_right_y = bounds['bottom']
+
+                # 中心坐标
+                center_x = (bounds['left'] + bounds['right']) // 2
+                center_y = (bounds['top'] + bounds['bottom']) // 2
+
+                if num != 0:
+                    if draw_area == '左上':
+                        self.driver.drag(center_x, center_y, top_left_x, top_left_y, 0.5)  # 0.5 秒内完成拖动
+                    elif draw_area == '右上':
+                        self.driver.drag(center_x, center_y, top_right_x, top_right_y, 0.5)
+                    elif draw_area == '右下':
+                        self.driver.drag(center_x, center_y, bottom_right_x, bottom_right_y, 0.5)
+                    elif draw_area == '左下':
+                        self.driver.drag(center_x, center_y, bottom_left_x, bottom_left_y, 0.5)
+                    elif draw_area == '全屏':
+                        self.driver.drag(top_left_x, top_left_y, bottom_right_x, bottom_right_y, 1)
+                elif num > 0:
+                    i = 0
+                    while i <= num:
+                        s_x = i * 130  # 每次开始画框的x坐标
+                        e_x = s_x + 50  # 每次画框结束的x坐标
+                        e_y = center_y + 50  # 每次画框结束的y坐标
+                        self.driver.drag(s_x, center_y, e_x, e_y, 0.5)  # 0.5 秒内完成拖动
+                        i += 1
+
+            if self.platform == "ios":
+                if mode == 'id':
+                    element = self.driver(accessibility_id=id_or_xpath)
+                else:
+                    element = self.driver.xpath(id_or_xpath)
+
+                # 获取元素的边界坐标
+                bounds = element.bounds
+
+                # 元素宽度、高度
+                width = bounds[2]
+                height = bounds[3]
+
+                # 左上角坐标
+                top_left_x = bounds[0]
+                top_left_y = bounds[1]
+
+                # 中心点坐标
+                center_x = int(top_left_x + width / 2)
+                center_y = int(top_left_y + height / 2)
+
+                # 右上角坐标
+                top_right_x = bounds[2]
+                top_right_y = 0
+
+                # 右下角坐标
+                bottom_right_x = bounds[2]
+                bottom_right_y = bounds[1] + bounds[3]
+
+                # 左下角坐标
+                bottom_left_x = bounds[0]
+                bottom_left_y = bounds[1] + bounds[3]
+
+                if draw_area == '左上':
+                    self.driver.swipe(center_x, center_y, top_left_x, top_left_y, 0.5)  # 0.5 秒内完成拖动
+                elif draw_area == '右上':
+                    self.driver.swipe(center_x, center_y, top_right_x, top_right_y, 0.5)
+                elif draw_area == '右下':
+                    self.driver.swipe(center_x, center_y, bottom_right_x, bottom_right_y, 0.5)
+                elif draw_area == '左下':
+                    self.driver.swipe(center_x, center_y, bottom_left_x, bottom_left_y, 0.5)
+                elif draw_area == '全屏':
+                    self.driver.swipe(top_left_x, top_left_y, bottom_right_x, bottom_right_y, 1)
 
         except Exception as err:
             logger.info(f"可能发生了错误: {err}")
