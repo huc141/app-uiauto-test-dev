@@ -5,7 +5,7 @@ from pages.rn_device_setting_page.remote_setting import RemoteSetting
 from common_tools.read_yaml import read_yaml
 
 devices_config = read_yaml.load_device_config()  # 读取设备能力集参数化文件
-element_config = read_yaml.get_data(key="setting", source="global_data")  # 读取全局配置
+element_config = read_yaml.get_data(key="remote_setting", source="global_data")  # 读取全局配置
 
 
 class TestRemoteSetting:
