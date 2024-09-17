@@ -33,7 +33,8 @@ d = u2.connect_usb()
 
 # 提取ipc和hub部分items中的name值
 # ipc_names = [item['name'] for item in remote_setting_wifi['advanced_setting_page']['items'].values()]
-# hub_names = [item['name'] for item in devices_config[0]['hub']['advanced_setting_page']['items'].values()]
+# hub_names = [item['name'] for item in devic
+# es_config[0]['hub']['advanced_setting_page']['items'].values()]
 
 # 打印结果
 # print("ipc部分items的name值:", ipc_names)
@@ -44,12 +45,12 @@ d = u2.connect_usb()
 # 安卓滑动条
 # 滑动条
 # 先定位：
-# element = d(resourceId='RNE__Slider_Thumb')
+element = d.xpath('//*[@resource-id="RNE__Slider_Thumb"]')
 
 # 按下并项右移动
-# for i in range(1, 20):
-#     element.swipe("right")
-#     i += 1
+for i in range(1, 20):
+    element.swipe("right")
+    i += 1
 
 # 按下并向左移动
 # for i in range(1, 20):
@@ -84,11 +85,11 @@ d = u2.connect_usb()
 # 安卓
 # 遮盖区域
 # 假设红色方框的区域是某个元素，可以通过 resourceId 或其他属性定位
-element = d.xpath('//*[@resource-id="com.mcu.reolink:id/shelter_player"]')
+# element = d.xpath('//android.view.View')
 #
 # 获取元素的边界坐标
-bounds = element.info['bounds']
-print(bounds)
+# bounds = element.info['bounds']
+# print(bounds)
 
 # 左上角坐标
 # start_x = bounds['left']
@@ -107,27 +108,23 @@ print(bounds)
 # 从中心点开始1/4遮盖
 # 计算中心坐标
 # center_x = (bounds['left'] + bounds['right']) // 2
-center_y = (bounds['top'] + bounds['bottom']) // 2
-
-middle_y = center_y
-middle_x = 0
-
-
+# center_y = (bounds['top'] + bounds['bottom']) // 2
+#
+# middle_y = center_y
+# middle_x = 0
 
 # 右下角坐标
 # end_x = bounds['right']
 # end_y = bounds['bottom']
 
 # 从中心点向右下角拖动
-i = 0
-while i <= 8:
-    s_x = i * 130
-    e_x = s_x + 50
-    e_y = middle_y + 50
-    d.drag(s_x, middle_y, e_x, e_y, 0.5)  # 0.5 秒内完成拖动
-    i += 1
-
-
+# i = 0
+# while i <= 8:
+#     s_x = i * 130
+#     e_x = s_x + 50
+#     e_y = middle_y + 50
+#     d.drag(s_x, middle_y, e_x, e_y, 0.5)  # 0.5 秒内完成拖动
+#     i += 1
 
 # ios
 # 遮盖区域
@@ -180,3 +177,6 @@ while i <= 8:
 #
 # is_id = ele.child(name='RNE__LISTITEM__padView').child(name='ReoSwitch:1')
 # print(is_id.exists)
+
+
+

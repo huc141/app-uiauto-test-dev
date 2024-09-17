@@ -114,18 +114,49 @@
 
 
 
-import random
+# import random
+#
+# lucky_er = ['黄sir', '曾银', '刘娜', '何建祥', '罗少', '罗玉隆']
+# module_list = ['预览1', '预览2', '预览3', '回放', '添加设备2+灯+WiFi配网', '初始化']
+#
+# # 打乱列表元素顺序
+# random.shuffle(lucky_er)
+# random.shuffle(module_list)
+#
+# # 开始匹配
+# pairings = {lucky_er[i]: module_list[i] for i in range(min(len(lucky_er), len(module_list)))}
+#
+# # 输出结果
+# formatted_output = "\n".join([f"{name}：【{module}】" for name, module in pairings.items()])
+# print(formatted_output)
 
-lucky_er = ['黄sir', '曾银', '刘娜', '何建祥', '罗少', '罗玉隆']
-module_list = ['预览1', '预览2', '预览3', '回放', '添加设备2+灯+WiFi配网', '初始化']
 
-# 打乱列表元素顺序
-random.shuffle(lucky_er)
-random.shuffle(module_list)
+import uiautomator2 as u2
 
-# 开始匹配
-pairings = {lucky_er[i]: module_list[i] for i in range(min(len(lucky_er), len(module_list)))}
+d = u2.connect_usb()
+element = d.xpath('//*[@text=""]')
 
-# 输出结果
-formatted_output = "\n".join([f"{name}：【{module}】" for name, module in pairings.items()])
-print(formatted_output)
+element.click()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
