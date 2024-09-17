@@ -6,6 +6,7 @@ from uiautomator2.exceptions import XPathElementNotFoundError
 from common_tools.app_driver import driver
 from common_tools.logger import logger
 from typing import Literal
+import pytest
 import xml.etree.ElementTree as ET
 from common_tools.handle_alerts import handle_alert
 
@@ -20,9 +21,9 @@ class BasePage:
     def is_element_exists(self, element_value, selector_type='text', max_scrolls=2):
         """
         判断元素是否存在当前页面
-        :param selector_type: 安卓支持：text文本、id、xpath定位；iOS支持text(label)文本、id、xpath定位
-        :param element_value: 对应的文本、id、xpath值
-        :param max_scrolls: 最大滚动次数，默认两次
+        :param element_value: 你要找的文本内容，或者对应元素的id、xpath值。
+        :param selector_type: 安卓支持：text文本、id、xpath定位；iOS支持text(label)文本、id、xpath定位。
+        :param max_scrolls: 最大滚动次数，默认两次。
         :return: bool
         """
         ele_status = None
@@ -450,7 +451,7 @@ class BasePage:
                 else:
                     device_name.click()
                 logger.info(f"尝试点击这个 '{text_to_find}' 元素右边的远程设置按钮")
-                time.sleep(2)
+                time.sleep(3)
                 return True
             return False
 
@@ -459,7 +460,7 @@ class BasePage:
             if element.exists and element.label == 'list device set':
                 element.click()
                 logger.info(f"尝试点击这个 '{text_to_find}' 元素右边的远程设置按钮")
-                time.sleep(2)
+                time.sleep(3)
                 return True
             return False
 
@@ -855,15 +856,14 @@ class BasePage:
             logger.info(f"可能发生了错误: {err}")
             return False
 
-    def get_coordinates_and_draw(self, mode, id_or_xpath, draw_area, num=0):
+    def get_coordinates_and_draw(self, mode, id_or_xpath, draw_area='左上', num=0):
         """
-        获取元素的xy轴坐标并画黑框遮盖
+        获取元素的xy轴坐标并画黑框遮盖，支持目前现有设备的画框数量
         :param mode: 定位方式，支持id或者xpath
         :param id_or_xpath: 可遮盖区域的id或者xpath的定位参数
-        :param draw_area: 需要遮盖的区域，支持[左上]、[左下]、[右上]、[右下]的1/4屏，以及[全屏]遮盖
-        :param num: 画框数量，默认为None，为none时需要指定遮盖区域draw_area
+        :param draw_area: 需要遮盖的区域，支持[左上]、[左下]、[右上]、[右下]的1/4屏，以及[全屏]遮盖，默认左上。
+        :param num: 画框数量，默认为0，为0时需要指定遮盖区域draw_area.
         :return:
-        TODO: 控制画框数量
         """
         try:
             if self.platform == "android":
@@ -895,7 +895,7 @@ class BasePage:
                 center_x = (bounds['left'] + bounds['right']) // 2
                 center_y = (bounds['top'] + bounds['bottom']) // 2
 
-                if num != 0:
+                if num == 0:
                     if draw_area == '左上':
                         self.driver.drag(center_x, center_y, top_left_x, top_left_y, 0.5)  # 0.5 秒内完成拖动
                     elif draw_area == '右上':
@@ -907,7 +907,7 @@ class BasePage:
                     elif draw_area == '全屏':
                         self.driver.drag(top_left_x, top_left_y, bottom_right_x, bottom_right_y, 1)
                 elif num > 0:
-                    i = 0
+                    i = 1
                     while i <= num:
                         s_x = i * 130  # 每次开始画框的x坐标
                         e_x = s_x + 50  # 每次画框结束的x坐标
@@ -962,3 +962,14 @@ class BasePage:
         except Exception as err:
             logger.info(f"可能发生了错误: {err}")
             return False
+
+    @staticmethod
+    def check_key_in_yaml(items, key):
+        """
+        检查给定的YAML字典中是否存在指定的键。
+        :param items: YAML文件中的字典
+        :param key: 需要检查的键名
+        :raises pytest.skip: 如果键不存在，则跳过测试
+        """
+        if key not in items:
+            pytest.skip(f"YAML配置文件中未找到'{key}'键，跳过此测试用例")
