@@ -15,6 +15,12 @@ class TestRemoteDisplay:
     @pytest.mark.parametrize("device_config", devices_config)
     @pytest.mark.skip
     def test_remote_vertical_flip(self, device_config):
+        # 获取yaml文件指定配置
+        remote_items = device_config['ipc']['display']['items']
+
+        # 检查'vertical_flip'键是否存在，存在则执行当前用例，否则跳过
+        BasePage().check_key_in_yaml(remote_items, 'vertical_flip')
+
         # 启动app，并开启录屏
         driver.start_app(True)
 
@@ -23,13 +29,12 @@ class TestRemoteDisplay:
 
         # 获取yaml文件指定配置
         remote_setting_display = device_config['ipc']['display']['items'].values()
-        remote_items = device_config['ipc']['display']['items']
 
         # 读取yaml文件中预期功能项
         page_fun_list = RemoteSetting().extract_yaml_names(remote_setting_display, 'name')
 
-        # 遍历并滚动查找当前页面指定元素，判断是否存在
-        page_fun = RemoteSetting().scroll_check_funcs(page_fun_list)
+        # 遍历并滚动查找当前页面功能项，判断是否存在
+        page_fun = RemoteSetting().scroll_check_funcs2(page_fun_list)
 
         # 点击垂直翻转按钮
         BasePage().scroll_click_right_btn(text_to_find=remote_items['vertical_flip']['name'])
@@ -41,6 +46,12 @@ class TestRemoteDisplay:
     @pytest.mark.parametrize("device_config", devices_config)
     @pytest.mark.skip
     def test_remote_horizontal_flip(self, device_config):
+        # 获取yaml文件指定配置
+        remote_items = device_config['ipc']['display']['items']
+
+        # 检查键是否存在，存在则执行当前用例，否则跳过
+        BasePage().check_key_in_yaml(remote_items, 'horizontal_flip')
+
         # 启动app，并开启录屏
         driver.start_app(True)
 
@@ -57,6 +68,12 @@ class TestRemoteDisplay:
     @pytest.mark.parametrize("device_config", devices_config)
     @pytest.mark.skip
     def test_remote_stream(self, device_config):
+        # 获取yaml文件指定配置
+        remote_items = device_config['ipc']['display']['items']
+
+        # 检查键是否存在，存在则执行当前用例，否则跳过
+        BasePage().check_key_in_yaml(remote_items, 'stream')
+
         # 启动app，并开启录屏
         driver.start_app(True)
 
@@ -65,7 +82,7 @@ class TestRemoteDisplay:
 
         # 获取yaml文件指定配置
         remote_setting_display = device_config['ipc']['display']['items'].values()
-        remote_items = device_config['ipc']['display']['items']
+        # remote_items = device_config['ipc']['display']['items']
 
         # 点击进入码流页
         RemoteDisplay().access_in_stream()
@@ -75,18 +92,21 @@ class TestRemoteDisplay:
 
         # 进入码流>清晰页面，验证清晰页面文本和操作
         RemoteDisplay().access_in_clear()
-        page_fun_clear_text = RemoteSetting().scroll_check_funcs(remote_items['stream']['subpage']['clear']['subpage']['text'])
+        page_fun_clear_text = RemoteSetting().scroll_check_funcs(
+            remote_items['stream']['subpage']['clear']['subpage']['text'])
 
         # 点击清晰>分辨率选项，验证文本、执行操作
         RemoteDisplay().click_resolution()
-        page_fun_resolution_text = RemoteSetting().scroll_check_funcs(remote_items['stream']['subpage']['clear']['subpage']['resolution']['text'])
+        page_fun_resolution_text = RemoteSetting().scroll_check_funcs(
+            remote_items['stream']['subpage']['clear']['subpage']['resolution']['text'])
         BasePage().iterate_and_click_popup_text(
             option_text_list=remote_items['stream']['subpage']['clear']['subpage']['resolution']['options'],
             menu_text='分辨率')
 
         # 点击清晰>帧率选项，验证文本
         RemoteDisplay().click_frame_rate()
-        page_fun_frame_rate = RemoteSetting().scroll_check_funcs(remote_items['stream']['subpage']['clear']['subpage']['frame_rate']['text'])
+        page_fun_frame_rate = RemoteSetting().scroll_check_funcs(
+            remote_items['stream']['subpage']['clear']['subpage']['frame_rate']['text'])
         BasePage().iterate_and_click_popup_text(
             option_text_list=remote_items['stream']['subpage']['clear']['subpage']['frame_rate']['options'],
             menu_text='帧率(fps)')
@@ -130,12 +150,13 @@ class TestRemoteDisplay:
             menu_text='最大码率(kbps)')
         BasePage().scroll_and_click_by_text("保存")
 
-        # 点击帧率控制,验证文本
+        # 点击帧率控制,验证popup文本
         RemoteDisplay().click_frame_rate_mode()
         page_fun_frame_rate_mode = RemoteSetting().scroll_check_funcs(
             remote_items['stream']['subpage']['frame_rate_mode']['text'])
-        BasePage().iterate_and_click_popup_text(option_text_list=remote_items['stream']['subpage']['frame_rate_mode']['options'],
-                                                menu_text='帧率控制')
+        BasePage().iterate_and_click_popup_text(
+            option_text_list=remote_items['stream']['subpage']['frame_rate_mode']['options'],
+            menu_text='帧率控制')
 
         assert page_fun_stream_text is True
 
@@ -157,14 +178,193 @@ class TestRemoteDisplay:
 
         assert page_fun_frame_rate_mode is True
 
+    # 测抗闪烁
+    @pytest.mark.parametrize("device_config", devices_config)
+    @pytest.mark.skip
+    def test_remote_anti_flicker(self, device_config):
+        # 获取yaml文件指定配置
+        remote_items = device_config['ipc']['display']['items']
+
+        # 检查键是否存在，存在则执行当前用例，否则跳过
+        BasePage().check_key_in_yaml(remote_items, 'anti_flicker')
+
+        # 启动app，并开启录屏
+        driver.start_app(True)
+
+        # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击‘显示’菜单项进入显示页
+        RemoteSetting().access_in_display(device_list_name=device_config['device_list_name'])
+
+        # 获取yaml文件指定配置
+        remote_items = device_config['ipc']['display']['items']
+
+        # 点击抗闪烁，验证popup文本
+        RemoteDisplay().click_anti_flicker()
+        page_fun = RemoteSetting().scroll_check_funcs2(remote_items['anti_flicker']['text'])
+
+        # 遍历popup操作项
+        BasePage().iterate_and_click_popup_text(
+            option_text_list=remote_items['anti_flicker']['options'],
+            menu_text='抗闪烁')
+
+        assert page_fun is True
+
+    # 测白天和黑夜
+    @pytest.mark.parametrize("device_config", devices_config)
+    @pytest.mark.skip
+    def test_remote_day_and_night(self, device_config):
+        # 获取yaml文件指定配置
+        remote_items = device_config['ipc']['display']['items']
+
+        # 检查键是否存在，存在则执行当前用例，否则跳过
+        BasePage().check_key_in_yaml(remote_items, 'day_and_night')
+
+        # 启动app，并开启录屏
+        driver.start_app(True)
+
+        # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击‘显示’菜单项进入显示页
+        RemoteSetting().access_in_display(device_list_name=device_config['device_list_name'])
+
+        # 获取yaml文件指定配置
+        remote_items = device_config['ipc']['display']['items']
+
+        # 点击白天和黑夜，验证popup文本
+        RemoteDisplay().click_day_and_night()
+        page_fun = RemoteSetting().scroll_check_funcs2(remote_items['day_and_night']['text'])
+
+        # 遍历popup操作项
+        BasePage().iterate_and_click_popup_text(
+            option_text_list=remote_items['anti_flicker']['options'],
+            menu_text='白天和黑夜')
+
+        assert page_fun is True
+
+    # 测亮度
+    @pytest.mark.parametrize("device_config", devices_config)
+    @pytest.mark.skip
+    def test_remote_brightness(self, device_config):
+        # 获取yaml文件指定配置
+        remote_items = device_config['ipc']['display']['items']
+
+        # 检查键是否存在，存在则执行当前用例，否则跳过
+        BasePage().check_key_in_yaml(remote_items, 'brightness')
+
+        # 启动app，并开启录屏
+        driver.start_app(True)
+
+        # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击‘显示’菜单项进入显示页
+        RemoteSetting().access_in_display(device_list_name=device_config['device_list_name'])
+
+        # 获取yaml文件指定配置
+        remote_items = device_config['ipc']['display']['items']
+
+        # 拖动亮度条
+        RemoteDisplay().drag_slider_brightness(slider_mode='', id_or_xpath='')
+
+    # 测设备名称
+    @pytest.mark.parametrize("device_config", devices_config)
+    @pytest.mark.skip
+    def test_remote_device_name(self, device_config):
+        # 获取yaml文件指定配置
+        remote_items = device_config['ipc']['display']['items']
+
+        # 检查键是否存在，存在则执行当前用例，否则跳过
+        BasePage().check_key_in_yaml(remote_items, 'device_name')
+
+        # 启动app，并开启录屏
+        driver.start_app(True)
+
+        # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击‘显示’菜单项进入显示页
+        RemoteSetting().access_in_display(device_list_name=device_config['device_list_name'])
+
+        # 获取yaml文件指定配置
+        remote_items = device_config['ipc']['display']['items']
+
+        # 点击设备名称，验证popup文本
+        RemoteDisplay().click_device_name()
+        page_fun = RemoteSetting().scroll_check_funcs2(remote_items['device_name']['text'])
+
+        # 遍历popup操作项
+        BasePage().iterate_and_click_popup_text(
+            option_text_list=remote_items['device_name']['options'],
+            menu_text='设备名称')
+
+        assert page_fun is True
+
+    # 测日期
+    @pytest.mark.parametrize("device_config", devices_config)
+    @pytest.mark.skip
+    def test_remote_date(self, device_config):
+        # 获取yaml文件指定配置
+        remote_items = device_config['ipc']['display']['items']
+
+        # 检查键是否存在，存在则执行当前用例，否则跳过
+        BasePage().check_key_in_yaml(remote_items, 'date')
+
+        # 启动app，并开启录屏
+        driver.start_app(True)
+
+        # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击‘显示’菜单项进入显示页
+        RemoteSetting().access_in_display(device_list_name=device_config['device_list_name'])
+
+        # 获取yaml文件指定配置
+        remote_items = device_config['ipc']['display']['items']
+
+        # 点击设备名称，验证popup文本
+        RemoteDisplay().click_device_name()
+        page_fun = RemoteSetting().scroll_check_funcs2(remote_items['date']['text'])
+
+        # 遍历popup操作项
+        BasePage().iterate_and_click_popup_text(
+            option_text_list=remote_items['date']['options'],
+            menu_text='日期')
+
+        assert page_fun is True
+
+    # 测水印
+    @pytest.mark.parametrize("device_config", devices_config)
+    @pytest.mark.skip
+    def test_remote_watermark(self, device_config):
+        # 获取yaml文件指定配置
+        remote_items = device_config['ipc']['display']['items']
+
+        # 检查键是否存在，存在则执行当前用例，否则跳过
+        BasePage().check_key_in_yaml(remote_items, 'watermark')
+
+        # 启动app，并开启录屏
+        driver.start_app(True)
+
+        # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击‘显示’菜单项进入显示页
+        RemoteSetting().access_in_display(device_list_name=device_config['device_list_name'])
+
+        # 点击水印按钮
+        BasePage().scroll_click_right_btn(text_to_find=remote_items['watermark']['name'])
+
     # 测隐私遮盖（遮盖区域）
     @pytest.mark.parametrize("device_config", devices_config)
     def test_privacy_mask(self, device_config):
-        BasePage().get_coordinates_and_draw(mode='xpath',
-                                            id_or_xpath='//*[@resource-id="com.mcu.reolink:id/shelter_player"]',
-                                            draw_area='全屏')
+        # 获取yaml文件指定配置
+        remote_items = device_config['ipc']['display']['items']
 
+        # 检查键是否存在，存在则执行当前用例，否则跳过
+        BasePage().check_key_in_yaml(remote_items, 'private_mark')
 
+        # 启动app，并开启录屏
+        driver.start_app(True)
 
+        # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击‘显示’菜单项进入显示页
+        RemoteSetting().access_in_display(device_list_name=device_config['device_list_name'])
 
+        # 点击进入遮盖区域主页
+        RemoteDisplay().access_in_privacy_mask()
 
+        # 验证码流主页文本
+        page_fun_privacy_mask_text = RemoteSetting().scroll_check_funcs(remote_items['private_mark']['subpage']['text'])
+
+        # 此处的定位方式默认xpath
+        RemoteDisplay().draw_privacy_mask(mode='xpath')
+
+        assert page_fun_privacy_mask_text is True
+
+    # 测高级设置
+
+    # 测明暗设置
