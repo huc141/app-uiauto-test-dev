@@ -58,6 +58,7 @@ class RemoteSetting(BasePage):
         """
         ele_exists = []
         ele_not_exists = []
+
         try:
             if isinstance(texts, list):
                 # 如果 texts 是一个列表，遍历列表中的每个功能项名称
@@ -89,7 +90,7 @@ class RemoteSetting(BasePage):
             logger.info(f"可能发生了错误: {err}")
             return False
 
-    def scroll_check_funcs2(self, texts, selector, selector_type='id'):
+    def scroll_check_funcs2(self, texts, selector=None, selector_type='id'):
         """
         遍历并判断功能项(名称)是否存在当前页面，同时比对数量是否正确。
         :param selector_type: 元素的定位方式，根据id进行文本提取。
@@ -101,46 +102,50 @@ class RemoteSetting(BasePage):
         ele_not_exists = []  # 当前页面缺失的功能
 
         try:
-            # 先滚动页面获取指定id的文本
-            actual_texts = self.get_all_texts(selector=selector, selector_type=selector_type)
+            if selector is not None:
+                # 先滚动页面提取指定id的文本（功能项）
+                actual_texts = self.get_all_texts(selector=selector, selector_type=selector_type)
 
-            if isinstance(texts, list):
-                # 如果 texts 是一个列表，遍历列表中的每个功能项名称
-                for text in texts:
-                    is_in_actual_texts = text in actual_texts
-                    if is_in_actual_texts:
-                        ele_exists.append(text)
+                if isinstance(texts, list):
+                    # 如果 texts 是一个列表，遍历列表中的每个功能项名称
+                    for text in texts:
+                        is_in_actual_texts = text in actual_texts
+                        if is_in_actual_texts:
+                            ele_exists.append(text)
+                        else:
+                            ele_not_exists.append(text)
+
+                    # 检查所有预期功能是否在actual_texts中，并检查两个列表的长度是否相同
+                    all_elements_exist = all(ele_exists)
+                    lengths_are_equal = len(actual_texts) == len(texts)
+
+                    if all_elements_exist and lengths_are_equal:
+                        logger.info(f"预期功能项均存在！-->{texts}")
+                        return True
+                    elif len(actual_texts) > len(texts):
+                        unique_fun = [item for item in actual_texts if item not in texts]
+                        logger.info(f"当前页面实际功能项有：{actual_texts}")
+                        logger.info(f"预期功能项有：{ele_exists}")
+                        logger.info(f"当前页面多余的功能有：{unique_fun}，功能数量与预期不符！可能存在非法能力集！")
+                        return False
                     else:
-                        ele_not_exists.append(text)
+                        logger.info(f"当前页面实际功能项有：{actual_texts}")
+                        logger.info(f"预期功能项有：{texts}")
+                        logger.info(f"当前页面缺失的功能有：{ele_not_exists}")
+                        return False
 
-                # 检查所有预期功能是否在actual_texts中，并检查两个列表的长度是否相同
-                all_elements_exist = all(ele_exists)
-                lengths_are_equal = len(actual_texts) == len(texts)
+                elif isinstance(texts, str):
+                    # 如果 texts 是一个单一的文本，在当前页面滚动查找该文本是否存在
+                    ele_status = self.is_element_exists(texts)
+                    if not ele_status:
+                        logger.info(f"当前页面缺失的功能有：{texts}")
+                        return False
+                    else:
+                        logger.info(f"需校验的功能项均存在！-->{texts}")
+                        return True
 
-                if all_elements_exist and lengths_are_equal:
-                    logger.info(f"预期功能项均存在！-->{texts}")
-                    return True
-                elif len(actual_texts) > len(texts):
-                    unique_fun = [item for item in actual_texts if item not in texts]
-                    logger.info(f"当前页面实际功能项有：{actual_texts}")
-                    logger.info(f"预期功能项有：{ele_exists}")
-                    logger.info(f"当前页面多余的功能有：{unique_fun}，功能数量与预期不符！可能存在非法能力集！")
-                    return False
-                else:
-                    logger.info(f"当前页面实际功能项有：{actual_texts}")
-                    logger.info(f"预期功能项有：{texts}")
-                    logger.info(f"当前页面缺失的功能有：{ele_not_exists}")
-                    return False
-
-            elif isinstance(texts, str):
-                # 如果 texts 是一个单一的文本，在当前页面滚动查找该文本是否存在
-                ele_status = self.is_element_exists(texts)
-                if not ele_status:
-                    logger.info(f"当前页面缺失的功能有：{texts}")
-                    return False
-                else:
-                    logger.info(f"需校验的功能项均存在！-->{texts}")
-                    return True
+            else:
+                return self.scroll_check_funcs(texts=texts)
 
         except Exception as err:
             logger.info(f"可能发生了错误: {err}")
