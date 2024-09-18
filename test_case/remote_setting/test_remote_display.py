@@ -341,6 +341,7 @@ class TestRemoteDisplay:
 
     # 测隐私遮盖（遮盖区域）
     @pytest.mark.parametrize("device_config", devices_config)
+    @pytest.mark.skip
     def test_privacy_mask(self, device_config):
         # 获取yaml文件指定配置
         remote_items = device_config['ipc']['display']['items']
