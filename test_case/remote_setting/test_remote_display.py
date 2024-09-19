@@ -258,7 +258,7 @@ class TestRemoteDisplay:
         remote_items = device_config['ipc']['display']['items']
 
         # 拖动亮度条
-        RemoteDisplay().drag_slider_brightness(slider_mode='', id_or_xpath='')
+        RemoteDisplay().drag_slider_brightness(slider_mode='')
 
     # 测设备名称
     @pytest.mark.parametrize("device_config", devices_config)
