@@ -10,10 +10,12 @@ class RemoteDisplay(BasePage):
     def __init__(self):
         super().__init__()
         if self.platform == 'android':
-            self.shelter_player = '//*[@resource-id="com.mcu.reolink:id/shelter_player"]'
+            self.shelter_player = '//*[@resource-id="com.mcu.reolink:id/shelter_player"]'  # 隐私遮盖可画框区域
+            self.slider_brightness_xpath = ''  # 亮度条定位xpath
 
         elif self.platform == 'ios':
             self.shelter_player = ''
+            self.slider_brightness_xpath = ''
 
     def access_in_stream(self, option_text='码流'):
         """
@@ -82,7 +84,7 @@ class RemoteDisplay(BasePage):
         """
         self.scroll_and_click_by_text(text_to_find=option_text)
 
-    def drag_slider_brightness(self, slider_mode, id_or_xpath, iteration=20):
+    def drag_slider_brightness(self, slider_mode, iteration=20):
         """
         对拖动条执行操作，支持上、下、左、右方向拖动
         :param slider_mode: slider的定位方式，支持id或者xpath
@@ -93,19 +95,19 @@ class RemoteDisplay(BasePage):
         """
         # 往右拖动20次
         self.slider_seek_bar(slider_mode=slider_mode,
-                             id_or_xpath=id_or_xpath,
+                             id_or_xpath=self.slider_brightness_xpath,
                              direction='right',
                              iteration=iteration)
 
         # 往左拖动30次
         self.slider_seek_bar(slider_mode=slider_mode,
-                             id_or_xpath=id_or_xpath,
+                             id_or_xpath=self.slider_brightness_xpath,
                              direction='left',
                              iteration=30)
 
         # 往右拖动10次
         self.slider_seek_bar(slider_mode=slider_mode,
-                             id_or_xpath=id_or_xpath,
+                             id_or_xpath=self.slider_brightness_xpath,
                              direction='right',
                              iteration=10)
 
