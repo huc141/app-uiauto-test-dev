@@ -40,3 +40,18 @@ ipc:
         options:
           - 'switch_on'
           - 'switch_off'
+
+      auto_reply:
+        name: '自动回复'
+        desc: '设置>音频>自动回复'
+        type: 'navigation'
+        text:
+          - '等待时长'
+          - '门铃响后等多久'
+          - '设置自动回复'
+          - '编辑'
+          - '无自动回复'
+          - "I'm sorry. I think you've knocked on the wrong door."
+          - 'Hi, we will be right there. Please wait a moment.'
+          - 'Hi, please leave the packege at the door. We will get it later.'
+          - '录制自动回复'
