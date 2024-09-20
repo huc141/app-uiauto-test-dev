@@ -288,8 +288,8 @@ class BasePage:
     def scroll_and_click_by_text(self, text_to_find, el_type='text', max_attempts=5, scroll_pause=0.5):
         """
         在可滚动视图中查找并点击指定文本或xpath的元素。
-        :param el_type: 元素定位类型，支持文本text(label)和xpath
         :param text_to_find: 要查找的文本/xpath
+        :param el_type: 元素定位类型，支持文本text(label)和xpath
         :param max_attempts: 最大尝试次数
         :param scroll_pause: 滚动后的暂停时间，秒
         """
@@ -391,11 +391,11 @@ class BasePage:
                         ele_not_exists.append(check_text)
 
                 if len(ele_not_exists) > 0:
-                    logger.info(f"当前页面存在的功能有：{ele_exists}")
-                    logger.info(f"当前页面缺失的功能有：{ele_not_exists}")
+                    logger.info(f"当前页面存在：{ele_exists}")
+                    logger.info(f"当前页面缺失：{ele_not_exists}")
                     return False
                 else:
-                    logger.info(f"需校验的功能项均存在！-->{ele_exists}")
+                    logger.info(f"需校验的文本均存在！-->{ele_exists}")
                     return True
 
             elif isinstance(texts, str):
@@ -403,10 +403,10 @@ class BasePage:
                 check_text = remove_default_keyword(texts)
                 ele_status = self.is_element_exists(check_text)
                 if not ele_status:
-                    logger.info(f"当前页面缺失的功能有：{check_text}")
+                    logger.info(f"当前页面缺失：{check_text}")
                     return False
                 else:
-                    logger.info(f"需校验的功能项均存在！-->{check_text}")
+                    logger.info(f"需校验的文本均存在！-->{check_text}")
                     return True
 
         try:
