@@ -33,13 +33,12 @@ class RemoteSetting(BasePage):
     def extract_yaml_names(dict_list, key):
         """
         从给定的字典列表中提取指定键的值。
-
         参数:
-        yaml_content: 包含字典的列表。
-        key (list): 要提取的键名。
+            yaml_content: 包含字典的列表。
+            key (list): 要提取的键名。
 
         返回:
-        list: 包含所有提取的name的列表。
+            list: 包含所有提取的name的列表。
         """
         # 初始化空列表
         all_names = []
@@ -204,7 +203,7 @@ class RemoteSetting(BasePage):
         # 如果设备是单机：
         if access_mode == 'ipc':
             time.sleep(2)
-            # 进入wifi主页
+            # 进入显示主页
             self.scroll_and_click_by_text('显示')
 
         # 如果设备接入了hub：
@@ -212,22 +211,37 @@ class RemoteSetting(BasePage):
             time.sleep(2)
             # 根据名称查找hub下的设备卡片，点击并进入hub下的设备的远程配置主页
             self.scroll_and_click_by_text(sub_name)
-            # 进入wifi主页
+            # 进入显示主页
             self.scroll_and_click_by_text('显示')
 
-    def access_in_audio(self):
+    def access_in_audio(self, device_list_name, sub_name=None, access_mode='ipc'):
         """
         点击音频，进入音频页
         :return:
         """
         return self.scroll_and_click_by_text('音频')
 
-    def access_in_light(self):
+    def access_in_light(self, device_list_name, sub_name=None, access_mode='ipc'):
         """
         点击灯，进入灯下一页
         :return:
         """
-        return self.scroll_and_click_by_text('灯')
+        # 根据昵称在设备列表中滚动查找该设备并进入远程配置主页
+        self.access_in_remote_setting(device_list_name)
+
+        # 如果设备是单机：
+        if access_mode == 'ipc':
+            time.sleep(2)
+            # 进入灯主页
+            self.scroll_and_click_by_text('灯')
+
+        # 如果设备接入了hub：
+        elif access_mode == 'hub' and sub_name is not None:
+            time.sleep(2)
+            # 根据名称查找hub下的设备卡片，点击并进入hub下的设备的远程配置主页
+            self.scroll_and_click_by_text(sub_name)
+            # 进入灯主页
+            self.scroll_and_click_by_text('灯')
 
     def access_in_detection_alarm(self):
         """

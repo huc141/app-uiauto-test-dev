@@ -141,7 +141,7 @@ class RemoteAudio(BasePage):
             self.scroll_and_click_by_text(text_to_find=self.stop_record_sound, el_type='xpath')
             # 点击下一步并命名录音
             self.scroll_and_click_by_text(text_to_find=self.next_step, el_type='xpath')
-            # TODO:录音命名
+            # TODO:定位命名输入框并输入“auto_test_record_xxxx”，点击保存，验证保存是否成功
 
         if mode == 2:
             # 点击开始录音按钮
@@ -176,13 +176,16 @@ class RemoteAudio(BasePage):
         """
         self.iterate_and_click_popup_text(option_text_list=option_text_list, menu_text='等待时长')
 
-    def click_edit(self, rename):
+    def click_edit(self):
         """
         点击【编辑】按钮
         :return:
         """
         self.scroll_and_click_by_text(text_to_find='编辑')
 
+    def auto_reply_rename(self):
+        pass
 
-
+    def auto_reply_delete(self):
+        pass
 
