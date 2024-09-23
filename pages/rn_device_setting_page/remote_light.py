@@ -52,21 +52,19 @@ class RemoteLight(BasePage):
         """
         self.scroll_and_click_by_text(text_to_find='照明灯')
 
-    def time_selector(self, slider_mode='xpath', iteration=1):
+    def time_selector(self, direction='up', iteration=1):
         """
         时间选择器
-        :param slider_mode: slider的定位方式，支持id或者xpath
+        :param direction: slider的定位方式，支持id或者xpath
         :param iteration:
         :return:
         """
         # 手指向上滑动选择小时
-        self.slider_seek_bar(slider_mode=slider_mode,
-                             id_or_xpath=self.time_selector_hour,
-                             direction='up',
-                             iteration=iteration)
+        self.scroll_selector(id_or_xpath=self.time_selector_hour,
+                             direction=direction,
+                             times=iteration)
 
         # 手指向上滑动选择分钟
-        self.slider_seek_bar(slider_mode=slider_mode,
-                             id_or_xpath=self.time_selector_min,
-                             direction='up',
-                             iteration=iteration)
+        self.scroll_selector(id_or_xpath=self.time_selector_min,
+                             direction=direction,
+                             times=iteration)
