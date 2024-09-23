@@ -101,10 +101,26 @@ class TestRemoteLight:
         #     menu_text='侦测')
         # BasePage().scroll_and_click_by_text(text_to_find='取消')
 
-        # 测试定时模式
-        # RemoteLight().click_timer_mode()
-        RemoteSetting().scroll_check_funcs2(
-            remote_items['floodlight']['subpage']['timer_mode']['hidden_text'])
+        # 测试定时模式：取消
+        RemoteLight().click_timer_mode()  # 点击定时模式
+        # 点击 开始
         BasePage().scroll_and_click_by_text(
             text_to_find=remote_items['floodlight']['subpage']['timer_mode']['hidden_text'][0])
+        # 选择时、分
         RemoteLight().time_selector()
+        # 点击取消
+        BasePage().scroll_and_click_by_text(
+            text_to_find='取消')
+
+        RemoteLight().click_timer_mode()
+        # 点击 结束
+        BasePage().scroll_and_click_by_text(
+            text_to_find=remote_items['floodlight']['subpage']['timer_mode']['hidden_text'][1])
+        RemoteLight().time_selector()
+        # 点击取消
+        BasePage().scroll_and_click_by_text(
+            text_to_find='取消')
+
+        BasePage().scroll_and_click_by_text(
+            text_to_find='保存')
+
