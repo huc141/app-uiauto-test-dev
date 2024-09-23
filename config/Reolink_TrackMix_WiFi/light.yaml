@@ -27,8 +27,8 @@ ipc:
             - '自动'
             - '光线较亮时自动开启，光线较暗时自动关闭。'
           options:
-            - '关闭'
             - '自动'
+            - '保持关闭'
 
       floodlight:
         name: '照明灯'
@@ -57,8 +57,8 @@ ipc:
             desc: '设置>灯>照明灯>定时模式'
             type: 'menu'
             hidden_text:
-              - '开始时间'
-              - '结束时间'
+              - '开始'
+              - '结束'
 
           night_smart_mode:
             name: '夜间智能模式'

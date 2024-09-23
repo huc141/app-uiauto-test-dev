@@ -106,14 +106,6 @@
 # print(page_fun2)
 
 
-
-
-
-
-
-
-
-
 # import random
 #
 # lucky_er = ['黄sir', '曾银', '刘娜', '何建祥', '罗少', '罗玉隆']
@@ -131,32 +123,17 @@
 # print(formatted_output)
 
 
+import wda
 import uiautomator2 as u2
+from uiautomator2 import Direction
 
 d = u2.connect_usb()
-element = d.xpath('//*[@text=""]')
 
-element.click()
-
-
-
+# d.swipe_ext(Direction.HORIZ_FORWARD)  # 页面水平右翻
+# d.swipe_ext(Direction.HORIZ_BACKWARD)  # 页面水平左翻
+e = d.xpath(xpath='//*[@resource-id="com.mcu.reolink:id/options1"]')
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# c = wda.Client('http://localhost:8100')
+# s = c.session()
+# s.swipe_right()
