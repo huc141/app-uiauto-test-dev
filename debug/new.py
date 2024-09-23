@@ -132,7 +132,7 @@ d = u2.connect_usb()
 # d.swipe_ext(Direction.HORIZ_FORWARD)  # 页面水平右翻
 # d.swipe_ext(Direction.HORIZ_BACKWARD)  # 页面水平左翻
 e = d.xpath(xpath='//*[@resource-id="com.mcu.reolink:id/options1"]')
-
+e.scroll('up')
 
 # c = wda.Client('http://localhost:8100')
 # s = c.session()
