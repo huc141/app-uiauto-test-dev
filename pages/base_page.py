@@ -9,6 +9,7 @@ from typing import Literal
 import pytest
 import xml.etree.ElementTree as ET
 from common_tools.handle_alerts import handle_alert
+from uiautomator2 import Direction
 
 DEFAULT_SECONDS = 15
 
@@ -185,6 +186,82 @@ class BasePage:
                 raise
         return False
 
+    def scroll_click_right_btn(self, text_to_find, el_type='text', max_attempts=1, scroll_pause=0.5):
+        """
+        在当前页面滑动查找并点击指定文本右侧的可点击元素/按钮。
+        :param el_type: 元素查找类型，支持 文本text(label).
+        :param text_to_find: 要查找的文本
+        :param max_attempts: 最大尝试次数
+        :param scroll_pause: 滚动后的暂停时间，秒
+        """
+        try:
+            def find_and_click_ios(xpath_exp):
+                element = self.driver.xpath(xpath_exp)
+                if element.exists:
+                    element.click()
+                    logger.info(f"尝试点击这个 '{text_to_find}' 元素右边的按钮")
+                    time.sleep(1)
+                    return True
+                return False
+
+            def click_button_android(text):
+                logger.info(f"尝试点击这个 '{text_to_find}' 元素右边的可点击按钮")
+                self.driver(text=text).right(clickable='true').click()
+                time.sleep(1)
+                return True
+
+            def click_button_ios(text):
+                # 这里的xpath表达式中的下标可能需要根据具体页面分析，先暂时这样写
+                if find_and_click_ios(
+                        f"//*[contains(@name, '{text}')]/following-sibling::*[3][@visible='true']"):
+                    return True
+                else:
+                    logger.info(f"没有找到目标元素{text}右边的按钮")
+                    return False
+
+            # 根据el_type初始化查找元素
+            if el_type == "text":
+                element = self.driver(text=text_to_find) if self.platform == "android" else self.driver(
+                    label=text_to_find)
+            else:
+                raise ValueError("你可能输入了不支持的元素查找类型")
+
+            attempt = 0
+
+            if self.platform == "android":
+                while attempt <= max_attempts:
+                    if element.exists:
+                        logger.info(f"【{text_to_find}】元素已找到")
+                        click_button_android(text_to_find)
+                        break
+                    else:
+                        # 滑动屏幕
+                        logger.info(f"尝试滑动查找 '{text_to_find}'... 第{attempt + 1}次")
+                        self.driver(scrollable=True).scroll(steps=150)
+
+                    attempt += 1
+
+            if self.platform == "ios":
+                # 判断元素是否可见，不可见则滑动至可见后点击
+                e_is_visible = self.driver(text=text_to_find)
+                while attempt <= max_attempts:
+                    if element.exists and e_is_visible.visible:
+                        logger.info(f"【{text_to_find}】元素存在且可见")
+                        click_button_ios(text_to_find)
+                        break
+                    else:
+                        # 获取可滑动的元素，此处根据className(Type)定位
+                        logger.info(f"尝试滑动查找 '{text_to_find}'... 第{attempt + 1}次")
+                        e = self.driver(className='XCUIElementTypeTable')
+                        e.scroll('down')
+                        time.sleep(scroll_pause)  # 等待页面稳定
+
+                    attempt += 1
+
+        except Exception as err:
+            logger.info(f"可能发生了错误: {err}")
+            return False
+
     def get_toast(self, toast_text: str, reset=True, timeout=5.0, default="没有获取到toast提示"):
         """
         废除！该方法不可用！ 获取页面弹出的toast
@@ -351,15 +428,16 @@ class BasePage:
                     attempt += 1
 
         except Exception as err:
-            logger.info(f"Error occurred: {err}")
+            logger.info(f"貌似出错了: {err}")
+            return False
 
         logger.info(f"没找到要点击的元素： '{text_to_find}' ，已经尝试了： {max_attempts} 次.")
         return False
 
     def iterate_and_click_popup_text(self, option_text_list, menu_text):
         """
-        根据文本遍历popup弹窗的单选项，执行点击操作
-        :param option_text_list: 需要遍历的文本
+        根据文本遍历popup弹窗的单选项，执行点击操作，适合点击某个选项后自动返回上一页的操作。
+        :param option_text_list: 需要遍历的文本列表
         :param menu_text: 需要点击的popup菜单功能项
         :return:
         """
@@ -427,6 +505,35 @@ class BasePage:
                 elif i == '取消':
                     page_options = scroll_check_function(option_text_list[-2])
                     assert page_options is True
+        except Exception as err:
+            logger.info(f"可能发生了错误: {err}")
+            return False
+
+    def click_checkbox_by_text(self, option_text_list, menu_text, mode=1):
+        """
+        根据文本对多选框执行点击操作，适合同时选择多个/单个选项后手动点击保存、取消、返回的操作。
+        :param option_text_list: 需要遍历的文本列表
+        :param menu_text: 需要点击进入多选页面的菜单功能项
+        :param mode: 1：根据文本直接多选；2：根据文本点击右边按钮多选
+        :return:
+        """
+        try:
+            if mode == 1:
+                self.scroll_and_click_by_text(text_to_find=menu_text)
+                # 遍历文本，执行点击操作
+                for i in option_text_list:
+                    time.sleep(0.5)
+                    logger.info('点击 ' + i)
+                    self.click_by_text(i)
+
+            elif mode == 2:
+                self.scroll_and_click_by_text(text_to_find=menu_text)
+                # 遍历文本，执行点击操作
+                for i in option_text_list:
+                    time.sleep(0.5)
+                    logger.info('点击 ' + i)
+                    self.scroll_click_right_btn(text_to_find=i)
+
         except Exception as err:
             logger.info(f"可能发生了错误: {err}")
             return False
@@ -739,82 +846,6 @@ class BasePage:
                 logger.info(f"读取文件失败: {process.stderr}")
                 return None
 
-    def scroll_click_right_btn(self, text_to_find, el_type='text', max_attempts=1, scroll_pause=0.5):
-        """
-        在当前页面滑动查找并点击指定文本右侧的可点击元素/按钮。
-        :param el_type: 元素查找类型，支持 文本text(label).
-        :param text_to_find: 要查找的文本
-        :param max_attempts: 最大尝试次数
-        :param scroll_pause: 滚动后的暂停时间，秒
-        """
-        try:
-            def find_and_click_ios(xpath_exp):
-                element = self.driver.xpath(xpath_exp)
-                if element.exists:
-                    element.click()
-                    logger.info(f"尝试点击这个 '{text_to_find}' 元素右边的按钮")
-                    time.sleep(1)
-                    return True
-                return False
-
-            def click_button_android(text):
-                logger.info(f"尝试点击这个 '{text_to_find}' 元素右边的可点击按钮")
-                self.driver(text=text).right(clickable='true').click()
-                time.sleep(1)
-                return True
-
-            def click_button_ios(text):
-                # 这里的xpath表达式中的下标可能需要根据具体页面分析，先暂时这样写
-                if find_and_click_ios(
-                        f"//*[contains(@name, '{text}')]/following-sibling::*[3][@visible='true']"):
-                    return True
-                else:
-                    logger.info(f"没有找到目标元素{text}右边的按钮")
-                    return False
-
-            # 根据el_type初始化查找元素
-            if el_type == "text":
-                element = self.driver(text=text_to_find) if self.platform == "android" else self.driver(
-                    label=text_to_find)
-            else:
-                raise ValueError("你可能输入了不支持的元素查找类型")
-
-            attempt = 0
-
-            if self.platform == "android":
-                while attempt <= max_attempts:
-                    if element.exists:
-                        logger.info(f"【{text_to_find}】元素已找到")
-                        click_button_android(text_to_find)
-                        break
-                    else:
-                        # 滑动屏幕
-                        logger.info(f"尝试滑动查找 '{text_to_find}'... 第{attempt + 1}次")
-                        self.driver(scrollable=True).scroll(steps=150)
-
-                    attempt += 1
-
-            if self.platform == "ios":
-                # 判断元素是否可见，不可见则滑动至可见后点击
-                e_is_visible = self.driver(text=text_to_find)
-                while attempt <= max_attempts:
-                    if element.exists and e_is_visible.visible:
-                        logger.info(f"【{text_to_find}】元素存在且可见")
-                        click_button_ios(text_to_find)
-                        break
-                    else:
-                        # 获取可滑动的元素，此处根据className(Type)定位
-                        logger.info(f"尝试滑动查找 '{text_to_find}'... 第{attempt + 1}次")
-                        e = self.driver(className='XCUIElementTypeTable')
-                        e.scroll('down')
-                        time.sleep(scroll_pause)  # 等待页面稳定
-
-                    attempt += 1
-
-        except Exception as err:
-            logger.info(f"可能发生了错误: {err}")
-            return False
-
     def slider_seek_bar(self, slider_mode, id_or_xpath, direction, iteration=20):
         """
         对拖动条执行操作，支持上、下、左、右方向拖动
@@ -973,3 +1004,21 @@ class BasePage:
         """
         if key not in items:
             pytest.skip(f"YAML配置文件中未找到'{key}'键，跳过此测试用例")
+
+    def back_previous_page(self):
+        """
+        手势向右滑模拟：返回上一页
+        :return:
+        """
+        try:
+            if self.platform == "android":
+                self.driver.swipe_ext(Direction.HORIZ_BACKWARD)
+
+            if self.platform == "ios":
+                self.driver.swipe_right()
+
+        except Exception as err:
+            logger.info(f"可能发生了错误: {err}")
+            return False
+
+
