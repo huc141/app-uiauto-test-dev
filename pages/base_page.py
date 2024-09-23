@@ -1021,4 +1021,29 @@ class BasePage:
             logger.info(f"可能发生了错误: {err}")
             return False
 
+    def scroll_selector(self, id_or_xpath, direction, times=1):
+        """
+        滚动选择器，如选择时间
+        :param id_or_xpath: 选择器可滚动的id或者xpath
+        :param direction: 滚动方向, "up", "down", "left", "right"
+        :param times: 滚动次数
+        :return:
+        """
+        try:
+            if self.platform == "android":
+                while times <= 1:
+                    e = self.driver.xpath(id_or_xpath)
+                    time.sleep(0.5)
+                    e.scroll(direction)
+                    times += 1
 
+            if self.platform == "ios":
+                while times <= 1:
+                    e = self.driver.xpath(id_or_xpath)
+                    time.sleep(0.5)
+                    e.scroll(direction)
+                    times += 1
+
+        except Exception as err:
+            logger.info(f"可能发生了错误: {err}")
+            return False
