@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import pytest
+import allure
 from common_tools.app_driver import driver
 from common_tools.read_yaml import read_yaml
 from pages.base_page import BasePage
@@ -9,6 +10,7 @@ from pages.rn_device_setting_page.remote_display import RemoteDisplay
 devices_config = read_yaml.load_device_config(yaml_file_name='display.yaml')  # 读取参数化文件
 
 
+@allure.feature("远程配置>灯")
 class TestRemoteDisplay:
 
     # 测垂直翻转
