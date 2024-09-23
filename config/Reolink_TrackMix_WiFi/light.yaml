@@ -137,7 +137,6 @@ hub:
                 - '车'
                 - '动物'
 
-
 nvr:
   light:
     name: '灯'
