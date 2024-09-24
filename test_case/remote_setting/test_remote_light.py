@@ -12,8 +12,8 @@ devices_config = read_yaml.load_device_config(yaml_file_name='light.yaml')  # �
 
 @allure.feature("远程配置>灯")
 class TestRemoteLight:
-    # 测红外灯
     @pytest.mark.parametrize("device_config", devices_config)
+    @allure.feature("测红外灯")
     @pytest.mark.skip
     def test_remote_infrared_light(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
@@ -58,7 +58,6 @@ class TestRemoteLight:
         assert light_status_auto is True
         assert light_status_off is True
 
-    # 测照明灯(白光灯) > 夜间智能模式
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("测照明灯(白光灯) > 夜间智能模式")
     @allure.story("需人工核查日志和录屏")
@@ -163,3 +162,32 @@ class TestRemoteLight:
         RemoteLight().time_selector()
 
         BasePage().scroll_and_click_by_text(text_to_find='保存')
+
+    @pytest.mark.parametrize("device_config", devices_config)
+    @allure.feature("测照明灯(白光灯) > 关 模式")
+    def test_remote_floodlight_off(self, device_config):
+        # 检查键是否存在，存在则执行当前用例，否则跳过
+        remote_items = device_config['ipc']['light']['items']['floodlight']['subpage']
+        BasePage().check_key_in_yaml(remote_items, 'light_off_mode')
+
+        # 启动app，并开启录屏
+        driver.start_app(True)
+
+        # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击‘灯’菜单项进入灯主页
+        RemoteSetting().access_in_light(device_list_name=device_config['device_list_name'])
+
+        # 获取yaml文件指定配置
+        remote_items = device_config['ipc']['light']['items']
+
+        # 遍历并滚动查找当前页面功能项，判断是否存在
+        remote_funs_text = device_config['ipc']['light']['text']
+
+        # 获取yaml文件指定key的值
+        remote_setting_display = device_config['ipc']['light']['items'].values()
+        # page_fun_list = RemoteSetting().extract_yaml_names(remote_setting_display, 'name')
+
+        # 进入灯>照明灯
+        RemoteLight().click_floodlight()
+
+        # 测试 关 模式
+        RemoteLight().click_light_off()
