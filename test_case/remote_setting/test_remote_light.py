@@ -58,19 +58,20 @@ class TestRemoteLight:
         assert light_status_auto is True
         assert light_status_off is True
 
-    # 测照明灯(白光灯)
+    # 测照明灯(白光灯) > 夜间智能模式
     @pytest.mark.parametrize("device_config", devices_config)
-    @allure.story("需人工核查录屏")
-    def test_remote_floodlight(self, device_config):
+    @allure.feature("测照明灯(白光灯) > 夜间智能模式")
+    @allure.story("需人工核查日志和录屏")
+    def test_remote_floodlight_night_smart(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['light']['items']
         BasePage().check_key_in_yaml(remote_items, 'floodlight')
 
         # 启动app，并开启录屏
-        # driver.start_app(True)
+        driver.start_app(True)
 
         # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击‘灯’菜单项进入灯主页
-        # RemoteSetting().access_in_light(device_list_name=device_config['device_list_name'])
+        RemoteSetting().access_in_light(device_list_name=device_config['device_list_name'])
 
         # 获取yaml文件指定配置
         remote_items = device_config['ipc']['light']['items']
@@ -83,27 +84,54 @@ class TestRemoteLight:
         # page_fun_list = RemoteSetting().extract_yaml_names(remote_setting_display, 'name')
 
         # 进入灯>照明灯
-        # RemoteLight().click_floodlight()
+        RemoteLight().click_floodlight()
 
         # 测试夜间智能模式：保存
-        # RemoteLight().click_night_smart_mode()
-        # BasePage().click_checkbox_by_text(
-        #     option_text_list=remote_items['floodlight']['subpage']['night_smart_mode']['hidden_text'],
-        #     menu_text='侦测')
-        # BasePage().scroll_and_click_by_text(
-        #     text_to_find=remote_items['floodlight']['subpage']['night_smart_mode']['hidden_text'][0])
-        # BasePage().scroll_and_click_by_text(text_to_find='保存')
+        RemoteLight().click_night_smart_mode()
+        BasePage().click_checkbox_by_text(
+            option_text_list=remote_items['floodlight']['subpage']['night_smart_mode']['hidden_text'],
+            menu_text='侦测')
+        BasePage().scroll_and_click_by_text(
+            text_to_find=remote_items['floodlight']['subpage']['night_smart_mode']['hidden_text'][0])
+        BasePage().scroll_and_click_by_text(text_to_find='保存')
 
         # 测试夜间智能模式：取消
-        # RemoteLight().click_night_smart_mode()
-        # BasePage().click_checkbox_by_text(
-        #     option_text_list=remote_items['floodlight']['subpage']['night_smart_mode']['hidden_text'],
-        #     menu_text='侦测')
-        # BasePage().scroll_and_click_by_text(text_to_find='取消')
+        RemoteLight().click_night_smart_mode()
+        BasePage().click_checkbox_by_text(
+            option_text_list=remote_items['floodlight']['subpage']['night_smart_mode']['hidden_text'],
+            menu_text='侦测')
+        BasePage().scroll_and_click_by_text(text_to_find='取消')
+
+    @pytest.mark.parametrize("device_config", devices_config)
+    @allure.feature("测照明灯(白光灯) > 定时模式")
+    @allure.story("需人工核查日志和录屏")
+    def test_remote_floodlight_timer_mode(self, device_config):
+        # 检查键是否存在，存在则执行当前用例，否则跳过
+        remote_items = device_config['ipc']['light']['items']['floodlight']['subpage']
+        BasePage().check_key_in_yaml(remote_items, 'timer_mode')
+
+        # 启动app，并开启录屏
+        driver.start_app(True)
+
+        # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击‘灯’菜单项进入灯主页
+        RemoteSetting().access_in_light(device_list_name=device_config['device_list_name'])
+
+        # 获取yaml文件指定配置
+        remote_items = device_config['ipc']['light']['items']
+
+        # 遍历并滚动查找当前页面功能项，判断是否存在
+        remote_funs_text = device_config['ipc']['light']['text']
+
+        # 获取yaml文件指定key的值
+        remote_setting_display = device_config['ipc']['light']['items'].values()
+        # page_fun_list = RemoteSetting().extract_yaml_names(remote_setting_display, 'name')
+
+        # 进入灯>照明灯
+        RemoteLight().click_floodlight()
 
         # 测试定时模式：取消
         RemoteLight().click_timer_mode()  # 点击定时模式
-        # 点击 开始
+        # 选择 开始 时间
         BasePage().scroll_and_click_by_text(
             text_to_find=remote_items['floodlight']['subpage']['timer_mode']['hidden_text'][0])
         # 选择时、分
@@ -113,7 +141,7 @@ class TestRemoteLight:
             text_to_find='取消')
 
         RemoteLight().click_timer_mode()
-        # 点击 结束
+        # 点击 结束 时间
         BasePage().scroll_and_click_by_text(
             text_to_find=remote_items['floodlight']['subpage']['timer_mode']['hidden_text'][1])
         RemoteLight().time_selector()
@@ -121,6 +149,17 @@ class TestRemoteLight:
         BasePage().scroll_and_click_by_text(
             text_to_find='取消')
 
+        # 测试定时模式：保存
+        # 选择 开始 时间
         BasePage().scroll_and_click_by_text(
-            text_to_find='保存')
+            text_to_find=remote_items['floodlight']['subpage']['timer_mode']['hidden_text'][0])
+        # 选择时、分
+        RemoteLight().time_selector()
+        BasePage().scroll_and_click_by_text(text_to_find='保存')
 
+        # 点击 结束 时间
+        BasePage().scroll_and_click_by_text(
+            text_to_find=remote_items['floodlight']['subpage']['timer_mode']['hidden_text'][1])
+        RemoteLight().time_selector()
+
+        BasePage().scroll_and_click_by_text(text_to_find='保存')
