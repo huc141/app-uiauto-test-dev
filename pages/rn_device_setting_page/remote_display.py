@@ -131,16 +131,16 @@ class RemoteDisplay(BasePage):
 
     def draw_privacy_mask(self, mode, draw_area='左上'):
         """
-        画隐私遮盖区域
-        :param mode: 定位方式，支持id或者xpath
-        :param id_or_xpath: 可遮盖区域的id或者xpath的定位参数
+        画隐私遮盖区域。
+        :param mode: 定位方式，支持id或者xpath。
+        :param id_or_xpath: 可遮盖区域的id或者xpath的定位参数。
         :param draw_area: 需要遮盖的区域，支持[左上]、[左下]、[右上]、[右下]的1/4屏，以及[全屏]遮盖，默认左上。
-        :param num: 画框数量，默认为0，为0时需要指定遮盖区域draw_area，若不指定，则默认左上遮盖
+        :param num: 画框数量，默认为0，为0时需要指定遮盖区域draw_area，若不指定，则默认左上遮盖。
         :return:
         """
         try:
 
-            if not self.is_element_exists(element_value='广角画面'):
+            if not self.is_element_exists(element_value='广角画面') and not self.is_element_exists(element_value='左摄像机'):
                 self.get_coordinates_and_draw(mode=mode, id_or_xpath=self.shelter_player, draw_area=draw_area, num=9)
 
             if self.is_element_exists(element_value='广角画面'):
@@ -149,6 +149,14 @@ class RemoteDisplay(BasePage):
 
             if self.is_element_exists(element_value='长焦画面'):
                 self.click_by_text('长焦画面')
+                self.get_coordinates_and_draw(mode=mode, id_or_xpath=self.shelter_player, draw_area=draw_area, num=5)
+
+            if self.is_element_exists(element_value='左摄像机'):
+                self.click_by_text('左摄像机')
+                self.get_coordinates_and_draw(mode=mode, id_or_xpath=self.shelter_player, draw_area=draw_area, num=5)
+
+            if self.is_element_exists(element_value='右摄像机'):
+                self.click_by_text('右摄像机')
                 self.get_coordinates_and_draw(mode=mode, id_or_xpath=self.shelter_player, draw_area=draw_area, num=5)
 
         except Exception as err:
