@@ -64,6 +64,8 @@ ipc:
             name: '夜间智能模式'
             desc: '设置>灯>照明灯>夜间智能模式'
             type: 'menu'
+            event_type:
+              - '侦测'
             hidden_text:
                 - '人'
                 - '车'
