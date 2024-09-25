@@ -168,6 +168,19 @@ ipc:
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 sensitivity_motion_page: &sensitivity_motion_page_anchor
   name: '灵敏度'
   desc: '设置>侦测报警>灵敏度>移动侦测>灵敏度页面'
