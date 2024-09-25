@@ -64,4 +64,4 @@ def pytest_sessionfinish(session, exitstatus):  # 在所有测试用例运行完
     # 所有用例执行完毕，自动生成allure测试报告
     logger.info("正在自动生成测试报告···")
     gr.generate_report()
-    # d2._stop_wda()
+    scr.take_screenrecord(False)  # 终止录屏进程
