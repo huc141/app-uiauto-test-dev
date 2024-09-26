@@ -13,10 +13,14 @@ class RemoteDetectionAlarm(BasePage):
             self.non_detection_area = '//*[@resource-id="com.mcu.reolink:id/ziv"]'  # 非侦测区域屏幕
             self.non_detection_area_fullscreen_button = '//*[@resource-id="com.mcu.reolink:id/player_fullscreen_button"]'  # 非侦测区域横屏按钮
             self.landscape_bar_portrait_button = '//*[@resource-id="com.mcu.reolink:id/landscape_bar_portrait"]'  # 非侦测区域横屏左上角按钮恢复竖屏按钮
+            self.time_selector_hour = '//*[@resource-id="com.mcu.reolink:id/options1"]'  # 编辑分段灵敏度，开始时间设置：小时
+            self.time_selector_min = '//*[@resource-id="com.mcu.reolink:id/options2"]'  # 编辑分段灵敏度，开始时间设置：分钟
 
         elif self.platform == 'ios':
             self.non_detection_area = ''
             self.non_detection_area_fullscreen_button = ''
+            self.time_selector_hour = ''
+            self.time_selector_min = ''
 
     def click_non_detection_area(self):
         """
@@ -82,9 +86,87 @@ class RemoteDetectionAlarm(BasePage):
         # 点击移动侦测
         self.scroll_and_click_by_text('移动侦测')
 
+    def click_smart_detect(self):
+        """
+        点击智能侦测
+        :return:
+        """
+        self.scroll_and_click_by_text('智能侦测')
+
     def click_add_multi_time_sensitivity_motion(self):
         """
         点击添加分段灵敏度
         :return:
         """
         self.scroll_and_click_by_text(text_to_find='添加分段灵敏度')
+
+    def click_start_time(self):
+        """
+        点击开始时间，针对时间选择器
+        :return:
+        """
+        self.scroll_and_click_by_text('开始时间')
+
+    def click_end_time(self):
+        """
+        点击结束时间，针对时间选择器
+        :return:
+        """
+        self.scroll_and_click_by_text('结束时间')
+
+    def time_selector(self, direction='up', iteration=1):
+        """
+        时间选择器
+        :param direction: slider的定位方式，支持id或者xpath
+        :param iteration:
+        :return:
+        """
+        # 手指向上滑动选择小时
+        self.scroll_selector(id_or_xpath=self.time_selector_hour,
+                             direction=direction,
+                             times=iteration)
+
+        # 手指向上滑动选择分钟
+        self.scroll_selector(id_or_xpath=self.time_selector_min,
+                             direction=direction,
+                             times=iteration)
+
+    def delete_multi_time_sensitivity_motion(self):
+        """
+        删除灵敏度分段
+        :return:
+        """
+        self.scroll_and_click_by_text(text_to_find='高 灵敏度(50)')
+        self.scroll_and_click_by_text(text_to_find='删除该分段')
+
+    def click_alarm_delay(self):
+        """
+        点击延时报警
+        :return:
+        """
+        self.scroll_and_click_by_text('延时报警')
+
+    def drag_alarm_delay_slider_person(self):
+        """
+        拖动延时报警：人
+        :return:
+        """
+        # TODO: 待rn提测
+        pass
+
+    def drag_alarm_delay_slider_car(self):
+        """
+        拖动延时报警：车
+        :return:
+        """
+        # TODO: 待rn提测
+        pass
+
+    def drag_alarm_delay_slider_animal(self):
+        """
+        拖动延时报警：动物
+        :return:
+        """
+        # TODO: 待rn提测
+        pass
+
