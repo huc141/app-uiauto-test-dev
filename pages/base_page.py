@@ -1031,18 +1031,20 @@ class BasePage:
         """
         try:
             if self.platform == "android":
-                while times <= 1:
+                i = 1
+                while i <= times:
                     e = self.driver.xpath(id_or_xpath)
                     time.sleep(0.5)
                     e.scroll(direction)
-                    times += 1
+                    i += 1
 
             if self.platform == "ios":
-                while times <= 1:
+                i = 1
+                while i <= times:
                     e = self.driver.xpath(id_or_xpath)
                     time.sleep(0.5)
                     e.scroll(direction)
-                    times += 1
+                    i += 1
 
         except Exception as err:
             logger.info(f"可能发生了错误: {err}")
