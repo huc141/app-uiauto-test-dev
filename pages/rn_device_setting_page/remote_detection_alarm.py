@@ -57,3 +57,34 @@ class RemoteDetectionAlarm(BasePage):
 
         # 点击左上角按钮恢复竖屏
         self.scroll_and_click_by_text(text_to_find=self.landscape_bar_portrait_button, el_type='xpath')
+
+    def click_motion_mark_switch(self):
+        """
+        点击移动标记Switch按钮，点击两次
+        :return:
+        """
+        self.scroll_click_right_btn(text_to_find='移动标记')
+        time.sleep(1.5)
+        self.scroll_click_right_btn(text_to_find='移动标记')
+
+    def click_sensitivity_motion(self):
+        """
+        点击灵敏度
+        :return:
+        """
+        self.scroll_and_click_by_text(text_to_find='灵敏度')
+
+    def click_motion_detect(self):
+        """
+        点击移动侦测
+        :return:
+        """
+        # 点击移动侦测
+        self.scroll_and_click_by_text('移动侦测')
+
+    def click_add_multi_time_sensitivity_motion(self):
+        """
+        点击添加分段灵敏度
+        :return:
+        """
+        self.scroll_and_click_by_text(text_to_find='添加分段灵敏度')
