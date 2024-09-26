@@ -10,10 +10,10 @@ from pages.rn_device_setting_page.remote_light import RemoteLight
 devices_config = read_yaml.load_device_config(yaml_file_name='light.yaml')  # 读取参数化文件
 
 
-@allure.feature("远程配置>灯")
+@allure.epic("远程配置>常规设置>灯")
 class TestRemoteLight:
     @pytest.mark.parametrize("device_config", devices_config)
-    @allure.feature("测红外灯")
+    @allure.feature("灯>红外灯")
     @pytest.mark.skip
     def test_remote_infrared_light(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
@@ -59,7 +59,7 @@ class TestRemoteLight:
         assert light_status_off is True
 
     @pytest.mark.parametrize("device_config", devices_config)
-    @allure.feature("测照明灯(白光灯) > 夜间智能模式")
+    @allure.feature("灯>照明灯(白光灯) > 夜间智能模式")
     @allure.story("需人工核查日志和录屏")
     def test_remote_floodlight_night_smart(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
@@ -100,7 +100,7 @@ class TestRemoteLight:
         BasePage().scroll_and_click_by_text(text_to_find='取消')
 
     @pytest.mark.parametrize("device_config", devices_config)
-    @allure.feature("测照明灯(白光灯) > 定时模式")
+    @allure.feature("灯>照明灯(白光灯) > 定时模式")
     @allure.story("需人工核查日志和录屏")
     @pytest.mark.skip
     def test_remote_floodlight_timer_mode(self, device_config):
@@ -141,7 +141,7 @@ class TestRemoteLight:
         BasePage().scroll_and_click_by_text(text_to_find='保存')  # 点击保存
 
     @pytest.mark.parametrize("device_config", devices_config)
-    @allure.feature("测照明灯(白光灯) > 关 模式")
+    @allure.feature("灯>照明灯(白光灯) > 关 模式")
     @pytest.mark.skip
     def test_remote_floodlight_off(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
