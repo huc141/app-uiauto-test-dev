@@ -10,7 +10,7 @@ from pages.rn_device_setting_page.remote_display import RemoteDisplay
 devices_config = read_yaml.load_device_config(yaml_file_name='display.yaml')  # 读取参数化文件
 
 
-@allure.feature("远程配置>灯")
+@allure.feature("远程配置>常规设置>显示")
 class TestRemoteDisplay:
 
     # 测垂直翻转
