@@ -156,7 +156,7 @@ class TestRemoteDetectionAlarm:
 
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("延时报警")
-    def test_remote_sensitivity_smart_detect(self, device_config):
+    def test_remote_sensitivity_alarm_delay(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['detection_alarm']['items']
         BasePage().check_key_in_yaml(remote_items, 'alarm_delay')
@@ -183,6 +183,25 @@ class TestRemoteDetectionAlarm:
         # 断言
         assert alarm_delay_text is True
 
+    @pytest.mark.parametrize("device_config", devices_config)
+    @allure.feature("目标尺寸")
+    def test_remote_object_size(self, device_config):
+        # 检查键是否存在，存在则执行当前用例，否则跳过
+        remote_items = device_config['ipc']['detection_alarm']['items']
+        BasePage().check_key_in_yaml(remote_items, 'object_size')
 
+        # 启动app，并开启录屏
+        driver.start_app(True)
+
+        # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击菜单项@allure.feature
+        RemoteSetting().access_in_detection_alarm(device_list_name=device_config['device_list_name'])
+
+        # 进入侦测报警>延时报警
+        RemoteDetectionAlarm().click_alarm_delay()
+
+        # 验证文案
+        remote_funs_text = device_config['ipc']['detection_alarm']['items']['sensitivity_motion']['smart_detect'][
+            'text']
+        alarm_delay_text = RemoteSetting().scroll_check_funcs2(remote_funs_text)
 
 
