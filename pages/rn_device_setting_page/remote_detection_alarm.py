@@ -170,3 +170,13 @@ class RemoteDetectionAlarm(BasePage):
         # TODO: 待rn提测
         pass
 
+    def click_and_test_object_size(self, object_list):
+        """
+        点击并测试目标尺寸.
+        测试策略：
+        进入目标尺寸页面后，遍历检测目标类型，并点击最小目标、最大目标。
+        :param object_list: 检测目标类型，如人车动物包裹等。列表
+        :return:
+        """
+        self.scroll_and_click_by_text('目标尺寸')
+
