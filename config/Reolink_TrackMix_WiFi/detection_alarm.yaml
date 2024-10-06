@@ -3,23 +3,132 @@ sub_name: ""
 
 ipc:
   detection_alarm:
-    name: '灯'
+    name: '侦测报警'
     desc: '设置>侦测报警'
     type: 'navigation'
     text:
+      - '侦测报警'
+      - '人'
+      - '车'
+      - '动物'
       - '非侦测区域'
-      - '绘制不需要报警的区域'
-      - '移动标记'
-      - '画面为清晰时，智能检测到移动事物将进行标记。'
-      - '报警设置'
-      - '灵敏度'
-      - '延时报警'
-      - '检测目标在检测区域内可停留的时间'
-      - '目标尺寸'
-      - '过滤不需要检测的目标尺寸'
+      - '非侦测区域仅针对人、车、动物、包裹等报警类型生效，对于其他AI侦测功能不生效'
       - '智能追踪'
 
     items:
+      alarm_type:
+        desc: '设置>侦测报警>报警类型设置'
+        type: 'menu'
+        text:
+          - '人'
+          - '车'
+          - '动物'
+
+        person:
+          name: '人'
+          desc: '设置>侦测报警>报警类型——人'
+          type: 'navigation'
+          text:
+            - '人'
+            - '报警类型「人」的相关设置'
+            - '灵敏度'
+            - '灵敏度中，检测到与人相似的物体移动则报警'
+            - '移动侦测'
+            - '智能侦测'
+            - '目标尺寸'
+            - '延时报警'
+            - '检测目标在报警区域内停留的时间超过设置时间将触发报警'
+
+          sensitivity_motion:
+            name: '灵敏度'
+            desc: '设置>侦测报警>灵敏度'
+            type: 'slider'
+            text:
+              - ''
+
+            motion_detect:
+              name: '移动侦测'
+              desc: '设置>侦测报警>灵敏度>移动侦测'
+              type: 'page'
+              text:
+                - '取消'
+                - '灵敏度'
+                - '保存'
+                - '00:00 - 23:59'
+                - '灵敏度高，检测到细微的物体移动就报警，不放过任何风吹草动，如细小的蚊虫、较远的人等。'
+                - '不灵敏'
+                - '灵敏'
+                - '添加分段灵敏度'
+
+              add_multi_time_sensitivity_motion:
+                name: '添加分段灵敏度'
+                desc: '设置>侦测报警>灵敏度>添加分段灵敏度'
+                type: 'page'
+                text:
+                  - '取消'
+                  - '编辑分段'
+                  - '保存'
+                  - '开始时间'
+                  - '结束时间'
+                  - '不灵敏'
+                  - '灵敏'
+
+            smart_detect:
+              name: '智能侦测'
+              desc: '设置>侦测报警>灵敏度>智能侦测'
+              type: 'page'
+              text:
+                - '取消'
+                - '灵敏度'
+                - '保存'
+                - '灵敏度中，检测到与人相似的物体移动则报警。'
+                - '人'
+                - '车'
+                - '动物'
+
+            object_size:
+              name: '目标尺寸'
+              desc: '设置>侦测报警>目标尺寸'
+              type: 'navigation'
+              text:
+                - '取消'
+                - '目标尺寸'
+                - '保存'
+                - '人'
+                - '车'
+                - '动物'
+                - '最小目标'
+                - '最大目标'
+                - '小于最小目标尺寸的目标将不报警。大于最大目标尺寸的目标将不报警。'
+              detect_objects:
+                - '人'
+                - '车'
+                - '动物'
+
+            alarm_delay:
+              name: '延时报警'
+              desc: '设置>侦测报警>人>延时报警'
+              type: 'navigation'
+              text:
+                - '取消'
+                - '延时报警'
+                - '保存'
+                - '人形移动'
+                - '车辆移动'
+                - '动物'
+                - '0'
+                - '8'
+
+        car:
+          name: '车'
+          desc: '设置>侦测报警>报警类型——车'
+          type: 'navigation'
+
+        animal:
+          name: '动物'
+          desc: '设置>侦测报警>报警类型——动物'
+          type: 'navigation'
+
       non_detection_area:
         name: '非侦测区域'
         desc: '设置>侦测报警>非侦测区域'
@@ -47,87 +156,6 @@ ipc:
           - 'switch-on'
           - 'switch-off'
 
-      sensitivity_motion:
-        name: '灵敏度'
-        desc: '设置>侦测报警>灵敏度'
-        type: 'navigation'
-        text:
-          - '移动侦测'
-          - '智能侦测'
-
-        motion_detect:
-          name: '移动侦测'
-          desc: '设置>侦测报警>灵敏度>移动侦测'
-          type: 'page'
-          text:
-            - '取消'
-            - '灵敏度'
-            - '保存'
-            - '00:00 - 23:59'
-            - '灵敏度高，检测到细微的物体移动就报警，不放过任何风吹草动，如细小的蚊虫、较远的人等。'
-            - '不灵敏'
-            - '灵敏'
-            - '添加分段灵敏度'
-
-          add_multi_time_sensitivity_motion:
-            name: '添加分段灵敏度'
-            desc: '设置>侦测报警>灵敏度>添加分段灵敏度'
-            type: 'page'
-            text:
-              - '取消'
-              - '编辑分段'
-              - '保存'
-              - '开始时间'
-              - '结束时间'
-              - '不灵敏'
-              - '灵敏'
-
-        smart_detect:
-          name: '智能侦测'
-          desc: '设置>侦测报警>灵敏度>智能侦测'
-          type: 'page'
-          text:
-            - '取消'
-            - '灵敏度'
-            - '保存'
-            - '灵敏度中，检测到与人相似的物体移动则报警。'
-            - '人'
-            - '车'
-            - '动物'
-
-      alarm_delay:
-        name: '灯'
-        desc: '设置>侦测报警'
-        type: 'navigation'
-        text:
-          - '取消'
-          - '延时报警'
-          - '保存'
-          - '人形移动'
-          - '车辆移动'
-          - '动物'
-          - '0'
-          - '8'
-
-      object_size:
-        name: '目标尺寸'
-        desc: '设置>侦测报警>目标尺寸'
-        type: 'navigation'
-        text:
-          - '取消'
-          - '目标尺寸'
-          - '保存'
-          - '人'
-          - '车'
-          - '动物'
-          - '最小目标'
-          - '最大目标'
-          - '小于最小目标尺寸的目标将不报警。大于最大目标尺寸的目标将不报警。'
-        detect_objects:
-          - '人'
-          - '车'
-          - '动物'
-
       auto_tracking:
         name: '智能追踪'
         desc: '设置>侦测报警>智能追踪'
@@ -143,7 +171,7 @@ ipc:
 
         tracking_type:
           name: '追踪类型'
-          desc: '设置>侦测报警>智能追踪'
+          desc: '设置>侦测报警>智能追踪>追踪类型'
           type: 'popup'
           text:
             - '追踪类型'
@@ -153,186 +181,64 @@ ipc:
             - '动物'
             - '取消'
             - '确定'
+          option_text:
+            - '人'
+            - '车'
+            - '动物'
 
         tracking_mode:
           name: '追踪方式'
-          desc: '设置>侦测报警>追踪方式'
+          desc: '设置>侦测报警>智能追踪>追踪方式'
           type: 'popup'
           text:
+            - ''
+          option_text:
             - '数码'
             - '数码优先'
             - 'PT优先'
             - '取消'
 
+        horizontal_tracking_range:
+          name: '水平追踪范围'
+          desc: '设置>侦测报警>智能追踪>水平追踪范围'
+          type: 'navigation'
+          text:
+            - '水平追踪范围'
+            - '通过调整左侧和右侧最大旋转角度视图，来限制摄像头的自动水平追踪范围。'
+            - '设置'
 
+        time_plan:
+          name: '计划表'
+          desc: '设置>侦测报警>智能追踪>计划表'
+          type: 'navigation'
+          text:
+            - '取消'
+            - '计划'
+            - '保存'
+            - '报警'
+            - '该时间段内检测到移动事件时会进行录像。'
+            - '定时'
+            - '该时间段内会持续录像，并标识出报警录像。'
+            - '涂抹以选择录像时间'
 
+        object_stops:
+          name: '目标禁止'
+          desc: '设置>侦测报警>智能追踪>目标静止'
+          type: 'popup'
+          option_text:
+            - '10 秒'
+            - '20 秒'
+            - '30 秒'
+            - '60 秒'
+            - '取消'
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-sensitivity_motion_page: &sensitivity_motion_page_anchor
-  name: '灵敏度'
-  desc: '设置>侦测报警>灵敏度>移动侦测>灵敏度页面'
-  type: 'page'
-
-
-sensitivity_smart_page: &sensitivity_smart_page_anchor
-  name: '灵敏度'
-  desc: '设置>侦测报警>灵敏度>智能侦测>灵敏度页面'
-  type: 'page'
-  items:
-    person:
-      name: '人'
-      desc: '设置>侦测报警>灵敏度>人（选项）'
-      type: 'slider'
-    car:
-      name: '车'
-      desc: '设置>侦测报警>灵敏度>车（选项）'
-      type: 'slider'
-    animal:
-      name: '动物'
-      desc: '设置>侦测报警>灵敏度>动物（选项）'
-      type: 'slider'
-    pet:
-      name: '宠物'
-      desc: '设置>侦测报警>灵敏度>宠物（选项）'
-      type: 'slider'
-
-
-sensitivity_page: &sensitivity_page_anchor
-  name: '灵敏度'
-  desc: '设置>侦测报警>灵敏度>灵敏度'
-  type: 'page'
-  items:
-    motion_detection:
-      name: '移动侦测'
-      key: ''
-      desc: '设置>侦测报警>灵敏度>移动侦测'
-      type: 'navigation'
-      subpage: *sensitivity_motion_page_anchor
-    smart_detection:
-      name: '智能侦测'
-      desc: '设置>侦测报警>灵敏度>智能侦测'
-      type: 'navigation'
-      subpage: *sensitivity_smart_page_anchor
-
-
-alarm_delay_page: &alarm_delay_page_anchor
-  name: '延时报警'
-  desc: '设置>侦测报警>延时报警>延时报警'
-  type: 'page'
-  items:
-    human_movement:
-      name: '人形移动'
-      desc: '设置>侦测报警>灵敏度>人形移动（选项）'
-      type: 'slider'
-    car_movement:
-      name: '车辆移动'
-      desc: '设置>侦测报警>灵敏度>车辆移动（选项）'
-      type: 'slider'
-    animal:
-      name: '动物'
-      desc: '设置>侦测报警>灵敏度>动物（选项）'
-      type: 'slider'
-
-
-object_size_page: &object_size_page_anchor
-  name: '目标尺寸'
-  desc: '设置>侦测报警>灵敏度>目标尺寸>目标尺寸(页面）'
-  type: 'page'
-  items:
-    detection_target:
-      name: '检测目标'
-      desc: '设置>侦测报警>灵敏度>目标尺寸>目标尺寸(页面）>检测目标'
-      type: 'checkbox'
-      option:
-        - '人'
-        - '车'
-        - '动物'
-        - '宠物'
-
-
-detection_alarm_page:
-  name: '侦测报警'
-  key: 'detection_alarm_page'
-  desc: '设置>侦测报警页面'
-  type: 'page'
-  items:
-    non_detection_area:
-      name: '非侦测区域'
-      desc: '设置>侦测报警>非侦测区域'
-      type: 'navigation'
-      subpage:
-        name: '非侦测区域'
-        desc: '设置>侦测报警>非侦测区域>非侦测区域页面'
-        type: 'page'
-    motion_mark:
-      name: '移动标记'
-      desc: '设置>侦测报警>移动标记'
-      type: 'switch'
-    sensitivity:
-      name: '灵敏度'
-      desc: '设置>侦测报警>灵敏度'
-      type: 'navigation'
-      subpage: *sensitivity_page_anchor
-    alarm_delay:
-      name: '延时报警'
-      desc: '设置>侦测报警>延时报警'
-      type: 'navigation'
-      subpage: *alarm_delay_page_anchor
-    object_size:
-      name: '目标尺寸'
-      desc: '设置>侦测报警>目标尺寸'
-      type: 'navigation'
-      subpage: *object_size_page_anchor
-    auto_tracking:
-      name: '智能追踪'
-      desc: '设置>侦测报警>智能追踪'
-      type: 'switch'
-    tracking_type:
-      name: '追踪类型'
-      desc: '设置>侦测报警>智能追踪>追踪类型'
-      type: 'popup'
-      options:
-        - '人'
-        - '车'
-        - '动物'
-        - '宠物'
-    tracking_method:
-      name: '追踪方式'
-      desc: '设置>侦测报警>智能追踪>追踪方式'
-      type: 'popup'
-      options:
-        - '数码'
-        - '数码优先'
-        - 'PT优先'
-    object_static:
-      name: '目标静止'
-      desc: '设置>侦测报警>目标静止'
-      type: 'popup'
-      options:
-        - '10 秒'
-        - '20 秒'
-        - '30 秒'
-        - '60 秒'
-    object_disappear:
-      name: '追踪方式'
-      desc: '设置>侦测报警>目标消失'
-      type: 'popup'
-      options:
-        - '10 秒'
-        - '20 秒'
-        - '30 秒'
-        - '60 秒'
+        object_disappears:
+          name: '目标消失'
+          desc: '设置>侦测报警>智能追踪>目标消失'
+          type: 'popup'
+          option_text:
+            - '10 秒'
+            - '20 秒'
+            - '30 秒'
+            - '60 秒'
+            - '取消'
