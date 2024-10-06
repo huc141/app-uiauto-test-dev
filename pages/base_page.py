@@ -999,11 +999,14 @@ class BasePage:
         """
         检查给定的YAML字典中是否存在指定的键。
         :param items: YAML文件中的字典
-        :param key: 需要检查的键名
-        :raises pytest.skip: 如果键不存在，则跳过测试
+        :param key: 需要检查的键名列表
+        :raises pytest.skip: 如果所有指定的键不存在，则跳过测试
         """
         if key not in items:
             pytest.skip(f"YAML配置文件中未找到'{key}'键，跳过此测试用例")
+
+        # if not any(key in items for key in keys):
+        #     pytest.skip(f"YAML配置文件中未找到以下任意键：{', '.join(keys)}，跳过此测试用例")
 
     def back_previous_page(self):
         """
@@ -1012,10 +1015,14 @@ class BasePage:
         """
         try:
             if self.platform == "android":
+                logger.info('右滑模拟：返回上一页')
                 self.driver.swipe_ext(Direction.HORIZ_BACKWARD)
+                time.sleep(0.5)
 
             if self.platform == "ios":
+                logger.info('右滑模拟：返回上一页')
                 self.driver.swipe_right()
+                time.sleep(0.5)
 
         except Exception as err:
             logger.info(f"可能发生了错误: {err}")
