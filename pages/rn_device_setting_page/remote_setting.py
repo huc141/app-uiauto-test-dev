@@ -352,7 +352,7 @@ class RemoteSetting(BasePage):
             # 如果设备是单机：
             if access_mode == 'ipc':
                 time.sleep(2)
-                # 进入摄像机录像主页
+                # 进入手机推送主页
                 self.scroll_and_click_by_text('手机推送')
 
             # 如果设备接入了nvr：
@@ -361,7 +361,7 @@ class RemoteSetting(BasePage):
                 self.scroll_and_click_by_text(self.ivSelectChannelButton, el_type='xpath')
                 # 选择通道并点击
                 self.scroll_and_click_by_text(sub_name)
-                # 进入摄像机录像主页
+                # 进入手机推送主页
                 self.scroll_and_click_by_text('手机推送')
 
             # 如果设备接入了hub：
@@ -369,24 +369,78 @@ class RemoteSetting(BasePage):
                 time.sleep(2)
                 # 根据名称查找hub下的设备卡片，点击并进入hub下的设备的远程配置主页
                 self.scroll_and_click_by_text(sub_name)
-                # 进入摄像机录像主页
+                # 进入手机推送主页
                 self.scroll_and_click_by_text('手机推送')
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
-    def access_in_email_alerts(self):
+    def access_in_email_alerts(self, device_list_name, sub_name=None, access_mode='ipc'):
         """
         点击邮件通知，进入邮件通知页
         :return:
         """
-        return self.scroll_and_click_by_text('邮件通知')
+        try:
+            # 根据昵称在设备列表中滚动查找该设备并进入远程配置主页
+            self.access_in_remote_setting(device_list_name)
 
-    def access_in_ftp(self):
+            # 如果设备是单机：
+            if access_mode == 'ipc':
+                time.sleep(2)
+                # 进入邮件通知主页
+                self.scroll_and_click_by_text('邮件通知')
+
+            # 如果设备接入了nvr：
+            elif access_mode == 'nvr' and sub_name is not None:
+                time.sleep(2)
+                self.scroll_and_click_by_text(self.ivSelectChannelButton, el_type='xpath')
+                # 选择通道并点击
+                self.scroll_and_click_by_text(sub_name)
+                # 进入邮件通知主页
+                self.scroll_and_click_by_text('邮件通知')
+
+            # 如果设备接入了hub：
+            elif access_mode == 'hub' and sub_name is not None:
+                time.sleep(2)
+                # 根据名称查找hub下的设备卡片，点击并进入hub下的设备的远程配置主页
+                self.scroll_and_click_by_text(sub_name)
+                # 进入邮件通知主页
+                self.scroll_and_click_by_text('邮件通知')
+        except Exception as e:
+            pytest.fail(f"函数执行出错: {str(e)}")
+
+    def access_in_ftp(self, device_list_name, sub_name=None, access_mode='ipc'):
         """
         点击FTP，进入FTP页
         :return:
         """
-        return self.scroll_and_click_by_text('FTP')
+        try:
+            # 根据昵称在设备列表中滚动查找该设备并进入远程配置主页
+            self.access_in_remote_setting(device_list_name)
+
+            # 如果设备是单机：
+            if access_mode == 'ipc':
+                time.sleep(2)
+                # 进入FTP主页
+                self.scroll_and_click_by_text('FTP')
+
+            # 如果设备接入了nvr：
+            elif access_mode == 'nvr' and sub_name is not None:
+                time.sleep(2)
+                self.scroll_and_click_by_text(self.ivSelectChannelButton, el_type='xpath')
+                # 选择通道并点击
+                self.scroll_and_click_by_text(sub_name)
+                # 进入FTP主页
+                self.scroll_and_click_by_text('FTP')
+
+            # 如果设备接入了hub：
+            elif access_mode == 'hub' and sub_name is not None:
+                time.sleep(2)
+                # 根据名称查找hub下的设备卡片，点击并进入hub下的设备的远程配置主页
+                self.scroll_and_click_by_text(sub_name)
+                # 进入FTP主页
+                self.scroll_and_click_by_text('FTP')
+        except Exception as e:
+            pytest.fail(f"函数执行出错: {str(e)}")
 
     def access_in_siren(self):
         """
