@@ -434,11 +434,12 @@ class BasePage:
         logger.info(f"没找到要点击的元素： '{text_to_find}' ，已经尝试了： {max_attempts} 次.")
         return False
 
-    def iterate_and_click_popup_text(self, option_text_list, menu_text):
+    def iterate_and_click_popup_text(self, option_text_list, menu_text, el_type='text'):
         """
         根据文本遍历popup弹窗的单选项，执行点击操作，适合点击某个选项后自动返回上一页的操作。
         :param option_text_list: 需要遍历的文本列表
         :param menu_text: 需要点击的popup菜单功能项
+        :param el_type: menu_text的定位方式,支持文本和xpath，默认文本
         :return:
         """
 
@@ -494,7 +495,7 @@ class BasePage:
 
             # 遍历文本，执行点击操作
             for i in option_text_list:
-                self.scroll_and_click_by_text(text_to_find=menu_text)
+                self.scroll_and_click_by_text(text_to_find=menu_text, el_type=el_type)
                 time.sleep(0.5)
                 logger.info('点击 ' + i)
                 self.click_by_text(i)
