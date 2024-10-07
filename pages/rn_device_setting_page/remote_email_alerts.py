@@ -1,0 +1,188 @@
+# -*- coding: utf-8 -*-
+import time
+from typing import Literal
+import pytest
+from common_tools.logger import logger
+from pages.base_page import BasePage
+from pages.rn_device_setting_page.remote_setting import RemoteSetting
+
+
+class RemoteEmailAlerts(BasePage):
+    def __init__(self):
+        super().__init__()
+        if self.platform == 'android':
+            pass
+
+        elif self.platform == 'ios':
+            pass
+
+    def check_email_alerts_main_text(self, texts):
+        """
+        验证邮件通知主页文案
+        :param texts: 待验证的文案列表
+        :return:
+        """
+        try:
+            email_alerts_main_text_status = RemoteSetting().scroll_check_funcs2(texts=texts)
+            return email_alerts_main_text_status
+        except Exception as e:
+            pytest.fail(f"函数执行出错: {str(e)}")
+
+    def set_email_config(self, email='123456789@qq.com', passw='123456789'):
+        """
+        邮件设置
+        :param email: 邮箱账号
+        :param passw: 邮箱密码
+        :return:
+        """
+        try:
+            # 设置邮箱
+            self.input_text(xpath_exp='//*[@text="输入邮箱"]', text=email)
+            self.input_text(xpath_exp='//*[@text="输入密码"]', text=passw)
+
+            # 点击保存
+            self.scroll_and_click_by_text(text_to_find='保存')
+            # 处理弹窗：点击确定/取消
+            self.scroll_and_click_by_text(text_to_find='确定')
+
+        except Exception as e:
+            pytest.fail(f"函数执行出错: {str(e)}")
+
+    def is_email_alert_on(self):
+        """
+        判断邮件通知按钮开关状态：
+            ①如果为关，则点击打开，打开后配置邮件并保存；
+            ②如果为开，则进行下一层判断：
+                1.如果是缺省状态，则点击【现在设置】按钮，配置邮件并保存；
+                2.如果是已配置状态，则不做其他操作。
+        :return:
+        """
+        try:
+            # 如果是关：
+            if (not RemoteSetting().scroll_check_funcs2(texts='测试') and
+                    not RemoteSetting().scroll_check_funcs2(texts='现在设置')):
+                self.scroll_click_right_btn(text_to_find='邮件通知')
+
+                # 设置邮箱
+                self.set_email_config()
+
+            # 如果是开-缺省状态：
+            if RemoteSetting().scroll_check_funcs2(texts='现在设置'):
+                self.scroll_and_click_by_text('现在设置')
+
+                # 设置邮箱
+                self.set_email_config()
+
+        except Exception as e:
+            pytest.fail(f"函数执行出错: {str(e)}")
+
+    def click_and_test_email_alarm_type(self, texts_list):
+        """
+        点击邮件通知>计划>报警>报警类型，验证文案内容
+        :param texts_list: 需要验证的文案列表
+        :return:
+        """
+        try:
+            self.scroll_and_click_by_text(text_to_find='报警类型')
+            email_alarm_type_text_status = RemoteSetting().scroll_check_funcs2(texts=texts_list)
+            return email_alarm_type_text_status
+        except Exception as e:
+            pytest.fail(f"函数执行出错: {str(e)}")
+
+    def click_and_test_plan(self, alarm_type_list, plan_alarm_text, plan_timed_text):
+        """
+        测试 计划
+        :param alarm_type_list: 报警类型 列表文案
+        :param plan_alarm_text: 计划>报警>报警类型 列表文案
+        :param plan_timed_text: 计划>报警>定时 列表文案
+        :return:
+        """
+        try:
+            self.scroll_and_click_by_text('计划')
+            # 验证计划>报警>报警类型 文案内容
+            self.scroll_and_click_by_text('报警')
+            email_plan_alarm_text_status = RemoteSetting().scroll_check_funcs2(texts=plan_alarm_text)
+
+            # 验证计划>报警>定时 文案内容
+            self.scroll_and_click_by_text('定时')
+            email_plan_timed_text_status = RemoteSetting().scroll_check_funcs2(texts=plan_timed_text)
+
+            # 点击报警类型，遍历
+            self.click_and_test_email_alarm_type(texts_list=alarm_type_list)
+
+            return email_plan_alarm_text_status, email_plan_timed_text_status
+
+        except Exception as e:
+            pytest.fail(f"函数执行出错: {str(e)}")
+
+    def click_and_test_email_config(self, email_config_text):
+        """
+        点击并测试邮件设置。
+        测试策略：
+            进入邮件设置，验证文案；
+            点击发件邮箱，进入邮件设置编辑页，编辑发件邮箱、关闭/开启SSL、点击添加邮箱、点击?帮助；
+            点击保存。
+        :return:
+        """
+        try:
+            self.scroll_and_click_by_text('邮件设置')
+            email_config_text_status = RemoteSetting().scroll_check_funcs2(texts=email_config_text)
+
+            # 进入发件邮箱
+            self.scroll_and_click_by_text('134****371@qq.com')
+            # TODO: 编辑发件邮箱、点击?帮助
+
+            # 关闭/开启SSL
+            self.scroll_click_right_btn('SSL or TLS')
+            self.scroll_and_click_by_text('取消')
+            self.scroll_click_right_btn('SSL or TLS')
+            self.scroll_and_click_by_text('关闭')
+            self.scroll_click_right_btn('SSL or TLS')  # 开启
+            self.scroll_and_click_by_text('保存')
+
+            # 点击添加邮箱
+            self.scroll_and_click_by_text('添加邮箱')
+            self.input_text(xpath_exp='//*[@text="输入邮箱地址"]', text='autotestemail@gmail.com')
+            self.scroll_and_click_by_text('保存')
+
+            return email_config_text_status
+
+        except Exception as e:
+            pytest.fail(f"函数执行出错: {str(e)}")
+
+    def click_and_test_email_content(self, option_text):
+        """
+        点击并遍历邮件内容
+        :param option_text: 需要遍历的邮件内容列表
+        :return:
+        """
+        try:
+            self.scroll_and_click_by_text('邮件内容')
+            self.iterate_and_click_popup_text(option_text_list=option_text, menu_text='邮件内容')
+        except Exception as e:
+            pytest.fail(f"函数执行出错: {str(e)}")
+
+    def click_and_test_email_interval(self, option_text):
+        """
+        点击并遍历邮箱间隔
+        :param option_text: 需要遍历的邮箱间隔列表
+        :return:
+        """
+        try:
+            self.scroll_and_click_by_text('邮箱间隔')
+            self.iterate_and_click_popup_text(option_text_list=option_text, menu_text='邮箱间隔')
+        except Exception as e:
+            pytest.fail(f"函数执行出错: {str(e)}")
+
+    def click_email_not_received_link(self):
+        """
+        点击未收到邮件？链接
+        :return:
+        """
+        try:
+            self.scroll_and_click_by_text('未收到邮件？')
+            time.sleep(4)
+            self.back_previous_page()
+        except Exception as e:
+            pytest.fail(f"函数执行出错: {str(e)}")
+

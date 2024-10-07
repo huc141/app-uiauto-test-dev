@@ -161,3 +161,13 @@ class RemotePush(BasePage):
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
+    def click_test_button(self):
+        """
+        点击测试按钮
+        :return:
+        """
+        try:
+            self.is_push_on()
+            self.scroll_and_click_by_text('测试')
+        except Exception as e:
+            pytest.fail(f"函数执行出错: {str(e)}")
