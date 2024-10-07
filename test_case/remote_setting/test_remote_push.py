@@ -105,3 +105,16 @@ class TestRemoteDetectionAlarm:
         # 遍历延迟时间
         RemotePush().click_and_test_delay_notifications(
             option_text_list=remote_items['delay_notifications']['delay_time']['option_text'])
+
+    @pytest.mark.parametrize("device_config", devices_config)
+    @allure.feature("右上角测试按钮")
+    @allure.story("需人工核查日志和录屏")
+    def test_top_right_corner_test_button(self, device_config):
+        # 启动app，并开启录屏
+        driver.start_app(True)
+
+        # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击菜单项@allure.feature
+        RemoteSetting().access_in_push_notifications(device_list_name=device_config['device_list_name'])
+
+        # 点击右上角测试按钮
+        RemotePush().click_test_button()
