@@ -17,17 +17,17 @@ class RemoteWiFi(BasePage):
         elif self.platform == 'ios':
             pass
 
-    def access_in_wifi_band_preference(self, text_list, option_text='Wi-Fi 频段偏好'):
+    def access_in_wifi_band_preference(self, text_list):
         """
         进入并测试wifi频段偏好页面，验证操作内容存在，并点击
         :param text_list: 文本
-        :param option_text: 菜单功能项，该方法默认进入【Wi-Fi 频段偏好】
         :return:
         """
-        self.scroll_and_click_by_text(text_to_find=option_text)
+        # 默认进入【Wi-Fi 频段偏好】
+        self.scroll_and_click_by_text(text_to_find='Wi-Fi 频段偏好')
 
         # 检查wifi频段偏好页面文案
-        page_fun_list = RemoteSetting().scroll_check_funcs(text_list)
+        page_fun_list = RemoteSetting().scroll_check_funcs2(texts=text_list)
 
         # 断言
         assert page_fun_list is True
@@ -37,7 +37,7 @@ class RemoteWiFi(BasePage):
 
         # 遍历文本，执行点击操作
         for i in text_list:
-            self.scroll_and_click_by_text(text_to_find=option_text)
+            self.scroll_and_click_by_text(text_to_find='Wi-Fi 频段偏好')
             time.sleep(0.5)
             logger.info('点击 ' + i)
             self.click_by_text(i)
