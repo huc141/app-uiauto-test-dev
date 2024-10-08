@@ -48,7 +48,7 @@ ipc:
             name: '报警类型'
             desc: '设置>邮件通知>计划主页>报警>报警类型'
             type: 'page'
-            text:
+            option_text:
               - '画面变动'
               - '人'
               - '车'
