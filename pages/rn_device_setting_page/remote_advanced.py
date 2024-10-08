@@ -57,9 +57,49 @@ class RemoteAdvancedSetting(BasePage):
         :return:
         """
         try:
-            texts_res = RemoteSetting().scroll_check_funcs2(texts=texts)
+            texts_res = RemoteSetting().scroll_check_funcs2(texts=texts)  # 验证非法登录锁定按钮的文案内容
             self.scroll_click_right_btn(text_to_find='非法登录锁定')
             self.scroll_click_right_btn(text_to_find='非法登录锁定')
             return texts_res
+        except Exception as e:
+            pytest.fail(f"函数执行出错: {str(e)}")
+
+    def check_manager_text(self, texts):
+        """
+        检查管理员栏的文案
+        :return:
+        """
+        try:
+            manager_texts_res = RemoteSetting().scroll_check_funcs2(texts=texts)  # 验证管理员栏的文案内容
+            return manager_texts_res
+        except Exception as e:
+            pytest.fail(f"函数执行出错: {str(e)}")
+
+    def click_and_modify_passw(self):
+        """
+        TODO: 修改密码
+        :return:
+        """
+        pass
+
+    def check_user_text(self, texts):
+        """
+        检查用户栏的文案
+        :return:
+        """
+        try:
+            user_texts_res = RemoteSetting().scroll_check_funcs2(texts=texts)  # 验证用户栏的文案内容
+            return user_texts_res
+        except Exception as e:
+            pytest.fail(f"函数执行出错: {str(e)}")
+
+    def click_and_check_date_time_text(self, texts):
+        """
+        点击并验证日期和时间的文案
+        :return:
+        """
+        try:
+            date_time_texts_res = RemoteSetting().scroll_check_funcs2(texts=texts)  # 验证日期和时间的文案内容
+            return date_time_texts_res
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
