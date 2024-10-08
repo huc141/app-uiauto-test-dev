@@ -57,7 +57,7 @@ class TestRemoteEmailAlerts:
         # 点击并测试 计划
         plan_text = remote_items['plan']
         email_plan_alarm_text_status, email_plan_timed_text_status = RemoteEmailAlerts().click_and_test_plan(
-            alarm_type_list=plan_text['alarm']['subpage']['text'],
+            alarm_type_option_text=plan_text['alarm']['subpage']['option_text'],
             plan_alarm_text=plan_text['alarm']['text'],
             plan_timed_text=plan_text['timed']['text'])
         # 断言
