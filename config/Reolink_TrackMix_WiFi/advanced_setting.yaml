@@ -44,6 +44,25 @@ ipc:
               - '拥有设备所有设置、查看权限以及用户管理权限。'
               - 'admin (当前用户)'
               - '添加管理员'
+            current_user:
+              name: '管理员'
+              desc: '设置>高级设置>用户管理主页>管理员>admin(当前用户)'
+              type: 'page'
+              text:
+                - '用户名'
+                - 'admin'
+                - '修改密码'
+              option_text:
+                - '修改密码'
+
+
+            add_manager:
+              name: '管理员'
+              desc: '设设置>高级设置>用户管理主页>管理员>添加管理员'
+              type: 'page'
+              text:
+                - ''
+
 
           user:
             name: '用户'
@@ -53,57 +72,13 @@ ipc:
               - '用户'
               - '拥有设备查看权限以及当前用户密码修改权限，无法更改设备配置。'
               - '添加用户'
-
-        change_device_password:
-          name: '修改设备密码'
-          desc: '设置>高级设置>修改设备密码主页'
-          type: 'page'
-          text:
-            - ''
+            option_text:
+              - '添加用户'
 
         date_and_time:
           name: '日期和时间主页'
           desc: '设置>高级设置>日期和时间日期和时间主页'
           type: 'page'
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-name: '高级设置'
-key: 'advanced_setting_page'
-desc: '设置-高级设置'
-type: 'page'
-items:
-  - name: '用户管理'
-    key: 'user_management'
-    desc: '设置>高级设置>用户管理'
-    type: 'navigation'
-    children:
-      name: '用户管理'
-      desc: '设置>高级设置>用户管理>用户管理页面'
-      type: 'page'
-  - name: '日期和时间'
-    key: 'date_and_time'
-    desc: '设置>高级设置>日期和时间'
-    type: 'navigation'
-    children:
-      name: '日期和时间'
-      desc: '设置>高级设置>日期和时间>日期和时间页面'
-      type: 'page'
-
-
-
+          text:
+            - '此设备的日期和时间'
+            - '设备时间与手机时间不一致时，可手动校正，校正后时区、时间、日期、时间格式等均匀手机同步。'
