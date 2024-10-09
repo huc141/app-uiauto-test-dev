@@ -14,7 +14,7 @@ d = u2.connect_usb()
 # c = wda.Client('http://localhost:8100')
 # s = c.session()
 
-# devices_config = read_yaml.load_device_config(yaml_file_name='wifi.yaml')  # 读取参数化文件
+# devices_config = read_yaml.load_device_config(yaml_file_name='wifi2.yaml')  # 读取参数化文件
 # print(devices_config)
 #
 # remote_setting_wifi = devices_config[0]['device_list_name']

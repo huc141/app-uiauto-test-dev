@@ -24,7 +24,7 @@ print(device_dirs)
 def load_device_config(device_dir):
     devices_list_path = os.path.join(os.getcwd(), 'config')
     # wifi_parse_xml_path = os.path.join(devices_list_path, 'devices_list.yml')
-    wifi_path = os.path.join(device_dir, 'wifi.yaml')
+    wifi_path = os.path.join(device_dir, 'wifi2.yaml')
 
     # print(wifi_parse_xml_path)
 
@@ -40,7 +40,7 @@ def load_device_config(device_dir):
     #     except Exception as e:
     #         print(f"Error loading {wifi_parse_xml_path}: {e}")
 
-    # 尝试加载 wifi.yaml 文件
+    # 尝试加载 wifi2.yaml 文件
     if os.path.exists(wifi_path):
         try:
             with open(wifi_path, 'r', encoding='utf-8') as wifi_file:
