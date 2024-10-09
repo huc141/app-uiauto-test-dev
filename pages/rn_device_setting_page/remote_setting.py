@@ -67,7 +67,7 @@ class RemoteSetting(BasePage):
             if isinstance(texts, list):
                 # 如果 texts 是一个列表，遍历列表中的每个功能项名称
                 for text in texts:
-                    ele_status = self.is_element_exists(text)
+                    ele_status = self.is_element_exists(element_value=text, max_scrolls=5)
                     if ele_status:
                         ele_exists.append(text)
                     else:
@@ -108,7 +108,7 @@ class RemoteSetting(BasePage):
         try:
             if selector is not None:
                 # 先滚动页面提取指定id的文本（功能项）
-                actual_texts = self.get_all_texts(selector=selector, selector_type=selector_type)
+                actual_texts = self.get_all_texts(selector=selector, selector_type=selector_type, max_scrolls=5)
 
                 if isinstance(texts, list):
                     # 如果 texts 是一个列表，遍历列表中的每个功能项名称
@@ -140,7 +140,7 @@ class RemoteSetting(BasePage):
 
                 elif isinstance(texts, str):
                     # 如果 texts 是一个单一的文本，在当前页面滚动查找该文本是否存在
-                    ele_status = self.is_element_exists(texts)
+                    ele_status = self.is_element_exists(element_value=texts, max_scrolls=5)
                     if not ele_status:
                         logger.info(f"当前页面缺失的功能有：{texts}")
                         return False
