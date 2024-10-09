@@ -428,8 +428,9 @@ class BasePage:
                     attempt += 1
 
         except Exception as err:
-            logger.info(f"貌似出错了: {err}")
-            return False
+            pytest.fail(f"函数执行出错: {str(err)}")
+            # logger.info(f"貌似出错了: {err}")
+            # return False
 
         logger.info(f"没找到要点击的元素： '{text_to_find}' ，已经尝试了： {max_attempts} 次.")
         return False
@@ -491,15 +492,15 @@ class BasePage:
         try:
             # 关闭popup弹窗
             self.click_by_text('取消')
-            time.sleep(0.5)
+            time.sleep(1)
 
             # 遍历文本，执行点击操作
             for i in option_text_list:
                 self.scroll_and_click_by_text(text_to_find=menu_text, el_type=el_type)
-                time.sleep(0.5)
+                time.sleep(1)
                 logger.info('点击 ' + i)
                 self.click_by_text(i)
-                time.sleep(1)
+                time.sleep(2)
                 page_options = scroll_check_function(i)  # 断言
                 if i != '取消':
                     assert page_options is True
@@ -507,8 +508,7 @@ class BasePage:
                     page_options = scroll_check_function(option_text_list[-2])
                     assert page_options is True
         except Exception as err:
-            logger.info(f"可能发生了错误: {err}")
-            return False
+            pytest.fail(f"函数执行出错: {str(err)}")
 
     def click_checkbox_by_text(self, option_text_list, menu_text, mode=1):
         """
@@ -536,8 +536,8 @@ class BasePage:
                     self.scroll_click_right_btn(text_to_find=i)
 
         except Exception as err:
-            logger.info(f"可能发生了错误: {err}")
-            return False
+            pytest.fail(f"函数执行出错: {str(err)}")
+            # logger.info(f"可能发生了错误: {err}")
 
     def access_in_remote_setting(self, text_to_find, el_type='text', max_attempts=15, scroll_pause=0.5):
         """
@@ -625,7 +625,8 @@ class BasePage:
                 attempt += 1
 
         except Exception as err:
-            logger.info(f"可能发生了错误: {err}")
+            # logger.info(f"可能发生了错误: {err}")
+            pytest.fail(f"函数执行出错: {str(err)}")
 
         logger.info(f"还是没找到 '{text_to_find}' 元素，已经尝试了 {max_attempts} 次.")
         return False
@@ -668,21 +669,23 @@ class BasePage:
         :param max_scrolls: 最大滚动次数，默认1次
         :return:
         """
-
-        if self.platform == "android":
-            scroll_method = self.driver.swipe_ext
-
-        elif self.platform == "ios":
-            scroll_method = driver.swipe_up
-        else:
-            raise ValueError("不支持当前平台")
-
-        for _ in range(max_scrolls):
+        try:
             if self.platform == "android":
-                scroll_method(direction)
+                scroll_method = self.driver.swipe_ext
+
+            elif self.platform == "ios":
+                scroll_method = driver.swipe_up
             else:
-                time.sleep(1)
-                scroll_method()
+                raise ValueError("不支持当前平台")
+
+            for _ in range(max_scrolls):
+                if self.platform == "android":
+                    scroll_method(direction)
+                else:
+                    time.sleep(1)
+                    scroll_method()
+        except Exception as err:
+            pytest.fail(f"函数执行出错: {str(err)}")
 
     def get_all_texts(self, selector_type, selector, max_scrolls=2):
         """
@@ -885,8 +888,8 @@ class BasePage:
                 self.driver.swipe(start_x, start_y, start_x + iteration, start_y, 0.5)  # 1秒完成滑动
 
         except Exception as err:
-            logger.info(f"可能发生了错误: {err}")
-            return False
+            # logger.info(f"可能发生了错误: {err}")
+            pytest.fail(f"函数执行出错: {str(err)}")
 
     def get_coordinates_and_draw(self, mode, id_or_xpath, draw_area='左上', num=0):
         """
@@ -992,8 +995,8 @@ class BasePage:
                     self.driver.swipe(top_left_x, top_left_y, bottom_right_x, bottom_right_y, 1)
 
         except Exception as err:
-            logger.info(f"可能发生了错误: {err}")
-            return False
+            # logger.info(f"可能发生了错误: {err}")
+            pytest.fail(f"函数执行出错: {str(err)}")
 
     @staticmethod
     def check_key_in_yaml(items, key):
@@ -1026,8 +1029,8 @@ class BasePage:
                 time.sleep(0.5)
 
         except Exception as err:
-            logger.info(f"可能发生了错误: {err}")
-            return False
+            # logger.info(f"可能发生了错误: {err}")
+            pytest.fail(f"函数执行出错: {str(err)}")
 
     def scroll_selector(self, id_or_xpath, direction, times=1):
         """
@@ -1055,5 +1058,5 @@ class BasePage:
                     i += 1
 
         except Exception as err:
-            logger.info(f"可能发生了错误: {err}")
-            return False
+            # logger.info(f"可能发生了错误: {err}")
+            pytest.fail(f"函数执行出错: {str(err)}")
