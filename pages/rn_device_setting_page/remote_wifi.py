@@ -38,14 +38,12 @@ class RemoteWiFi(BasePage):
         :return:
         """
         try:
+            time.sleep(2)
             # 默认进入【Wi-Fi 频段偏好】
             self.scroll_and_click_by_text(text_to_find='Wi-Fi 频段偏好')
 
             # 检查wifi频段偏好页面文案
             wifi_band_preference_text = RemoteSetting().scroll_check_funcs2(texts=text_list)
-
-            # 关闭弹窗，返回Wi-Fi页
-            self.click_by_text('取消')
 
             # 遍历操作选项
             self.iterate_and_click_popup_text(option_text_list=option_text_list, menu_text='Wi-Fi 频段偏好')
@@ -74,6 +72,7 @@ class RemoteWiFi(BasePage):
         :return:
         """
         try:
+            time.sleep(2)
             # 点击Wi-Fi测速功能项
             self.scroll_and_click_by_text(text_to_find='Wi-Fi测速')
 
@@ -93,13 +92,13 @@ class RemoteWiFi(BasePage):
             # 点击开始测速
             self.scroll_and_click_by_text(text_to_find='开始测速')
             # 验证测速页面是否打开
-            time.sleep(2)
+            time.sleep(10)
             google_speed_page = RemoteSetting().scroll_check_funcs2(texts='How fast are you going?')
             self.back_previous_page()  # 返回Wi-Fi测速页
 
-            # 返回Wi-Fi主页
-            # self.scroll_and_click_by_text(text_to_find=self.base_left_button, el_type='xpath')
+            # 返回Wi-Fi主页，有可能失败
             self.back_previous_page()
+
             return wifi_test_speed_text, google_speed_page
 
         except Exception as e:
@@ -111,7 +110,7 @@ class RemoteWiFi(BasePage):
         :return:
         """
         try:
-
+            time.sleep(2)
             # 点击进入添加其他网络页面
             self.scroll_and_click_by_text(text_to_find='添加其他网络')
 
