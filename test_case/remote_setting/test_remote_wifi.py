@@ -52,7 +52,7 @@ class TestRemoteWifi:
         # 启动app，并开启录屏
         driver.start_app(True)
 
-        # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击‘Wi-Fi’菜单项进入Wi-Fi页
+        # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击‘Wi-Fi’菜单项进入@allure.feature
         RemoteSetting().access_in_remote_wifi(device_list_name=device_config['device_list_name'])
 
         # 测试WiFi频段偏好
@@ -77,7 +77,8 @@ class TestRemoteWifi:
         RemoteSetting().access_in_remote_wifi(device_list_name=device_config['device_list_name'])
 
         # 测试Wi-Fi测速
-        wifi_test_speed_text, google_speed_page = RemoteWiFi().access_in_wifi_test(text_list=remote_items['wifi_speed_test']['subpage']['text'])
+        wifi_test_speed_text, google_speed_page = RemoteWiFi().access_in_wifi_test(
+            text_list=remote_items['wifi_speed_test']['subpage']['text'])
 
         # 断言
         assert wifi_test_speed_text is True
@@ -105,13 +106,11 @@ class TestRemoteWifi:
         RemoteSetting().access_in_remote_wifi(device_list_name=device_config['device_list_name'])
 
         # 测试添加其他网络
-        switch_wifi = remote_items['subpage']['options_text']
-        add_network_text = RemoteWiFi().access_in_add_network(text_list=remote_items['add_other_network']['subpage']['text'],
-                                           wifi_name=switch_wifi['input_wifi_name'],
-                                           wifi_passw=switch_wifi['input_wifi_passw'])
+        switch_wifi = remote_items['add_other_network']['subpage']
+        add_network_text = RemoteWiFi().access_in_add_network(
+            text_list=switch_wifi['text'],
+            wifi_name=switch_wifi['options_text']['input_wifi_name'],
+            wifi_passw=switch_wifi['options_text']['input_wifi_passw'])
 
         # 断言
         assert add_network_text is True
-
-
-
