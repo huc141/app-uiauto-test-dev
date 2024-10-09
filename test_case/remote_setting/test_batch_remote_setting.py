@@ -1,15 +1,18 @@
 # -*- coding: utf-8 -*-
 import pytest
+import allure
 from common_tools.app_driver import driver
 from pages.rn_device_setting_page.remote_setting import RemoteSetting
 from common_tools.read_yaml import read_yaml
 
-devices_config = read_yaml.load_device_config()  # 读取设备能力集参数化文件
+devices_config = read_yaml.load_device_config(yaml_file_name='setting.yaml')  # 读取设备能力集参数化文件
 element_config = read_yaml.get_data(key="remote_setting", source="global_data")  # 读取全局配置
 
 
+@allure.epic("远程配置")
 class TestRemoteSetting:
     @pytest.mark.parametrize("device_config", devices_config)
+    @allure.feature("远程配置主页文案")
     def test_remote_setting_main_page(self, device_config):
         # 启动app，并开启录屏
         driver.start_app(True)

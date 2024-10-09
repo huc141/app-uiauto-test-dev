@@ -161,7 +161,10 @@ class RemoteSetting(BasePage):
         :param device_list_name: 要查找的设备名称
         :return:
         """
-        return self.access_in_remote_setting(text_to_find=device_list_name)
+        try:
+            self.access_in_remote_setting(text_to_find=device_list_name)
+        except Exception as e:
+            pytest.fail(f"查找设备在设备列表的名称并点击远程设置按钮出错：{str(e)}")
 
     def access_in_remote_wifi(self, device_list_name, sub_name=None, access_mode='ipc'):
         """
@@ -476,26 +479,107 @@ class RemoteSetting(BasePage):
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
-    def access_in_linked_devices(self):
+    def access_in_linked_devices(self, device_list_name, sub_name=None, access_mode='ipc'):
         """
         点击已联动的设备，进入已联动的设备页
         :return:
         """
-        return self.scroll_and_click_by_text('已联动的设备')
+        try:
+            # 根据昵称在设备列表中滚动查找该设备并进入远程配置主页
+            self.access_in_remote_setting(device_list_name)
 
-    def access_in_share_camera(self):
+            # 如果设备是单机：
+            if access_mode == 'ipc':
+                time.sleep(2)
+                # 进入已联动的设备主页
+                self.scroll_and_click_by_text('已联动的设备')
+
+            # 如果设备接入了nvr：
+            elif access_mode == 'nvr' and sub_name is not None:
+                time.sleep(2)
+                self.scroll_and_click_by_text(self.ivSelectChannelButton, el_type='xpath')
+                # 选择通道并点击
+                self.scroll_and_click_by_text(sub_name)
+                # 进入已联动的设备主页
+                self.scroll_and_click_by_text('已联动的设备')
+
+            # 如果设备接入了hub：
+            elif access_mode == 'hub' and sub_name is not None:
+                time.sleep(2)
+                # 根据名称查找hub下的设备卡片，点击并进入hub下的设备的远程配置主页
+                self.scroll_and_click_by_text(sub_name)
+                # 进入已联动的设备主页
+                self.scroll_and_click_by_text('已联动的设备')
+        except Exception as e:
+            pytest.fail(f"函数执行出错: {str(e)}")
+
+    def access_in_share_camera(self, device_list_name, sub_name=None, access_mode='ipc'):
         """
         点击分享摄像机，进入分享摄像机页
         :return:
         """
-        return self.scroll_and_click_by_text('分享摄像机')
+        try:
+            # 根据昵称在设备列表中滚动查找该设备并进入远程配置主页
+            self.access_in_remote_setting(device_list_name)
 
-    def access_in_time_lapse(self):
+            # 如果设备是单机：
+            if access_mode == 'ipc':
+                time.sleep(2)
+                # 进入分享摄像机主页
+                self.scroll_and_click_by_text('分享摄像机')
+
+            # 如果设备接入了nvr：
+            elif access_mode == 'nvr' and sub_name is not None:
+                time.sleep(2)
+                self.scroll_and_click_by_text(self.ivSelectChannelButton, el_type='xpath')
+                # 选择通道并点击
+                self.scroll_and_click_by_text(sub_name)
+                # 进入分享摄像机主页
+                self.scroll_and_click_by_text('分享摄像机')
+
+            # 如果设备接入了hub：
+            elif access_mode == 'hub' and sub_name is not None:
+                time.sleep(2)
+                # 根据名称查找hub下的设备卡片，点击并进入hub下的设备的远程配置主页
+                self.scroll_and_click_by_text(sub_name)
+                # 进入分享摄像机主页
+                self.scroll_and_click_by_text('分享摄像机')
+        except Exception as e:
+            pytest.fail(f"函数执行出错: {str(e)}")
+
+    def access_in_time_lapse(self, device_list_name, sub_name=None, access_mode='ipc'):
         """
         点击延时摄影，进入延时摄影页
         :return:
         """
-        return self.scroll_and_click_by_text('延时摄影')
+        try:
+            # 根据昵称在设备列表中滚动查找该设备并进入远程配置主页
+            self.access_in_remote_setting(device_list_name)
+
+            # 如果设备是单机：
+            if access_mode == 'ipc':
+                time.sleep(2)
+                # 进入延时摄影主页
+                self.scroll_and_click_by_text('延时摄影')
+
+            # 如果设备接入了nvr：
+            elif access_mode == 'nvr' and sub_name is not None:
+                time.sleep(2)
+                self.scroll_and_click_by_text(self.ivSelectChannelButton, el_type='xpath')
+                # 选择通道并点击
+                self.scroll_and_click_by_text(sub_name)
+                # 进入延时摄影主页
+                self.scroll_and_click_by_text('延时摄影')
+
+            # 如果设备接入了hub：
+            elif access_mode == 'hub' and sub_name is not None:
+                time.sleep(2)
+                # 根据名称查找hub下的设备卡片，点击并进入hub下的设备的远程配置主页
+                self.scroll_and_click_by_text(sub_name)
+                # 进入延时摄影主页
+                self.scroll_and_click_by_text('延时摄影')
+        except Exception as e:
+            pytest.fail(f"函数执行出错: {str(e)}")
 
     def access_in_advanced(self, device_list_name, sub_name=None, access_mode='ipc'):
         """
@@ -534,7 +618,6 @@ class RemoteSetting(BasePage):
     def back_previous_page_by_xpath(self):
         """
         根据xpath定位返回上一页的按钮
-        :param exp_xpath: xpath参数
         :return:
         """
         self.click_by_xpath(xpath_expression=self.base_left_button)

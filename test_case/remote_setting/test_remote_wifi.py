@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import pytest
 import allure
+from pages.base_page import BasePage
 from common_tools.app_driver import driver
 from common_tools.read_yaml import read_yaml
 from pages.rn_device_setting_page.remote_wifi import RemoteWiFi
@@ -14,36 +15,103 @@ class TestRemoteWifi:
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("Wi-Fi主页文案")
     @allure.story("需人工核查日志和录屏")
-    def test_remote_wifi_page(self, device_config):
+    def test_remote_wifi_page_main_text(self, device_config):
+        # 检查键是否存在，存在则执行当前用例，否则跳过
+        remote_items = device_config['ipc']
+        BasePage().check_key_in_yaml(remote_items, 'Wi_Fi')
+
         # 启动app，并开启录屏
         driver.start_app(True)
 
         # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击‘Wi-Fi’菜单项进入Wi-Fi页
         RemoteSetting().access_in_remote_wifi(device_list_name=device_config['device_list_name'])
 
+        # 验证Wi-Fi主页文案
+        wifi_main_text_res = RemoteWiFi().check_wifi_main_text(texts=remote_items['Wi_Fi']['items']['wifi']['text'])
+
         # 获取yaml文件指定配置
-        remote_setting_wifi = device_config['ipc']['Wi_Fi']['items'].values()
+        # remote_setting_wifi = device_config['ipc']['Wi_Fi']['items'].values()
+        #
+        # # 读取yaml文件中预期功能项
+        # page_fun_list = RemoteSetting().extract_yaml_names(remote_setting_wifi, 'name')
+        #
+        # # 遍历并滚动查找当前页面指定元素，判断是否存在
+        # page_fun = RemoteSetting().scroll_check_funcs(page_fun_list)
 
-        # 读取yaml文件中预期功能项
-        page_fun_list = RemoteSetting().extract_yaml_names(remote_setting_wifi, 'name')
+        # 断言
+        assert wifi_main_text_res is True
 
-        # 遍历并滚动查找当前页面指定元素，判断是否存在
-        page_fun = RemoteSetting().scroll_check_funcs(page_fun_list)
+    @pytest.mark.parametrize("device_config", devices_config)
+    @allure.feature("Wi-Fi频段偏好")
+    @allure.story("需人工核查日志和录屏")
+    def test_wifi_band_preference(self, device_config):
+        # 检查键是否存在，存在则执行当前用例，否则跳过
+        remote_items = device_config['ipc']['Wi_Fi']['items']['wifi']
+        BasePage().check_key_in_yaml(remote_items, 'wifi_band_preference')
+
+        # 启动app，并开启录屏
+        driver.start_app(True)
+
+        # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击‘Wi-Fi’菜单项进入Wi-Fi页
+        RemoteSetting().access_in_remote_wifi(device_list_name=device_config['device_list_name'])
 
         # 测试WiFi频段偏好
-        wifi_band_preference_text = device_config['ipc']['Wi_Fi']['items']['wifi_band_preference']['options']
-        RemoteWiFi().access_in_wifi_band_preference(wifi_band_preference_text)
+        wifi_band_preference_text = RemoteWiFi().access_in_wifi_band_preference(
+            text_list=remote_items['wifi_band_preference']['text'],
+            option_text_list=remote_items['wifi_band_preference']['options_text'])
+
+        assert wifi_band_preference_text is True
+
+    @pytest.mark.parametrize("device_config", devices_config)
+    @allure.feature("Wi-Fi测速")
+    @allure.story("需人工核查日志和录屏")
+    def test_wifi_speed_test(self, device_config):
+        # 检查键是否存在，存在则执行当前用例，否则跳过
+        remote_items = device_config['ipc']['Wi_Fi']['items']['wifi']
+        BasePage().check_key_in_yaml(remote_items, 'wifi_speed_test')
+
+        # 启动app，并开启录屏
+        driver.start_app(True)
+
+        # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击‘Wi-Fi’菜单项进入Wi-Fi页
+        RemoteSetting().access_in_remote_wifi(device_list_name=device_config['device_list_name'])
 
         # 测试Wi-Fi测速
-        wifi_test_speed_text = device_config['ipc']['Wi_Fi']['items']['wifi_speed_test']['subpage']['text']
-        RemoteWiFi().access_in_wifi_test(wifi_test_speed_text)
+        wifi_test_speed_text, google_speed_page = RemoteWiFi().access_in_wifi_test(text_list=remote_items['wifi_speed_test']['subpage']['text'])
+
+        # 断言
+        assert wifi_test_speed_text is True
+        assert google_speed_page is True
+
+    @pytest.mark.parametrize("device_config", devices_config)
+    @allure.feature("未连接")
+    @allure.story("需人工核查日志和录屏")
+    @pytest.mark.skip
+    def test_disconnect(self, device_config):
+        pass
+
+    @pytest.mark.parametrize("device_config", devices_config)
+    @allure.feature("添加其他网络")
+    @allure.story("需人工核查日志和录屏")
+    def test_add_other_network(self, device_config):
+        # 检查键是否存在，存在则执行当前用例，否则跳过
+        remote_items = device_config['ipc']['Wi_Fi']['items']['wifi']
+        BasePage().check_key_in_yaml(remote_items, 'add_other_network')
+
+        # 启动app，并开启录屏
+        driver.start_app(True)
+
+        # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击‘Wi-Fi’菜单项进入Wi-Fi页
+        RemoteSetting().access_in_remote_wifi(device_list_name=device_config['device_list_name'])
 
         # 测试添加其他网络
-        check_text_list = device_config['ipc']['Wi_Fi']['items']['add_other_network']['subpage']['text']
-        switch_wifi = device_config['ipc']['Wi_Fi']['items']['add_other_network']['subpage']['options']
-        RemoteWiFi().access_in_add_network(text_list=check_text_list,
+        switch_wifi = remote_items['subpage']['options_text']
+        add_network_text = RemoteWiFi().access_in_add_network(text_list=remote_items['add_other_network']['subpage']['text'],
                                            wifi_name=switch_wifi['input_wifi_name'],
                                            wifi_passw=switch_wifi['input_wifi_passw'])
 
         # 断言
-        assert page_fun is True
+        assert add_network_text is True
+
+
+

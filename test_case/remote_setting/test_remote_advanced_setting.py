@@ -50,6 +50,7 @@ class TestRemoteAdvancedSetting:
 
         # 点击并进入用户管理主页
         RemoteAdvancedSetting().click_user_management()
+
         # 验证非法登录锁定
         texts_res = RemoteAdvancedSetting().click_illegal_login_lockout(texts=remote_items['user_management']['illegal_login_lockout']['text'])
 
