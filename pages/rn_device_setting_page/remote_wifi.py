@@ -129,6 +129,7 @@ class RemoteWiFi(BasePage):
 
             # 点击输入Wi-Fi名称
             self.scroll_and_click_by_text(text_to_find='Wi-Fi名称')
+            time.sleep(1)
             self.input_text(xpath_exp=self.edit_wifi_name_text, text=wifi_name)
 
             # 点击输入Wi-Fi密码

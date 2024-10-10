@@ -246,34 +246,38 @@ class RemoteSetting(BasePage):
 
     def access_in_light(self, device_list_name, sub_name=None, access_mode='ipc'):
         """
-        点击灯，进入灯下一页
+        点击灯，进入灯主页或者灯的配置页。
         :return:
         """
-        # 根据昵称在设备列表中滚动查找该设备并进入远程配置主页
-        self.access_in_remote_setting(device_list_name)
+        try:
+            # 根据昵称在设备列表中滚动查找该设备并进入远程配置主页
+            self.access_in_remote_setting(device_list_name)
 
-        # 如果设备是单机：
-        if access_mode == 'ipc':
-            time.sleep(2)
-            # 进入灯主页
-            self.scroll_and_click_by_text('灯')
+            # 如果设备是单机：
+            if access_mode == 'ipc':
+                time.sleep(2)
+                # 进入灯主页
+                self.scroll_and_click_by_text('灯')
 
-        # 如果设备接入了nvr：
-        elif access_mode == 'nvr' and sub_name is not None:
-            time.sleep(2)
-            self.scroll_and_click_by_text(self.ivSelectChannelButton, el_type='xpath')
-            # 选择通道并点击
-            self.scroll_and_click_by_text(sub_name)
-            # 进入灯主页
-            self.scroll_and_click_by_text('灯')
+            # 如果设备接入了nvr：
+            elif access_mode == 'nvr' and sub_name is not None:
+                time.sleep(2)
+                self.scroll_and_click_by_text(self.ivSelectChannelButton, el_type='xpath')
+                # 选择通道并点击
+                self.scroll_and_click_by_text(sub_name)
+                # 进入灯主页
+                self.scroll_and_click_by_text('灯')
 
-        # 如果设备接入了hub：
-        elif access_mode == 'hub' and sub_name is not None:
-            time.sleep(2)
-            # 根据名称查找hub下的设备卡片，点击并进入hub下的设备的远程配置主页
-            self.scroll_and_click_by_text(sub_name)
-            # 进入灯主页
-            self.scroll_and_click_by_text('灯')
+            # 如果设备接入了hub：
+            elif access_mode == 'hub' and sub_name is not None:
+                time.sleep(2)
+                # 根据名称查找hub下的设备卡片，点击并进入hub下的设备的远程配置主页
+                self.scroll_and_click_by_text(sub_name)
+                # 进入灯主页
+                self.scroll_and_click_by_text('灯')
+
+        except Exception as e:
+            pytest.fail(f"函数执行出错: {str(e)}")
 
     def access_in_detection_alarm(self, device_list_name, sub_name=None, access_mode='ipc'):
         """
@@ -614,10 +618,3 @@ class RemoteSetting(BasePage):
                 self.scroll_and_click_by_text('高级设置')
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
-
-    def back_previous_page_by_xpath(self):
-        """
-        根据xpath定位返回上一页的按钮
-        :return:
-        """
-        self.click_by_xpath(xpath_expression=self.base_left_button)

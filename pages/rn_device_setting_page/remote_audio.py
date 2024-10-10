@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import time
+import pytest
 from typing import Literal
 from common_tools.logger import logger
 from pages.base_page import BasePage
@@ -31,7 +32,10 @@ class RemoteAudio(BasePage):
         :param text_to_find: 要查找的文本
         :return:
         """
-        self.scroll_click_right_btn(text_to_find=text_to_find)
+        try:
+            self.scroll_click_right_btn(text_to_find=text_to_find)
+        except Exception as e:
+            pytest.fail(f"函数执行出错: {str(e)}")
 
     def click_twice_doorbell_button_sound(self, text_to_find):
         """

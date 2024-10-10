@@ -19,9 +19,9 @@ ipc:
           - '连接同一Wi-Fi的哪种频段'
           - 'Wi-Fi测速'
           - '检测局域网设备当前的Wi-Fi信号强度'
+          - '切换Wi-Fi'
           - '当前Wi-Fi'
           - '未连接'
-          - '切换Wi-Fi'
           - '添加其他网络'
 
         wifi_band_preference:
