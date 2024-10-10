@@ -7,69 +7,77 @@ ipc:
     desc: '设置>灯'
     type: 'navigation'
     text:
-      - '红外灯'
-      - '照明灯'
+      - ''
     items:
-      infrared_light:
-        name: '红外灯'
-        desc: '设置>灯'
-        type: 'navigation'
-        subpage:
+      light:
+        name: 'Wi-Fi'
+        desc: '设置>灯主页'
+        type: 'page'
+        text:
+          - '灯'
+          - '红外灯'
+          - '照明灯'
+
+        infrared_light:
           name: '红外灯'
           desc: '设置>灯>红外灯'
-          type: 'page'
-          text:
-            - '红外灯补光时，能让你在夜晚或光线较暗时拍出更清晰的影像。'
-            - '红外灯关闭'
-            - '红外灯亮起'
-            - '关闭'
-            - '关闭红外灯后，夜视环境下效果会较差。'
-            - '自动'
-            - '光线较亮时自动开启，光线较暗时自动关闭。'
-          options:
-            - '自动'
-            - '保持关闭'
+          type: 'navigation'
+          subpage:
+            name: '红外灯'
+            desc: '设置>灯>红外灯'
+            type: 'page'
+            text:
+              - '红外灯补光时，能让你在夜晚或光线较暗时拍出更清晰的影像。'
+              - '红外灯关闭'
+              - '红外灯亮起'
+              - '关闭'
+              - '关闭红外灯后，夜视环境下效果会较差。'
+              - '自动'
+              - '光线较亮时自动开启，光线较暗时自动关闭。'
+            options_text:
+              - '自动'
+              - '保持关闭'
 
-      floodlight:
-        name: '照明灯'
-        desc: '设置>灯'
-        type: 'navigation'
-        subpage:
+        floodlight:
           name: '照明灯'
-          desc: '设置>灯>照明灯'
-          type: 'page'
-          text:
-            - '夜晚时开启照明灯画面呈彩色状态，拍摄效果更佳。'
-            - '关闭'
-            - '白光灯将保持关闭'
-            - '定时模式'
-            - '在预定的时间段内保持开启。'
-            - '夜间智能模式'
-            - '当相机在夜间检测到事件时自动打开。'
+          desc: '设置>灯'
+          type: 'navigation'
+          subpage:
+            name: '照明灯'
+            desc: '设置>灯>照明灯'
+            type: 'page'
+            text:
+              - '夜晚时开启照明灯画面呈彩色状态，拍摄效果更佳。'
+              - '关闭'
+              - '白光灯将保持关闭'
+              - '定时模式'
+              - '在预定的时间段内保持开启。'
+              - '夜间智能模式'
+              - '当相机在夜间检测到事件时自动打开。'
 
-          light_off_mode:
-            name: '关闭'
-            desc: '设置>灯>照明灯>关闭'
-            type: 'menu'
+            light_off_mode:
+              name: '关闭'
+              desc: '设置>灯>照明灯>关闭'
+              type: 'menu'
 
-          timer_mode:
-            name: '定时模式'
-            desc: '设置>灯>照明灯>定时模式'
-            type: 'menu'
-            hidden_text:
-              - '开始'
-              - '结束'
+            timer_mode:
+              name: '定时模式'
+              desc: '设置>灯>照明灯>定时模式'
+              type: 'menu'
+              hidden_text:
+                - '开始'
+                - '结束'
 
-          night_smart_mode:
-            name: '夜间智能模式'
-            desc: '设置>灯>照明灯>夜间智能模式'
-            type: 'menu'
-            event_type:
-              - '侦测'
-            hidden_text:
-                - '人'
-                - '车'
-                - '动物'
+            night_smart_mode:
+              name: '夜间智能模式'
+              desc: '设置>灯>照明灯>夜间智能模式'
+              type: 'menu'
+              event_type:
+                - '侦测'
+              hidden_text:
+                  - '人'
+                  - '车'
+                  - '动物'
 
 hub:
   light:
