@@ -316,7 +316,7 @@ class BasePage:
         :return:
         """
         try:
-            time.sleep(0.5)
+            time.sleep(0.8)
             if self.platform == "android":
                 self.driver.xpath(xpath_exp).set_text(text)
                 # self.driver.set_input_ime(True)
@@ -339,7 +339,7 @@ class BasePage:
         :return:
         """
         try:
-            time.sleep(0.2)
+            time.sleep(0.8)
             if self.platform == "android":
                 self.driver.xpath(xpath_exp).click()
                 self.driver.clear_text()
@@ -1014,7 +1014,7 @@ class BasePage:
 
     def back_previous_page(self):
         """
-        手势向右滑模拟：返回上一页
+        手势向右滑模拟：返回上一页（不同手机机型有可能会失效）
         :return:
         """
         try:
@@ -1030,6 +1030,16 @@ class BasePage:
 
         except Exception as err:
             # logger.info(f"可能发生了错误: {err}")
+            pytest.fail(f"函数执行出错: {str(err)}")
+
+    def back_previous_page_by_xpath(self, xpath_expression):
+        """
+        RN: 根据xpath定位左上角返回上一页的按钮
+        :return:
+        """
+        try:
+            self.click_by_xpath(xpath_expression=xpath_expression)
+        except Exception as err:
             pytest.fail(f"函数执行出错: {str(err)}")
 
     def scroll_selector(self, id_or_xpath, direction, times=1):
