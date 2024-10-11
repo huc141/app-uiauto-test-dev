@@ -127,25 +127,24 @@ class RemoteLight(BasePage):
                 self.scroll_and_click_by_text(text_to_find='夜间智能模式')
                 # 验证照明灯主页文案
                 floodlight_main_text_res = RemoteSetting().scroll_check_funcs2(texts=infrared_light_texts)
-                # 遍历操作
-                for i in options_text:
-                    # 操作照明灯配置
-                    self.scroll_and_click_by_text(text_to_find=i)
-                    # 返回上一页
-                    self.back_previous_page_by_xpath(xpath_expression=self.base_left_button)
-                    # 断言
-                    if not self.scroll_and_click_by_text(text_to_find=i):
-                        pytest.fail(f"照明灯选择【{i}】后，未检查到回显！")
+
+                # 点击侦测类型，进入侦测页面遍历,遍历完成点击保存
+                self.click_checkbox_by_text(option_text_list=options_text, menu_text='侦测')
+                self.scroll_and_click_by_text('保存')
+
+                # 返回灯主页，验证照明灯模式回显
+                self.back_previous_page_by_xpath(xpath_expression=self.base_left_button)
+                if not self.scroll_and_click_by_text(text_to_find='夜间智能模式'):
+                    pytest.fail(f"照明灯选择【夜间智能模式】后，未检查到回显！")
 
                 return floodlight_main_text_res
 
             else:
                 # 验证照明灯主页文案
                 floodlight_main_text_res = RemoteSetting().scroll_check_funcs2(texts=infrared_light_texts)
-                # 遍历操作
-                for i in options_text:
-                    # 操作照明灯配置
-                    self.scroll_and_click_by_text(text_to_find=i)
+                # 点击侦测类型，进入侦测页面遍历,遍历完成点击保存
+                self.click_checkbox_by_text(option_text_list=options_text, menu_text='侦测')
+                self.scroll_and_click_by_text('保存')
 
                 return floodlight_main_text_res
 
