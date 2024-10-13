@@ -27,6 +27,21 @@ class RemoteCameraRecord(BasePage):
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
+    def check_camera_record_main_text(self, main_text, record_type):
+        """
+        验证摄像机录像主页文案
+        :param record_type: 支持的录像类型：报警录像，定时录像
+        :param main_text: 待验证的文案列表
+        :return:
+        """
+        try:
+            self.is_camera_recording_on()
+            self.scroll_and_click_by_text(text_to_find=record_type)
+            main_text_res = RemoteSetting().scroll_check_funcs2(texts=main_text)
+            return main_text_res
+        except Exception as e:
+            pytest.fail(f"函数执行出错: {str(e)}")
+
     def check_camera_alarm_recording_page_text(self, texts_list):
         """
         验证 摄像机主页>报警录像 文案内容
@@ -34,6 +49,7 @@ class RemoteCameraRecord(BasePage):
         :return:
         """
         try:
+            self.is_camera_recording_on()
             self.scroll_and_click_by_text(text_to_find='报警录像')
             camera_recording_page_text_status = RemoteSetting().scroll_check_funcs2(texts=texts_list)
             return camera_recording_page_text_status
@@ -53,17 +69,29 @@ class RemoteCameraRecord(BasePage):
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
-    def click_and_test_alarm_recording_plan(self, texts_list):
+    def click_and_test_alarm_recording_plan(self, texts_list, supported_alarm_type, alarm_type_text, option_text):
         """
-        点击报警录像计划并验证文案内容
+        点击并测试 报警录像>报警录像计划 并验证文案内容
         :param texts_list: 需要验证的文案列表
         :return:
         """
         try:
-            self.scroll_and_click_by_text(text_to_find='报警录像')
-            self.scroll_and_click_by_text(text_to_find='报警录像计划')
+            self.is_camera_recording_on()  # 打开摄像机录像开关
+            self.scroll_and_click_by_text(text_to_find='报警录像')  # 点击报警录像
+            self.scroll_and_click_by_text(text_to_find='报警录像计划')  # 点击报警录像计划
+
+            # 验证报警录像计划文案
             camera_recording_page_text_status = RemoteSetting().scroll_check_funcs2(texts=texts_list)
-            return camera_recording_page_text_status
+
+            alarm_type_text_res = None
+            # 如果支持选择报警类型：
+            if supported_alarm_type:
+                self.click_checkbox_by_text(option_text_list=option_text, menu_text='报警类型')
+                alarm_type_text_res = RemoteSetting().scroll_check_funcs2(texts=alarm_type_text)
+                self.scroll_and_click_by_text(text_to_find=option_text[0])  # 保底选项，防止下一步无法点击保存
+                self.scroll_and_click_by_text('保存')
+
+            return camera_recording_page_text_status, alarm_type_text_res
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
@@ -125,23 +153,3 @@ class RemoteCameraRecord(BasePage):
             self.scroll_click_right_btn(text_to_find='覆盖录像')
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

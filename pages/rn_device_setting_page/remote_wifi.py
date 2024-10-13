@@ -18,7 +18,8 @@ class RemoteWiFi(BasePage):
         elif self.platform == 'ios':
             pass
 
-    def check_wifi_main_text(self, texts):
+    @staticmethod
+    def check_wifi_main_text(texts):
         """
         验证Wi-Fi主页文案
         :param texts: 待验证的文案列表
