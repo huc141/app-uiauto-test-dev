@@ -1,0 +1,73 @@
+device_list_name: "yulong-test-sd7"
+sub_name: ""
+
+ipc:
+  light:
+    name: '灯'
+    desc: '设置>灯'
+    type: 'navigation'
+    text:
+      - ''
+
+    items:
+      light:
+        name: '灯'
+        desc: '设置>灯主页'
+        type: 'page'
+        text:
+          - '灯'
+          - '状态灯'
+          - '照明灯'
+
+        floodlight:
+          name: '照明灯'
+          desc: '设置>灯>照明灯'
+          type: 'navigation'
+          subpage:
+            name: '照明灯'
+            desc: '设置>灯>照明灯'
+            type: 'page'
+
+            light_off_mode:
+              name: '关闭'
+              desc: '设置>灯>照明灯>关闭'
+              type: 'menu'
+
+            auto_mode:
+              name: '自动模式'
+              desc: '设置>灯>照明灯>自动模式'
+              type: 'menu'
+              text:
+                - '白光灯'
+                - '夜晚时开启照明灯画面呈彩色状态，拍摄效果更佳。'
+                - '关闭'
+                - '白光灯将保持关闭'
+                - '智能模式'
+                - '自动调整亮度以在弱光条件下进行准确检测，并在预定时间段内摄像机检测到事件时开启。'
+
+        status_lights:
+          name: '状态灯'
+          desc: '设置>灯>状态灯'
+          type: 'navigation'
+          subpage:
+            name: '状态灯'
+            desc: '设置>灯>状态灯'
+            type: 'page'
+            text:
+              - '状态灯'
+              - '电池供电 WiFi 摄像头的状态 LED 有两种颜色：蓝色和红色。蓝色表示相机WiFi连接成功，红色表示WiFi连接失败'
+              - '了解更多'
+              - '关闭'
+              - '状态灯将保持关闭'
+              - '开启'
+              - '状态灯将始终亮起'
+
+            light_off_mode:
+              name: '关闭'
+              desc: '设置>灯>状态灯>关闭'
+              type: 'menu'
+
+            light_on_mode:
+              name: '开启'
+              desc: '设置>灯>状态灯>开启'
+              type: 'menu'

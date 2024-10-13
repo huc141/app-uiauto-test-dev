@@ -1,0 +1,87 @@
+device_list_name: "yulong-test-sd7"
+sub_name: ""
+
+ipc:
+  audio:
+    name: '音频'
+    desc: '设置>音频'
+    type: 'navigation'
+    text:
+      - ''
+
+    items:
+      audio:
+        name: '音频'
+        desc: '设置>音频>音频主页'
+        type: 'page'
+        text:
+          - '录制声音'
+          - '关闭后，观看预览时将无法听到声音，并且将不会录制声音到回放文件中'
+          - '门铃按钮音频'
+          - '关闭后，按下门铃将不会播放声音'
+          - '设备音量'
+          - '报警音量和对讲音量'
+          - '自动回复'
+
+        record_audio:
+          name: '录制声音'
+          desc: '设置>音频'
+          type: 'switch'
+          text:
+            - ''
+          option_text:
+            - 'switch_on'
+            - 'switch_off'
+
+        device_volume_and_speaker_volume:
+          name: '设备音量'
+          desc: '设置>音频>设备音量'
+          type: 'slider'
+          text:
+            - ''
+          option_text:
+            - ''
+
+        auto_reply:
+          name: '自动回复'
+          desc: '设置>音频>自动回复'
+          type: 'navigation'
+          text:
+            - '等待时长'
+            - '门铃按钮被按下后多久播放自动回复'
+            - '设置自动回复'
+            - '编辑'
+            - '无自动回复'
+            - "I'm sorry. I think you've knocked on the wrong door."
+            - 'Hi, we will be right there. Please wait a moment.'
+            - 'Hi, please leave the packege at the door. We will get it later.'
+            - '录制自动回复'
+
+          waiting_time:
+            name: '等待时长'
+            desc: '设置>音频>自动回复>等待时长'
+            type: 'popup'
+            text:
+              - '等待时长'
+              - '2 秒'
+              - '5 秒'
+              - '10 秒'
+              - '15 秒'
+              - '20 秒'
+              - '取消'
+            option_text:
+              - '2 秒'
+              - '5 秒'
+              - '10 秒'
+              - '15 秒'
+              - '20 秒'
+
+          record_autoresponders:
+            name: '录制自动回复'
+            desc: '设置>音频>自动回复>录制自动回复'
+            type: 'page'
+            text:
+              - '取消'
+              - '录制声音'
+              - '原声'
+              - '开始录音'
