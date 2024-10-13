@@ -270,3 +270,50 @@ class RemoteDetectionAlarm(BasePage):
 
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
+
+    def check_detection_alarm_main_text(self, texts):
+        """
+        验证侦测报警主页文案
+        :param texts:
+        :return:
+        """
+        try:
+            main_text_res = RemoteSetting().scroll_check_funcs2(texts=texts)
+            return main_text_res
+        except Exception as e:
+            pytest.fail(f"函数执行出错: {str(e)}")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

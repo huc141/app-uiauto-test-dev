@@ -12,6 +12,55 @@ devices_config = read_yaml.load_device_config(yaml_file_name='detection_alarm.ya
 
 @allure.epic("远程配置>报警设置>侦测报警")
 class TestRemoteDetectionAlarm:
+
+    @pytest.mark.parametrize("device_config", devices_config)
+    @allure.feature("音频>侦测报警主页 文案")
+    @allure.story("需人工核查日志和录屏")
+    @pytest.mark.skip
+    def test_remote_detection_alarm_main_text(self, device_config):
+        # 检查键是否存在，存在则执行当前用例，否则跳过
+        remote_items = device_config['ipc']['detection_alarm']['items']
+        BasePage().check_key_in_yaml(remote_items, 'detection_alarm')
+
+        # 启动app，并开启录屏
+        driver.start_app(True)
+
+        # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击‘音频’菜单项进入
+        RemoteSetting().access_in_light(device_list_name=device_config['device_list_name'])
+
+        # 验证音频主页文案
+        main_text_res = RemoteDetectionAlarm().check_detection_alarm_main_text(texts=remote_items['audio']['text'])
+
+        # 断言
+        assert main_text_res is True
+
+    @pytest.mark.parametrize("device_config", devices_config)
+    @allure.feature("人-非侦测区域")
+    @allure.story("需人工核查日志和录屏")
+    def test_remote_non_detection_area(self, device_config):
+        # 检查键是否存在，存在则执行当前用例，否则跳过
+        remote_items = device_config['ipc']['detection_alarm']['items']
+        BasePage().check_key_in_yaml(remote_items, 'non_detection_area')
+
+        # 启动app，并开启录屏
+        driver.start_app(True)
+
+        # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击菜单项@allure.feature进入侦测报警
+        RemoteSetting().access_in_detection_alarm(device_list_name=device_config['device_list_name'])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("非侦测区域")
     @allure.story("需人工核查日志和录屏")
