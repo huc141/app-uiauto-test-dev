@@ -258,9 +258,10 @@ class BasePage:
 
                     attempt += 1
 
-        except Exception as err:
-            logger.info(f"可能发生了错误: {err}")
-            return False
+        except Exception as e:
+            pytest.fail(f"函数执行出错: {str(e)}")
+            # logger.info(f"可能发生了错误: {err}")
+            # return False
 
     def get_toast(self, toast_text: str, reset=True, timeout=5.0, default="没有获取到toast提示"):
         """
@@ -1006,11 +1007,35 @@ class BasePage:
         :param key: 需要检查的键名列表
         :raises pytest.skip: 如果所有指定的键不存在，则跳过测试
         """
-        if key not in items:
-            pytest.skip(f"YAML配置文件中未找到'{key}'键，跳过此测试用例")
+        try:
+            if key not in items:
+                pytest.skip(f"YAML配置文件中未找到'{key}'键，跳过此测试用例")
+            else:
+                return True
+        except Exception as err:
+            # logger.info(f"可能发生了错误: {err}")
+            pytest.fail(f"【check_key_in_yaml】方法检查yaml文件中的key出错: {str(err)}")
 
         # if not any(key in items for key in keys):
         #     pytest.skip(f"YAML配置文件中未找到以下任意键：{', '.join(keys)}，跳过此测试用例")
+
+    @staticmethod
+    def is_key_in_yaml(items, key) -> bool:
+        """
+        检查给定的YAML字典中是否存在指定的键。
+        :param items: YAML文件中的字典
+        :param key: 需要检查的键名列表
+        :return: bool
+        """
+        try:
+            if key not in items:
+                logger.info(f"{key} 在yaml中未找到！")
+                return False
+            else:
+                return True
+        except Exception as err:
+            # logger.info(f"可能发生了错误: {err}")
+            pytest.fail(f"【check_key_in_yaml】方法检查yaml文件中的key出错: {str(err)}")
 
     def back_previous_page(self):
         """
