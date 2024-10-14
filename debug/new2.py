@@ -1,11 +1,33 @@
 import yaml
 import os
-from common_tools.read_yaml import read_yaml
 
-devices_config = read_yaml  # 读取参数化文件
-print(devices_config)
+from pages.base_page import BasePage
+
 # 读取yaml文件中远程配置页面内
-remote_setting_page = devices_config['ipc']['items']
+with open(file='D:\\app-uiauto-test-dev\\config\\AReolink_TrackMix_WiFi\\camera_record.yaml', encoding='utf-8') as stream:
+    devices_config = yaml.safe_load(stream)  # 读取参数化文件
+    remote_items = devices_config['ipc']['camera_record']['items']
+    key_res = BasePage().is_key_in_yaml(remote_items['alarm_recording_plan'], 'alarm_type')
+
+    print(devices_config)
+    print(key_res)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # print(remote_setting_page)
 
 
