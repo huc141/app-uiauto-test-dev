@@ -109,7 +109,7 @@ ipc:
           - '绘制不需要报警的区域'
           - '全部绘制'
 
-      auto_tracking:
+      smart_tracking:
         name: '智能追踪'
         desc: '设置>侦测报警>智能追踪'
         type: 'switch'
@@ -197,7 +197,7 @@ ipc:
             - '取消'
 
       motion_mark:
-        name: '移动标记'
+        name: '移动标记[已被移动到远程配置首页了，待确认]'
         desc: '设置>侦测报警>移动标记'
         type: 'switch'
         options:

@@ -31,7 +31,7 @@ class RemoteDetectionAlarm(BasePage):
             self.set_maximum_left_turn_angle = ''
             self.set_maximum_right_turn_angle = ''
 
-    def check_camera_record_main_text(self, main_text, smart_tracking):
+    def check_detection_alarm_main_text(self, main_text, smart_tracking):
         """
         验证侦测报警主页文案
         :param smart_tracking: 是否支持智能追踪
@@ -39,9 +39,13 @@ class RemoteDetectionAlarm(BasePage):
         :return:
         """
         try:
-            self.is_camera_recording_on()
-            self.scroll_and_click_by_text(text_to_find=smart_tracking)
+            # 开启智能追踪按钮
+            if smart_tracking:
+                self.scroll_click_right_btn(text_to_find='智能追踪')
+
+            # 侦测报警主页文案验证
             main_text_res = RemoteSetting().scroll_check_funcs2(texts=main_text)
+
             return main_text_res
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
@@ -194,46 +198,68 @@ class RemoteDetectionAlarm(BasePage):
         # TODO: 待rn提测
         pass
 
-    def click_and_test_object_size(self, object_list):
+    def click_and_test_object_size(self):
         """
         点击并测试目标尺寸.
         测试策略：
-        遍历检测目标类型，并点击最小目标、最大目标。
-        :param object_list: 检测目标类型，如人车动物包裹等。列表
+        分别点击和绘制最小目标、最大目标。
         :return:
         """
         try:
-            for object_type in object_list:
-                self.scroll_and_click_by_text(object_type)
-                self.scroll_and_click_by_text("目标尺寸")
-                # 点击 最小目标
-                self.scroll_and_click_by_text(text_to_find=self.min_object, el_type='xpath')
+            self.scroll_and_click_by_text("目标尺寸")
+            time.sleep(1)
 
-                # TODO：绘制最小目标
+            # 点击 最大目标
+            self.scroll_and_click_by_text(text_to_find=self.max_object, el_type='xpath')
+            # TODO：绘制最大目标
 
-                # TODO：删除最小目标
+            # 点击 最小目标
+            self.scroll_and_click_by_text(text_to_find=self.min_object, el_type='xpath')
+            # TODO：绘制最小目标
 
-                # 点击 最大目标
-                self.scroll_and_click_by_text(text_to_find=self.max_object, el_type='xpath')
+            # 点击 取消
+            self.scroll_and_click_by_text('取消')
 
-                # 点击 取消
-                self.scroll_and_click_by_text('取消')
-                self.scroll_and_click_by_text(text_to_find='左上角返回按钮', el_type='xpath')
+            self.scroll_and_click_by_text("目标尺寸")
 
-                # 手势向右滑模拟：返回上一页
-                self.back_previous_page()
+            # 点击 最大目标
+            self.scroll_and_click_by_text(text_to_find=self.max_object, el_type='xpath')
+            # TODO：绘制最大目标
+            # TODO：删除最大目标
 
-                # TODO：绘制最大目标
+            # 点击 最小目标
+            self.scroll_and_click_by_text(text_to_find=self.min_object, el_type='xpath')
+            # TODO：绘制最小目标
+            # TODO：删除最小目标
 
-                # TODO：删除最大目标
+            # TODO：点击横屏按钮
+            # TODO：绘制最大目标
+            # TODO：绘制最小目标
 
-                # TODO：点击横屏按钮
+            # TODO: 点击左上角返回竖屏按钮
 
-                # TODO：绘制最小目标
+            # TODO：点击保存
 
-                # TODO：绘制最大目标
+        except Exception as e:
+            pytest.fail(f"函数执行出错: {str(e)}")
 
-                # TODO：点击保存
+    def click_test_person_object_size(self, main_texts, texts):
+        """
+        点击并测试人——目标尺寸
+        :param main_texts: 人主页文案
+        :param texts: 目标尺寸页的文案内容
+        :return:
+        """
+        try:
+            self.scroll_and_click_by_text(text_to_find='人')
+            # 验证人主页文案
+            main_texts_res = RemoteSetting().scroll_check_funcs2(texts=main_texts)
+
+            # 验证目标尺寸文案
+            texts_res = RemoteSetting().scroll_check_funcs2(texts=texts)
+            self.click_and_test_object_size()
+
+            return main_texts_res, texts_res
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
@@ -286,17 +312,6 @@ class RemoteDetectionAlarm(BasePage):
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
-    def check_detection_alarm_main_text(self, texts):
-        """
-        验证侦测报警主页文案
-        :param texts:
-        :return:
-        """
-        try:
-            main_text_res = RemoteSetting().scroll_check_funcs2(texts=texts)
-            return main_text_res
-        except Exception as e:
-            pytest.fail(f"函数执行出错: {str(e)}")
 
 
 
