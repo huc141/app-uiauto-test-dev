@@ -31,6 +31,21 @@ class RemoteDetectionAlarm(BasePage):
             self.set_maximum_left_turn_angle = ''
             self.set_maximum_right_turn_angle = ''
 
+    def check_camera_record_main_text(self, main_text, smart_tracking):
+        """
+        验证侦测报警主页文案
+        :param smart_tracking: 是否支持智能追踪
+        :param main_text: 待验证的文案列表
+        :return:
+        """
+        try:
+            self.is_camera_recording_on()
+            self.scroll_and_click_by_text(text_to_find=smart_tracking)
+            main_text_res = RemoteSetting().scroll_check_funcs2(texts=main_text)
+            return main_text_res
+        except Exception as e:
+            pytest.fail(f"函数执行出错: {str(e)}")
+
     def click_non_detection_area(self):
         """
         点击进入非侦测区域

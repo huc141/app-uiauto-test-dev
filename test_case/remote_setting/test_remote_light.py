@@ -80,12 +80,11 @@ class TestRemoteLight:
         # 点击并测试照明灯(白光灯/泛光灯) > 夜间智能模式： 保存
         count_lights = device_config['ipc']['light']['items']['light']['text']
         lights_num = RemoteLight().verify_lights_list_length(texts=count_lights)  # 判断灯数量
+        key_res = BasePage().is_key_in_yaml(remote_items['night_smart_mode'], 'detect_type')  # 获取是否支持侦测
         floodlight_main_text_res = RemoteLight().click_test_floodlight_night_smart_mode(lights_num=lights_num,
-                                                                                        flood_light_texts=remote_items[
-                                                                                            'night_smart_mode']['text'],
-                                                                                        options_text=remote_items[
-                                                                                            'night_smart_mode'][
-                                                                                            'option_text'])
+                                                                                        supported_detect_type=key_res,
+                                                                                        flood_light_texts=remote_items['night_smart_mode']['text'],
+                                                                                        options_text=remote_items['night_smart_mode']['detect_type']['option_text'])
 
         assert floodlight_main_text_res is True
 
@@ -176,9 +175,11 @@ class TestRemoteLight:
         # 点击并测试照明灯(白光灯/泛光灯) > 智能模式
         count_lights = device_config['ipc']['light']['items']['light']['text']
         lights_num = RemoteLight().verify_lights_list_length(texts=count_lights)  # 判断灯数量
+        key_res = BasePage().is_key_in_yaml(remote_items['smart_mode'], 'detect_type')  # 获取是否支持侦测
         flood_light_texts = RemoteLight().click_test_floodlight_smart_mode(lights_num=lights_num,
+                                                                           supported_detect_type=key_res,
                                                                            flood_light_texts=remote_items['smart_mode']['text'],
-                                                                           options_text=remote_items['smart_mode']['option_text'])
+                                                                           options_text=remote_items['smart_mode']['detect_type']['option_text'])
 
         assert flood_light_texts is True
 

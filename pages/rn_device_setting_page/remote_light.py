@@ -107,10 +107,11 @@ class RemoteLight(BasePage):
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
-    def click_test_floodlight_night_smart_mode(self, lights_num, flood_light_texts, options_text):
+    def click_test_floodlight_night_smart_mode(self, lights_num, supported_detect_type, flood_light_texts, options_text):
         """
-        点击并测试照明灯的夜间智能模式
+        点击并测试照明灯的夜间智能模式，（没有验证侦测页的文案）
         :param lights_num: 布尔值，灯的数量大于1:True,  等于1：False
+        :param supported_detect_type: 是否支持 侦测
         :param flood_light_texts: 配置页文案
         :param options_text: 配置页操作项
         :return:
@@ -124,7 +125,7 @@ class RemoteLight(BasePage):
                 floodlight_main_text_res = RemoteSetting().scroll_check_funcs2(texts=flood_light_texts)
 
                 # 如果支持侦测类型，则点击侦测类型，否则返回灯主页：
-                if RemoteSetting().scroll_check_funcs2(texts='侦测'):
+                if supported_detect_type:
                     # 点击侦测类型，进入侦测页面遍历,遍历完成点击保存，回到灯主页
                     self.click_checkbox_by_text(option_text_list=options_text, menu_text='侦测')
                     self.scroll_and_click_by_text(text_to_find=options_text[0])  # 保底选项，防止下一步无法点击保存
@@ -153,10 +154,11 @@ class RemoteLight(BasePage):
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
-    def click_test_floodlight_smart_mode(self, lights_num, flood_light_texts, options_text):
+    def click_test_floodlight_smart_mode(self, lights_num, supported_detect_type, flood_light_texts, options_text):
         """
-        点击并测试照明灯的智能模式
+        点击并测试照明灯的智能模式（没有验证侦测页的文案）
         :param lights_num: 布尔值，灯的数量大于1:True,  等于1：False
+        :param supported_detect_type: 是否支持 侦测
         :param flood_light_texts: 配置页文案
         :param options_text: 配置页操作项
         :return:
@@ -170,7 +172,7 @@ class RemoteLight(BasePage):
                 floodlight_main_text_res = RemoteSetting().scroll_check_funcs2(texts=flood_light_texts)
 
                 # 如果支持侦测类型，则点击侦测类型，否则返回灯主页：
-                if RemoteSetting().scroll_check_funcs2(texts='侦测'):
+                if supported_detect_type:
                     # 点击侦测类型，进入侦测页面遍历,遍历完成点击保存，回到灯主页
                     self.click_checkbox_by_text(option_text_list=options_text, menu_text='侦测')
                     self.scroll_and_click_by_text(text_to_find=options_text[0])  # 保底选项，防止下一步无法点击保存
@@ -197,7 +199,7 @@ class RemoteLight(BasePage):
                 # 验证照明灯主页文案
                 floodlight_main_text_res = RemoteSetting().scroll_check_funcs2(texts=flood_light_texts)
                 # 如果支持侦测类型，则点击侦测类型，否则返回灯主页：
-                if RemoteSetting().scroll_check_funcs2(texts='侦测'):
+                if supported_detect_type:
                     # 点击侦测类型，进入侦测页面遍历,遍历完成点击保存，回到照明灯的配置页
                     self.click_checkbox_by_text(option_text_list=options_text, menu_text='侦测')
                     self.scroll_and_click_by_text(text_to_find=options_text[0])  # 保底选项，防止下一步无法点击保存
