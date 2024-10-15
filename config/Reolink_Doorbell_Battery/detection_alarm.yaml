@@ -1,0 +1,220 @@
+device_list_name: "yulong-test"
+uid: '952700Y0061K137Z'
+sub_name: ""
+
+ipc:
+  detection_alarm:
+    name: '侦测报警'
+    desc: '设置>侦测报警'
+    type: 'navigation'
+    text:
+      - ''
+
+    items:
+      detection_alarm:
+        name: '侦测报警'
+        desc: '设置>侦测报警主页'
+        type: 'page'
+        text:
+          - '侦测报警'
+          - '报警类型设置'
+          - '人'
+          - '车'
+          - '动物'
+          - '其他'
+
+      person:
+        name: '人'
+        desc: '设置>侦测报警>人>报警类型——人'
+        type: 'navigation'
+        text:
+          - '人'
+          - '报警类型「人」的相关设置'
+          - '目标尺寸'
+          - '非侦测区域'
+          - '灵敏度'
+          - '0'
+          - '100'
+          - '延时报警'
+          - '检测目标在报警区域内停留的时间超过设置时间将触发报警'
+          - '0'
+          - '8'
+        object_size:
+          name: '目标尺寸'
+          desc: '设置>侦测报警>人>目标尺寸'
+          type: 'navigation'
+          text:
+            - '取消'
+            - '目标尺寸'
+            - '保存'
+        non_detection_area:
+          name: '非侦测区域'
+          desc: '设置>侦测报警>人>非侦测区域'
+          type: 'navigation'
+          text:
+            - '取消'
+            - '非侦测区域'
+            - '保存'
+            - '绘制不需要报警的区域'
+        sensitivity:
+          name: '灵敏度'
+          desc: '设置>侦测报警>人>灵敏度'
+          type: 'slider'
+        alarm_delay:
+          name: '延时报警'
+          desc: '设置>侦测报警>人>延时报警'
+          type: 'slider'
+
+      car:
+        name: '车'
+        desc: '设置>侦测报警>报警类型——车'
+        type: 'navigation'
+        text:
+          - '车'
+          - '报警类型「车」的相关设置'
+          - '目标尺寸'
+          - '非侦测区域'
+          - '灵敏度'
+          - '0'
+          - '100'
+          - '延时报警'
+          - '检测目标在报警区域内停留的时间超过设置时间将触发报警'
+          - '0'
+          - '8'
+        object_size:
+          name: '目标尺寸'
+          desc: '设置>侦测报警>车>目标尺寸'
+          type: 'navigation'
+          text:
+            - '取消'
+            - '目标尺寸'
+            - '保存'
+        non_detection_area:
+          name: '非侦测区域'
+          desc: '设置>侦测报警>车>非侦测区域'
+          type: 'navigation'
+          text:
+            - '取消'
+            - '非侦测区域'
+            - '保存'
+            - '绘制不需要报警的区域'
+        sensitivity:
+          name: '灵敏度'
+          desc: '设置>侦测报警>车>灵敏度'
+          type: 'slider'
+        alarm_delay:
+          name: '延时报警'
+          desc: '设置>侦测报警>车>延时报警'
+          type: 'slider'
+
+      animal:
+        name: '动物'
+        desc: '设置>侦测报警>报警类型——动物'
+        type: 'navigation'
+        text:
+          - '动物'
+          - '报警类型「动物」的相关设置'
+          - '目标尺寸'
+          - '非侦测区域'
+          - '灵敏度'
+          - '0'
+          - '100'
+          - '延时报警'
+          - '检测目标在报警区域内停留的时间超过设置时间将触发报警'
+          - '0'
+          - '8'
+        object_size:
+          name: '目标尺寸'
+          desc: '设置>侦测报警>动物>目标尺寸'
+          type: 'navigation'
+          text:
+            - '取消'
+            - '目标尺寸'
+            - '保存'
+        non_detection_area:
+          name: '非侦测区域'
+          desc: '设置>侦测报警>动物>非侦测区域'
+          type: 'navigation'
+          text:
+            - '取消'
+            - '非侦测区域'
+            - '保存'
+            - '绘制不需要报警的区域'
+        sensitivity:
+          name: '灵敏度'
+          desc: '设置>侦测报警>动物>灵敏度'
+          type: 'slider'
+        alarm_delay:
+          name: '延时报警'
+          desc: '设置>侦测报警>动物>延时报警'
+          type: 'slider'
+
+      package:
+        name: '包裹'
+        desc: '设置>侦测报警>报警类型——包裹'
+        type: 'navigation'
+        text:
+          - '包裹'
+          - '报警类型「包裹」的相关设置'
+          - '目标尺寸'
+          - '非侦测区域'
+          - '灵敏度'
+          - '0'
+          - '100'
+          - '延时报警'
+          - '检测目标在报警区域内停留的时间超过设置时间将触发报警'
+          - '0'
+          - '8'
+        object_size:
+          name: '目标尺寸'
+          desc: '设置>侦测报警>包裹>目标尺寸'
+          type: 'navigation'
+          text:
+            - '取消'
+            - '目标尺寸'
+            - '保存'
+        non_detection_area:
+          name: '非侦测区域'
+          desc: '设置>侦测报警>包裹>非侦测区域'
+          type: 'navigation'
+          text:
+            - '取消'
+            - '非侦测区域'
+            - '保存'
+            - '绘制不需要报警的区域'
+        sensitivity:
+          name: '灵敏度'
+          desc: '设置>侦测报警>包裹>灵敏度'
+          type: 'slider'
+        alarm_delay:
+          name: '延时报警'
+          desc: '设置>侦测报警>包裹>延时报警'
+          type: 'slider'
+
+      motion_detection:
+        name: '其他【待确定这个在rn上如何显示】'
+        desc: '设置>侦测报警>其他'
+        type: 'navigation'
+        text:
+          - '其他'
+          - '全天灵敏度计划表'
+          - '全时段灵敏度'
+          - '灵敏度高，检测到细微的物体移动就报警，不放过任何风吹草动，如细小的蚊虫、较远的人等。'
+          - '0'
+          - '50'
+          - '添加分段灵敏度'
+        add_multi_time_sensitivity:
+          name: '添加灵敏度分段'
+          desc: '设置>侦测报警>MD/其他>添加灵敏度分段'
+          type: 'navigation'
+          text:
+            - '取消'
+            - '编辑分段'
+            - '保存'
+            - '开始时间'
+            - '未设置'
+            - '结束时间'
+            - '灵敏度'
+            - '灵敏度高，检测到细微的物体移动就报警，不放过任何风吹草动，如细小的蚊虫、较远的人等。'
+            - '0'
+            - '50'

@@ -59,6 +59,197 @@ class TestRemoteDetectionAlarm:
         assert texts_res is True
 
     @pytest.mark.parametrize("device_config", devices_config)
+    @allure.feature("人-智能侦测")
+    @allure.story("需人工核查日志和录屏")
+    def test_remote_non_detection_area(self, device_config):
+        # 检查键是否存在，存在则执行当前用例，否则跳过
+        remote_items = device_config['ipc']['detection_alarm']['items']['person']
+        BasePage().check_key_in_yaml(remote_items, 'smart_detection')
+
+        # 启动app，并开启录屏
+        driver.start_app(True)
+
+        # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击菜单项@allure.feature进入侦测报警
+        RemoteSetting().access_in_detection_alarm(device_list_name=device_config['device_list_name'])
+
+        # 点击并测试人——智能侦测
+        RemoteDetectionAlarm().click_test_person_smart_detection()
+
+    @pytest.mark.parametrize("device_config", devices_config)
+    @allure.feature("人-延时报警")
+    @allure.story("需人工核查日志和录屏")
+    def test_remote_non_detection_area(self, device_config):
+        # 检查键是否存在，存在则执行当前用例，否则跳过
+        remote_items = device_config['ipc']['detection_alarm']['items']['person']
+        BasePage().check_key_in_yaml(remote_items, 'alarm_delay')
+
+        # 启动app，并开启录屏
+        driver.start_app(True)
+
+        # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击菜单项@allure.feature进入侦测报警
+        RemoteSetting().access_in_detection_alarm(device_list_name=device_config['device_list_name'])
+
+        # 点击并测试人——智能侦测
+        RemoteDetectionAlarm().click_test_person_alarm_delay()
+
+    @pytest.mark.parametrize("device_config", devices_config)
+    @allure.feature("车-目标尺寸")
+    @allure.story("需人工核查日志和录屏")
+    def test_remote_non_detection_area(self, device_config):
+        # 检查键是否存在，存在则执行当前用例，否则跳过
+        remote_items = device_config['ipc']['detection_alarm']['items']['car']
+        BasePage().check_key_in_yaml(remote_items, 'object_size')
+
+        # 启动app，并开启录屏
+        driver.start_app(True)
+
+        # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击菜单项@allure.feature进入侦测报警
+        RemoteSetting().access_in_detection_alarm(device_list_name=device_config['device_list_name'])
+
+        # 点击并测试车——目标尺寸
+        main_texts_res, texts_res = RemoteDetectionAlarm().click_test_car_object_size(
+            main_texts=remote_items['text'],
+            texts=remote_items['object_size']['text'])
+        # 断言
+        assert main_texts_res is True
+        assert texts_res is True
+
+    @pytest.mark.parametrize("device_config", devices_config)
+    @allure.feature("车-智能侦测")
+    @allure.story("需人工核查日志和录屏")
+    def test_remote_non_detection_area(self, device_config):
+        # 检查键是否存在，存在则执行当前用例，否则跳过
+        remote_items = device_config['ipc']['detection_alarm']['items']['car']
+        BasePage().check_key_in_yaml(remote_items, 'smart_detection')
+
+        # 启动app，并开启录屏
+        driver.start_app(True)
+
+        # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击菜单项@allure.feature进入侦测报警
+        RemoteSetting().access_in_detection_alarm(device_list_name=device_config['device_list_name'])
+
+        # 点击并测试车——智能侦测
+        RemoteDetectionAlarm().click_test_car_smart_detection()
+
+    @pytest.mark.parametrize("device_config", devices_config)
+    @allure.feature("车-延时报警")
+    @allure.story("需人工核查日志和录屏")
+    def test_remote_non_detection_area(self, device_config):
+        # 检查键是否存在，存在则执行当前用例，否则跳过
+        remote_items = device_config['ipc']['detection_alarm']['items']['car']
+        BasePage().check_key_in_yaml(remote_items, 'alarm_delay')
+
+        # 启动app，并开启录屏
+        driver.start_app(True)
+
+        # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击菜单项@allure.feature进入侦测报警
+        RemoteSetting().access_in_detection_alarm(device_list_name=device_config['device_list_name'])
+
+        # 点击并测试车——智能侦测
+        RemoteDetectionAlarm().click_test_car_alarm_delay()
+
+    @pytest.mark.parametrize("device_config", devices_config)
+    @allure.feature("动物-目标尺寸")
+    @allure.story("需人工核查日志和录屏")
+    def test_remote_non_detection_area(self, device_config):
+        # 检查键是否存在，存在则执行当前用例，否则跳过
+        remote_items = device_config['ipc']['detection_alarm']['items']['animal']
+        BasePage().check_key_in_yaml(remote_items, 'object_size')
+
+        # 启动app，并开启录屏
+        driver.start_app(True)
+
+        # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击菜单项@allure.feature进入侦测报警
+        RemoteSetting().access_in_detection_alarm(device_list_name=device_config['device_list_name'])
+
+        # 点击并测试动物——目标尺寸
+        main_texts_res, texts_res = RemoteDetectionAlarm().click_test_animal_object_size(
+            main_texts=remote_items['text'],
+            texts=remote_items['object_size']['text'])
+        # 断言
+        assert main_texts_res is True
+        assert texts_res is True
+
+    @pytest.mark.parametrize("device_config", devices_config)
+    @allure.feature("动物-智能侦测")
+    @allure.story("需人工核查日志和录屏")
+    def test_remote_non_detection_area(self, device_config):
+        # 检查键是否存在，存在则执行当前用例，否则跳过
+        remote_items = device_config['ipc']['detection_alarm']['items']['animal']
+        BasePage().check_key_in_yaml(remote_items, 'smart_detection')
+
+        # 启动app，并开启录屏
+        driver.start_app(True)
+
+        # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击菜单项@allure.feature进入侦测报警
+        RemoteSetting().access_in_detection_alarm(device_list_name=device_config['device_list_name'])
+
+        # 点击并测试动物——智能侦测
+        RemoteDetectionAlarm().click_test_animal_smart_detection()
+
+    @pytest.mark.parametrize("device_config", devices_config)
+    @allure.feature("动物-延时报警")
+    @allure.story("需人工核查日志和录屏")
+    def test_remote_non_detection_area(self, device_config):
+        # 检查键是否存在，存在则执行当前用例，否则跳过
+        remote_items = device_config['ipc']['detection_alarm']['items']['animal']
+        BasePage().check_key_in_yaml(remote_items, 'alarm_delay')
+
+        # 启动app，并开启录屏
+        driver.start_app(True)
+
+        # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击菜单项@allure.feature进入侦测报警
+        RemoteSetting().access_in_detection_alarm(device_list_name=device_config['device_list_name'])
+
+        # 点击并测试动物——智能侦测
+        RemoteDetectionAlarm().click_test_animal_alarm_delay()
+
+    @pytest.mark.parametrize("device_config", devices_config)
+    @allure.feature("包裹-目标尺寸")
+    @allure.story("需人工核查日志和录屏")
+    def test_remote_non_detection_area(self, device_config):
+        # 检查键是否存在，存在则执行当前用例，否则跳过
+        remote_items = device_config['ipc']['detection_alarm']['items']['package']
+        BasePage().check_key_in_yaml(remote_items, 'object_size')
+
+        # 启动app，并开启录屏
+        driver.start_app(True)
+
+        # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击菜单项@allure.feature进入侦测报警
+        RemoteSetting().access_in_detection_alarm(device_list_name=device_config['device_list_name'])
+
+        # 点击并测试包裹——目标尺寸
+        main_texts_res, texts_res = RemoteDetectionAlarm().click_test_package_object_size(
+            main_texts=remote_items['text'],
+            texts=remote_items['object_size']['text'])
+        # 断言
+        assert main_texts_res is True
+        assert texts_res is True
+
+    @pytest.mark.parametrize("device_config", devices_config)
+    @allure.feature("MD/其他")
+    @allure.story("需人工核查日志和录屏")
+    def test_remote_non_detection_area(self, device_config):
+        # 检查键是否存在，存在则执行当前用例，否则跳过
+        remote_items = device_config['ipc']['detection_alarm']['items']['motion_detection']
+        BasePage().check_key_in_yaml(remote_items, 'add_multi_time_sensitivity')
+
+        # 启动app，并开启录屏
+        driver.start_app(True)
+
+        # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击菜单项@allure.feature进入侦测报警
+        RemoteSetting().access_in_detection_alarm(device_list_name=device_config['device_list_name'])
+
+        # 点击并测试MD/其他-添加灵敏度分段
+        main_texts_res, texts_res = RemoteDetectionAlarm().click_test_motion_detect(
+            main_texts=remote_items['text'],
+            add_multi_time_texts=remote_items['add_multi_time_sensitivity']['text'])
+
+        # 断言
+        assert main_texts_res is True
+        assert texts_res is True
+
+    @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("人-非侦测区域")
     @allure.story("需人工核查日志和录屏")
     def test_remote_non_detection_area(self, device_config):
@@ -71,6 +262,8 @@ class TestRemoteDetectionAlarm:
 
         # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击菜单项@allure.feature进入侦测报警
         RemoteSetting().access_in_detection_alarm(device_list_name=device_config['device_list_name'])
+
+        # TODO: 待完善
 
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("非侦测区域")
@@ -99,8 +292,29 @@ class TestRemoteDetectionAlarm:
         # 测试绘制非侦测区域: 横屏
         RemoteDetectionAlarm().draw_landscape_non_detection_area()
 
+        # TODO: 待完善
+
         # 断言
         assert page_fun is True
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("移动标记")
@@ -262,7 +476,7 @@ class TestRemoteDetectionAlarm:
         # page_fun = RemoteSetting().scroll_check_funcs2(texts=alarm_type_list)
 
         # 进入侦测报警，遍历人、车、动物等报警类型设置中的目标尺寸
-        RemoteDetectionAlarm().click_and_test_object_size(object_list=remote_items['alarm_type']['text'])
+
 
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("智能追踪")
