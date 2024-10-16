@@ -75,6 +75,71 @@ class BasePage:
         elif self.platform == "ios":
             return self.driver(xpath=xpath_expression)
 
+    def long_click_by(self, text_to_find, el_type='text', max_attempts=5, scroll_pause=0.5, duration=3000):
+        """
+        在可滚动视图中查找并点击指定文本或xpath的元素。
+        :param text_to_find: 要查找的文本/xpath
+        :param el_type: 元素定位类型，支持文本text(label)和xpath
+        :param max_attempts: 最大尝试次数
+        :param scroll_pause: 滚动后的暂停时间，秒
+        :param duration: ios长按时间，毫秒，默认3秒
+        """
+        attempt = 0
+        time.sleep(2)
+
+        try:
+            if self.platform == "android":
+                # 如果未找到，则尝试滚动查找
+                while attempt < max_attempts:
+                    # 根据类型初始化查找元素
+                    if el_type == "text":
+                        element = self.driver(text=text_to_find)
+                    elif el_type == "xpath":
+                        element = self.driver.xpath(text_to_find)
+                    else:
+                        raise ValueError("你可能输入了不支持的元素查找类型el_type！")
+
+                    # 检查元素是否存在
+                    if element.exists:
+                        logger.info(f"元素已找到: '{text_to_find}'")
+                        element.long_click()
+                        logger.info(f"长按 '{text_to_find}'")
+                        return True
+
+                    # 滑动屏幕
+                    logger.info(f"正在尝试滚动查找 '{text_to_find}'... 第{attempt + 1}次")
+                    self.driver(scrollable=True).scroll(steps=150)
+                    time.sleep(scroll_pause)  # 等待页面稳定
+
+                    attempt += 1
+
+            elif self.platform == "ios":
+                while attempt < max_attempts:
+                    # 根据el_type初始化查找元素
+                    if el_type == "text":
+                        element = self.driver(label=text_to_find)
+                    elif el_type == "xpath":
+                        element = self.driver(xpath=text_to_find)
+                    else:
+                        raise ValueError("你可能输入了不支持的元素查找类型el_type···")
+
+                    # 尝试查找元素并长按
+                    if element.exists:
+                        logger.info(f"元素已找到: '{text_to_find}'")
+                        element.press(duration=duration)
+                        logger.info(f"长按 '{text_to_find}'")
+                        return True
+
+                    # 滑动屏幕
+                    logger.info(f"正在尝试滚动查找 '{text_to_find}'... 第{attempt + 1}次")
+                    self.driver.swipe_up()
+                    time.sleep(scroll_pause)  # 等待页面稳定
+
+                    attempt += 1
+
+        except Exception as err:
+            pytest.fail(f"函数执行出错: {str(err)}")
+
     def click_by_text(self, text, retries=2, is_click_again: Literal[True, False] = False):
         """
         :param text: 通过文本定位单个元素，并进行点击。
@@ -393,7 +458,7 @@ class BasePage:
                         logger.info(f"元素已找到: '{text_to_find}'")
                         element.click()
                         # self.click_by_text(text_to_find)
-                        logger.info(f"直接点击 '{text_to_find}'")
+                        logger.info(f"点击 '{text_to_find}'")
                         return True
 
                     # 滑动屏幕
@@ -418,7 +483,7 @@ class BasePage:
                         logger.info(f"元素已找到: '{text_to_find}'")
                         element.click()
                         # self.click_by_text(text_to_find)
-                        logger.info(f"直接点击 '{text_to_find}'")
+                        logger.info(f"点击 '{text_to_find}'")
                         return True
 
                     # 滑动屏幕

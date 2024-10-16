@@ -132,14 +132,20 @@ d = u2.connect_usb()
 # d.swipe_ext(Direction.FORWARD) # 页面下翻, 等价于 d.swipe_ext("up"), 只是更好理解
 # d.swipe_ext(Direction.BACKWARD) # 页面上翻
 
-a = d(text='切换Wi-Fi').exists
-print(a)
+# a = d(text='切换Wi-Fi').exists
+e = d.xpath(xpath='//*[@text="企业微信"]')
+e.long_click()
 # d.swipe_ext(Direction.HORIZ_FORWARD)  # 页面水平右翻
 # d.swipe_ext(Direction.HORIZ_BACKWARD)  # 页面水平左翻
 # e = d.xpath(xpath='//*[@text="开始测速"]')
 # e.click()
 # e.scroll('up')
 
-# c = wda.Client('http://localhost:8100')
-# s = c.session()
-# s.swipe_right()
+c = wda.Client('http://localhost:8100')
+s = c.session()
+s.swipe_right()
+
+# 使用 press() 方法在元素上按住一段时间后再执行操作
+elem = s(xpath='image_id')
+elem.press(duration=5000)
+
