@@ -190,18 +190,18 @@ class RemoteDetectionAlarm(BasePage):
         self.scroll_and_click_by_text(text_to_find=self.landscape_bar_portrait_button, el_type='xpath')
 
         # 点击保存
-        self.scroll_and_click_by_text(text_to_find='保存')
+        # self.scroll_and_click_by_text(text_to_find='保存')
 
-    def click_and_test_object_size(self):
+    def click_test_both_object_size(self):
         """
-        点击并测试目标尺寸.
+        点击并测试目标尺寸.适用左、右摄像头
         测试策略：
         分别点击和绘制最小目标、最大目标。横屏
         :return:
         """
         try:
             # 进入目标尺寸页面
-            self.scroll_and_click_by_text("目标尺寸")
+            # self.scroll_and_click_by_text("目标尺寸")
             time.sleep(1)
 
             # 定义通用操作：点击摄像机、绘制最小/最大目标
@@ -237,11 +237,55 @@ class RemoteDetectionAlarm(BasePage):
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
-    def click_test_person_object_size(self, main_texts, texts):
+    def clk_test_single_object_size(self):
+        """
+        点击并测试目标尺寸.适用单摄像头
+        测试策略：
+        分别点击和绘制最小目标、最大目标。横屏
+        :return:
+        :return:
+        """
+        try:
+            # 进入目标尺寸页面
+            # self.scroll_and_click_by_text("目标尺寸")
+            time.sleep(1)
+
+            # 定义通用操作：绘制最小/最大目标
+            def click_camera_and_draw():
+                self.get_coordinates_and_draw(mode='xpath',
+                                              id_or_xpath=self.object_size_drawable_range,
+                                              draw_area='左上')  # 绘制最小目标
+                self.get_coordinates_and_draw(mode='xpath',
+                                              id_or_xpath=self.object_size_drawable_range,
+                                              draw_area='全屏')  # 绘制最大目标
+
+            # 对摄像机执行操作
+            click_camera_and_draw()
+
+            # 点击取消后重新进入目标尺寸页面
+            self.scroll_and_click_by_text('取消')
+            self.scroll_and_click_by_text("目标尺寸")
+
+            # 再次对摄像机执行相同操作
+            click_camera_and_draw()
+
+            # 点击横屏按钮
+            self.scroll_and_click_by_text(text_to_find=self.fullscreen_object, el_type='xpath')
+            # 点击返回竖屏按钮
+            self.scroll_and_click_by_text(text_to_find=self.landscape_fullscreen_object, el_type='xpath')
+
+            # 点击保存
+            self.scroll_and_click_by_text('保存')
+
+        except Exception as e:
+            pytest.fail(f"函数执行出错: {str(e)}")
+
+    def click_test_person_object_size(self, main_texts, texts, is_both):
         """
         点击并测试人——目标尺寸
         :param main_texts: 人主页文案
         :param texts: 目标尺寸页的文案内容
+        :param is_both: 是否双摄像头
         :return:
         """
         try:
@@ -250,8 +294,12 @@ class RemoteDetectionAlarm(BasePage):
             main_texts_res = RemoteSetting().scroll_check_funcs2(texts=main_texts)
 
             # 验证目标尺寸文案
+            self.scroll_and_click_by_text('目标尺寸')
             texts_res = RemoteSetting().scroll_check_funcs2(texts=texts)
-            self.click_and_test_object_size()
+            if not is_both:
+                self.clk_test_single_object_size()
+            else:
+                self.click_test_both_object_size()
 
             return main_texts_res, texts_res
         except Exception as e:
@@ -295,11 +343,12 @@ class RemoteDetectionAlarm(BasePage):
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
-    def click_test_car_object_size(self, main_texts, texts):
+    def click_test_car_object_size(self, main_texts, texts, is_both):
         """
         点击并测试车——目标尺寸
         :param main_texts: 车主页文案
         :param texts: 目标尺寸页的文案内容
+        :param is_both: 是否双摄像头
         :return:
         """
         try:
@@ -308,8 +357,12 @@ class RemoteDetectionAlarm(BasePage):
             main_texts_res = RemoteSetting().scroll_check_funcs2(texts=main_texts)
 
             # 验证目标尺寸文案
+            self.scroll_and_click_by_text('目标尺寸')
             texts_res = RemoteSetting().scroll_check_funcs2(texts=texts)
-            self.click_and_test_object_size()
+            if not is_both:
+                self.clk_test_single_object_size()
+            else:
+                self.click_test_both_object_size()
 
             return main_texts_res, texts_res
         except Exception as e:
@@ -357,11 +410,12 @@ class RemoteDetectionAlarm(BasePage):
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
-    def click_test_animal_object_size(self, main_texts, texts):
+    def click_test_animal_object_size(self, main_texts, texts, is_both):
         """
         点击并测试动物——目标尺寸
         :param main_texts: 动物主页文案
         :param texts: 目标尺寸页的文案内容
+        :param is_both: 是否双摄像头
         :return:
         """
         try:
@@ -370,8 +424,12 @@ class RemoteDetectionAlarm(BasePage):
             main_texts_res = RemoteSetting().scroll_check_funcs2(texts=main_texts)
 
             # 验证目标尺寸文案
+            self.scroll_and_click_by_text('目标尺寸')
             texts_res = RemoteSetting().scroll_check_funcs2(texts=texts)
-            self.click_and_test_object_size()
+            if not is_both:
+                self.clk_test_single_object_size()
+            else:
+                self.click_test_both_object_size()
 
             return main_texts_res, texts_res
         except Exception as e:
@@ -419,11 +477,12 @@ class RemoteDetectionAlarm(BasePage):
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
-    def click_test_package_object_size(self, main_texts, texts):
+    def click_test_package_object_size(self, main_texts, texts, is_both):
         """
         点击并测试包裹——目标尺寸
         :param main_texts: 包裹主页文案
         :param texts: 目标尺寸页的文案内容
+        :param is_both: 是否双摄像头
         :return:
         """
         try:
@@ -432,18 +491,23 @@ class RemoteDetectionAlarm(BasePage):
             main_texts_res = RemoteSetting().scroll_check_funcs2(texts=main_texts)
 
             # 验证目标尺寸文案
+            self.scroll_and_click_by_text('目标尺寸')
             texts_res = RemoteSetting().scroll_check_funcs2(texts=texts)
-            self.click_and_test_object_size()
+            if not is_both:
+                self.clk_test_single_object_size()
+            else:
+                self.click_test_both_object_size()
 
             return main_texts_res, texts_res
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
-    def clk_test_ai_non_detect_area(self, non_detect_type, edit_texts):
+    def clk_test_ai_non_detect_area(self, non_detect_type, edit_texts, is_both):
         """
         点击并测试某某非侦测选项——>非侦测区域
         :param non_detect_type: 非侦测选项的入口：人、车、动物、包裹
         :param edit_texts: 非侦测区域编辑页文案
+        :param is_both: 是否双摄像头
         :return:
         """
         try:
@@ -451,11 +515,22 @@ class RemoteDetectionAlarm(BasePage):
             self.scroll_and_click_by_text(text_to_find='非侦测区域')
             # 验证非侦测区域编辑页文案
             edit_texts_res = RemoteSetting().scroll_check_funcs2(texts=edit_texts)
-
-            # 测试竖屏绘制非侦测区域
-            self.draw_portrait_non_detection_area()
-            # 测试横屏绘制非侦测区域
-            self.draw_landscape_non_detection_area()
+            if not is_both:
+                # 测试竖屏绘制非侦测区域
+                self.draw_portrait_non_detection_area()
+                # 测试横屏绘制非侦测区域
+                self.draw_landscape_non_detection_area()
+            else:
+                # 测试竖屏绘制非侦测区域
+                self.scroll_and_click_by_text('左摄像机')
+                self.draw_portrait_non_detection_area()
+                self.scroll_and_click_by_text('右摄像机')
+                self.draw_portrait_non_detection_area()
+                # 测试横屏绘制非侦测区域
+                self.scroll_and_click_by_text('左摄像机')
+                self.draw_landscape_non_detection_area()
+                self.scroll_and_click_by_text('右摄像机')
+                self.draw_landscape_non_detection_area()
 
             return edit_texts_res
         except Exception as e:
@@ -482,21 +557,36 @@ class RemoteDetectionAlarm(BasePage):
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
-    def clk_test_main_non_detect_area(self, edit_texts):
+    def clk_test_main_non_detect_area(self, edit_texts, is_both):
         """
         点击并测试侦测报警主页——>非侦测区域
         :param edit_texts: 非侦测区域编辑页文案
+        :param is_both: 是否双摄像头
         :return:
         """
         try:
-            self.scroll_and_click_by_text(text_to_find='非侦测区域')  # 点击侦测报警主页
+            self.scroll_and_click_by_text(text_to_find='非侦测区域')  # 点击侦测报警主页》非侦测区域
             # 验证非侦测区域编辑页文案
             edit_texts_res = RemoteSetting().scroll_check_funcs2(texts=edit_texts)
 
-            # 测试竖屏绘制非侦测区域
-            self.draw_portrait_non_detection_area()
-            # 测试横屏绘制非侦测区域
-            self.draw_landscape_non_detection_area()
+            if not is_both:
+                # 测试竖屏绘制非侦测区域
+                self.draw_portrait_non_detection_area()
+                # 测试横屏绘制非侦测区域
+                self.draw_landscape_non_detection_area()
+            else:
+                # 测试竖屏绘制非侦测区域
+                self.scroll_and_click_by_text('左摄像机')
+                self.draw_portrait_non_detection_area()
+                self.scroll_and_click_by_text('右摄像机')
+                self.draw_portrait_non_detection_area()
+                # 测试横屏绘制非侦测区域
+                self.scroll_and_click_by_text('左摄像机')
+                self.draw_landscape_non_detection_area()
+                self.scroll_and_click_by_text('右摄像机')
+                self.draw_landscape_non_detection_area()
+                # 点击保存
+                self.scroll_and_click_by_text(text_to_find='保存')
 
             return edit_texts_res
         except Exception as e:

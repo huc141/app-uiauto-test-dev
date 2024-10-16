@@ -53,8 +53,10 @@ class TestRemoteDetectionAlarm:
         RemoteSetting().access_in_detection_alarm(device_list_name=device_config['device_list_name'])
 
         # 点击并测试人——目标尺寸
+        is_both = remote_items['object_size']['left_right_camera']
         main_texts_res, texts_res = RemoteDetectionAlarm().click_test_person_object_size(main_texts=remote_items['text'],
-                                                                                         texts=remote_items['object_size']['text'])
+                                                                                         texts=remote_items['object_size']['text'],
+                                                                                         is_both=is_both)
         # 断言
         assert main_texts_res is True
         assert texts_res is True
@@ -75,8 +77,10 @@ class TestRemoteDetectionAlarm:
         RemoteSetting().access_in_detection_alarm(device_list_name=device_config['device_list_name'])
 
         # 点击人>非侦测区域
+        is_both = remote_items['non_detection_area']['left_right_camera']
         RemoteDetectionAlarm().clk_test_ai_non_detect_area(non_detect_type='人',
-                                                           edit_texts=remote_items['non_detection_area']['text'])
+                                                           edit_texts=remote_items['non_detection_area']['text'],
+                                                           is_both=is_both)
 
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("人-智能侦测")
@@ -146,9 +150,10 @@ class TestRemoteDetectionAlarm:
         RemoteSetting().access_in_detection_alarm(device_list_name=device_config['device_list_name'])
 
         # 点击并测试车——目标尺寸
+        is_both = remote_items['object_size']['left_right_camera']
         main_texts_res, texts_res = RemoteDetectionAlarm().click_test_car_object_size(
             main_texts=remote_items['text'],
-            texts=remote_items['object_size']['text'])
+            texts=remote_items['object_size']['text'], is_both=is_both)
         # 断言
         assert main_texts_res is True
         assert texts_res is True
@@ -187,8 +192,10 @@ class TestRemoteDetectionAlarm:
         RemoteSetting().access_in_detection_alarm(device_list_name=device_config['device_list_name'])
 
         # 点击车>非侦测区域
+        is_both = remote_items['non_detection_area']['left_right_camera']
         RemoteDetectionAlarm().clk_test_ai_non_detect_area(non_detect_type='车',
-                                                           edit_texts=remote_items['non_detection_area']['text'])
+                                                           edit_texts=remote_items['non_detection_area']['text'],
+                                                           is_both=is_both)
 
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("车-智能侦测")
@@ -242,9 +249,10 @@ class TestRemoteDetectionAlarm:
         RemoteSetting().access_in_detection_alarm(device_list_name=device_config['device_list_name'])
 
         # 点击并测试动物——目标尺寸
+        is_both = remote_items['object_size']['left_right_camera']
         main_texts_res, texts_res = RemoteDetectionAlarm().click_test_animal_object_size(
             main_texts=remote_items['text'],
-            texts=remote_items['object_size']['text'])
+            texts=remote_items['object_size']['text'], is_both=is_both)
         # 断言
         assert main_texts_res is True
         assert texts_res is True
@@ -283,8 +291,10 @@ class TestRemoteDetectionAlarm:
         RemoteSetting().access_in_detection_alarm(device_list_name=device_config['device_list_name'])
 
         # 点击车>非侦测区域
+        is_both = remote_items['non_detection_area']['left_right_camera']
         RemoteDetectionAlarm().clk_test_ai_non_detect_area(non_detect_type='动物',
-                                                           edit_texts=remote_items['non_detection_area']['text'])
+                                                           edit_texts=remote_items['non_detection_area']['text'],
+                                                           is_both=is_both)
 
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("动物-智能侦测")
@@ -338,9 +348,10 @@ class TestRemoteDetectionAlarm:
         RemoteSetting().access_in_detection_alarm(device_list_name=device_config['device_list_name'])
 
         # 点击并测试包裹——目标尺寸
+        is_both = remote_items['object_size']['left_right_camera']
         main_texts_res, texts_res = RemoteDetectionAlarm().click_test_package_object_size(
             main_texts=remote_items['text'],
-            texts=remote_items['object_size']['text'])
+            texts=remote_items['object_size']['text'], is_both=is_both)
         # 断言
         assert main_texts_res is True
         assert texts_res is True
@@ -379,8 +390,10 @@ class TestRemoteDetectionAlarm:
         RemoteSetting().access_in_detection_alarm(device_list_name=device_config['device_list_name'])
 
         # 点击包裹>非侦测区域
+        is_both = remote_items['non_detection_area']['left_right_camera']
         RemoteDetectionAlarm().clk_test_ai_non_detect_area(non_detect_type='包裹',
-                                                           edit_texts=remote_items['non_detection_area']['text'])
+                                                           edit_texts=remote_items['non_detection_area']['text'],
+                                                           is_both=is_both)
 
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("MD/其他")
@@ -422,7 +435,9 @@ class TestRemoteDetectionAlarm:
         RemoteSetting().access_in_detection_alarm(device_list_name=device_config['device_list_name'])
 
         # 点击测试侦测报警主页——>非侦测区域
-        edit_texts_res = RemoteDetectionAlarm().clk_test_main_non_detect_area(edit_texts=remote_items['non_detection_area']['text'])
+        is_both = remote_items['non_detection_area']['left_right_camera']
+        edit_texts_res = RemoteDetectionAlarm().clk_test_main_non_detect_area(edit_texts=remote_items['non_detection_area']['text'],
+                                                                              is_both=is_both)
 
         # 断言
         assert edit_texts_res is True
@@ -470,3 +485,4 @@ class TestRemoteDetectionAlarm:
         # 进入侦测报警>移动标记
         RemoteDetectionAlarm().click_motion_mark_switch()
 
+        # 不确定移动标记在rn上加在哪里了
