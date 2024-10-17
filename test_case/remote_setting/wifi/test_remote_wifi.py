@@ -88,7 +88,7 @@ class TestRemoteWifi:
     @allure.feature("未连接")
     @allure.story("需人工核查日志和录屏")
     @pytest.mark.skip
-    def test_disconnect(self, device_config):
+    def test_wifi_disconnect(self, device_config):
         pass
 
     @pytest.mark.parametrize("device_config", devices_config)

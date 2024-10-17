@@ -31,8 +31,8 @@ class TestRemoteDetectionAlarm:
         # 验证侦测报警主页文案
         smart_tracking = BasePage().is_key_in_yaml(remote_items, 'smart_tracking')  # 获取该设备是否支持智能追踪
         main_text_res = RemoteDetectionAlarm().check_detection_alarm_main_text(
-            main_text=remote_items['detection_alarm']['text'],
-            smart_tracking=smart_tracking)
+                                                main_text=remote_items['detection_alarm']['text'],
+                                                smart_tracking=smart_tracking)
 
         # 断言
         assert main_text_res is True
@@ -41,7 +41,7 @@ class TestRemoteDetectionAlarm:
     @allure.feature("人-目标尺寸")
     @allure.story("需人工核查日志和录屏")
     @pytest.mark.skip
-    def test_remote_non_detection_area(self, device_config):
+    def test_remote_person_object_size(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['detection_alarm']['items']['person']
         BasePage().check_key_in_yaml(remote_items, 'object_size')
@@ -65,7 +65,7 @@ class TestRemoteDetectionAlarm:
     @allure.feature("人-非侦测区域")
     @allure.story("需人工核查日志和录屏")
     @pytest.mark.skip
-    def test_remote_non_detection_area(self, device_config):
+    def test_remote_person_non_detect_area(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['detection_alarm']['items']['person']
         BasePage().check_key_in_yaml(remote_items, 'non_detection_area')
@@ -85,7 +85,7 @@ class TestRemoteDetectionAlarm:
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("人-智能侦测")
     @allure.story("需人工核查日志和录屏")
-    def test_remote_non_detection_area(self, device_config):
+    def test_remote_person_smart_detection(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['detection_alarm']['items']['person']
         BasePage().check_key_in_yaml(remote_items, 'smart_detection')
@@ -103,7 +103,7 @@ class TestRemoteDetectionAlarm:
     @allure.feature("人-灵敏度")
     @allure.story("需人工核查日志和录屏")
     @pytest.mark.skip
-    def test_remote_non_detection_area(self, device_config):
+    def test_remote_person_draw_sensitivity(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['detection_alarm']['items']['person']
         BasePage().check_key_in_yaml(remote_items, 'sensitivity')
@@ -120,7 +120,7 @@ class TestRemoteDetectionAlarm:
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("人-延时报警")
     @allure.story("需人工核查日志和录屏")
-    def test_remote_non_detection_area(self, device_config):
+    def test_remote_person_alarm_delay(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['detection_alarm']['items']['person']
         BasePage().check_key_in_yaml(remote_items, 'alarm_delay')
@@ -138,7 +138,7 @@ class TestRemoteDetectionAlarm:
     @allure.feature("车-目标尺寸")
     @allure.story("需人工核查日志和录屏")
     @pytest.mark.skip
-    def test_remote_non_detection_area(self, device_config):
+    def test_remote_car_object_size(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['detection_alarm']['items']['car']
         BasePage().check_key_in_yaml(remote_items, 'object_size')
@@ -151,9 +151,9 @@ class TestRemoteDetectionAlarm:
 
         # 点击并测试车——目标尺寸
         is_both = remote_items['object_size']['left_right_camera']
-        main_texts_res, texts_res = RemoteDetectionAlarm().click_test_car_object_size(
-            main_texts=remote_items['text'],
-            texts=remote_items['object_size']['text'], is_both=is_both)
+        main_texts_res, texts_res = RemoteDetectionAlarm().click_test_car_object_size(main_texts=remote_items['text'],
+                                                                                      texts=remote_items['object_size']['text'],
+                                                                                      is_both=is_both)
         # 断言
         assert main_texts_res is True
         assert texts_res is True
@@ -162,7 +162,7 @@ class TestRemoteDetectionAlarm:
     @allure.feature("车-灵敏度")
     @allure.story("需人工核查日志和录屏")
     @pytest.mark.skip
-    def test_remote_non_detection_area(self, device_config):
+    def test_remote_car_draw_sensitivity(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['detection_alarm']['items']['car']
         BasePage().check_key_in_yaml(remote_items, 'sensitivity')
@@ -180,7 +180,7 @@ class TestRemoteDetectionAlarm:
     @allure.feature("车-非侦测区域")
     @allure.story("需人工核查日志和录屏")
     @pytest.mark.skip
-    def test_remote_non_detection_area(self, device_config):
+    def test_remote_car_non_detection_area(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['detection_alarm']['items']['car']
         BasePage().check_key_in_yaml(remote_items, 'non_detection_area')
@@ -201,7 +201,7 @@ class TestRemoteDetectionAlarm:
     @allure.feature("车-智能侦测")
     @allure.story("需人工核查日志和录屏")
     @pytest.mark.skip
-    def test_remote_non_detection_area(self, device_config):
+    def test_remote_car_smart_detection(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['detection_alarm']['items']['car']
         BasePage().check_key_in_yaml(remote_items, 'smart_detection')
@@ -219,7 +219,7 @@ class TestRemoteDetectionAlarm:
     @allure.feature("车-延时报警")
     @allure.story("需人工核查日志和录屏")
     @pytest.mark.skip
-    def test_remote_non_detection_area(self, device_config):
+    def test_remote_car_alarm_delay(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['detection_alarm']['items']['car']
         BasePage().check_key_in_yaml(remote_items, 'alarm_delay')
@@ -237,7 +237,7 @@ class TestRemoteDetectionAlarm:
     @allure.feature("动物-目标尺寸")
     @allure.story("需人工核查日志和录屏")
     @pytest.mark.skip
-    def test_remote_non_detection_area(self, device_config):
+    def test_remote_animal_object_size(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['detection_alarm']['items']['animal']
         BasePage().check_key_in_yaml(remote_items, 'object_size')
@@ -250,9 +250,9 @@ class TestRemoteDetectionAlarm:
 
         # 点击并测试动物——目标尺寸
         is_both = remote_items['object_size']['left_right_camera']
-        main_texts_res, texts_res = RemoteDetectionAlarm().click_test_animal_object_size(
-            main_texts=remote_items['text'],
-            texts=remote_items['object_size']['text'], is_both=is_both)
+        main_texts_res, texts_res = RemoteDetectionAlarm().click_test_animal_object_size(main_texts=remote_items['text'],
+                                                                                         texts=remote_items['object_size']['text'],
+                                                                                         is_both=is_both)
         # 断言
         assert main_texts_res is True
         assert texts_res is True
@@ -261,7 +261,7 @@ class TestRemoteDetectionAlarm:
     @allure.feature("动物-灵敏度")
     @allure.story("需人工核查日志和录屏")
     @pytest.mark.skip
-    def test_remote_non_detection_area(self, device_config):
+    def test_remote_animal_draw_sensitivity(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['detection_alarm']['items']['animal']
         BasePage().check_key_in_yaml(remote_items, 'sensitivity')
@@ -279,7 +279,7 @@ class TestRemoteDetectionAlarm:
     @allure.feature("动物-非侦测区域")
     @allure.story("需人工核查日志和录屏")
     @pytest.mark.skip
-    def test_remote_non_detection_area(self, device_config):
+    def test_remote_animal_non_detection_area(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['detection_alarm']['items']['animal']
         BasePage().check_key_in_yaml(remote_items, 'non_detection_area')
@@ -300,7 +300,7 @@ class TestRemoteDetectionAlarm:
     @allure.feature("动物-智能侦测")
     @allure.story("需人工核查日志和录屏")
     @pytest.mark.skip
-    def test_remote_non_detection_area(self, device_config):
+    def test_remote_animal_smart_detection(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['detection_alarm']['items']['animal']
         BasePage().check_key_in_yaml(remote_items, 'smart_detection')
@@ -318,7 +318,7 @@ class TestRemoteDetectionAlarm:
     @allure.feature("动物-延时报警")
     @allure.story("需人工核查日志和录屏")
     @pytest.mark.skip
-    def test_remote_non_detection_area(self, device_config):
+    def test_remote_animal_alarm_delay(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['detection_alarm']['items']['animal']
         BasePage().check_key_in_yaml(remote_items, 'alarm_delay')
@@ -336,7 +336,7 @@ class TestRemoteDetectionAlarm:
     @allure.feature("包裹-目标尺寸")
     @allure.story("需人工核查日志和录屏")
     @pytest.mark.skip
-    def test_remote_non_detection_area(self, device_config):
+    def test_remote_package_object_size(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['detection_alarm']['items']['package']
         BasePage().check_key_in_yaml(remote_items, 'object_size')
@@ -349,9 +349,9 @@ class TestRemoteDetectionAlarm:
 
         # 点击并测试包裹——目标尺寸
         is_both = remote_items['object_size']['left_right_camera']
-        main_texts_res, texts_res = RemoteDetectionAlarm().click_test_package_object_size(
-            main_texts=remote_items['text'],
-            texts=remote_items['object_size']['text'], is_both=is_both)
+        main_texts_res, texts_res = RemoteDetectionAlarm().click_test_package_object_size(main_texts=remote_items['text'],
+                                                                                          texts=remote_items['object_size']['text'],
+                                                                                          is_both=is_both)
         # 断言
         assert main_texts_res is True
         assert texts_res is True
@@ -360,7 +360,7 @@ class TestRemoteDetectionAlarm:
     @allure.feature("包裹-灵敏度")
     @allure.story("需人工核查日志和录屏")
     @pytest.mark.skip
-    def test_remote_non_detection_area(self, device_config):
+    def test_remote_package_draw_sensitivity(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['detection_alarm']['items']['package']
         BasePage().check_key_in_yaml(remote_items, 'sensitivity')
@@ -378,7 +378,7 @@ class TestRemoteDetectionAlarm:
     @allure.feature("包裹-非侦测区域")
     @allure.story("需人工核查日志和录屏")
     @pytest.mark.skip
-    def test_remote_non_detection_area(self, device_config):
+    def test_remote_package_non_detection_area(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['detection_alarm']['items']['package']
         BasePage().check_key_in_yaml(remote_items, 'non_detection_area')
@@ -399,7 +399,7 @@ class TestRemoteDetectionAlarm:
     @allure.feature("MD/其他")
     @allure.story("需人工核查日志和录屏")
     @pytest.mark.skip
-    def test_remote_non_detection_area(self, device_config):
+    def test_remote_motion_detect(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['detection_alarm']['items']['motion_detection']
         BasePage().check_key_in_yaml(remote_items, 'add_multi_time_sensitivity')
@@ -423,7 +423,7 @@ class TestRemoteDetectionAlarm:
     @allure.feature("侦测报警主页>非侦测区域")
     @allure.story("需人工核查日志和录屏")
     @pytest.mark.skip
-    def test_remote_non_detection_area(self, device_config):
+    def test_remote_main_non_detection_area(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['detection_alarm']['items']
         BasePage().check_key_in_yaml(remote_items, 'non_detection_area')
@@ -445,7 +445,7 @@ class TestRemoteDetectionAlarm:
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("智能追踪")
     @allure.story("需人工核查日志和录屏")
-    def test_remote_auto_tracking(self, device_config):
+    def test_remote_smart_tracking(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['detection_alarm']['items']
         BasePage().check_key_in_yaml(remote_items, 'smart_tracking')
@@ -458,7 +458,7 @@ class TestRemoteDetectionAlarm:
 
         # 开启并测试智能追踪
         options_dict = remote_items['smart_tracking']  # 传参字典
-        result = RemoteDetectionAlarm().click_test_auto_tracking(options=options_dict)
+        result = RemoteDetectionAlarm().click_test_smart_tracking(options=options_dict)
 
         # 断言
         assert result['smart_tracking'] is True
@@ -485,4 +485,4 @@ class TestRemoteDetectionAlarm:
         # 进入侦测报警>移动标记
         RemoteDetectionAlarm().click_motion_mark_switch()
 
-        # 不确定移动标记在rn上加在哪里了
+        # 不确定移动标记在rn上加在哪里了(貌似放在了显示模块的一级菜单)

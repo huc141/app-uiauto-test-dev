@@ -1,0 +1,11 @@
+device_list_name: "yulong-test-sd7"
+sub_name: ""
+
+ipc:
+  share_camera:
+    name: '分享摄像机'
+    desc: '设置>分享摄像机'
+    type: 'navigation'
+    text:
+      - '分享摄像机'
+      - '请让您的家人或者好友打开app, 点击添加按钮，扫描此二维码'

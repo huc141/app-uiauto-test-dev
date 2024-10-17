@@ -313,9 +313,15 @@ class RemoteDetectionAlarm(BasePage):
         try:
             self.scroll_and_click_by_text(text_to_find='人')
             # 向右拖动智能侦测
-            self.slider_seek_bar(slider_mode='xpath', id_or_xpath=self.smart_detection_slider, direction='right', iteration=20)
+            self.slider_seek_bar(slider_mode='xpath',
+                                 id_or_xpath=self.smart_detection_slider,
+                                 direction='right',
+                                 iteration=20)
             # 向左拖动智能侦测
-            self.slider_seek_bar(slider_mode='xpath', id_or_xpath=self.smart_detection_slider, direction='left', iteration=20)
+            self.slider_seek_bar(slider_mode='xpath',
+                                 id_or_xpath=self.smart_detection_slider,
+                                 direction='left',
+                                 iteration=20)
 
             # 返回上一页，再点击进入查看智能侦测
             self.back_previous_page()
@@ -611,7 +617,7 @@ class RemoteDetectionAlarm(BasePage):
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
-    def click_test_auto_tracking(self, options):
+    def click_test_smart_tracking(self, options):
         """
         点击并测试智能追踪.
         :param options: 包含所有参数的字典

@@ -1,0 +1,59 @@
+device_list_name: "yulong-test-sd7"
+sub_name: ""
+
+ipc:
+  audio:
+    name: '音频'
+    desc: '设置>音频'
+    type: 'navigation'
+    text:
+      - ''
+
+    items:
+      audio:
+        name: '音频'
+        desc: '设置>音频>音频主页'
+        type: 'page'
+        text:
+          - '录制声音'
+          - '关闭后，观看预览时将无法听到声音，并且将不会录制声音到回放文件中'
+          - '设备音量'
+          - '报警音量和对讲音量'
+          - '试听'
+          - '音频降噪'
+
+        record_audio:
+          name: '录制声音'
+          desc: '设置>音频'
+          type: 'switch'
+          text:
+            - ''
+          option_text:
+            - 'switch_on'
+            - 'switch_off'
+
+        device_volume_and_speaker_volume:
+          name: '设备音量'
+          desc: '设置>音频>设备音量'
+          type: 'slider'
+          text:
+            - ''
+          option_text:
+            - ''
+
+        sound_test:
+          name: '试听'
+          desc: '设置>音频>试听'
+          type: 'button'
+
+        noise_reduction:
+          name: '音频降噪'
+          desc: '设置>音频>音频降噪'
+          type: 'switch'
+          text:
+            - '降噪强度'
+            - '低'
+            - '高'
+          option_text:
+            - 'switch_on'
+            - 'switch_off'
