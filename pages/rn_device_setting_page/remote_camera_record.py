@@ -157,21 +157,49 @@ class RemoteCameraRecord(BasePage):
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
-    def click_test_smart_power_saving_mode(self, texts_list):
-        """"""
+    def clk_test_frame_rate(self, texts, option_text):
+        """
+        遍历智能省电模式的帧率
+        :return:
+        """
+        try:
+            self.scroll_and_click_by_text(text_to_find='帧率(fps)')
+            # 验证popup文案
+            popup_text_res = RemoteSetting().scroll_check_funcs2(texts=texts)
+
+            # 遍历popup选项
+            self.iterate_and_click_popup_text(option_text_list=option_text, menu_text='帧率(fps)')
+
+            return popup_text_res
+        except Exception as e:
+            pytest.fail(f"函数执行出错: {str(e)}")
+
+    def click_test_smart_power_saving_mode(self, texts_list, frame_rate_texts, option_text):
+        """
+        点击并测试智能省电模式
+        :param texts_list:
+        :param frame_rate_texts:
+        :param option_text:
+        :return:
+        """
         try:
             self.is_camera_recording_on()  # 打开摄像机录像开关
             self.scroll_and_click_by_text(text_to_find='定时录像')  # 点击定时录像
             self.scroll_and_click_by_text(text_to_find='智能省电模式')  # 点击智能省电模式
 
-            # 验证智能省电模式文案
-            main_text_res = RemoteSetting().scroll_check_funcs2(texts=texts_list)
-
+            main_text_res = None
             # 点击开启/关闭智能省电模式
             if not RemoteSetting().scroll_check_funcs2(texts='电量'):
                 self.scroll_click_right_btn(text_to_find='智能省电模式')  # 开启
+                # 验证智能省电模式主页文案
+                main_text_res = RemoteSetting().scroll_check_funcs2(texts=texts_list)
+                # 遍历popup选项
+                self.clk_test_frame_rate(texts=frame_rate_texts, option_text=option_text)
+
                 self.scroll_click_right_btn(text_to_find='智能省电模式')  # 关闭
             else:
+                # 遍历popup选项
+                self.clk_test_frame_rate(texts=frame_rate_texts, option_text=option_text)
                 self.scroll_click_right_btn(text_to_find='智能省电模式')  # 关闭
 
             return main_text_res

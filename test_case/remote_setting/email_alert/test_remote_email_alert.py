@@ -56,13 +56,16 @@ class TestRemoteEmailAlerts:
 
         # 点击并测试 计划
         plan_text = remote_items['plan']
-        email_plan_alarm_text_status, email_plan_timed_text_status = RemoteEmailAlerts().click_and_test_plan(
-            alarm_type_option_text=plan_text['alarm']['subpage']['option_text'],
+        plan_alarm_main_text_res, plan_timed_main_text_res, plan_alarm_type_text_res = RemoteEmailAlerts().click_and_test_plan(
             plan_alarm_text=plan_text['alarm']['text'],
-            plan_timed_text=plan_text['timed']['text'])
+            plan_timed_text=plan_text['timed']['text'],
+            alarm_type_text=plan_text['alarm']['alarm_type']['text'],
+            alarm_type_option_text=plan_text['alarm']['alarm_type']['option_text'])
+
         # 断言
-        assert email_plan_alarm_text_status is True
-        assert email_plan_timed_text_status is True
+        assert plan_alarm_main_text_res is True
+        assert plan_timed_main_text_res is True
+        assert plan_alarm_type_text_res is True
 
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("邮件设置")
@@ -146,4 +149,8 @@ class TestRemoteEmailAlerts:
         RemoteEmailAlerts().is_email_alert_on()
 
         # 点击未收到邮件？链接
-        RemoteEmailAlerts().click_email_not_received_link()
+        not_received_link_res = RemoteEmailAlerts().click_email_not_received_link()
+
+        assert not_received_link_res is True
+
+

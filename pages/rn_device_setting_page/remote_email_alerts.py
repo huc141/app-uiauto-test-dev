@@ -16,7 +16,8 @@ class RemoteEmailAlerts(BasePage):
         elif self.platform == 'ios':
             pass
 
-    def check_email_alerts_main_text(self, texts):
+    @staticmethod
+    def check_email_alerts_main_text(texts):
         """
         验证邮件通知主页文案
         :param texts: 待验证的文案列表
@@ -76,41 +77,46 @@ class RemoteEmailAlerts(BasePage):
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
-    def click_and_test_email_alarm_type(self, texts_list):
+    def click_and_test_email_alarm_type(self, texts_list, option_text):
         """
         点击邮件通知>计划>报警>报警类型，验证文案内容
-        :param texts_list: 需要验证的文案列表
+        :param texts_list: 报警类型页面需要验证的文案列表
+        :param option_text: 操作列表
         :return:
         """
         try:
             self.scroll_and_click_by_text(text_to_find='报警类型')
-            email_alarm_type_text_status = RemoteSetting().click_checkbox_by_text(option_text_list=texts_list, menu_text='报警类型')
-            return email_alarm_type_text_status
+            plan_alarm_type_text_res = RemoteSetting().scroll_check_funcs2(texts=texts_list)
+            RemoteSetting().click_checkbox_by_text(option_text_list=option_text, menu_text='报警类型')
+            return plan_alarm_type_text_res
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
-    def click_and_test_plan(self, alarm_type_option_text, plan_alarm_text, plan_timed_text):
+    def click_and_test_plan(self, plan_alarm_text, plan_timed_text, alarm_type_text, alarm_type_option_text):
         """
         测试 计划
-        :param alarm_type_option_text: 报警类型 列表文案
-        :param plan_alarm_text: 计划>报警>报警类型 列表文案
-        :param plan_timed_text: 计划>报警>定时 列表文案
+        :param plan_alarm_text: 计划>报警> 文案
+        :param plan_timed_text: 计划>定时 文案
+        :param alarm_type_text: 计划>报警>报警类型 文案
+        :param alarm_type_option_text: 计划>报警>报警类型 操作选项
         :return:
         """
         try:
             self.scroll_and_click_by_text('计划')
-            # 验证计划>报警>报警类型 文案内容
+            # 验证计划>报警>文案内容
             self.scroll_and_click_by_text('报警')
-            email_plan_alarm_text_status = RemoteSetting().scroll_check_funcs2(texts=plan_alarm_text)
+            plan_alarm_main_text_res = RemoteSetting().scroll_check_funcs2(texts=plan_alarm_text)
 
-            # 验证计划>报警>定时 文案内容
+            # 验证计划>定时 文案内容
             self.scroll_and_click_by_text('定时')
-            email_plan_timed_text_status = RemoteSetting().scroll_check_funcs2(texts=plan_timed_text)
+            plan_timed_main_text_res = RemoteSetting().scroll_check_funcs2(texts=plan_timed_text)
 
-            # 点击报警类型，遍历
-            self.click_and_test_email_alarm_type(texts_list=alarm_type_option_text)
+            # 点击报警>报警类型
+            self.scroll_and_click_by_text('报警')
+            plan_alarm_type_text_res = self.click_and_test_email_alarm_type(texts_list=alarm_type_text,
+                                                                            option_text=alarm_type_option_text)
 
-            return email_plan_alarm_text_status, email_plan_timed_text_status
+            return plan_alarm_main_text_res, plan_timed_main_text_res, plan_alarm_type_text_res
 
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
@@ -182,7 +188,10 @@ class RemoteEmailAlerts(BasePage):
         try:
             self.scroll_and_click_by_text('未收到邮件？')
             time.sleep(4)
+            page_res = RemoteSetting().scroll_check_funcs2(texts='Troubleshooting - Fail to Get Alerts via Emails')
             self.back_previous_page()
+
+            return page_res
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 

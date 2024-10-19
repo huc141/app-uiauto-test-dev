@@ -16,7 +16,8 @@ class RemoteSirenAlerts(BasePage):
         elif self.platform == 'ios':
             pass
 
-    def check_siren_alerts_main_text(self, texts):
+    @staticmethod
+    def check_siren_alerts_main_text(texts):
         """
         验证鸣笛主页文案
         :param texts: 待验证的文案列表
@@ -41,6 +42,9 @@ class RemoteSirenAlerts(BasePage):
                 self.scroll_click_right_btn(text_to_find='鸣笛')
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
+
+    def clk_test_siren_sound(self):
+        """"""
 
     def click_and_test_siren_alarm_type(self, texts_list):
         """

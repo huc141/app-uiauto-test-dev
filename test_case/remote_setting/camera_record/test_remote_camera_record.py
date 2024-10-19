@@ -83,7 +83,9 @@ class TestRemoteCameraRecord:
         RemoteSetting().access_in_camera_record(device_list_name=device_config['device_list_name'])
 
         # 点击测试智能省电模式开关按钮
-        RemoteCameraRecord().click_test_smart_power_saving_mode()
+        RemoteCameraRecord().click_test_smart_power_saving_mode(texts_list=remote_items['smart_power_saving_mode']['text'],
+                                                                frame_rate_texts=remote_items['smart_power_saving_mode']['frame_rate']['text'],
+                                                                option_text=remote_items['smart_power_saving_mode']['frame_rate']['option_text'])
 
 
 

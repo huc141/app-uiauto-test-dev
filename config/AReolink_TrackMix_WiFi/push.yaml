@@ -7,106 +7,64 @@ ipc:
     desc: '设置>手机推送'
     type: 'switch'
     text:
-      - '手机推送'
-      - '测试'
-      - '打开后，将会接收到移动事件与低电量通知。'
+      - ''
 
     items:
-      visitor_phone_remind:
-        name: '访客电话提醒'
-        desc: '设置>手机推送>访客电话提醒'
+      push:
+        name: '手机推送'
+        desc: '设置>手机推送'
         type: 'switch'
-        text:
-          - '访客电话提醒'
-          - '访客铃声'
-        option_text:
-          - ''
-
-      device_notify_ringtone:
-        name: '设备通知铃声'
-        desc: '设置>手机推送>设备通知铃声'
-        type: 'switch'
-        text:
-          - '设备通知铃声'
-          - '开启后，可为设备单独设置通知铃声。'
-          - '报警铃声'
-        alarm_ring:
-          name: '报警铃声'
-          desc: '设置>手机推送>设备通知铃声>报警铃声'
-          type: 'popup'
-          text:
-            - ''
-          option_text:
-            - '强烈通知'
-            - '重要通知'
-            - '一般通知'
+        push_text:
+          - '手机推送'
+          - '测试'
+          - '打开后，将会接收到移动事件与低电量通知。'
 
       schedule:
         name: '计划'
         desc: '设置>手机推送>计划'
         type: 'navigation'
-        text:
+        push_text:
           - '计划'
           - '可筛选报警类型或时间进行规划。'
-          - '推送间隔'
-        subpage:
-          name: '计划'
-          desc: '设置>手机推送>计划'
+        text:
+          - '取消'
+          - '计划'
+          - '保存'
+          - '配置推送的触发类型和时间计划。'
+          - '报警类型'
+        alarm_type:
+          name: '报警类型'
+          desc: '设置>手机推送>计划>报警类型'
           type: 'page'
           text:
             - '取消'
-            - '保存'
-            - '配置推送的触发类型和时间计划。'
             - '报警类型'
-          subpage:
-            name: '报警类型'
-            desc: '设置>手机推送>计划>报警类型'
-            type: 'page'
-            text:
-              - '画面变动'
-              - '人'
-              - '车'
-              - '动物'
-            option_text:
-              - '画面变动'
-              - '人'
-              - '车'
-              - '动物'
-
-
-        push_interval:
-          name: '推送间隔'
-          desc: '设置>手机推送>推送间隔'
-          type: 'popup'
-          text:
-            - '20'
-            - '30'
-            - '60'
-            - '120'
+            - '保存'
+            - '全选'
+            - '画面变动'
+            - '人'
+            - '车'
+            - '动物'
           option_text:
-            - '20'
-            - '30'
-            - '60'
-            - '120'
+            - '画面变动'
+            - '人'
+            - '车'
+            - '动物'
 
-      delay_notifications:
-        name: '延时通知'
-        desc: '设置>手机推送>延时通知'
-        type: 'switch'
+      push_interval:
+        name: '推送间隔'
+        desc: '设置>手机推送>推送间隔'
+        type: 'popup'
         text:
-          - '延时通知'
-          - '延迟时间'
-        delay_time:
-          name: '延迟时间'
-          desc: '设置>手机推送>延迟时间'
-          type: 'popup'
-          text:
-            - '20'
-            - '30'
-            - '60'
-            - '120'
-          option_text:
-            - '20'
-            - '30'
-            - '60'
-            - '120'
+          - '推送间隔(秒)'
+          - '20'
+          - '30'
+          - '60'
+          - '120'
+          - '取消'
+        option_text:
+          - '20'
+          - '30'
+          - '60'
+          - '120'
+
