@@ -28,4 +28,7 @@ class TestRemoteShareCamera:
         RemoteSetting().access_in_email_alerts(device_list_name=device_config['device_list_name'])
 
         # 验证分享摄像机主页文案
-        RemoteShareCamera().check_share_camera_main_text(texts=remote_items['share_camera']['text'])
+        share_camera_main_text_res = RemoteShareCamera().check_share_camera_main_text(texts=remote_items['share_camera']['text'])
+
+        # 断言
+        assert share_camera_main_text_res is True

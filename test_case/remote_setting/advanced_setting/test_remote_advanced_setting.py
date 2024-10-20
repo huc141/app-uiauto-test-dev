@@ -39,7 +39,7 @@ class TestRemoteAdvancedSetting:
     @allure.story("需人工核查日志和录屏")
     def test_user_management(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
-        remote_items = device_config['ipc']['advanced_setting']['items']['advanced_setting']
+        remote_items = device_config['ipc']['advanced_setting']['items']
         BasePage().check_key_in_yaml(remote_items, 'user_management')
 
         # 启动app，并开启录屏
@@ -70,7 +70,7 @@ class TestRemoteAdvancedSetting:
     @allure.story("需人工核查日志和录屏")
     def test_user_management(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
-        remote_items = device_config['ipc']['advanced_setting']['items']['advanced_setting']
+        remote_items = device_config['ipc']['advanced_setting']['items']
         BasePage().check_key_in_yaml(remote_items, 'user_management')
 
         # 启动app，并开启录屏

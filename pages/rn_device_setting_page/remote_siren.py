@@ -11,10 +11,20 @@ class RemoteSirenAlerts(BasePage):
     def __init__(self):
         super().__init__()
         if self.platform == 'android':
-            pass
+            self.siren_start_record = ''  # 添加自定义声音的开始录制按钮
+            self.siren_stop_record = ''  # 添加自定义声音的停止录制按钮
+            self.edit_custom_sound_button = ''  # 自定义声音的编辑按钮
+            self.clear_custom_sound_button = ''  # 清空自定义声音的 按钮
+            self.rerecord_custom_sound = ''  # 重录按钮
+            self.play_sound_button = ''  # 录制声音页面的播放按钮
 
         elif self.platform == 'ios':
-            pass
+            self.siren_start_record = ''
+            self.siren_stop_record = ''
+            self.edit_custom_sound_button = ''
+            self.clear_custom_sound_button = ''
+            self.rerecord_custom_sound = ''
+            self.play_sound_button = ''
 
     @staticmethod
     def check_siren_alerts_main_text(texts):
@@ -43,8 +53,73 @@ class RemoteSirenAlerts(BasePage):
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
-    def clk_test_siren_sound(self):
-        """"""
+    def clear_custom_sound(self):
+        """
+        点击编辑自定义声音按钮，重录自定义声音、清空自定义声音文件
+        :return:
+        """
+        try:
+            self.is_siren_alert_on()
+            if RemoteSetting().scroll_check_funcs2('自定义声音'):
+                # 点击自定义声音的编辑按钮
+                self.scroll_and_click_by_text(text_to_find=self.edit_custom_sound_button, el_type='xpath')
+
+                # 点击重录按钮
+                self.scroll_and_click_by_text(text_to_find=self.rerecord_custom_sound, el_type='xpath')
+                # 点击开始录制按钮
+                self.scroll_and_click_by_text(text_to_find=self.siren_start_record, el_type='xpath')
+                time.sleep(3)  # 等待录制3秒
+
+                # 点击停止录制按钮
+                self.scroll_and_click_by_text(text_to_find=self.siren_stop_record, el_type='xpath')
+
+                # 点击清空按钮
+                self.scroll_and_click_by_text(text_to_find=self.clear_custom_sound_button, el_type='xpath')
+                # 点击取消
+                self.scroll_and_click_by_text(text_to_find='取消')
+                # 点击清空按钮
+                self.scroll_and_click_by_text(text_to_find=self.clear_custom_sound_button, el_type='xpath')
+                # 点击确认
+                self.scroll_and_click_by_text(text_to_find='确认')
+
+                # 验证清空成功后回到鸣笛主页
+                siren_main_res = RemoteSetting().scroll_check_funcs2('鸣笛')
+
+                return siren_main_res
+        except Exception as e:
+            pytest.fail(f"函数执行出错: {str(e)}")
+
+    def clk_test_custom_sound(self):
+        """
+        点击并测试默认声音、添加自定义声音
+        :return:
+        """
+        try:
+            before_record_sound_text_list = ['取消', '录制声音', '保存']
+            after_record_sound_text_list = ['取消', '录制声音', '保存', '重录', '清空']
+
+            self.scroll_and_click_by_text('添加自定义声音')
+            # 验证录制前的页面文案
+            bf_res = RemoteSetting().scroll_check_funcs2(texts=before_record_sound_text_list)
+
+            # 点击开始录制按钮
+            self.scroll_and_click_by_text(text_to_find=self.siren_start_record, el_type='xpath')
+            time.sleep(6)  # 等待录制6秒自动完成录制
+
+            # 验证录制后的页面文案
+            af_res = RemoteSetting().scroll_check_funcs2(texts=after_record_sound_text_list)
+
+            # 点击播放按钮
+            self.scroll_and_click_by_text(text_to_find=self.play_sound_button, el_type='xpath')
+            time.sleep(6)
+
+            # 保存录音
+            self.scroll_and_click_by_text(text_to_find='保存')
+
+            return bf_res, af_res
+
+        except Exception as e:
+            pytest.fail(f"函数执行出错: {str(e)}")
 
     def click_and_test_siren_alarm_type(self, texts_list):
         """

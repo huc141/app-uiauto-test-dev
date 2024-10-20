@@ -23,117 +23,44 @@ ipc:
           - '计划'
           - '可筛选报警类型或进行时间规划。'
 
-        plan:
-          name: '计划'
-          desc: '设置>鸣笛>鸣笛主页>计划主页'
-          type: 'navigation'
+      siren_sound:
+        name: '鸣笛声音'
+        desc: '设置>鸣笛>鸣笛主页>鸣笛声音'
+        type: 'page'
+        text:
+          - ''
+        record_sound:
+          name: '录制声音'
+          desc: '设置>鸣笛>鸣笛主页>鸣笛声音>添加自定义声音>录制声音'
+          type: 'page'
+          text:
+            - '录制声音的页面验证文案直接写在代码里了，因为内容固定'
+
+      plan:
+        name: '计划'
+        desc: '设置>鸣笛>鸣笛主页>计划主页'
+        type: 'navigation'
+        text:
+          - '取消'
+          - '计划'
+          - '保存'
+          - '可筛选报警类型或进行时间规划。'
+          - '报警类型'
+        alarm_type:
+          name: '报警类型'
+          desc: '设置>鸣笛>鸣笛主页>计划>报警类型'
+          type: 'page'
           text:
             - '取消'
-            - '计划'
-            - '保存'
-            - '可筛选报警类型或进行时间规划。'
             - '报警类型'
-          subpage:
-            name: '报警类型'
-            desc: '设置>鸣笛>鸣笛主页>计划>报警类型'
-            type: 'page'
-            text:
-              - '取消'
-              - '报警类型'
-              - '保存'
-              - '全选'
-              - '画面变动'
-              - '人'
-              - '车'
-              - '动物'
-            option_text:
-              - '画面变动'
-              - '人'
-              - '车'
-              - '动物'
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-siren_sound_page: &siren_sound_page_anchor
-  name: '鸣笛声音'
-  desc: '鸣笛声音页面-入口：设置>鸣笛>鸣笛声音>鸣笛声音'
-  type: 'page'
-  items:
-    default_sound:
-      name: '默认声音'
-      desc: '设置>鸣笛>鸣笛声音>鸣笛声音>默认声音'
-      type: 'text'
-    custom_sound:
-      name: '自定义声音'
-      desc: '设置>鸣笛>鸣笛声音>鸣笛声音>自定义声音'
-      type: 'navigation'
-      subpage:
-        name: '自定义'
-        desc: '设置>鸣笛>鸣笛声音>鸣笛声音>自定义声音>自定义'
-        type: 'page'
-
-
-schedule_page: &schedule_page_anchor
-  name: '计划'
-  desc: '计划页面-入口：设置>鸣笛>计划>计划'
-  type: 'page'
-  items:
-    alarm_type:
-      name: '报警类型'
-      desc: '设置>摄像机录像>计划>计划>报警类型'
-      type: 'checkbox'
-      options:
-        - '画面变动'
-        - '人'
-        - '车'
-        - '动物'
-        - '包裹'
-
-siren_page:
-  name: '鸣笛'
-  key: 'siren_page'
-  desc: '鸣笛页面-入口：设置>鸣笛'
-  type: 'page'
-  items:
-    siren:
-      name: '鸣笛'
-      desc: '设置>鸣笛>鸣笛'
-      type: 'switch'
-    siren_sound:
-      name: '鸣笛声音'
-      desc: '设置>鸣笛>鸣笛声音'
-      type: 'navigation'
-      subpage: *siren_sound_page_anchor
-    schedule:
-      name: '计划'
-      desc: '设置>鸣笛>计划'
-      type: 'navigation'
-      subpage: *schedule_page_anchor
-
+            - '保存'
+            - '全选'
+            - '画面变动'
+            - '人'
+            - '车'
+            - '动物'
+          option_text:
+            - '画面变动'
+            - '人'
+            - '车'
+            - '动物'

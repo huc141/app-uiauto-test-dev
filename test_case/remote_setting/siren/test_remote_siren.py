@@ -37,6 +37,57 @@ class TestRemoteSirenAlerts:
         assert siren_alerts_main_text_status is True
 
     @pytest.mark.parametrize("device_config", devices_config)
+    @allure.feature("鸣笛声音>添加自定义声音")
+    @allure.story("需人工核查日志和录屏")
+    def test_siren_custom_sound(self, device_config):
+        # 检查键是否存在，存在则执行当前用例，否则跳过
+        remote_items = device_config['ipc']['siren']['items']
+        BasePage().check_key_in_yaml(remote_items, 'siren_sound')
+
+        # 启动app，并开启录屏
+        driver.start_app(True)
+
+        # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击菜单项@allure.feature
+        RemoteSetting().access_in_siren(device_list_name=device_config['device_list_name'])
+
+        # 判断鸣笛按钮开关状态，没开则开
+        RemoteSirenAlerts().is_siren_alert_on()
+
+        # 点击添加自定义声音并录制自定义声音
+        bf_res, af_res = RemoteSirenAlerts().clk_test_custom_sound()
+
+        # 断言
+        assert bf_res is True
+        assert af_res is True
+
+    @pytest.mark.parametrize("device_config", devices_config)
+    @allure.feature("鸣笛声音>编辑、重录、清空自定义声音")
+    @allure.story("需人工核查日志和录屏")
+    def test_rerecord_custom_sound(self, device_config):
+        """
+        点击编辑自定义声音按钮，重录自定义声音、清空自定义声音文件
+        :return:
+        """
+        # 检查键是否存在，存在则执行当前用例，否则跳过
+        remote_items = device_config['ipc']['siren']['items']
+        BasePage().check_key_in_yaml(remote_items, 'siren_sound')
+
+        # 启动app，并开启录屏
+        driver.start_app(True)
+
+        # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击菜单项@allure.feature
+        RemoteSetting().access_in_siren(device_list_name=device_config['device_list_name'])
+
+        # 判断鸣笛按钮开关状态，没开则开
+        RemoteSirenAlerts().is_siren_alert_on()
+
+        # 点击编辑自定义声音并重录自定义声音、清空自定义声音文件
+        siren_main_res = RemoteSirenAlerts().clear_custom_sound()
+
+        # 断言
+        assert siren_main_res is True
+
+    @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("计划")
     @allure.story("需人工核查日志和录屏")
     def test_remote_siren_alerts_plan(self, device_config):

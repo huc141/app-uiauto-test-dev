@@ -23,7 +23,7 @@ class RemoteShareCamera(BasePage):
         :return:
         """
         try:
-            share_camera_main_text_status = RemoteSetting().scroll_check_funcs2(texts=texts)
-            return share_camera_main_text_status
+            share_camera_main_text_res = RemoteSetting().scroll_check_funcs2(texts=texts)
+            return share_camera_main_text_res
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
