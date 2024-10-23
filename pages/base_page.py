@@ -19,12 +19,13 @@ class BasePage:
         self.driver = driver.get_actual_driver()
         self.platform = driver.get_platform()
 
-    def is_element_exists(self, element_value, selector_type='text', max_scrolls=2):
+    def is_element_exists(self, element_value, selector_type='text', max_scrolls=2, scroll_or_not=True):
         """
         判断元素是否存在当前页面
         :param element_value: 你要找的文本内容，或者对应元素的id、xpath值。
         :param selector_type: 安卓支持：text文本、id、xpath定位；iOS支持text(label)文本、id、xpath定位。
         :param max_scrolls: 最大滚动次数，默认两次。
+        :param scroll_or_not: 是否执行滚动查找。布尔值，默认True滚动查找
         :return: bool
         """
         ele_status = None
@@ -54,8 +55,10 @@ class BasePage:
                 ele_status = check_element()
                 if ele_status:
                     break
-                self.scroll_screen()
-                time.sleep(0.5)
+                if scroll_or_not:
+                    self.scroll_screen()
+                    logger.info(f"正在滑动屏幕查找：{element_value} 元素")
+                    time.sleep(0.5)
 
             return ele_status
 
@@ -271,7 +274,7 @@ class BasePage:
 
             def click_button_android(text):
                 logger.info(f"尝试点击这个 '{text_to_find}' 元素右边的可点击按钮")
-                self.driver(text=text).right(clickable='true').click()
+                self.driver(text=text, resourceId='ReoTitle').right(clickable='true').click()
                 time.sleep(1)
                 return True
 
@@ -738,9 +741,16 @@ class BasePage:
         try:
             if self.platform == "android":
                 scroll_method = self.driver.swipe_ext
+                # 检查是否可以滚动
+                if not self.driver(scrollable=True).exists:
+                    raise Exception("屏幕不可滚动")
 
             elif self.platform == "ios":
-                scroll_method = driver.swipe_up
+                # iOS平台默认可以滚动，不需要额外检查
+                if direction == "up":
+                    scroll_method = self.driver.swipe_up
+                else:
+                    scroll_method = self.driver.swipe_down
             else:
                 raise ValueError("不支持当前平台")
 
@@ -750,6 +760,9 @@ class BasePage:
                 else:
                     time.sleep(1)
                     scroll_method()
+                # 每次滚动后稍作等待
+                time.sleep(0.5)
+
         except Exception as err:
             pytest.fail(f"函数执行出错: {str(err)}")
 
