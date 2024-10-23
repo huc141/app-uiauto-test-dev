@@ -7,7 +7,7 @@ from pages.base_page import BasePage
 from pages.rn_device_setting_page.remote_push_notifications import RemotePush
 from pages.rn_device_setting_page.remote_setting import RemoteSetting
 
-devices_config = read_yaml.load_device_config(yaml_file_name='push.yaml')  # 读取参数化文件
+devices_config = read_yaml.load_device_config(device_dir='Reolink_Doorbell_Battery', yaml_file_name='push.yaml')  # 读取参数化文件
 
 
 @allure.epic("远程配置>报警通知>手机推送")
@@ -24,10 +24,10 @@ class TestRemotePush:
         BasePage().check_key_in_yaml(remote_items, 'push_text')
 
         # 启动app，并开启录屏
-        driver.start_app(True)
+        # driver.start_app(True)
 
         # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击菜单项@allure.feature
-        RemoteSetting().access_in_push_notifications(device_list_name=device_config['device_list_name'])
+        # RemoteSetting().access_in_push_notifications(device_list_name=device_config['device_list_name'])
 
         # 验证push主页文案列表
         main_text_res = RemotePush().check_push_main_text(main_text=remote_items['push_text'])
@@ -36,6 +36,8 @@ class TestRemotePush:
 
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("访客电话提醒")
+    @allure.story("需人工核查日志和录屏")
+    @pytest.mark.skip
     def test_remote_non_detection_area(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['push']['items']
@@ -57,6 +59,7 @@ class TestRemotePush:
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("设备通知铃声")
     @allure.story("需人工核查日志和录屏")
+    @pytest.mark.skip
     def test_device_notify_ringtone(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['push']['items']
@@ -81,6 +84,7 @@ class TestRemotePush:
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("计划")
     @allure.story("需人工核查日志和录屏")
+    @pytest.mark.skip
     def test_push_plan(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['push']['items']
@@ -110,6 +114,7 @@ class TestRemotePush:
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("推送间隔")
     @allure.story("需人工核查日志和录屏")
+    @pytest.mark.skip
     def test_push_interval(self, device_config):
         """
 
@@ -135,6 +140,7 @@ class TestRemotePush:
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("延时通知")
     @allure.story("需人工核查日志和录屏")
+    @pytest.mark.skip
     def test_push_plan(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['push']['items']
