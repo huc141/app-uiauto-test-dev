@@ -37,7 +37,9 @@ def scroll_click_right_btn(text_to_find, el_type='text', max_attempts=1, scroll_
 
         def click_button_android(text_to_find):
             logger.info(f"尝试点击这个 '{text_to_find}' 元素右边的可点击按钮")
-            driver(text=text_to_find).right(clickable='true').click()
+            dd = driver(text=text_to_find, resourceId='ReoTitle').right(clickable='true')
+            logger.info(dd)
+            driver(text=text_to_find, resourceId='ReoTitle').right(clickable='true').click()
             time.sleep(1)
             return True
 
@@ -93,4 +95,4 @@ def scroll_click_right_btn(text_to_find, el_type='text', max_attempts=1, scroll_
         return False
 
 
-scroll_click_right_btn(text_to_find='水印')
+scroll_click_right_btn(text_to_find='手机推送')
