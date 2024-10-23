@@ -22,8 +22,7 @@ class RemotePush(BasePage):
         :return:
         """
         try:
-            self.is_push_on()
-            self.scroll_and_click_by_text('测试')
+            self.click_by_text('测试')
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
@@ -35,16 +34,15 @@ class RemotePush(BasePage):
         try:
             if not RemoteSetting().scroll_check_funcs2(texts='测试'):  # 可能需要修改判断逻辑，不是所有设备开启后都要测试按钮
                 self.scroll_click_right_btn(text_to_find='手机推送')
-                time.sleep(3)
-                self.click_test_button()  # 点击测试按钮
-                time.sleep(3)
-                if self.is_element_exists(element_value='确定'):
-                    self.scroll_and_click_by_text('确定')
+                time.sleep(6)
+                if self.is_element_exists(element_value='确定', scroll_or_not=False):
+                    self.click_by_text('确定')
+                self.click_by_text('测试')  # 点击测试按钮
+                time.sleep(4)
+
             else:
                 if self.is_element_exists(element_value='测试'):
-                    self.scroll_and_click_by_text('测试')
-                    time.sleep(3)
-                    self.click_test_button()  # 点击测试按钮
+                    self.click_by_text('测试')  # 点击测试按钮
                     time.sleep(3)
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
