@@ -743,7 +743,7 @@ class BasePage:
                 scroll_method = self.driver.swipe_ext
                 # 检查是否可以滚动
                 if not self.driver(scrollable=True).exists:
-                    raise Exception("屏幕不可滚动")
+                    return Exception("屏幕不可滚动")
 
             elif self.platform == "ios":
                 # iOS平台默认可以滚动，不需要额外检查
