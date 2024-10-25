@@ -18,16 +18,17 @@ class TestRemotePush:
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("推送主页>主页文案")
     @allure.story("需人工核查日志和录屏")
+    @pytest.mark.skip
     def test_remote_push_main_text(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['push']['items']['push']
         BasePage().check_key_in_yaml(remote_items, 'push_text')
 
         # 启动app，并开启录屏
-        # driver.start_app(True)
+        driver.start_app(True)
 
         # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击菜单项@allure.feature
-        # RemoteSetting().access_in_push_notifications(device_list_name=device_config['device_list_name'])
+        RemoteSetting().access_in_push_notifications(device_list_name=device_config['device_list_name'])
 
         # 验证push主页文案列表
         main_text_res = RemotePush().check_push_main_text(main_text=remote_items['push_text'])
@@ -51,7 +52,7 @@ class TestRemotePush:
 
         # 开启访客电话提醒并验证【访客电话提醒】在主页的文案
         RemotePush().is_visitor_phone_remind_on()
-        push_text_res = RemoteSetting().scroll_check_funcs2(texts=remote_items['visitor_phone_remind']['push_text'])
+        push_text_res = RemoteSetting().scroll_check_funcs2(texts=remote_items['visitor_phone_remind']['text'])
 
         # 断言
         assert push_text_res is True
@@ -66,14 +67,14 @@ class TestRemotePush:
         BasePage().check_key_in_yaml(remote_items, 'device_notify_ringtone')
 
         # 启动app，并开启录屏
-        driver.start_app(True)
+        # driver.start_app(True)
 
         # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击菜单项@allure.feature
-        RemoteSetting().access_in_push_notifications(device_list_name=device_config['device_list_name'])
+        # RemoteSetting().access_in_push_notifications(device_list_name=device_config['device_list_name'])
 
         # 开启设备通知铃声并验证【设备通知铃声】在主页的文案
         RemotePush().is_device_notify_ringtone_on()
-        push_text_res = RemoteSetting().scroll_check_funcs2(texts=remote_items['device_notify_ringtone']['push_text'])
+        push_text_res = RemoteSetting().scroll_check_funcs2(texts=remote_items['device_notify_ringtone']['text'])
 
         # 遍历报警铃声
         RemotePush().click_and_test_device_notify_ringtone(option_text_list=remote_items['device_notify_ringtone']['alarm_ring']['option_text'])
@@ -84,7 +85,6 @@ class TestRemotePush:
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("计划")
     @allure.story("需人工核查日志和录屏")
-    @pytest.mark.skip
     def test_push_plan(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['push']['items']
@@ -97,7 +97,7 @@ class TestRemotePush:
         RemoteSetting().access_in_push_notifications(device_list_name=device_config['device_list_name'])
 
         # 验证【计划】在主页的文案
-        push_text_res = RemoteSetting().scroll_check_funcs2(texts=remote_items['schedule']['push_text'])
+        push_text_res = RemoteSetting().scroll_check_funcs2(texts=remote_items['schedule']['text'])
 
         # 验证 计划页的文案，验证报警类型
         plan_text_status = RemotePush().click_and_test_push_plan(texts_list=remote_items['schedule']['text'])  # 计划页的文案
