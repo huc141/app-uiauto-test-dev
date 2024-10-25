@@ -64,8 +64,27 @@ class BasePage:
 
         except Exception as err:
             logger.error(f"元素未找到 {selector_type}: {element_value}. Error: {err}")
-
             return False
+
+    def loop_detect_element_exist(self, element_value, selector_type='text', loop_times=10, scroll_or_not=True):
+        """
+        循环检测元素是否出现，循环10次，每次间隔2秒
+        :param element_value: 你要找的元素，支持文本、xpath
+        :param selector_type: 安卓支持：text文本、xpath定位；iOS支持text(label)文本、xpath定位。
+        :param loop_times: 最大循环次数
+        :param scroll_or_not: 是否执行滚动查找。布尔值，默认True滚动查找
+        :return: bool
+        """
+        try:
+            for i in range(loop_times):
+                time.sleep(2)
+                logger.info(f"正在循环检测 {element_value} 元素是否出现，第 {i+1} 次")
+                if self.is_element_exists(element_value=element_value, selector_type=selector_type,
+                                          max_scrolls=1, scroll_or_not=scroll_or_not):
+                    return True
+            return False
+        except Exception as err:
+            pytest.fail(f"函数执行出错: {str(err)}")
 
     def find_element_by_xpath(self, xpath_expression):
         """
@@ -162,7 +181,7 @@ class BasePage:
                 # if not element.exists:
                 #     logger.error("该点击元素：%s 不存在", text)
                 #     raise ValueError(f"该点击元素：{text} 不存在")
-
+                logger.info(f"正在尝试点击 {text} 元素")
                 element.click()
                 time.sleep(2)
 
@@ -274,7 +293,8 @@ class BasePage:
 
             def click_button_android(text):
                 logger.info(f"尝试点击这个 '{text_to_find}' 元素右边的可点击按钮")
-                self.driver(text=text, resourceId='ReoTitle').right(clickable='true').click()
+                self.driver(text=text, resourceId='com.mcu.reolink:id/tv_remote_toggle').right(
+                    clickable='true').click()  # ReoTitle
                 time.sleep(1)
                 return True
 
@@ -560,8 +580,8 @@ class BasePage:
 
         try:
             # 关闭popup弹窗
-            self.click_by_text('取消')
-            time.sleep(1)
+            # self.click_by_text('取消')
+            # time.sleep(1)
 
             # 遍历文本，执行点击操作
             for i in option_text_list:
