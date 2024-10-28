@@ -38,7 +38,7 @@ class RemotePush(BasePage):
         :return:
         """
         try:
-            if not RemoteSetting().scroll_check_funcs2(texts='测试'):  # 可能需要修改判断逻辑，不是所有设备开启后都要测试按钮
+            if not self.loop_detect_element_exist(element_value='测试', scroll_or_not=False):  # 可能需要修改判断逻辑，不是所有设备开启后都要测试按钮
                 self.scroll_click_right_btn(text_to_find='手机推送')
                 time.sleep(6)
         except Exception as e:
@@ -119,6 +119,19 @@ class RemotePush(BasePage):
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
+    def check_plan_items_text(self, texts):
+        """
+        验证【计划】在【手机推送】主页的文案
+        :return:
+        """
+        try:
+            self.is_push_on()
+            if self.loop_detect_element_exist(element_value='计划', scroll_or_not=False):
+                push_text_res = RemoteSetting().scroll_check_funcs2(texts=texts)
+                return push_text_res
+        except Exception as e:
+            pytest.fail(f"函数执行出错: {str(e)}")
+
     def click_and_test_push_plan(self, texts_list):
         """
         点击计划并验证文案内容
@@ -146,7 +159,9 @@ class RemotePush(BasePage):
                 self.scroll_and_click_by_text(text_to_find='报警类型')
                 alarm_type_text_res = RemoteSetting().scroll_check_funcs2(texts=texts_list)
                 self.click_checkbox_by_text(option_text_list=option_text_list, menu_text='报警类型')
-                self.back_previous_page()  # 返回到计划主页
+                time.sleep(1.5)
+                self.scroll_and_click_by_text(text_to_find='保存')  # 点击保存
+                time.sleep(1.5)
                 self.back_previous_page()  # 返回到推送主页
             return alarm_type_text_res
         except Exception as e:
@@ -160,11 +175,13 @@ class RemotePush(BasePage):
         :return:
         """
         try:
-            self.scroll_and_click_by_text(text_to_find='推送间隔')
-            push_interval_text_status = RemoteSetting().scroll_check_funcs2(texts=texts_list)
-            self.iterate_and_click_popup_text(option_text_list=option_text_list, menu_text='推送间隔')
+            self.is_push_on()
+            if self.loop_detect_element_and_click(element_value='推送间隔', scroll_or_not=False):
+                push_interval_text_status = RemoteSetting().scroll_check_funcs2(texts=texts_list)
+                self.scroll_and_click_by_text(text_to_find='取消')
+                self.iterate_and_click_popup_text(option_text_list=option_text_list, menu_text='推送间隔')
 
-            return push_interval_text_status
+                return push_interval_text_status
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 

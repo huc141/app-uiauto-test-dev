@@ -1,4 +1,5 @@
 device_list_name: "yulong-test-sd7"
+uid: '952700Y006ZP1IJ5'
 sub_name: ""
 
 ipc:
@@ -17,16 +18,16 @@ ipc:
         push_text:
           - '手机推送'
           - '测试'
-          - '打开后，将会接收到移动事件与低电量通知。'
+          - '打开后，接收移动事件通知。'
 
       schedule:
         name: '计划'
         desc: '设置>手机推送>计划'
         type: 'navigation'
-        push_text:
-          - '计划'
-          - '可筛选报警类型或时间进行规划。'
         text:
+          - '计划'
+          - '可筛选报警类型或进行时间规划。'
+        plan_main_text:
           - '取消'
           - '计划'
           - '保存'
@@ -63,8 +64,10 @@ ipc:
           - '120'
           - '取消'
         option_text:
-          - '20'
-          - '30'
-          - '60'
           - '120'
+          - '60'
+          - '30'
+          - '20'
+
+
 

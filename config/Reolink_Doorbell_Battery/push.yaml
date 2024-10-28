@@ -1,4 +1,5 @@
 device_list_name: "yulong Doorbell Battery"
+uid: '952700Y0061K137Z'
 sub_name: ""
 
 ipc:
@@ -56,29 +57,26 @@ ipc:
         type: 'navigation'
         text:
           - '计划'
-          - '可筛选报警类型或时间进行规划。'
-          - '推送间隔'
-        subpage:
-          name: '计划'
-          desc: '设置>手机推送>计划'
-          type: 'page'
-          text:
+          - '可筛选报警类型或进行时间规划。'
+        plan_main_text:
             - '取消'
             - '保存'
             - '配置推送的触发类型和时间计划。'
             - '报警类型'
-          subpage:
-            name: '报警类型'
-            desc: '设置>手机推送>计划>报警类型'
-            type: 'page'
-            text:
-              - '画面变动'
-              - '人'
-              - '车'
-              - '动物'
-            option_text:
-              - '画面变动'
-              - '人'
-              - '车'
-              - '动物'
+        alarm_type:
+          name: '报警类型'
+          desc: '设置>手机推送>计划>报警类型'
+          type: 'page'
+          text:
+            - '人'
+            - '车'
+            - '其他'
+            - '访客'
+            - '包裹'
+          option_text:
+            - '人'
+            - '车'
+            - '其他'
+            - '访客'
+            - '包裹'
 

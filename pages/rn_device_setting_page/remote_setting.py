@@ -373,7 +373,7 @@ class RemoteSetting(BasePage):
             if access_mode == 'ipc':
                 time.sleep(2)
                 # 进入手机推送主页
-                self.scroll_and_click_by_text('手机推送')
+                self.loop_detect_element_and_click('手机推送')
 
             # 如果设备接入了nvr：
             elif access_mode == 'nvr' and sub_name is not None:
@@ -382,7 +382,7 @@ class RemoteSetting(BasePage):
                 # 选择通道并点击
                 self.scroll_and_click_by_text(sub_name)
                 # 进入手机推送主页
-                self.scroll_and_click_by_text('手机推送')
+                self.loop_detect_element_and_click('手机推送')
 
             # 如果设备接入了hub：
             elif access_mode == 'hub' and sub_name is not None:
@@ -390,7 +390,7 @@ class RemoteSetting(BasePage):
                 # 根据名称查找hub下的设备卡片，点击并进入hub下的设备的远程配置主页
                 self.scroll_and_click_by_text(sub_name)
                 # 进入手机推送主页
-                self.scroll_and_click_by_text('手机推送')
+                self.loop_detect_element_and_click('手机推送')
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
@@ -407,7 +407,7 @@ class RemoteSetting(BasePage):
             if access_mode == 'ipc':
                 time.sleep(2)
                 # 进入邮件通知主页
-                self.scroll_and_click_by_text('邮件通知')
+                self.loop_detect_element_and_click('邮件通知')
 
             # 如果设备接入了nvr：
             elif access_mode == 'nvr' and sub_name is not None:
@@ -416,7 +416,7 @@ class RemoteSetting(BasePage):
                 # 选择通道并点击
                 self.scroll_and_click_by_text(sub_name)
                 # 进入邮件通知主页
-                self.scroll_and_click_by_text('邮件通知')
+                self.loop_detect_element_and_click('邮件通知')
 
             # 如果设备接入了hub：
             elif access_mode == 'hub' and sub_name is not None:
@@ -424,7 +424,7 @@ class RemoteSetting(BasePage):
                 # 根据名称查找hub下的设备卡片，点击并进入hub下的设备的远程配置主页
                 self.scroll_and_click_by_text(sub_name)
                 # 进入邮件通知主页
-                self.scroll_and_click_by_text('邮件通知')
+                self.loop_detect_element_and_click('邮件通知')
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 

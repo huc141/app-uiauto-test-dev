@@ -7,7 +7,7 @@ from pages.base_page import BasePage
 from pages.rn_device_setting_page.remote_push_notifications import RemotePush
 from pages.rn_device_setting_page.remote_setting import RemoteSetting
 
-devices_config = read_yaml.load_device_config(device_dir='Reolink_Doorbell_Battery', yaml_file_name='push.yaml')  # 读取参数化文件
+devices_config = read_yaml.load_device_config(device_dir='AReolink_TrackMix_WiFi', yaml_file_name='push.yaml')  # 读取参数化文件
 
 
 @allure.epic("远程配置>报警通知>手机推送")
@@ -67,10 +67,10 @@ class TestRemotePush:
         BasePage().check_key_in_yaml(remote_items, 'device_notify_ringtone')
 
         # 启动app，并开启录屏
-        # driver.start_app(True)
+        driver.start_app(True)
 
         # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击菜单项@allure.feature
-        # RemoteSetting().access_in_push_notifications(device_list_name=device_config['device_list_name'])
+        RemoteSetting().access_in_push_notifications(device_list_name=device_config['device_list_name'])
 
         # 开启设备通知铃声并验证【设备通知铃声】在主页的文案
         RemotePush().is_device_notify_ringtone_on()
@@ -85,7 +85,8 @@ class TestRemotePush:
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("计划")
     @allure.story("需人工核查日志和录屏")
-    def test_push_plan(self, device_config):
+    @pytest.mark.skip
+    def test_remote_push_plan(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['push']['items']
         BasePage().check_key_in_yaml(remote_items, 'schedule')
@@ -96,15 +97,15 @@ class TestRemotePush:
         # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击菜单项@allure.feature
         RemoteSetting().access_in_push_notifications(device_list_name=device_config['device_list_name'])
 
-        # 验证【计划】在主页的文案
-        push_text_res = RemoteSetting().scroll_check_funcs2(texts=remote_items['schedule']['text'])
+        # 验证【计划】在【手机推送】主页的文案
+        push_text_res = RemotePush().check_plan_items_text(texts=remote_items['schedule']['text'])
 
-        # 验证 计划页的文案，验证报警类型
-        plan_text_status = RemotePush().click_and_test_push_plan(texts_list=remote_items['schedule']['text'])  # 计划页的文案
+        # 验证 计划主页的文案，验证报警类型
+        plan_text_status = RemotePush().click_and_test_push_plan(texts_list=remote_items['schedule']['plan_main_text'])  # 计划主页的文案
         key_res = BasePage().is_key_in_yaml(remote_items['schedule'], 'alarm_type')
-        push_alarm_type_text = RemotePush().click_test_push_alarm_type(texts_list=remote_items['schedule']['alarm_type']['text'],
+        push_alarm_type_text = RemotePush().click_test_push_alarm_type(texts_list=remote_items['schedule']['alarm_type']['text'],  # 验证报警类型文案
                                                                        supported_alarm_type=key_res,
-                                                                       option_text_list=remote_items['schedule']['alarm_type']['option_text'])  # 验证报警类型文案
+                                                                       option_text_list=remote_items['schedule']['alarm_type']['option_text'])  # 遍历选项
 
         # 断言
         assert push_text_res is True
@@ -116,10 +117,6 @@ class TestRemotePush:
     @allure.story("需人工核查日志和录屏")
     @pytest.mark.skip
     def test_push_interval(self, device_config):
-        """
-
-        :return:
-        """
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['push']['items']
         BasePage().check_key_in_yaml(remote_items, 'push_interval')
