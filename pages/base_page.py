@@ -55,10 +55,14 @@ class BasePage:
                 ele_status = check_element()
                 if ele_status:
                     break
+
                 if scroll_or_not:
                     self.scroll_screen()
                     logger.info(f"正在滑动屏幕查找：{element_value} 元素")
                     time.sleep(0.5)
+
+            if not ele_status:
+                logger.info(f"{element_value} 元素未找到！")
 
             return ele_status
 
@@ -81,6 +85,27 @@ class BasePage:
                 logger.info(f"正在循环检测 {element_value} 元素是否出现，第 {i+1} 次")
                 if self.is_element_exists(element_value=element_value, selector_type=selector_type,
                                           max_scrolls=1, scroll_or_not=scroll_or_not):
+                    return True
+            return False
+        except Exception as err:
+            pytest.fail(f"函数执行出错: {str(err)}")
+
+    def loop_detect_element_and_click(self, element_value, selector_type='text', loop_times=10, scroll_or_not=True):
+        """
+        循环检测元素是否出现，循环10次，每次间隔2秒
+        :param element_value: 你要找的元素，支持文本、xpath
+        :param selector_type: 安卓支持：text文本、xpath定位；iOS支持text(label)文本、xpath定位。
+        :param loop_times: 最大循环次数
+        :param scroll_or_not: 是否执行滚动查找。布尔值，默认True滚动查找
+        :return: bool
+        """
+        try:
+            for i in range(loop_times):
+                time.sleep(2)
+                logger.info(f"正在循环检测 {element_value} 元素是否出现，第 {i+1} 次")
+                if self.is_element_exists(element_value=element_value, selector_type=selector_type,
+                                          max_scrolls=1, scroll_or_not=scroll_or_not):
+                    self.click_by_text(text=element_value)
                     return True
             return False
         except Exception as err:
