@@ -29,7 +29,7 @@ class RemoteEmailAlerts(BasePage):
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
-    def set_email_config(self, email='123456789@qq.com', passw='123456789'):
+    def set_email_config(self, email='1349983371@qq.com', passw='123456789'):
         """
         邮件设置
         :param email: 邮箱账号
@@ -38,13 +38,14 @@ class RemoteEmailAlerts(BasePage):
         """
         try:
             # 设置邮箱
-            self.input_text(xpath_exp='//*[@text="输入邮箱"]', text=email)
+            self.input_text_clear(xpath_exp='//*[@text="输入邮箱"]', text=email)
+            time.sleep(1)
             self.input_text(xpath_exp='//*[@text="输入密码"]', text=passw)
 
             # 点击保存
             self.scroll_and_click_by_text(text_to_find='保存')
             # 处理弹窗：点击确定/取消
-            self.scroll_and_click_by_text(text_to_find='确定')
+            self.loop_detect_element_and_click(element_value='确定')
 
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
@@ -59,6 +60,8 @@ class RemoteEmailAlerts(BasePage):
         :return:
         """
         try:
+            email_default_res = True
+            email_default_list = ['邮件设置', '邮件通知', '检测到移动事件时，自动发送邮件提醒用户。', '未设置邮件信息将无法发送邮件通知。', '现在设置']
             # 如果是关：
             if (not RemoteSetting().scroll_check_funcs2(texts='测试') and
                     not RemoteSetting().scroll_check_funcs2(texts='现在设置')):
@@ -69,11 +72,13 @@ class RemoteEmailAlerts(BasePage):
 
             # 如果是开-缺省状态：
             if RemoteSetting().scroll_check_funcs2(texts='现在设置'):
+                email_default_res = RemoteSetting().scroll_check_funcs2(texts=email_default_list)
                 self.scroll_and_click_by_text('现在设置')
 
                 # 设置邮箱
                 self.set_email_config()
 
+            return email_default_res
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 

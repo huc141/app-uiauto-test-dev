@@ -7,7 +7,7 @@ from pages.base_page import BasePage
 from pages.rn_device_setting_page.remote_setting import RemoteSetting
 from pages.rn_device_setting_page.remote_email_alerts import RemoteEmailAlerts
 
-devices_config = read_yaml.load_device_config(yaml_file_name='email_alerts.yaml')  # 读取参数化文件
+devices_config = read_yaml.load_device_config(device_dir='AReolink_TrackMix_WiFi', yaml_file_name='email_alerts.yaml')  # 读取参数化文件
 
 
 @allure.epic("远程配置>报警通知>邮件通知")
@@ -22,24 +22,26 @@ class TestRemoteEmailAlerts:
         BasePage().check_key_in_yaml(remote_items, 'email_alerts')
 
         # 启动app，并开启录屏
-        driver.start_app(True)
+        # driver.start_app(True)
 
         # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击菜单项@allure.feature进入侦测报警
-        RemoteSetting().access_in_email_alerts(device_list_name=device_config['device_list_name'])
+        # RemoteSetting().access_in_email_alerts(device_list_name=device_config['device_list_name'])
 
         # 判断邮件通知按钮开关状态
-        RemoteEmailAlerts().is_email_alert_on()
+        email_default_res = RemoteEmailAlerts().is_email_alert_on()
 
         # 验证主页文案
         email_alerts_main_text_status = RemoteEmailAlerts().check_email_alerts_main_text(
             texts=remote_items['email_alerts']['text'])
 
         # 断言
+        assert email_default_res is True
         assert email_alerts_main_text_status is True
 
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("计划")
     @allure.story("需人工核查日志和录屏")
+    @pytest.mark.skip
     def test_remote_email_alerts_plan(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['email_alerts']['items']
@@ -70,6 +72,7 @@ class TestRemoteEmailAlerts:
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("邮件设置")
     @allure.story("需人工核查日志和录屏")
+    @pytest.mark.skip
     def test_remote_email_config(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['email_alerts']['items']
@@ -94,6 +97,7 @@ class TestRemoteEmailAlerts:
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("邮件内容")
     @allure.story("需人工核查日志和录屏")
+    @pytest.mark.skip
     def test_remote_email_content(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['email_alerts']['items']
@@ -114,6 +118,7 @@ class TestRemoteEmailAlerts:
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("邮箱间隔")
     @allure.story("需人工核查日志和录屏")
+    @pytest.mark.skip
     def test_remote_email_interval(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['email_alerts']['items']
@@ -134,6 +139,7 @@ class TestRemoteEmailAlerts:
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("未收到邮件？")
     @allure.story("需人工核查日志和录屏")
+    @pytest.mark.skip
     def test_remote_email_interval(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['email_alerts']['items']

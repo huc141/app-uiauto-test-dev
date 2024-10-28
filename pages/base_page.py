@@ -430,9 +430,10 @@ class BasePage:
         :return:
         """
         try:
-            time.sleep(0.8)
             if self.platform == "android":
+                time.sleep(1)
                 self.driver.xpath(xpath_exp).set_text(text)
+                time.sleep(1)
                 # self.driver.set_input_ime(True)
                 # time.sleep(0.2)
                 # self.driver.send_keys(text)
