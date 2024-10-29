@@ -641,6 +641,7 @@ class BasePage:
                     time.sleep(0.5)
                     logger.info('点击 ' + i)
                     self.click_by_text(i)
+                    time.sleep(0.5)
 
             elif mode == 2:
                 self.scroll_and_click_by_text(text_to_find=menu_text)
@@ -649,10 +650,10 @@ class BasePage:
                     time.sleep(0.5)
                     logger.info('点击 ' + i)
                     self.scroll_click_right_btn(text_to_find=i)
+                    time.sleep(0.5)
 
         except Exception as err:
             pytest.fail(f"函数执行出错: {str(err)}")
-            # logger.info(f"可能发生了错误: {err}")
 
     def access_in_remote_setting(self, text_to_find, el_type='text', max_attempts=15, scroll_pause=0.5):
         """
