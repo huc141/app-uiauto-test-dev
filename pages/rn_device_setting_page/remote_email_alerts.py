@@ -37,15 +37,17 @@ class RemoteEmailAlerts(BasePage):
         :return:
         """
         try:
-            # 设置邮箱
-            self.input_text_clear(xpath_exp='//*[@text="输入邮箱"]', text=email)
-            time.sleep(1)
-            self.input_text(xpath_exp='//*[@text="输入密码"]', text=passw)
+            if not RemoteSetting().scroll_check_funcs2(texts='邮件设置'):
+                time.sleep(1)
+                # 设置邮箱
+                self.input_text_clear(xpath_exp='//*[@text="输入邮箱"]', text=email)
+                time.sleep(1)
+                self.input_text(xpath_exp='//*[@text="输入密码"]', text=passw)
 
-            # 点击保存
-            self.scroll_and_click_by_text(text_to_find='保存')
-            # 处理弹窗：点击确定/取消
-            self.loop_detect_element_and_click(element_value='确定')
+                # 点击保存
+                self.scroll_and_click_by_text(text_to_find='保存')
+                # 处理弹窗：点击确定/取消
+                self.loop_detect_element_and_click(element_value='确定')
 
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
@@ -67,16 +69,14 @@ class RemoteEmailAlerts(BasePage):
                     not RemoteSetting().scroll_check_funcs2(texts='现在设置')):
                 self.scroll_click_right_btn(text_to_find='邮件通知')
 
-                # 设置邮箱
-                self.set_email_config()
+                self.set_email_config()  # 设置邮箱
 
             # 如果是开-缺省状态：
             if RemoteSetting().scroll_check_funcs2(texts='现在设置'):
                 email_default_res = RemoteSetting().scroll_check_funcs2(texts=email_default_list)
                 self.scroll_and_click_by_text('现在设置')
 
-                # 设置邮箱
-                self.set_email_config()
+                self.set_email_config()  # 设置邮箱
 
             return email_default_res
         except Exception as e:
@@ -93,6 +93,9 @@ class RemoteEmailAlerts(BasePage):
             self.scroll_and_click_by_text(text_to_find='报警类型')
             plan_alarm_type_text_res = RemoteSetting().scroll_check_funcs2(texts=texts_list)
             RemoteSetting().click_checkbox_by_text(option_text_list=option_text, menu_text='报警类型')
+            time.sleep(1)
+            self.scroll_and_click_by_text(text_to_find='保存')  # 点击报警类型的保存按钮
+            self.scroll_and_click_by_text(text_to_find='保存')  # 保存当前计划
             return plan_alarm_type_text_res
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
@@ -121,7 +124,13 @@ class RemoteEmailAlerts(BasePage):
             plan_alarm_type_text_res = self.click_and_test_email_alarm_type(texts_list=alarm_type_text,
                                                                             option_text=alarm_type_option_text)
 
-            return plan_alarm_main_text_res, plan_timed_main_text_res, plan_alarm_type_text_res
+            result = {
+                'plan_alarm_main_text': plan_alarm_main_text_res,
+                'plan_timed_main_text': plan_timed_main_text_res,
+                'plan_alarm_type_text': plan_alarm_type_text_res
+            }
+
+            return result
 
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
