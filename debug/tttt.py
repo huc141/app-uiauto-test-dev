@@ -16,9 +16,11 @@ driver = u2.connect_usb()
 # driver = wda.Client('http://localhost:8100')
 
 
-def scroll_click_right_btn(text_to_find, el_type='text', max_attempts=1, scroll_pause=0.5, platform='android'):
+def scroll_click_right_btn(text_to_find, el_type='text', max_attempts=1, scroll_pause=0.5, platform='android', **kwargs):
     """
     在设备列表中滚动查找指定设备名称(支持单机、nvr、hub),并点击远程设置按钮。
+    :param className: 被点击元素的className
+    :param resourceId: 元素id
     :param platform:
     :param el_type: 元素查找类型，支持 文本text(label).
     :param text_to_find: 要查找的文本
@@ -37,9 +39,9 @@ def scroll_click_right_btn(text_to_find, el_type='text', max_attempts=1, scroll_
 
         def click_button_android(text_to_find):
             logger.info(f"尝试点击这个 '{text_to_find}' 元素右边的可点击按钮")
-            dd = driver(text=text_to_find, resourceId='ReoTitle').right(clickable='true')
-            logger.info(dd)
-            driver(text=text_to_find, resourceId='ReoTitle').right(clickable='true').click()
+            # dd = driver(text=text_to_find, resourceId='ReoTitle').right(clickable='true')
+            # logger.info(dd)
+            driver(text=text_to_find, className=kwargs.get('className1')).right(className=kwargs.get('className2')).click()
             time.sleep(1)
             return True
 
@@ -95,4 +97,4 @@ def scroll_click_right_btn(text_to_find, el_type='text', max_attempts=1, scroll_
         return False
 
 
-scroll_click_right_btn(text_to_find='手机推送')
+scroll_click_right_btn(text_to_find='SSL or TLS', className1='android.widget.TextView', resourceId='com.mcu.reolink:id/email_settings_ssl_switch')

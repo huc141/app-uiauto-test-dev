@@ -16,16 +16,17 @@ class TestRemoteEmailAlerts:
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("邮件通知主页文案")
     @allure.story("需人工核查日志和录屏")
+    @pytest.mark.skip
     def test_email_alerts_main_text(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['email_alerts']['items']
         BasePage().check_key_in_yaml(remote_items, 'email_alerts')
 
         # 启动app，并开启录屏
-        # driver.start_app(True)
+        driver.start_app(True)
 
         # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击菜单项@allure.feature进入侦测报警
-        # RemoteSetting().access_in_email_alerts(device_list_name=device_config['device_list_name'])
+        RemoteSetting().access_in_email_alerts(device_list_name=device_config['device_list_name'])
 
         # 判断邮件通知按钮开关状态
         email_default_res = RemoteEmailAlerts().is_email_alert_on()
@@ -58,31 +59,29 @@ class TestRemoteEmailAlerts:
 
         # 点击并测试 计划
         plan_text = remote_items['plan']
-        plan_alarm_main_text_res, plan_timed_main_text_res, plan_alarm_type_text_res = RemoteEmailAlerts().click_and_test_plan(
-            plan_alarm_text=plan_text['alarm']['text'],
-            plan_timed_text=plan_text['timed']['text'],
-            alarm_type_text=plan_text['alarm']['alarm_type']['text'],
-            alarm_type_option_text=plan_text['alarm']['alarm_type']['option_text'])
+        result = RemoteEmailAlerts().click_and_test_plan(plan_alarm_text=plan_text['alarm']['text'],
+                                                         plan_timed_text=plan_text['timed']['text'],
+                                                         alarm_type_text=plan_text['alarm']['alarm_type']['text'],
+                                                         alarm_type_option_text=plan_text['alarm']['alarm_type']['option_text'])
 
         # 断言
-        assert plan_alarm_main_text_res is True
-        assert plan_timed_main_text_res is True
-        assert plan_alarm_type_text_res is True
+        assert result['plan_alarm_main_text'] is True
+        assert result['plan_timed_main_text'] is True
+        assert result['plan_alarm_type_text'] is True
 
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("邮件设置")
     @allure.story("需人工核查日志和录屏")
-    @pytest.mark.skip
     def test_remote_email_config(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['email_alerts']['items']
         BasePage().check_key_in_yaml(remote_items, 'email_config')
 
         # 启动app，并开启录屏
-        driver.start_app(True)
+        # driver.start_app(True)
 
         # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击菜单项@allure.feature
-        RemoteSetting().access_in_email_alerts(device_list_name=device_config['device_list_name'])
+        # RemoteSetting().access_in_email_alerts(device_list_name=device_config['device_list_name'])
 
         # 判断邮件通知按钮开关状态
         RemoteEmailAlerts().is_email_alert_on()
