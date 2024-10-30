@@ -298,7 +298,7 @@ class BasePage:
                 raise
         return False
 
-    def scroll_click_right_btn(self, text_to_find, el_type='text', max_attempts=1, scroll_pause=0.5):
+    def scroll_click_right_btn(self, text_to_find, el_type='text', max_attempts=1, scroll_pause=0.5, **kwargs):
         """
         在当前页面滑动查找并点击指定文本右侧的可点击元素/按钮。
         :param el_type: 元素查找类型，支持 文本text(label).
@@ -318,8 +318,23 @@ class BasePage:
 
             def click_button_android(text):
                 logger.info(f"尝试点击这个 '{text_to_find}' 元素右边的可点击按钮")
-                self.driver(text=text, resourceId='com.mcu.reolink:id/tv_remote_toggle').right(
-                    clickable='true').click()  # ReoTitle
+                # self.driver(text=text, resourceId='com.mcu.reolink:id/tv_remote_toggle').right(
+                #     clickable='true').click()  # ReoTitle
+                # 根据提供的参数决定操作
+                if 'resourceId_1' in kwargs and 'resourceId_2' in kwargs:
+                    self.driver(text=text_to_find, resourceId=kwargs['resourceId_1']).right(
+                        resourceId=kwargs['resourceId_2']).click()
+                elif 'resourceId_1' in kwargs and 'className_2' in kwargs:
+                    self.driver(text=text_to_find, resourceId=kwargs['resourceId_1']).right(
+                        className=kwargs['className_2']).click()
+                elif 'className_1' in kwargs and 'resourceId_2' in kwargs:
+                    self.driver(text=text_to_find, className=kwargs['className_1']).right(
+                        resourceId=kwargs['resourceId_2']).click()
+                elif 'className_1' in kwargs and 'className_2' in kwargs:
+                    self.driver(text=text_to_find, className=kwargs['className_1']).right(
+                        className=kwargs['className_2']).click()
+                else:
+                    self.driver(text=text, resourceId='com.mcu.reolink:id/tv_remote_toggle').right().click()
                 time.sleep(1)
                 return True
 
@@ -373,8 +388,6 @@ class BasePage:
 
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
-            # logger.info(f"可能发生了错误: {err}")
-            # return False
 
     def get_toast(self, toast_text: str, reset=True, timeout=5.0, default="没有获取到toast提示"):
         """

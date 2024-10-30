@@ -63,7 +63,8 @@ class RemoteEmailAlerts(BasePage):
         """
         try:
             email_default_res = True
-            email_default_list = ['邮件设置', '邮件通知', '检测到移动事件时，自动发送邮件提醒用户。', '未设置邮件信息将无法发送邮件通知。', '现在设置']
+            email_default_list = ['邮件设置', '邮件通知', '检测到移动事件时，自动发送邮件提醒用户。',
+                                  '未设置邮件信息将无法发送邮件通知。', '现在设置']
             # 如果是关：
             if (not RemoteSetting().scroll_check_funcs2(texts='测试') and
                     not RemoteSetting().scroll_check_funcs2(texts='现在设置')):
@@ -153,15 +154,21 @@ class RemoteEmailAlerts(BasePage):
             # TODO: 编辑发件邮箱、点击?帮助
 
             # 关闭/开启SSL
-            self.scroll_click_right_btn('SSL or TLS')
+            self.scroll_click_right_btn(text_to_find='SSL or TLS',
+                                        className_1='android.widget.TextView',
+                                        className_2='android.widget.LinearLayout')
             self.scroll_and_click_by_text('取消')
-            self.scroll_click_right_btn('SSL or TLS')
+            self.scroll_click_right_btn(text_to_find='SSL or TLS',
+                                        className_1='android.widget.TextView',
+                                        className_2='android.widget.LinearLayout')
             self.scroll_and_click_by_text('关闭')
-            self.scroll_click_right_btn('SSL or TLS')  # 开启
+            self.scroll_click_right_btn(text_to_find='SSL or TLS',
+                                        className_1='android.widget.TextView',
+                                        className_2='android.widget.LinearLayout')
             self.scroll_and_click_by_text('保存')
 
             # 点击添加邮箱
-            self.scroll_and_click_by_text('添加邮箱')
+            self.scroll_and_click_by_text('+ 添加邮箱')
             self.input_text(xpath_exp='//*[@text="输入邮箱地址"]', text='autotestemail@gmail.com')
             self.scroll_and_click_by_text('保存')
 
@@ -208,4 +215,3 @@ class RemoteEmailAlerts(BasePage):
             return page_res
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
-

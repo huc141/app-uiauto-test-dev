@@ -41,7 +41,18 @@ def scroll_click_right_btn(text_to_find, el_type='text', max_attempts=1, scroll_
             logger.info(f"尝试点击这个 '{text_to_find}' 元素右边的可点击按钮")
             # dd = driver(text=text_to_find, resourceId='ReoTitle').right(clickable='true')
             # logger.info(dd)
-            driver(text=text_to_find, className=kwargs.get('className1')).right(className=kwargs.get('className2')).click()
+            # driver(text=text_to_find, className=kwargs.get('className1')).right(className=kwargs.get('className2')).click()
+            # 根据提供的参数决定操作
+            if 'resourceId_1' in kwargs and 'resourceId_2' in kwargs:
+                driver(text=text_to_find, resourceId=kwargs['resourceId_1']).right(resourceId=kwargs['resourceId_2']).click()
+            elif 'resourceId_1' in kwargs and 'className_2' in kwargs:
+                driver(text=text_to_find, resourceId=kwargs['resourceId_1']).right(className=kwargs['className_2']).click()
+            elif 'className_1' in kwargs and 'resourceId_2' in kwargs:
+                driver(text=text_to_find, className=kwargs['className_1']).right(resourceId=kwargs['resourceId_2']).click()
+            elif 'className_1' in kwargs and 'className_2' in kwargs:
+                driver(text=text_to_find, className=kwargs['className_1']).right(className=kwargs['className_2']).click()
+            else:
+                driver(text=text_to_find).right().click()
             time.sleep(1)
             return True
 
@@ -97,4 +108,6 @@ def scroll_click_right_btn(text_to_find, el_type='text', max_attempts=1, scroll_
         return False
 
 
-scroll_click_right_btn(text_to_find='SSL or TLS', className1='android.widget.TextView', resourceId='com.mcu.reolink:id/email_settings_ssl_switch')
+scroll_click_right_btn(text_to_find='SSL or TLS',
+                       className_1='android.widget.TextView',
+                       className_2='android.widget.LinearLayout')
