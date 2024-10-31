@@ -211,6 +211,9 @@ class RemoteEmailAlerts(BasePage):
             time.sleep(4)
             page_res = RemoteSetting().scroll_check_funcs2(texts='Troubleshooting - Fail to Get Alerts via Emails')
             self.back_previous_page()
+            res = self.loop_detect_element_exist(element_value='邮件设置')
+            if not res:
+                pytest.fail(f"进入【未收到邮件？】页面后，未能返回到邮件通知页面！")
 
             return page_res
         except Exception as e:

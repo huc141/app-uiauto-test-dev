@@ -7,7 +7,7 @@ from pages.base_page import BasePage
 from pages.rn_device_setting_page.remote_setting import RemoteSetting
 from pages.rn_device_setting_page.remote_ftp import RemoteFtp
 
-devices_config = read_yaml.load_device_config(yaml_file_name='ftp.yaml')  # 读取参数化文件
+devices_config = read_yaml.load_device_config(device_dir='AReolink_TrackMix_WiFi', yaml_file_name='ftp.yaml')  # 读取参数化文件
 
 
 @allure.epic("远程配置>报警通知>FTP")
