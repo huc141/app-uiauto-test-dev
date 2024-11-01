@@ -23,15 +23,16 @@ class TestRemoteFtp:
         BasePage().check_key_in_yaml(remote_items, 'ftp')
 
         # 启动app，并开启录屏
-        driver.start_app(True)
+        # driver.start_app(True)
 
         # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击菜单项@allure.feature
-        RemoteSetting().access_in_ftp(device_list_name=device_config['device_list_name'])
+        # RemoteSetting().access_in_ftp(device_list_name=device_config['device_list_name'])
 
         # 判断邮件通知按钮开关状态
-        RemoteFtp().is_ftp_on()
+        RemoteFtp().is_ftp_on(remote_items['ftp_config']['text'])
 
         # TODO: 验证主页文案
+
         # TODO: 断言
 
     @pytest.mark.parametrize("device_config", devices_config)

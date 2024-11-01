@@ -28,15 +28,83 @@ class RemoteFtp(BasePage):
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
-    def set_ftp_config(self):
+    # 设置端口
+    def set_ftp_port(self):
+        try:
+            # 点击清空按钮
+            self.scroll_and_click_by_text(text_to_find='//android.widget.TextView[@text=""]',
+                                          el_type='xpath')
+            # 输入端口
+            self.scroll_click_right_btn(text_to_find='端口',
+                                        className_1='android.widget.TextView',
+                                        className_2='android.widget.EditText')
+            self.input_text(xpath_exp='', text='21')
+        except Exception as e:
+            pytest.fail(f"函数执行出错: {str(e)}")
+
+    # 设置传输模式
+    def set_transmission_mode(self, trms_text, trm_opt_text):
+        try:
+            trms_text_res = RemoteSetting().scroll_check_funcs2(texts=trms_text)
+            self.iterate_and_click_popup_text(option_text_list=trm_opt_text, menu_text='传输模式')
+            if not trms_text_res:
+                pytest.fail(f"[]")
+        except Exception as e:
+            pytest.fail(f"函数执行出错: {str(e)}")
+
+    def set_ftp_config(self, text_list):
         """
         TODO: ftp设置
+        :param text_list: FTP设置页面的文案列表
         :return:
         """
         try:
-            # TODO: 设置服务器地址
-            self.input_text(xpath_exp='//*[@text="输入邮箱"]', text='')
-            self.input_text(xpath_exp='//*[@text="输入密码"]', text='')
+            text_to_find_list = ['服务器地址*', '用户名*', '密码', '远程目录']
+            text_to_input = ['111.222.333.444', 'autoUserTest', '123456789', '/user/test']
+            count = 0
+
+            # 匿名传输
+            for i in range(1, 2):
+                self.scroll_click_right_btn(text_to_find='匿名传输',
+                                            className_1='android.widget.TextView',
+                                            className_2='android.view.ViewGroup')
+
+            # 不允许未加密的FTP明文传输
+            if '不允许未加密的FTP明文传输' in text_list:
+                for i in range(1, 2):
+                    self.scroll_click_right_btn(text_to_find='不允许未加密的FTP明文传输',
+                                                className_1='android.widget.TextView',
+                                                className_2='android.view.ViewGroup')
+
+            # 设置服务器地址、用户名/密码、远程目录
+            for i in text_to_find_list:
+                self.scroll_click_right_btn(text_to_find=i,
+                                            className_1='android.widget.TextView',
+                                            className_2='android.widget.EditText')
+                self.input_text(xpath_exp='', text=text_to_input[count])
+                count += 1
+
+            # 设置端口
+            self.set_ftp_port()
+
+            # 设置传输模式
+            self.set_transmission_mode()
+
+            # 设置生成子目录
+
+            # 设置上传
+
+            # 设置视频-分辨率
+
+            # 设置视频-FTP录像延长
+
+            # 设置视频-视频最大大小(MB)
+
+            # 设置图片-分辨率
+
+            # 设置图片-间隔
+
+            # 设置图片-覆盖
 
             # TODO: 点击保存
             self.scroll_and_click_by_text(text_to_find='保存')
@@ -46,7 +114,7 @@ class RemoteFtp(BasePage):
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
-    def is_ftp_on(self):
+    def is_ftp_on(self, text_list):
         """
         判断FTP按钮开关状态：
             ①如果为关，则点击打开，打开后配置FTP并保存；
@@ -56,21 +124,31 @@ class RemoteFtp(BasePage):
         :return:
         """
         try:
+            ftp_default_res = True
+            alert_info_res = False
+            ftp_default_list = ['FTP', '未完成FTP功能配置将无法正常使用此功能。', '现在设置']
+            alert_info = ['在FTP服务中，数据将以未加密形式传输，建议您在家庭和工作网络而非公共网络上启用此功能。或开启此设备FTPS加密选项，并同时开启FTP服务器的FTPS选项，以保障数据的传输安全。确认开启？']
             # 如果是关：
             if (not RemoteSetting().scroll_check_funcs2(texts='测试') and
                     not RemoteSetting().scroll_check_funcs2(texts='现在设置')):
-                self.scroll_click_right_btn(text_to_find='FTP')
 
-                # TODO: 设置ftp
-                # self.set_ftp_config()
+                self.scroll_click_right_btn(text_to_find='FTP')  # 点击FTP
+                alert_info_res = RemoteSetting().scroll_check_funcs2(texts=alert_info)
+                self.loop_detect_element_and_click(element_value='取消', scroll_or_not=False)  # 点击取消
+                self.scroll_click_right_btn(text_to_find='FTP')  # 点击FTP
+                self.loop_detect_element_and_click(element_value='确定', scroll_or_not=False)  # 点击确定
+
+                self.scroll_and_click_by_text('现在设置')
+                self.set_ftp_config(text_list=text_list)  # 设置邮箱
 
             # 如果是开-缺省状态：
             if RemoteSetting().scroll_check_funcs2(texts='现在设置'):
+                ftp_default_res = RemoteSetting().scroll_check_funcs2(texts=ftp_default_list)
                 self.scroll_and_click_by_text('现在设置')
 
-                # TODO: 设置ftp
-                # self.set_ftp_config()
+                self.set_ftp_config(text_list=text_list)  # 设置邮箱
 
+            return ftp_default_res, alert_info_res
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
