@@ -78,6 +78,7 @@ def scroll_click_right_btn(text_to_find, el_type='text', max_attempts=1, scroll_
                 if element.exists:
                     logger.info(f"【{text_to_find}】元素已找到")
                     click_button_android(text_to_find)
+                    driver.xpath(xpath='').set_text('111.111.111.111')
                     break
                 else:
                     # 滑动屏幕
@@ -108,6 +109,6 @@ def scroll_click_right_btn(text_to_find, el_type='text', max_attempts=1, scroll_
         return False
 
 
-scroll_click_right_btn(text_to_find='SSL or TLS',
+scroll_click_right_btn(text_to_find='匿名传输',
                        className_1='android.widget.TextView',
-                       className_2='android.widget.LinearLayout')
+                       className_2='android.view.ViewGroup')
