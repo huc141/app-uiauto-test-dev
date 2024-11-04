@@ -17,7 +17,7 @@ class TestRemoteLight:
     @allure.feature("灯>门铃按钮灯 > 关闭 模式")
     @allure.story("需人工核查日志和录屏")
     @pytest.mark.skip
-    def test_doorbell_button_light(self, device_config):
+    def test_doorbell_button_light_off(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['light']['items']['light']['button_light']['subpage']
         BasePage().check_key_in_yaml(remote_items, 'light_off_mode')
@@ -41,7 +41,7 @@ class TestRemoteLight:
     @allure.feature("灯>门铃按钮灯 > 自动 模式")
     @allure.story("需人工核查日志和录屏")
     @pytest.mark.skip
-    def test_doorbell_button_light(self, device_config):
+    def test_doorbell_button_light_auto(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['light']['items']['light']['button_light']['subpage']
         BasePage().check_key_in_yaml(remote_items, 'light_auto_mode')
@@ -65,7 +65,7 @@ class TestRemoteLight:
     @allure.feature("灯>门铃按钮灯 > 自动且夜间常亮 模式")
     @allure.story("需人工核查日志和录屏")
     @pytest.mark.skip
-    def test_doorbell_button_light(self, device_config):
+    def test_doorbell_button_light_auto_night_steady_on(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['light']['items']['light']['button_light']['subpage']
         BasePage().check_key_in_yaml(remote_items, 'light_auto_on_night_mode')
@@ -89,7 +89,7 @@ class TestRemoteLight:
     @allure.feature("灯>门铃按钮灯 > 常亮 模式")
     @allure.story("需人工核查日志和录屏")
     @pytest.mark.skip
-    def test_doorbell_button_light(self, device_config):
+    def test_doorbell_button_light_steady_on(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['light']['items']['light']['button_light']['subpage']
         BasePage().check_key_in_yaml(remote_items, 'light_always_on_mode')

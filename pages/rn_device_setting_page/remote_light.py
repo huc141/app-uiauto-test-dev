@@ -13,7 +13,7 @@ class RemoteLight(BasePage):
         if self.platform == 'android':
             self.time_selector_hour = '//*[@resource-id="com.mcu.reolink:id/options1"]'  # 定时模式：小时
             self.time_selector_min = '//*[@resource-id="com.mcu.reolink:id/options2"]'  # 定时模式：分钟
-            self.base_left_button = '//*[@resource-id="com.mcu.reolink:id/base_left_button"]'  # 左上角返回上一页按钮
+            self.base_left_button = '//*[@resource-id="PageHeaderLeft"]'  # 左上角返回上一页按钮
 
         elif self.platform == 'ios':
             self.time_selector_hour = ''
@@ -107,7 +107,8 @@ class RemoteLight(BasePage):
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
-    def click_test_floodlight_night_smart_mode(self, lights_num, supported_detect_type, flood_light_texts, options_text):
+    def click_test_floodlight_night_smart_mode(self, lights_num, supported_detect_type, flood_light_texts,
+                                               options_text):
         """
         点击并测试照明灯的夜间智能模式，（没有验证侦测页的文案）
         :param lights_num: 布尔值，灯的数量大于1:True,  等于1：False
@@ -271,6 +272,34 @@ class RemoteLight(BasePage):
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
+    def click_test_floodlight_night_vision_steady_light_mode(self, lights_num, flood_light_texts):
+        """
+        点击测试白光灯/泛光灯的夜视常亮模式
+        :return:
+        """
+        try:
+            # 如果是多个灯，则点击照明灯》夜视常亮 模式
+            if lights_num:
+                self.scroll_and_click_by_text(text_to_find='照明灯')
+                self.scroll_and_click_by_text(text_to_find='夜视常亮')
+                # 验证照明灯主页文案
+                light_steady_main_text_res = RemoteSetting().scroll_check_funcs2(texts=flood_light_texts)
+
+                # 返回灯聚合页，验证照明灯模式回显
+                self.back_previous_page_by_xpath(xpath_expression=self.base_left_button)
+                if not RemoteSetting().scroll_check_funcs2(texts='夜视常亮'):
+                    pytest.fail(f"照明灯选择【夜视常亮】后，未检查到回显！")
+
+                return light_steady_main_text_res
+
+            else:
+                self.scroll_and_click_by_text(text_to_find='夜视常亮')
+                # 验证照明灯主页文案
+                light_off_main_text_res = RemoteSetting().scroll_check_funcs2(texts=flood_light_texts)
+                return light_off_main_text_res
+        except Exception as e:
+            pytest.fail(f"函数执行出错: {str(e)}")
+
     def click_test_light_off_mode(self, lights_num, flood_light_texts):
         """
         点击测试白光灯的关闭模式
@@ -339,8 +368,8 @@ class RemoteLight(BasePage):
         try:
             # 如果是多个灯，则点击状态灯》关闭模式
             if lights_num:
-                self.scroll_and_click_by_text(text_to_find='状态灯')
-                self.scroll_and_click_by_text(text_to_find='关闭')
+                self.loop_detect_element_and_click(element_value='状态灯')
+                self.loop_detect_element_and_click(element_value='关闭')
                 # 验证状态灯主页文案
                 status_lights_main_text_res = RemoteSetting().scroll_check_funcs2(texts=status_lights_texts)
 
@@ -352,9 +381,10 @@ class RemoteLight(BasePage):
                 return status_lights_main_text_res
 
             else:
-                self.scroll_and_click_by_text(text_to_find='关闭')
+                self.loop_detect_element_and_click(element_value='关闭')
                 # 验证状态灯主页文案
                 status_lights_main_text_res = RemoteSetting().scroll_check_funcs2(texts=status_lights_texts)
+
                 return status_lights_main_text_res
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
@@ -369,8 +399,8 @@ class RemoteLight(BasePage):
         try:
             # 如果是多个灯，则点击状态灯》开启模式
             if lights_num:
-                self.scroll_and_click_by_text(text_to_find='状态灯')
-                self.scroll_and_click_by_text(text_to_find='开启')
+                self.loop_detect_element_and_click(element_value='状态灯')
+                self.loop_detect_element_and_click(element_value='开启')
                 # 验证状态灯主页文案
                 status_lights_main_text_res = RemoteSetting().scroll_check_funcs2(texts=status_lights_texts)
 
@@ -382,9 +412,10 @@ class RemoteLight(BasePage):
                 return status_lights_main_text_res
 
             else:
-                self.scroll_and_click_by_text(text_to_find='开启')
+                self.loop_detect_element_and_click(element_value='开启')
                 # 验证状态灯主页文案
                 status_lights_main_text_res = RemoteSetting().scroll_check_funcs2(texts=status_lights_texts)
+
                 return status_lights_main_text_res
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")

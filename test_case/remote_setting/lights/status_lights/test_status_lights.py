@@ -41,7 +41,7 @@ class TestRemoteLight:
     @allure.feature("灯>状态灯 > 开启 模式")
     @allure.story("需人工核查日志和录屏")
     @pytest.mark.skip
-    def test_status_lights_off(self, device_config):
+    def test_status_lights_on(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['light']['items']['light']['status_lights']['subpage']
         BasePage().check_key_in_yaml(remote_items, 'light_on_mode')
