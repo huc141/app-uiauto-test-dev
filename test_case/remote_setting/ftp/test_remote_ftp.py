@@ -14,13 +14,33 @@ devices_config = read_yaml.load_device_config(device_dir='AReolink_TrackMix_WiFi
 class TestRemoteFtp:
 
     @pytest.mark.parametrize("device_config", devices_config)
-    @allure.feature("FTP主页文案")
+    @allure.feature("FTP主页文案(未设置)")
     @allure.story("需人工核查日志和录屏")
-    @pytest.mark.skip
     def test_ftp_main_text(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['ftp']['items']
         BasePage().check_key_in_yaml(remote_items, 'ftp')
+
+        # 启动app，并开启录屏
+        driver.start_app(True)
+
+        # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击菜单项@allure.feature
+        RemoteSetting().access_in_ftp(device_list_name=device_config['device_list_name'])
+
+        # 判断邮件通知按钮开关状态
+        ftp_default_res, alert_info_res = RemoteFtp().is_ftp_on()
+
+        # 断言
+        assert ftp_default_res is True
+        assert alert_info_res is True
+
+    @pytest.mark.parametrize("device_config", devices_config)
+    @allure.feature("FTP配置")
+    @allure.story("需人工核查日志和录屏")
+    def test_ftp_config(self, device_config):
+        # 检查键是否存在，存在则执行当前用例，否则跳过
+        remote_items = device_config['ipc']['ftp']['items']
+        BasePage().check_key_in_yaml(remote_items, 'ftp_config')
 
         # 启动app，并开启录屏
         # driver.start_app(True)
@@ -28,26 +48,7 @@ class TestRemoteFtp:
         # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击菜单项@allure.feature
         # RemoteSetting().access_in_ftp(device_list_name=device_config['device_list_name'])
 
-        # 判断邮件通知按钮开关状态
-        RemoteFtp().is_ftp_on(remote_items['ftp_config']['text'])
-
-        # TODO: 验证主页文案
-
-        # TODO: 断言
-
-    @pytest.mark.parametrize("device_config", devices_config)
-    @allure.feature("FTP配置")
-    @allure.story("需人工核查日志和录屏")
-    def test_ftp_main_text(self, device_config):
-        # 检查键是否存在，存在则执行当前用例，否则跳过
-        remote_items = device_config['ipc']['ftp']['items']
-        BasePage().check_key_in_yaml(remote_items, 'ftp_config')
-
-        # 启动app，并开启录屏
-        driver.start_app(True)
-
-        # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击菜单项@allure.feature
-        RemoteSetting().access_in_ftp(device_list_name=device_config['device_list_name'])
+        # 点击
 
         # 检查FTP配置文案
         ftp_text_status = RemoteFtp().temp_check_ftp_text(ftp_config_text=remote_items['ftp_config']['text'])

@@ -109,6 +109,6 @@ def scroll_click_right_btn(text_to_find, el_type='text', max_attempts=1, scroll_
         return False
 
 
-scroll_click_right_btn(text_to_find='匿名传输',
-                       className_1='android.widget.TextView',
+scroll_click_right_btn(text_to_find='FTP',
+                       resourceId_1='ReoTitle',
                        className_2='android.view.ViewGroup')

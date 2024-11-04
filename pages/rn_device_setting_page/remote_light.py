@@ -431,9 +431,11 @@ class RemoteLight(BasePage):
             # 如果是多个灯，则点击按钮灯》开启模式
             if lights_num:
                 self.scroll_and_click_by_text(text_to_find='按钮灯')
-                self.scroll_and_click_by_text(text_to_find='关闭')
+
                 # 验证按钮灯主页文案
                 button_light__main_text_res = RemoteSetting().scroll_check_funcs2(texts=button_light_texts)
+
+                self.scroll_and_click_by_text(text_to_find='关闭')
 
                 # 返回灯聚合页，验证按钮灯模式回显
                 self.back_previous_page_by_xpath(xpath_expression=self.base_left_button)

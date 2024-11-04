@@ -54,10 +54,11 @@ class RemoteSetting(BasePage):
                 all_names.append(item[key])
         return all_names
 
-    def scroll_check_funcs(self, texts):
+    def scroll_check_funcs(self, texts, scroll_or_not=True):
         """
         遍历并判断功能项(名称)是否存在当前页面
         :param texts: 存储了预期功能项名称的列表。
+        :param scroll_or_not: 是否执行滚动查找。布尔值，默认True滚动查找
         :return: bool
         """
         ele_exists = []
@@ -67,7 +68,7 @@ class RemoteSetting(BasePage):
             if isinstance(texts, list):
                 # 如果 texts 是一个列表，遍历列表中的每个功能项名称
                 for text in texts:
-                    ele_status = self.is_element_exists(element_value=text, max_scrolls=5)
+                    ele_status = self.is_element_exists(element_value=text, max_scrolls=5, scroll_or_not=scroll_or_not)
                     if ele_status:
                         ele_exists.append(text)
                     else:
@@ -83,7 +84,7 @@ class RemoteSetting(BasePage):
 
             elif isinstance(texts, str):
                 # 如果 texts 是一个单一的文本，在当前页面滚动查找该文本是否存在
-                ele_status = self.is_element_exists(texts)
+                ele_status = self.is_element_exists(texts, scroll_or_not=scroll_or_not)
                 if not ele_status:
                     logger.info(f"当前页面缺失的功能有：{texts}")
                     return False
@@ -94,12 +95,13 @@ class RemoteSetting(BasePage):
             logger.info(f"可能发生了错误: {err}")
             return False
 
-    def scroll_check_funcs2(self, texts, selector=None, selector_type='id'):
+    def scroll_check_funcs2(self, texts, selector=None, selector_type='id', scroll_or_not=True):
         """
         遍历并判断功能项(名称)是否存在当前页面，同时比对数量是否正确。
         :param selector_type: 元素的定位方式，根据id进行文本提取。
         :param selector: 元素定位的具体id。
         :param texts: 存储了预期功能项名称的列表。
+        :param scroll_or_not: 是否执行滚动查找。布尔值，默认True滚动查找
         :return:
         """
         ele_exists = []  # 当前页面存在的功能
@@ -140,7 +142,7 @@ class RemoteSetting(BasePage):
 
                 elif isinstance(texts, str):
                     # 如果 texts 是一个单一的文本，在当前页面滚动查找该文本是否存在
-                    ele_status = self.is_element_exists(element_value=texts, max_scrolls=5)
+                    ele_status = self.is_element_exists(element_value=texts, max_scrolls=5, scroll_or_not=scroll_or_not)
                     if not ele_status:
                         logger.info(f"当前页面缺失的功能有：{texts}")
                         return False
@@ -149,7 +151,7 @@ class RemoteSetting(BasePage):
                         return True
 
             else:
-                return self.scroll_check_funcs(texts=texts)
+                return self.scroll_check_funcs(texts=texts, scroll_or_not=scroll_or_not)
 
         except Exception as err:
             logger.info(f"可能发生了错误: {err}")

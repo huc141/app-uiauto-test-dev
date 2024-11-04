@@ -7,7 +7,7 @@ from pages.base_page import BasePage
 from pages.rn_device_setting_page.remote_setting import RemoteSetting
 from pages.rn_device_setting_page.remote_light import RemoteLight
 
-devices_config = read_yaml.load_device_config(yaml_file_name='light.yaml')  # 读取参数化文件
+devices_config = read_yaml.load_device_config(yaml_file_name='doorbell_light.yaml')  # 读取参数化文件
 
 
 @allure.epic("远程配置>常规设置>灯")
@@ -16,7 +16,6 @@ class TestRemoteLight:
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("灯>门铃按钮灯 > 关闭 模式")
     @allure.story("需人工核查日志和录屏")
-    @pytest.mark.skip
     def test_doorbell_button_light_off(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['light']['items']['light']['button_light']['subpage']

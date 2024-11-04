@@ -16,9 +16,9 @@ class GenerateReports:
     def make_dir():
         if not exists(path):
             os.mkdir(path)
-            logger.info("成功创建report_allure_temps文件夹")
+            logger.info("成功创建report_allure_temps文件夹！")
         else:
-            logger.info("report_allure_temps文件夹已存在")
+            logger.info("无需创建report_allure_temps文件夹！")
 
     @staticmethod
     def generate_report():
