@@ -31,6 +31,7 @@ class ReadYaml:
 
     # 定义一个函数来加载指定设备文件夹中的 YAML 文件
     def load_device_config(self, device_dir=None, yaml_file_name='setting.yaml'):
+        device_configs = []
 
         if device_dir is None:
             device_dirs = [os.path.join(self.config_root_dir, d) for d in os.listdir(self.config_root_dir) if
@@ -38,17 +39,30 @@ class ReadYaml:
         else:
             device_dirs = [os.path.join(self.config_root_dir, device_dir)]
 
-        device_configs = []
+        # for _dir in device_dirs:
+        #     yaml_path = os.path.join(_dir, yaml_file_name)
+        #     if os.path.exists(yaml_path):
+        #         try:
+        #             with open(yaml_path, 'r', encoding='utf-8') as file:
+        #                 config = yaml.safe_load(file)
+        #                 device_configs.append(config)
+        #         except Exception as e:
+        #             print(f"Warning: {yaml_path} does not exist in {_dir}")
+        #             print(f"Error loading {yaml_path}: {e}")
         for _dir in device_dirs:
-            yaml_path = os.path.join(_dir, yaml_file_name)
-            if os.path.exists(yaml_path):
-                try:
-                    with open(yaml_path, 'r', encoding='utf-8') as file:
-                        config = yaml.safe_load(file)
-                        device_configs.append(config)
-                except Exception as e:
-                    print(f"Warning: {yaml_path} does not exist in {_dir}")
-                    print(f"Error loading {yaml_path}: {e}")
+            for root, dirs, files in os.walk(_dir):
+                for filename in files:
+                    if yaml_file_name and filename != yaml_file_name:
+                        continue
+                    if filename.endswith('.yaml') or filename.endswith('.yml'):
+                        yaml_path = os.path.join(root, filename)
+                        try:
+                            with open(yaml_path, 'r', encoding='utf-8') as file:
+                                config = yaml.safe_load(file)
+                                device_configs.append(config)
+                        except Exception as e:
+                            print(f"Warning: Error loading {yaml_path}")
+                            print(f"Error: {e}")
 
         return device_configs
 
