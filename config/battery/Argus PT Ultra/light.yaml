@@ -18,33 +18,8 @@ ipc:
         text:
           - '灯'
           - '状态灯'
+          - '红外灯'
           - '照明灯'
-
-        floodlight:
-          name: '照明灯'
-          desc: '设置>灯>照明灯'
-          type: 'navigation'
-          subpage:
-            name: '照明灯'
-            desc: '设置>灯>照明灯'
-            type: 'page'
-
-            light_off_mode:
-              name: '关闭'
-              desc: '设置>灯>照明灯>关闭'
-              type: 'menu'
-
-            auto_mode:
-              name: '自动模式'
-              desc: '设置>灯>照明灯>自动模式'
-              type: 'menu'
-              text:
-                - '白光灯'
-                - '夜晚时开启照明灯画面呈彩色状态，拍摄效果更佳。'
-                - '关闭'
-                - '白光灯将保持关闭'
-                - '智能模式'
-                - '自动调整亮度以在弱光条件下进行准确检测，并在预定时间段内摄像机检测到事件时开启。'
 
         status_lights:
           name: '状态灯'
@@ -56,7 +31,7 @@ ipc:
             type: 'page'
             text:
               - '状态灯'
-              - '电池供电 WiFi 摄像头的状态 LED 有两种颜色：蓝色和红色。蓝色表示相机WiFi连接成功，红色表示WiFi连接失败'
+              - '位于镜头附近的一个表示摄像机连接状态的灯。'
               - '了解更多'
               - '关闭'
               - '状态灯将保持关闭'
@@ -72,3 +47,24 @@ ipc:
               name: '开启'
               desc: '设置>灯>状态灯>开启'
               type: 'menu'
+
+        infrared_light:
+          name: '红外灯'
+          desc: '设置>灯>红外灯'
+          type: 'navigation'
+          subpage:
+            name: '红外灯'
+            desc: '设置>灯>红外灯'
+            type: 'page'
+            text:
+              - '红外灯'
+              - '红外补光灯，能让你在夜晚或光线较暗时拍出更清晰的影像。'
+              - '红外灯关闭'
+              - '红外灯亮起'
+              - '自动'
+              - '光线较暗时自动开启，光线较亮时自动关闭。'
+              - '保持关闭'
+            options_text:
+              - '自动'
+              - '保持关闭'
+

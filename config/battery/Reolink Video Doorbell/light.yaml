@@ -1,4 +1,5 @@
-device_list_name: "yulong-test-sd7"
+device_list_name: "Reolink Video Doorbell"
+uid: '952700Y101JN1AA1'
 sub_name: ""
 
 ipc:
@@ -32,33 +33,6 @@ ipc:
               - ''
             options_text:
               - ''
-
-        status_lights:
-          name: '状态灯'
-          desc: '设置>灯>状态灯'
-          type: 'navigation'
-          subpage:
-            name: '状态灯'
-            desc: '设置>灯>状态灯'
-            type: 'page'
-            text:
-              - '状态灯'
-              - '位于镜头附近的一个表示摄像机连接状态的灯。'
-              - '了解更多'
-              - '关闭'
-              - '状态灯将保持关闭'
-              - '开启'
-              - '状态灯将始终亮起'
-
-            light_off_mode:
-              name: '关闭'
-              desc: '设置>灯>状态灯>关闭'
-              type: 'menu'
-
-            light_on_mode:
-              name: '开启'
-              desc: '设置>灯>状态灯>开启'
-              type: 'menu'
 
         infrared_light:
           name: '红外灯'
@@ -99,14 +73,14 @@ ipc:
               - '自动且夜间常亮'
               - '按钮灯将在检测到人员、按下按钮和双向通话时 24/7 亮起，并在夜间保持稳定的白色。'
 
-            light_off_mode:
-              name: '关闭'
-              desc: '设置>灯>按钮灯>关闭'
-              type: 'menu'
-
             light_auto_mode:
               name: '自动'
               desc: '设置>灯>按钮灯>自动'
+              type: 'menu'
+
+            light_off_mode:
+              name: '关闭'
+              desc: '设置>灯>按钮灯>关闭'
               type: 'menu'
 
             light_auto_on_night_mode:
