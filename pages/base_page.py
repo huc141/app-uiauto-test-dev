@@ -221,7 +221,8 @@ class BasePage:
                 raise
             except Exception as err:  # 捕获并处理所有其他类型的异常，确保程序不会因为未处理的异常而崩溃。
                 logger.error("页面中没有找到id为 %s 的元素，原因可能是：%s", text, err)
-                raise
+                pytest.fail(f"页面中没有找到id为 {text} 的元素，原因可能是：{err}")
+                # raise
         return False
 
     def click_by_id(self, resource_id, retries=2, is_click_again: Literal[True, False] = False):
@@ -601,7 +602,8 @@ class BasePage:
                 if len(ele_not_exists) > 0:
                     logger.info(f"当前页面存在：{ele_exists}")
                     logger.info(f"当前页面缺失：{ele_not_exists}")
-                    return False
+                    pytest.fail(f"当前页面缺失：{ele_not_exists}")
+                    # return False
                 else:
                     logger.info(f"需校验的文本均存在！-->{ele_exists}")
                     return True
@@ -612,7 +614,8 @@ class BasePage:
                 ele_status = self.is_element_exists(check_text)
                 if not ele_status:
                     logger.info(f"当前页面缺失：{check_text}")
-                    return False
+                    pytest.fail(f"当前页面缺失：{check_text}")
+                    # return False
                 else:
                     logger.info(f"需校验的文本均存在！-->{check_text}")
                     return True
