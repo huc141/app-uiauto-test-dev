@@ -77,7 +77,8 @@ class RemoteSetting(BasePage):
                 if len(ele_not_exists) > 0:
                     logger.info(f"当前页面存在的功能有：{ele_exists}")
                     logger.info(f"当前页面缺失的功能有：{ele_not_exists}")
-                    return False
+                    pytest.fail(f"当前页面缺失的功能有：{ele_not_exists}")
+                    # return False
                 else:
                     logger.info(f"需校验的功能项均存在！-->{ele_exists}")
                     return True
@@ -87,13 +88,14 @@ class RemoteSetting(BasePage):
                 ele_status = self.is_element_exists(texts, scroll_or_not=scroll_or_not)
                 if not ele_status:
                     logger.info(f"当前页面缺失的功能有：{texts}")
-                    return False
+                    pytest.fail(f"当前页面缺失的功能有：{ele_not_exists}")
+                    # return False
                 else:
                     logger.info(f"需校验的功能项均存在！-->{texts}")
                     return True
         except Exception as err:
-            logger.info(f"可能发生了错误: {err}")
-            return False
+            pytest.fail(f"可能发生了错误: {err}")
+            # return False
 
     def scroll_check_funcs2(self, texts, selector=None, selector_type='id', scroll_or_not=True):
         """
@@ -133,19 +135,22 @@ class RemoteSetting(BasePage):
                         logger.info(f"当前页面实际功能项有：{actual_texts}")
                         logger.info(f"预期功能项有：{ele_exists}")
                         logger.info(f"当前页面多余的功能有：{unique_fun}，功能数量与预期不符！可能存在非法能力集！")
-                        return False
+                        pytest.fail(f"当前页面多余的功能有：{unique_fun}，功能数量与预期不符！可能存在非法能力集！")
+                        # return False
                     else:
                         logger.info(f"当前页面实际功能项有：{actual_texts}")
                         logger.info(f"预期功能项有：{texts}")
                         logger.info(f"当前页面缺失的功能有：{ele_not_exists}")
-                        return False
+                        pytest.fail(f"当前页面缺失的功能有：{ele_not_exists}")
+                        # return False
 
                 elif isinstance(texts, str):
                     # 如果 texts 是一个单一的文本，在当前页面滚动查找该文本是否存在
                     ele_status = self.is_element_exists(element_value=texts, max_scrolls=5, scroll_or_not=scroll_or_not)
                     if not ele_status:
                         logger.info(f"当前页面缺失的功能有：{texts}")
-                        return False
+                        pytest.fail(f"当前页面缺失的功能有：{texts}")
+                        # return False
                     else:
                         logger.info(f"需校验的功能项均存在！-->{texts}")
                         return True

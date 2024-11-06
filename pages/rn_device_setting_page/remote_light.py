@@ -285,11 +285,6 @@ class RemoteLight(BasePage):
                 # 验证照明灯主页文案
                 light_steady_main_text_res = RemoteSetting().scroll_check_funcs2(texts=flood_light_texts)
 
-                # 返回灯聚合页，验证照明灯模式回显
-                self.back_previous_page_by_xpath(xpath_expression=self.base_left_button)
-                if not RemoteSetting().scroll_check_funcs2(texts='夜视常亮'):
-                    pytest.fail(f"照明灯选择【夜视常亮】后，未检查到回显！")
-
                 return light_steady_main_text_res
 
             else:
@@ -297,6 +292,34 @@ class RemoteLight(BasePage):
                 # 验证照明灯主页文案
                 light_off_main_text_res = RemoteSetting().scroll_check_funcs2(texts=flood_light_texts)
                 return light_off_main_text_res
+        except Exception as e:
+            pytest.fail(f"函数执行出错: {str(e)}")
+
+    def click_test_preview_opens_auto(self, lights_num, flood_light_texts):
+        """
+        点击测试 照明灯>预览自动开启 的switch切换按钮
+        :return:
+        """
+        try:
+            # 如果是多个灯，则点击照明灯》预览自动开启
+            if lights_num:
+                self.scroll_and_click_by_text(text_to_find='照明灯')
+                self.scroll_click_right_btn(text_to_find='预览自动开启')
+                # 验证照明灯主页文案
+                preview_opens_text_res = RemoteSetting().scroll_check_funcs2(texts=flood_light_texts)
+
+                # 返回灯聚合页，验证照明灯模式回显
+                self.back_previous_page_by_xpath(xpath_expression=self.base_left_button)
+                if not RemoteSetting().scroll_check_funcs2(texts='夜视常亮'):
+                    pytest.fail(f"照明灯选择【夜视常亮】后，未检查到回显！")
+
+                return preview_opens_text_res
+
+            else:
+                self.scroll_click_right_btn(text_to_find='预览自动开启')
+                # 验证照明灯主页文案
+                preview_opens_text_res = RemoteSetting().scroll_check_funcs2(texts=flood_light_texts)
+                return preview_opens_text_res
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
