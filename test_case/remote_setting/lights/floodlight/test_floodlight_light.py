@@ -19,6 +19,9 @@ class TestRemoteLight:
     @pytest.mark.skip
     def test_remote_floodlight_night_smart(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
+        remote_items = device_config['ipc']['light']['items']['light']
+        BasePage().check_key_in_yaml(remote_items, 'floodlight')
+
         remote_items = device_config['ipc']['light']['items']['light']['floodlight']['subpage']
         BasePage().check_key_in_yaml(remote_items, 'night_smart_mode')
 
@@ -49,6 +52,9 @@ class TestRemoteLight:
     @pytest.mark.skip
     def test_remote_floodlight_timer_mode(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
+        remote_items = device_config['ipc']['light']['items']['light']
+        BasePage().check_key_in_yaml(remote_items, 'floodlight')
+
         remote_items = device_config['ipc']['light']['items']['light']['floodlight']['subpage']
         BasePage().check_key_in_yaml(remote_items, 'timer_mode')
 
@@ -72,6 +78,9 @@ class TestRemoteLight:
     @pytest.mark.skip
     def test_remote_floodlight_off(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
+        remote_items = device_config['ipc']['light']['items']['light']
+        BasePage().check_key_in_yaml(remote_items, 'floodlight')
+
         remote_items = device_config['ipc']['light']['items']['light']['floodlight']['subpage']
         BasePage().check_key_in_yaml(remote_items, 'light_off_mode')
 
@@ -95,6 +104,9 @@ class TestRemoteLight:
     @pytest.mark.skip
     def test_remote_floodlight_auto(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
+        remote_items = device_config['ipc']['light']['items']['light']
+        BasePage().check_key_in_yaml(remote_items, 'floodlight')
+
         remote_items = device_config['ipc']['light']['items']['light']['floodlight']['subpage']
         BasePage().check_key_in_yaml(remote_items, 'auto_mode')
 
@@ -118,6 +130,9 @@ class TestRemoteLight:
     @pytest.mark.skip
     def test_remote_floodlight_smart(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
+        remote_items = device_config['ipc']['light']['items']['light']
+        BasePage().check_key_in_yaml(remote_items, 'floodlight')
+
         remote_items = device_config['ipc']['light']['items']['light']['floodlight']['subpage']
         BasePage().check_key_in_yaml(remote_items, 'smart_mode')
 
@@ -146,6 +161,9 @@ class TestRemoteLight:
     @pytest.mark.skip
     def test_remote_floodlight_night_vision_steady_light(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
+        remote_items = device_config['ipc']['light']['items']['light']
+        BasePage().check_key_in_yaml(remote_items, 'floodlight')
+
         remote_items = device_config['ipc']['light']['items']['light']['floodlight']['subpage']
         BasePage().check_key_in_yaml(remote_items, 'night_vision_steady_light')
 
@@ -161,5 +179,31 @@ class TestRemoteLight:
         light_off_main_text_res = RemoteLight().click_test_floodlight_night_vision_steady_light_mode(
             lights_num=lights_num,
             flood_light_texts=remote_items['night_vision_steady_light']['text'])
+
+        assert light_off_main_text_res is True
+
+    @pytest.mark.parametrize("device_config", devices_config)
+    @allure.feature("灯>照明灯(白光灯/泛光灯) > 预览自动开启 模式")
+    @pytest.mark.skip
+    def test_remote_floodlight_night_vision_steady_light(self, device_config):
+        # 检查键是否存在，存在则执行当前用例，否则跳过
+        remote_items = device_config['ipc']['light']['items']['light']
+        BasePage().check_key_in_yaml(remote_items, 'floodlight')
+
+        remote_items = device_config['ipc']['light']['items']['light']['floodlight']['subpage']
+        BasePage().check_key_in_yaml(remote_items, 'preview_opens_auto')
+
+        # 启动app，并开启录屏
+        driver.start_app(True)
+
+        # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击‘灯’菜单项进入灯主页
+        RemoteSetting().access_in_light(device_list_name=device_config['device_list_name'])
+
+        # 点击并测试照明灯(白光灯/泛光灯) > 夜视常亮模式
+        count_lights = device_config['ipc']['light']['items']['light']['text']
+        lights_num = RemoteLight().verify_lights_list_length(texts=count_lights)  # 判断灯数量
+        light_off_main_text_res = RemoteLight().click_test_preview_opens_auto(
+            lights_num=lights_num,
+            flood_light_texts=remote_items['preview_opens_auto']['text'])
 
         assert light_off_main_text_res is True

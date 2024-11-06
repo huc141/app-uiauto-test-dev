@@ -19,6 +19,9 @@ class TestRemoteLight:
     @pytest.mark.skip
     def test_status_lights_off(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
+        remote_items = device_config['ipc']['light']['items']['light']
+        BasePage().check_key_in_yaml(remote_items, 'status_lights')
+
         remote_items = device_config['ipc']['light']['items']['light']['status_lights']['subpage']
         BasePage().check_key_in_yaml(remote_items, 'light_off_mode')
 
@@ -43,6 +46,9 @@ class TestRemoteLight:
     @pytest.mark.skip
     def test_status_lights_on(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
+        remote_items = device_config['ipc']['light']['items']['light']
+        BasePage().check_key_in_yaml(remote_items, 'status_lights')
+
         remote_items = device_config['ipc']['light']['items']['light']['status_lights']['subpage']
         BasePage().check_key_in_yaml(remote_items, 'light_on_mode')
 
