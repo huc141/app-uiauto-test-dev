@@ -833,7 +833,7 @@ class BasePage:
         """
         滚动获取当前页面所有指定文本
         :param selector_type: 支持安卓className，resource-id定位，iOS的className定位
-        :param selector: 对应的value值
+        :param selector: 元素定位的具体id、className
         :param max_scrolls: 最大滚动次数
         :return:
         """
