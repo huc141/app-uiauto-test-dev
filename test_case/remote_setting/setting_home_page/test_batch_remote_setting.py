@@ -15,13 +15,13 @@ class TestRemoteSetting:
     @allure.feature("远程配置主页文案")
     def test_remote_setting_main_page(self, device_config):
         # 启动app，并开启录屏
-        driver.start_app(True)
+        # driver.start_app(True)
+
+        # 在设备列表查找到对应设备并进入远程配置
+        # RemoteSetting().scroll_click_remote_setting(device_list_name=device_config['device_list_name'])
 
         # 读取yaml文件中远程配置页面内容
         remote_setting_page = device_config['ipc']['items']
-
-        # 在设备列表查找到对应设备并进入远程配置
-        RemoteSetting().scroll_click_remote_setting(device_list_name=device_config['device_list_name'])
 
         # 读取yaml文件中预期功能项
         page_fun_list = RemoteSetting().extract_yaml_names(remote_setting_page, 'name')

@@ -1,5 +1,5 @@
 # 远程配置主页能力集提取id：
-remote_setting: 'com.mcu.reolink:id/tv_remote_sub'
+remote_setting: 'ReoTitle'
 
 # 远程配置>WiFi主页：
 WiFi_setting: ''

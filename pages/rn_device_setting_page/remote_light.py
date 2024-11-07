@@ -46,9 +46,10 @@ class RemoteLight(BasePage):
         :return:
         """
         try:
-            # 如果是多个灯，则点击红外灯
+            # 如果是多个灯
             if lights_num:
-                lights_main_text_res = RemoteSetting().scroll_check_funcs2(texts=texts)
+                lights_main_text_res = RemoteSetting().scroll_check_funcs2(texts=texts,
+                                                                           selector='ReoTitle')
                 return lights_main_text_res
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")

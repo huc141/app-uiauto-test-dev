@@ -21,10 +21,10 @@ class TestRemoteWifi:
         BasePage().check_key_in_yaml(remote_items, 'wifi')
 
         # 启动app，并开启录屏
-        driver.start_app(True)
+        # driver.start_app(True)
 
         # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击‘Wi-Fi’菜单项进入Wi-Fi页
-        RemoteSetting().access_in_remote_wifi(device_list_name=device_config['device_list_name'])
+        # RemoteSetting().access_in_remote_wifi(device_list_name=device_config['device_list_name'])
 
         # 验证Wi-Fi主页文案
         wifi_main_text_res = RemoteWiFi().check_wifi_main_text(texts=remote_items['wifi']['text'])

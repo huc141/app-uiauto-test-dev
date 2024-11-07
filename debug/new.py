@@ -126,6 +126,13 @@
 import wda
 import uiautomator2 as u2
 from uiautomator2 import Direction
+import pytest
+import allure
+from common_tools.app_driver import driver
+from common_tools.read_yaml import read_yaml
+from pages.base_page import BasePage
+from pages.rn_device_setting_page.remote_setting import RemoteSetting
+from pages.rn_device_setting_page.remote_light import RemoteLight
 
 d = u2.connect_usb()
 
@@ -133,8 +140,8 @@ d = u2.connect_usb()
 # d.swipe_ext(Direction.BACKWARD) # 页面上翻
 
 # a = d(text='切换Wi-Fi').exists
-e = d.xpath(xpath='//android.widget.TextView[@text=""]')
-e.click()
+# e = d.xpath(xpath='//android.widget.TextView[@text=""]')
+# e.click()
 # d.swipe_ext(Direction.HORIZ_FORWARD)  # 页面水平右翻
 # d.swipe_ext(Direction.HORIZ_BACKWARD)  # 页面水平左翻
 # e = d.xpath(xpath='//*[@text="开始测速"]')
@@ -148,4 +155,6 @@ e.click()
 # 使用 press() 方法在元素上按住一段时间后再执行操作
 # elem = s(xpath='image_id')
 # elem.press(duration=5000)
+
+
 

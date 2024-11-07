@@ -16,6 +16,7 @@ ipc:
         desc: '设置>Wi-Fi主页'
         type: 'page'
         text:
+          - 'Wi-Fi'
           - 'Wi-Fi 频段偏好'
           - '连接同一Wi-Fi的哪种频段'
           - 'Wi-Fi测速'

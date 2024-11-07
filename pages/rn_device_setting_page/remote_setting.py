@@ -112,7 +112,9 @@ class RemoteSetting(BasePage):
         try:
             if selector is not None:
                 # 先滚动页面提取指定id的文本（功能项）
-                actual_texts = self.get_all_texts(selector=selector, selector_type=selector_type, max_scrolls=5)
+                actual_texts = self.get_all_texts(selector=selector,
+                                                  selector_type=selector_type,
+                                                  max_scrolls=5)
 
                 if isinstance(texts, list):
                     # 如果 texts 是一个列表，遍历列表中的每个功能项名称
