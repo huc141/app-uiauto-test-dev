@@ -48,9 +48,15 @@ class RemoteLight(BasePage):
         try:
             # 如果是多个灯
             if lights_num:
-                lights_main_text_res = RemoteSetting().scroll_check_funcs2(texts=texts,
-                                                                           selector='ReoTitle')
+                lights_main_text_res = RemoteSetting().scroll_check_funcs2(texts=texts, selector='ReoTitle')
                 return lights_main_text_res
+
+            # 如果只有一个灯，则验证该灯的配置页文案
+            else:
+                light_config_text_res = RemoteSetting().scroll_check_funcs2(texts=texts)
+
+                return light_config_text_res
+
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 

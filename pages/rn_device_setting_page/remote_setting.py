@@ -106,7 +106,7 @@ class RemoteSetting(BasePage):
         :param scroll_or_not: 是否执行滚动查找。布尔值，默认True滚动查找
         :return:
         """
-        ele_exists = []  # 当前页面存在的功能
+        ele_exists = []  # 预期存在的功能
         ele_not_exists = []  # 当前页面缺失的功能
 
         try:
@@ -117,7 +117,7 @@ class RemoteSetting(BasePage):
                                                   max_scrolls=5)
 
                 if isinstance(texts, list):
-                    # 如果 texts 是一个列表，遍历列表中的每个功能项名称
+                    # 如果 texts 是一个列表，遍历yaml文件中的每个功能项名称是否存在actual_texts列表中
                     for text in texts:
                         is_in_actual_texts = text in actual_texts
                         if is_in_actual_texts:
@@ -132,16 +132,19 @@ class RemoteSetting(BasePage):
                     if all_elements_exist and lengths_are_equal:
                         logger.info(f"预期功能项均存在！-->{texts}")
                         return True
+
                     elif len(actual_texts) > len(texts):
                         unique_fun = [item for item in actual_texts if item not in texts]
-                        logger.info(f"当前页面实际功能项有：{actual_texts}")
-                        logger.info(f"预期功能项有：{ele_exists}")
-                        logger.info(f"当前页面多余的功能有：{unique_fun}，功能数量与预期不符！可能存在非法能力集！")
-                        pytest.fail(f"当前页面多余的功能有：{unique_fun}，功能数量与预期不符！可能存在非法能力集！")
-                        # return False
-                    else:
-                        logger.info(f"当前页面实际功能项有：{actual_texts}")
                         logger.info(f"预期功能项有：{texts}")
+                        logger.info(f"当前页面实际功能项有：{actual_texts}")
+                        logger.info(f"当前页面缺失的功能有：{ele_not_exists}")
+                        logger.info(f"当前页面多余的功能有：{unique_fun}，功能数量与预期不符！可能存在非法能力集！")
+                        pytest.fail(f"当前页面多余的功能有：{unique_fun}，缺失的功能有：{ele_not_exists}, 功能数量与预期不符！可能存在非法能力集！")
+                        # return False
+
+                    else:
+                        logger.info(f"预期功能项有：{texts}")
+                        logger.info(f"当前页面实际功能项有：{actual_texts}")
                         logger.info(f"当前页面缺失的功能有：{ele_not_exists}")
                         pytest.fail(f"当前页面缺失的功能有：{ele_not_exists}")
                         # return False
