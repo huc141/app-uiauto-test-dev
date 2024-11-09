@@ -82,7 +82,7 @@ class BasePage:
         try:
             for i in range(loop_times):
                 time.sleep(2)
-                logger.info(f"正在循环检测 {element_value} 元素是否出现，第 {i+1} 次")
+                logger.info(f"正在循环检测 {element_value} 元素是否出现，第 {i + 1} 次")
                 if self.is_element_exists(element_value=element_value, selector_type=selector_type,
                                           max_scrolls=1, scroll_or_not=scroll_or_not):
                     logger.info(f"检测到 {element_value} 元素存在")
@@ -103,7 +103,7 @@ class BasePage:
         try:
             for i in range(loop_times):
                 time.sleep(2)
-                logger.info(f"正在循环检测 {element_value} 元素是否出现，第 {i+1} 次")
+                logger.info(f"正在循环检测 {element_value} 元素是否出现，第 {i + 1} 次")
                 if self.is_element_exists(element_value=element_value, selector_type=selector_type,
                                           max_scrolls=1, scroll_or_not=scroll_or_not):
                     self.click_by_text(text=element_value)
@@ -1237,3 +1237,55 @@ class BasePage:
         except Exception as err:
             # logger.info(f"可能发生了错误: {err}")
             pytest.fail(f"函数执行出错: {str(err)}")
+
+    def find_element_by_xpath_recursively(self, start_xpath_prefix, target_id=None, target_text=None):
+        """
+        递归查找页面指定的目标元素，遍历同级和子级元素
+
+        :param d: uiautomator2设备对象
+        :param start_xpath_prefix: 当前元素的xpath前缀路径
+        :param target_id: 目标元素的resourceId（可选）
+        :param target_text: 目标元素的text属性值（可选）
+        :return: 返回找到的目标元素对象，如果未找到则返回None
+        """
+        # 初始化同级元素索引
+        sibling_index = 1
+
+        while True:
+            # 构建当前同级元素的xpath
+            current_xpath = f"{start_xpath_prefix}[{sibling_index}]"
+            current_element = self.driver.xpath(current_xpath)
+
+            # 如果当前同级元素不存在，则退出循环
+            if not current_element.exists:
+                logger.info('不存在同级元素！')
+                break
+
+            # 检查是否匹配目标元素的条件.resourceName实际上就是resourceId。这两个名称指的同一个属性，即Android UI元素的资源ID。
+            if (target_id is None or current_element.info.get('resourceName') == target_id) and \
+                    (target_text is None or current_element.info.get('text') == target_text):
+                return current_element  # 找到目标元素，返回该元素对象
+
+            # 如果没有匹配，递归遍历当前元素的子元素
+            child_index = 1
+            while True:
+                # 构建子元素的xpath路径
+                child_xpath = f"{current_xpath}/*[{child_index}]"
+                child_element = self.driver.xpath(child_xpath)
+
+                # 如果没有更多子元素，退出子元素循环
+                if not child_element.exists:
+                    break
+
+                # 递归在子元素中查找
+                result = self.find_element_by_xpath_recursively(child_xpath, target_id, target_text)
+                if result:
+                    return result  # 找到目标元素，返回该元素对象
+
+                child_index += 1  # 检查下一个子元素
+
+            # 检查下一个同级元素
+            sibling_index += 1
+
+        # 如果未找到目标元素，返回None
+        return None
