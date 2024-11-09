@@ -94,7 +94,7 @@ class RemoteSetting(BasePage):
                     logger.info(f"需校验的功能项均存在！-->{texts}")
                     return True
         except Exception as err:
-            pytest.fail(f"可能发生了错误: {err}")
+            pytest.fail(f"函数执行出错: {err}")
             # return False
 
     def scroll_check_funcs2(self, texts, selector=None, selector_type='id', scroll_or_not=True):
@@ -129,7 +129,7 @@ class RemoteSetting(BasePage):
                     all_elements_exist = all(ele_exists)
                     lengths_are_equal = len(actual_texts) == len(texts)
 
-                    if all_elements_exist and lengths_are_equal:
+                    if all_elements_exist and lengths_are_equal and ele_not_exists == []:
                         logger.info(f"预期功能项均存在！-->{texts}")
                         return True
 
@@ -143,9 +143,11 @@ class RemoteSetting(BasePage):
                         # return False
 
                     else:
+                        unique_fun = [item for item in actual_texts if item not in texts]
                         logger.info(f"预期功能项有：{texts}")
                         logger.info(f"当前页面实际功能项有：{actual_texts}")
                         logger.info(f"当前页面缺失的功能有：{ele_not_exists}")
+                        logger.info(f'当前页面多余的功能有：{unique_fun}')
                         pytest.fail(f"当前页面缺失的功能有：{ele_not_exists}")
                         # return False
 
