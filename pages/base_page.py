@@ -85,6 +85,7 @@ class BasePage:
                 logger.info(f"正在循环检测 {element_value} 元素是否出现，第 {i+1} 次")
                 if self.is_element_exists(element_value=element_value, selector_type=selector_type,
                                           max_scrolls=1, scroll_or_not=scroll_or_not):
+                    logger.info(f"检测到 {element_value} 元素存在")
                     return True
             return False
         except Exception as err:
