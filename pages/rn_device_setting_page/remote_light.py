@@ -37,8 +37,7 @@ class RemoteLight(BasePage):
                              direction=direction,
                              times=iteration)
 
-    @staticmethod
-    def check_lights_main_text(lights_num, texts):
+    def check_lights_main_text(self, lights_num, texts):
         """
         验证灯主页文案
         :param lights_num: 布尔值，灯的数量大于1:True,  等于1：False
@@ -48,7 +47,12 @@ class RemoteLight(BasePage):
         try:
             # 如果是多个灯
             if lights_num:
+                if not self.loop_detect_element_exist(element_value='//*[@text="灯"]', selector_type='xpath',
+                                                      loop_times=2, scroll_or_not=False):
+                    pytest.fail(f"当前页面缺失headerTitle ==> ‘灯’")
+
                 lights_main_text_res = RemoteSetting().scroll_check_funcs2(texts=texts, selector='ReoTitle')
+
                 return lights_main_text_res
 
             # 如果只有一个灯，则验证该灯的配置页文案
