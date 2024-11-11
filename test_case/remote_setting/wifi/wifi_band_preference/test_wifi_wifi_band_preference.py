@@ -7,7 +7,7 @@ from common_tools.read_yaml import read_yaml
 from pages.rn_device_setting_page.remote_wifi import RemoteWiFi
 from pages.rn_device_setting_page.remote_setting import RemoteSetting
 
-devices_config = read_yaml.load_device_config(yaml_file_name='wifi.yaml')  # 读取参数化文件
+devices_config = read_yaml.load_device_config(device_dir='apower/AReolink_TrackMix_WiFi', yaml_file_name='wifi.yaml')  # 读取参数化文件
 
 
 @allure.epic("远程配置>Wi-Fi")
