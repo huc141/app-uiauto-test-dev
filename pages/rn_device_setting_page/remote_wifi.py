@@ -41,7 +41,7 @@ class RemoteWiFi(BasePage):
         try:
             time.sleep(2)
             # 默认进入【Wi-Fi 频段偏好】
-            self.scroll_and_click_by_text(text_to_find='Wi-Fi 频段偏好')
+            self.loop_detect_element_and_click(element_value='Wi-Fi 频段偏好')
 
             # 检查wifi频段偏好页面文案
             wifi_band_preference_text = RemoteSetting().scroll_check_funcs2(texts=text_list)
@@ -75,7 +75,7 @@ class RemoteWiFi(BasePage):
         try:
             time.sleep(2)
             # 点击Wi-Fi测速功能项
-            self.scroll_and_click_by_text(text_to_find='Wi-Fi测速')
+            self.loop_detect_element_and_click(element_value='Wi-Fi测速')
 
             # 检查Wi-Fi测速页面文案
             wifi_test_speed_text = RemoteSetting().scroll_check_funcs2(texts=text_list)
@@ -91,10 +91,11 @@ class RemoteWiFi(BasePage):
             #         assert False
 
             # 点击开始测速
-            self.scroll_and_click_by_text(text_to_find='开始测速')
+            self.loop_detect_element_and_click(element_value='开始测速')
             # 验证测速页面是否打开
-            time.sleep(10)
-            google_speed_page = RemoteSetting().scroll_check_funcs2(texts='How fast are you going?')
+            time.sleep(2)
+            google_speed_page = self.loop_detect_element_exist(element_value='How fast are you going?',
+                                                               scroll_or_not=False)
             self.back_previous_page()  # 返回Wi-Fi测速页
 
             # 返回Wi-Fi主页，有可能失败
@@ -113,7 +114,7 @@ class RemoteWiFi(BasePage):
         try:
             time.sleep(2)
             # 点击进入添加其他网络页面
-            self.scroll_and_click_by_text(text_to_find='添加其他网络')
+            self.loop_detect_element_and_click(element_value='添加其他网络')
 
             # 检查添加其他网络页面文案
             add_network_text = RemoteSetting().scroll_check_funcs2(texts=text_list)
@@ -129,19 +130,19 @@ class RemoteWiFi(BasePage):
             #         assert False
 
             # 点击输入Wi-Fi名称
-            self.scroll_and_click_by_text(text_to_find='Wi-Fi名称')
+            self.loop_detect_element_and_click(element_value='Wi-Fi名称')
             time.sleep(1)
             self.input_text(xpath_exp=self.edit_wifi_name_text, text=wifi_name)
 
             # 点击输入Wi-Fi密码
-            self.scroll_and_click_by_text(text_to_find='Wi-Fi密码')
+            self.loop_detect_element_and_click(element_value='Wi-Fi密码')
             self.input_text(xpath_exp=self.edit_wifi_passw_text, text=wifi_passw)
 
             # 点击保存
-            self.scroll_and_click_by_text(text_to_find='保存')
+            self.loop_detect_element_and_click(element_value='保存')
 
             # 点击跳过并保存
-            self.scroll_and_click_by_text(text_to_find='跳过并保存')
+            self.loop_detect_element_and_click(element_value='跳过并保存')
 
             return add_network_text
 
