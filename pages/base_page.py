@@ -682,6 +682,19 @@ class BasePage:
         """
         attempt = 0
 
+        def retry_method(num=4):
+            count_num = 1
+            while count_num <= num:
+                status = self.driver(text='连接失败，点击重试')
+                if count_num == num and status:
+                    pytest.fail(f'已重试 {num} 次，未能连接上该设备！')
+                elif status:
+                    self.click_by_text(text='连接失败，点击重试')
+                    time.sleep(5)
+                    count_num += 1
+                else:
+                    break
+
         def find_and_click_android(xpath_exp):
             device_name = self.driver.xpath(xpath_exp)
             if device_name.exists:
@@ -692,7 +705,9 @@ class BasePage:
                 else:
                     device_name.click()
                 logger.info(f"尝试点击这个 '{text_to_find}' 元素右边的远程设置按钮")
-                time.sleep(3)
+                time.sleep(5)
+                retry_method()
+
                 return True
             return False
 
