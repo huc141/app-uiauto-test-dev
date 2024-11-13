@@ -1,0 +1,60 @@
+device_list_name: 'Reolink Altas PT Ultra'
+uid: '952700Y100BF19GB'
+sub_name: ''
+
+ipc:
+  Wi_Fi:
+    name: 'Wi-Fi'
+    desc: '设置>Wi-Fi'
+    type: 'page'
+    text:
+      - ''
+
+    items:
+      wifi:
+        name: 'Wi-Fi'
+        desc: '设置>Wi-Fi主页'
+        type: 'page'
+        text:
+          - 'Wi-Fi'
+          - 'Wi-Fi测速'
+          - '检测局域网设备当前的Wi-Fi信号强度'
+          - '切换Wi-Fi'
+          - '当前Wi-Fi'
+          - '未连接'
+          - '添加其他网络'
+
+        wifi_speed_test:
+          name: 'Wi-Fi测速'
+          desc: '设置>Wi-Fi>Wi-Fi测速'
+          type: 'navigation'
+          subpage:
+            name: 'Wi-Fi测速'
+            desc: '设置>Wi-Fi>Wi-Fi测速>Wi-Fi测速'
+            type: 'button'
+            text:
+              - '1. 关闭手机移动数据，将手机与设备连接至同一个网络。'
+              - '2. 点击“开始测速”测试Wi-Fi信号强度，并将手机和设备尽量靠近路由器。'
+              - '3. 查看Wi-Fi信号强度测试结果，正常情况下，需要保证Wi-Fi信号强度在10Mbps以上（总值100Mbps）。'
+            options:
+              - '开始测速'
+
+        add_other_network:
+          name: '添加其他网络'
+          key: 'add_other_network'
+          desc: '设置>Wi-Fi>添加其他网络'
+          type: 'navigation'
+          subpage:
+            name: '输入密码'
+            key: 'input_password'
+            desc: '设置>Wi-Fi>添加其他网络>输入密码'
+            type: 'page'
+            text:
+              - '取消'
+              - '保存'
+              - 'Wi-Fi名称'
+              - 'Wi-Fi密码'
+              - '输入密码'
+            options_text:
+              input_wifi_name: 'reolink-HMK_5G'
+              input_wifi_passw: '11111111'
