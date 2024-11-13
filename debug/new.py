@@ -151,7 +151,6 @@ d = u2.connect_usb()
 legal_function_ids = ['音频', '录制声音', '关闭后，将不会录制声音到回放文件中', '设备音量',
                       '报警音量和对讲音量', '试听', '音频降噪', '降噪强度', '自动回复', '低', '高']
 
-
 # 获取当前界面上所有的可见UI元素,
 #                  '//*[@resource-id="com.android.systemui:id/battery_digit"]',
 #                  '//*[@resource-id="com.android.systemui:id/wifi_standard"]'
@@ -180,7 +179,7 @@ for i in text2:
     element_text = i.text
     all_elements.append(element_text)
 print('全屏文本：' + str(all_elements))
-# print(all_elements)
+
 
 # 从全屏文本中排除掉需要排除的文本内容,构建出最终的文本
 excluded_text = []
@@ -189,7 +188,6 @@ for i in exclude_elements:
         all_elements.remove(i)
         excluded_text.append(i)
 print('本次移除的文本：' + str(excluded_text))
-    # print(i)
 
 
 # 检查非法功能
@@ -205,6 +203,7 @@ if illegal_functions:
     print("检测到以下非法功能：")
     for func in illegal_functions:
         print(func)
+    print(f'存在非法功能：{illegal_functions}')
 else:
     print("没有检测到非法功能。")
 
