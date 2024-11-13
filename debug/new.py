@@ -123,16 +123,7 @@
 # print(formatted_output)
 
 
-import wda
 import uiautomator2 as u2
-from uiautomator2 import Direction
-import pytest
-import allure
-from common_tools.app_driver import driver
-from common_tools.read_yaml import read_yaml
-from pages.base_page import BasePage
-from pages.rn_device_setting_page.remote_setting import RemoteSetting
-from pages.rn_device_setting_page.remote_light import RemoteLight
 
 d = u2.connect_usb()
 
@@ -156,5 +147,66 @@ d = u2.connect_usb()
 # elem = s(xpath='image_id')
 # elem.press(duration=5000)
 
+# 确定合法功能的ID集合（这取决于你的APP，这里只是示例）
+legal_function_ids = ['音频', '录制声音', '关闭后，将不会录制声音到回放文件中', '设备音量',
+                      '报警音量和对讲音量', '试听', '音频降噪', '降噪强度', '自动回复', '低', '高']
 
 
+# 获取当前界面上所有的可见UI元素,
+#                  '//*[@resource-id="com.android.systemui:id/battery_digit"]',
+#                  '//*[@resource-id="com.android.systemui:id/wifi_standard"]'
+exclude_xpath = ['//*[@resource-id="com.android.systemui:id/clock"]',
+                 '//*[@resource-id="com.android.systemui:id/operator_name"]',
+                 '//*[@resource-id="RNE__ICON__Component"]']
+
+exclude_elements = []
+all_elements = []
+
+# 先获取需要排除的文本内容
+for i in exclude_xpath:
+    try:
+        text = d.xpath(i).all()
+        for t in text:
+            element_text = t.text
+            exclude_elements.append(element_text)
+        print("需要排除的内容：" + str(exclude_elements))
+    except Exception as err:
+        print(err)
+
+# 再获取全屏文本
+text2 = d.xpath('//android.widget.TextView').all()
+for i in text2:
+    # 获取元素的text属性，假设合法功能的ID就是UI元素的text
+    element_text = i.text
+    all_elements.append(element_text)
+print('全屏文本：' + str(all_elements))
+# print(all_elements)
+
+# 从全屏文本中排除掉需要排除的文本内容,构建出最终的文本
+excluded_text = []
+for i in exclude_elements:
+    if i in all_elements:
+        all_elements.remove(i)
+        excluded_text.append(i)
+print('本次移除的文本：' + str(excluded_text))
+    # print(i)
+
+
+# 检查非法功能
+illegal_functions = []
+
+for element in all_elements:
+    # 如果元素的text不在合法功能列表中，则标记为非法功能
+    if element not in legal_function_ids:
+        illegal_functions.append(element)
+
+# 输出非法功能
+if illegal_functions:
+    print("检测到以下非法功能：")
+    for func in illegal_functions:
+        print(func)
+else:
+    print("没有检测到非法功能。")
+
+# 注意：这里使用的是XPath表达式`//android.widget.TextView`，它假设所有的功能文本都是TextView类型。
+# 实际应用中，你可能需要根据APP的实际情况调整XPath表达式或使用其他属性进行筛选。
