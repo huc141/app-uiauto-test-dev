@@ -1332,7 +1332,7 @@ class BasePage:
                             exclude_elements.append(element_text)  # 添加至exclude_elements列表
                         logger.info("需排除的内容有：" + str(exclude_elements))
                     except Exception as err:
-                        logger.error(f'函数执行出错：{err}')
+                        logger.error(f'排除的文本内容时出错：{err}')
 
                 # 再获取全屏文本
                 fullscreen_text = self.driver.xpath('//android.widget.TextView').all()
@@ -1357,9 +1357,6 @@ class BasePage:
 
                 # 输出非法功能
                 if illegal_functions:
-                    # logger.info("检测到以下非法功能：")
-                    # for func in illegal_functions:
-                    #     logger.info(func)
                     pytest.fail(f"存在非法功能：{illegal_functions}")
                 else:
                     logger.info("没有检测到非法功能。")
