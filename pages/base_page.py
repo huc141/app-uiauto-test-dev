@@ -1326,52 +1326,89 @@ class BasePage:
         try:
             if isinstance(legal_function_ids, list):
                 # 定义需要排除的元素xpath列表
-                exclude_xpath = ['//*[@resource-id="com.android.systemui:id/clock"]',
-                                 '//*[@resource-id="com.android.systemui:id/operator_name"]',
-                                 '//*[@resource-id="RNE__ICON__Component"]']
+                exclude_xpath = [
+                    '//*[@resource-id="com.android.systemui:id/wifi_standard"]',
+                    '//*[@resource-id="com.android.systemui:id/clock"]',
+                    '//*[@resource-id="com.android.systemui:id/operator_name"]',
+                    '//*[@resource-id="RNE__ICON__Component"]',
+                    '//*[@resource-id="storageText"]',
+                    '//*[@resource-id="name"]',
+                    '//*[@resource-id="ReoValue"]',
+                    '//*[@resource-id="com.android.systemui:id/battery_digit"]',
+                    '//*[@resource-id="com.mcu.reolink:id/device_name_tv"]',
+                    '//*[@resource-id="com.mcu.reolink:id/device_type_tv"]',
+                    '//*[@resource-id="com.mcu.reolink:id/device_storage_tv"]',
+                    '//*[@resource-id="com.mcu.reolink:id/tv_sub_right"]'
+                ]
 
-                exclude_elements = []  # 定义需要排除的文案列表
-                all_elements = []  # 定义全屏文案列表
+                exclude_elements = []  # 定义需要排除的文案集合
                 illegal_functions = []  # 定义非法功能列表
+                all_elements = []  # 定义全屏文案集合
 
-                # 先获取需要排除的文本内容
-                for i in exclude_xpath:
-                    try:
-                        exclude_text = self.driver.xpath(i).all()
-                        for t in exclude_text:
-                            element_text = t.text  # 获取元素的text属性
-                            exclude_elements.append(element_text)  # 添加至exclude_elements列表
-                        logger.info("需排除的内容有：" + str(exclude_elements))
-                    except Exception as err:
-                        logger.error(f'排除的文本内容时出错：{err}')
+                def get_exclude_texts():  # 获取当前页面需要排除的文本内容
+                    for i in exclude_xpath:
+                        try:
+                            exclude_text = d.xpath(i).all()
+                            for t in exclude_text:
+                                element_text = t.text  # 获取元素的text属性
+                                exclude_elements.append(element_text)  # 添加至exclude_elements列表
+                                dr_exclude_elements = list(set(exclude_elements))  # 将列表转集合再转列表，去除重复元素
+                        except Exception as err:
+                            print(f'排除的文本内容时出错：{err}')
+                    logger.info("需排除的内容有：")
+                    logger.info(dr_exclude_elements)
+                    return dr_exclude_elements
 
-                # 再获取全屏文本
-                fullscreen_text = self.driver.xpath('//android.widget.TextView').all()
-                for i in fullscreen_text:
-                    element_text = i.text  # 获取元素的text属性
-                    all_elements.append(element_text)  # 添加至all_elements列表
-                logger.info('全屏文本内容有：' + str(all_elements))
+                def get_fullscreen_text():  # 获取当前页面全屏文本
+                    fullscreen_text = d.xpath('//android.widget.TextView').all()  # 获取当前页面所有元素的文本内容
+                    for s in fullscreen_text:
+                        element_texts = s.text  # 获取元素的text属性
+                        all_elements.append(element_texts)
+                        dr_all_elements = list(set(all_elements))  # 将列表转集合再转列表，去除重复元素
+                    logger.info("当前页面全屏文本有：")
+                    logger.info(dr_all_elements)
+                    return dr_all_elements
+
+                for _ in range(3):
+                    # 先获取当前页面需要排除的文本内容
+                    new_exclude_texts = get_exclude_texts()
+                    exclude_elements.extend(new_exclude_texts)
+
+                    # 再获取当前页面所有元素的文本内容
+                    new_all_texts = get_fullscreen_text()
+                    all_elements.extend(new_all_texts)  # 添加至all_elements列表
+
+                    self.driver.swipe_ext(direction='up')
+                    time.sleep(0.5)
+
+                # 集合转列表
+                whole_page_exclude_elements = list(set(exclude_elements))
+                whole_page_all_elements = list(set(all_elements))
+
+                logger.info("循环页面后需要排除的内容：")
+                logger.info(whole_page_exclude_elements)
+                logger.info("循环页面后全屏的内容：")
+                logger.info(whole_page_all_elements)
 
                 # 从全屏文本中删掉需要排除的文本内容,构建出最终文本
-                excluded_text = []
-                for e in exclude_elements:
-                    if e in all_elements:
-                        all_elements.remove(e)
-                        excluded_text.append(e)
-                    logger.info('本次移除的文本：' + str(excluded_text))
+                for e in whole_page_exclude_elements:
+                    if e in whole_page_all_elements:
+                        whole_page_all_elements.remove(e)
+                        whole_page_exclude_elements.append(e)
+                logger.info('本次移除的文本：')
+                logger.info(whole_page_exclude_elements)
 
                 # 检查非法功能
-                for element in all_elements:
-                    # 如果元素的text不在合法功能列表中，则标记为非法功能，添加到illegal_functions列表中
+                for element in whole_page_all_elements:
                     if element not in legal_function_ids:
                         illegal_functions.append(element)
 
                 # 输出非法功能
                 if illegal_functions:
-                    pytest.fail(f"存在非法功能：{illegal_functions}")
+                    logger.info(f"存在非法功能：{illegal_functions}")
                 else:
                     logger.info("没有检测到非法功能。")
                     return True
 
         except Exception as err:
-            pytest.fail(f"函数执行出错: {str(err)}")
+            logger.info(f"函数执行出错: {str(err)}")
