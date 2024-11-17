@@ -77,10 +77,12 @@ class RemoteSetting(BasePage):
                 if len(ele_not_exists) > 0:
                     logger.info(f"当前页面存在的功能有：{ele_exists}")
                     logger.info(f"当前页面缺失的功能有：{ele_not_exists}")
+                    self.back_to_page_top()
                     pytest.fail(f"当前页面缺失的功能有：{ele_not_exists}")
-                    # return False
+
                 else:
                     logger.info(f"需校验的功能项均存在！-->{ele_exists}")
+                    self.back_to_page_top()
                     return True
 
             elif isinstance(texts, str):
@@ -88,12 +90,15 @@ class RemoteSetting(BasePage):
                 ele_status = self.is_element_exists(texts, scroll_or_not=scroll_or_not)
                 if not ele_status:
                     logger.info(f"当前页面缺失的功能有：{texts}")
+                    self.back_to_page_top()
                     pytest.fail(f"当前页面缺失的功能有：{ele_not_exists}")
-                    # return False
                 else:
                     logger.info(f"需校验的功能项均存在！-->{texts}")
+                    self.back_to_page_top()
                     return True
+
         except Exception as err:
+            self.back_to_page_top()
             pytest.fail(f"函数执行出错: {err}")
             # return False
 
@@ -131,41 +136,48 @@ class RemoteSetting(BasePage):
 
                     if all_elements_exist and lengths_are_equal and ele_not_exists == []:
                         logger.info(f"预期功能项均存在！-->{texts}")
+                        self.back_to_page_top()
                         return True
 
                     elif len(actual_texts) > len(texts):
                         unique_fun = [item for item in actual_texts if item not in texts]
+                        self.back_to_page_top()
                         logger.info(f"预期功能项有：{texts}")
                         logger.info(f"当前页面实际功能项有：{actual_texts}")
                         logger.info(f"当前页面缺失的功能有：{ele_not_exists}")
                         logger.info(f"当前页面多余的功能有：{unique_fun}，功能数量与预期不符！可能存在非法能力集！")
                         pytest.fail(f"当前页面多余的功能有：{unique_fun}，缺失的功能有：{ele_not_exists}, 功能数量与预期不符！可能存在非法能力集！")
-                        # return False
 
                     else:
                         unique_fun = [item for item in actual_texts if item not in texts]
+                        # 将当前页面滑动回顶部
+                        self.back_to_page_top()
                         logger.info(f"预期功能项有：{texts}")
                         logger.info(f"当前页面实际功能项有：{actual_texts}")
                         logger.info(f"当前页面缺失的功能有：{ele_not_exists}")
                         logger.info(f'当前页面多余的功能有：{unique_fun}')
                         pytest.fail(f"当前页面缺失的功能有：{ele_not_exists}")
-                        # return False
 
                 elif isinstance(texts, str):
                     # 如果 texts 是一个单一的文本，在当前页面滚动查找该文本是否存在
                     ele_status = self.is_element_exists(element_value=texts, max_scrolls=5, scroll_or_not=scroll_or_not)
                     if not ele_status:
+                        self.back_to_page_top()
                         logger.info(f"当前页面缺失的功能有：{texts}")
                         pytest.fail(f"当前页面缺失的功能有：{texts}")
-                        # return False
                     else:
                         logger.info(f"需校验的功能项均存在！-->{texts}")
+                        self.back_to_page_top()
                         return True
 
             else:
                 return self.scroll_check_funcs(texts=texts, scroll_or_not=scroll_or_not)
 
+            # 将当前页面滑动回顶部
+            self.back_to_page_top()
+
         except Exception as err:
+            self.back_to_page_top()
             logger.info(f"可能发生了错误: {err}")
             return False
 
