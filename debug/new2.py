@@ -90,10 +90,6 @@ def detect_illegal_functions(legal_function_ids):
                 if element not in legal_function_ids:
                     illegal_functions.append(element)
 
-            # 将当前页面滑动回顶部
-            print('尝试返回页面顶部...')
-            d(scrollable=True).fling.vert.toBeginning(max_swipes=10)
-
             # 输出非法功能
             if illegal_functions:
                 print(f"存在非法功能：{illegal_functions}")
