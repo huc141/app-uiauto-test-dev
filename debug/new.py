@@ -221,102 +221,104 @@ def detect_illegal_functions(legal_function_ids):
     :param legal_function_ids: 预期的合法功能名称列表
     :return:
     """
-    try:
-        if isinstance(legal_function_ids, list):
-            # 定义需要排除的元素xpath列表
-            exclude_xpath = ['//*[@resource-id="com.android.systemui:id/clock"]',
-                             '//*[@resource-id="com.android.systemui:id/operator_name"]',
-                             '//*[@resource-id="RNE__ICON__Component"]',
-                             '//*[@resource-id="storageText"]',
-                             '//*[@resource-id="name"]',
-                             '//*[@resource-id="ReoValue"]'
-                             ]
+    # try:
+    if isinstance(legal_function_ids, list):
+        # 定义需要排除的元素xpath列表
+        exclude_xpath = ['//*[@resource-id="com.android.systemui:id/clock"]',
+                         '//*[@resource-id="com.android.systemui:id/operator_name"]',
+                         '//*[@resource-id="RNE__ICON__Component"]',
+                         '//*[@resource-id="storageText"]',
+                         '//*[@resource-id="name"]',
+                         '//*[@resource-id="ReoValue"]',
+                         '//*[@resource-id="com.android.systemui:id/wifi_standard"]',
+                         '//*[@resource-id="com.android.systemui:id/battery_digit"]'
+                         ]
 
-            exclude_elements = set()  # 定义需要排除的文案集合
-            illegal_functions = []  # 定义非法功能列表
-            all_elements = set()  # 定义全屏文案集合
+        exclude_elements = []  # 定义需要排除的文案集合
+        illegal_functions = []  # 定义非法功能列表
+        all_elements = []  # 定义全屏文案集合
 
-            def get_exclude_texts():  # 获取当前页面需要排除的文本内容
-                for i in exclude_xpath:
-                    try:
-                        exclude_text = d.xpath(i).all()
-                        for t in exclude_text:
-                            element_text = t.text  # 获取元素的text属性
-                            exclude_elements.update(element_text)  # 添加至exclude_elements列表
-                        print("需排除的内容有：")
-                        print(exclude_elements)
-                        return exclude_elements
-                    except Exception as err:
-                        print(f'排除的文本内容时出错：{err}')
-
-            def get_fullscreen_text():  # 获取当前页面全屏文本
-                fullscreen_text = d.xpath('//android.widget.TextView').all()  # 获取当前页面所有元素的文本内容
-                for s in fullscreen_text:
-                    element_texts = s.text  # 获取元素的text属性
-                    all_elements.update(element_texts)
-                return all_elements
-
-            for _ in range(3):
-                # 先获取当前页面需要排除的文本内容
-                new_exclude_texts = get_exclude_texts()
-                exclude_elements.update(new_exclude_texts)
-
-                # 再获取当前页面所有元素的文本内容
-                new_all_texts = get_fullscreen_text()
-                all_elements.update(new_all_texts)  # 添加至all_elements集合
-
-                d.swipe_ext(direction='up')
-                time.sleep(0.5)
-
-                # 检查滑动后页面是否有变化:
-                # 1.排除的文本:
-                new_exclude_texts = get_exclude_texts()
-                new_all_texts = get_fullscreen_text()
-                if not new_exclude_texts - exclude_elements and not new_all_texts - all_elements:
-                    break  # 如果滑动后没有新内容，退出循环
-                # 2.全屏文本：
-                # new_all_texts = get_fullscreen_text()
-                # if not new_all_texts - all_elements:
-                #     break
-
-                # 添加新获取的文本内容:
-                # 1.排除的文本:
-                exclude_elements.update(new_exclude_texts)
-                all_elements.update(new_all_texts)
-
-            # 从全屏文本中删掉需要排除的文本内容,构建出最终文本
-            excluded_text = list(set(exclude_elements))
-            print("需要排除的文案列表：")
+        def get_exclude_texts():  # 获取当前页面需要排除的文本内容
+            for i in exclude_xpath:
+                try:
+                    exclude_text = d.xpath(i).all()
+                    for t in exclude_text:
+                        element_text = t.text  # 获取元素的text属性
+                        exclude_elements.append(element_text)  # 添加至exclude_elements列表
+                        exclude_elementss = list(set(exclude_elements))  # 将列表转集合再转列表，去除重复元素
+                except Exception as err:
+                    print(f'排除的文本内容时出错：{err}')
+            print("需排除的内容有：")
             print(exclude_elements)
-            all_texts = list(set(all_elements))
-            print("全屏文案列表：")
-            print(all_texts)
-            for e in excluded_text:
-                if e in all_texts:
-                    all_texts.remove(e)
-                    excluded_text.append(e)
-                print('本次移除的文本：' + str(excluded_text))
+            return exclude_elements
 
-            # 检查非法功能
-            for element in all_texts:
-                # 如果元素的text不在合法功能列表中，则标记为非法功能，添加到illegal_functions列表中
-                if element not in legal_function_ids:
-                    illegal_functions.append(element)
+        def get_fullscreen_text():  # 获取当前页面全屏文本
+            fullscreen_text = d.xpath('//android.widget.TextView').all()  # 获取当前页面所有元素的文本内容
+            for s in fullscreen_text:
+                element_texts = s.text  # 获取元素的text属性
+                all_elements.append(element_texts)
+            return all_elements
 
-            # 输出非法功能
-            if illegal_functions:
-                print(f"存在非法功能：{illegal_functions}")
-            else:
-                print("没有检测到非法功能。")
-                return True
+        for _ in range(3):
+            # 先获取当前页面需要排除的文本内容
+            new_exclude_texts = get_exclude_texts()
+            exclude_elements.append(new_exclude_texts)
 
-    except Exception as err:
-        print(f"函数执行出错: {str(err)}")
+            # 再获取当前页面所有元素的文本内容
+            new_all_texts = get_fullscreen_text()
+            all_elements.append(new_all_texts)  # 添加至all_elements集合
+
+            d.swipe_ext(direction='up')
+            time.sleep(0.5)
+
+            # 检查滑动后页面是否有变化:
+            # 1.排除的文本:
+            new_exclude_texts = get_exclude_texts()
+            new_all_texts = get_fullscreen_text()
+            # if not new_exclude_texts - exclude_elements and not new_all_texts - all_elements:
+            #     break  # 如果滑动后没有新内容，退出循环
+            # 2.全屏文本：
+            # new_all_texts = get_fullscreen_text()
+            # if not new_all_texts - all_elements:
+            #     break
+
+            # 添加新获取的文本内容:
+            # 1.排除的文本:
+            exclude_elements.append(new_exclude_texts)
+            all_elements.append(new_all_texts)
+
+        # 从全屏文本中删掉需要排除的文本内容,构建出最终文本
+        excluded_text = exclude_elements
+        print("需要排除的文案列表：")
+        print(exclude_elements)
+        all_texts = all_elements
+        print("全屏文案列表：")
+        print(all_texts)
+        for e in excluded_text:
+            if e in all_texts:
+                all_texts.remove(e)
+                excluded_text.append(e)
+            print('本次移除的文本：' + str(excluded_text))
+
+        # 检查非法功能
+        for element in all_texts:
+            # 如果元素的text不在合法功能列表中，则标记为非法功能，添加到illegal_functions列表中
+            if element not in legal_function_ids:
+                illegal_functions.append(element)
+
+        # 输出非法功能
+        if illegal_functions:
+            print(f"存在非法功能：{illegal_functions}")
+        else:
+            print("没有检测到非法功能。")
+            return True
+
+    # except Exception as err:
+    #     print(f"函数执行出错: {str(err)}")
 
 
-# legal_function_ids = ['音频', '录制声音', '关闭后，将不会录制声音到回放文件中', '设备音量',
-#                       '报警音量和对讲音量', '试听', '音频降噪', '降噪强度', '自动回复', '低', '高']
-legal_function_ids = ['Wi-Fi', '显示', '音频', '灯', '报警设置', '侦测报警', '摄像机录像', '报警通知',
-                      '手机推送', '邮件通知', 'FTP', '鸣笛', '设备联动', '延时摄影', '安装方式', '更多设置',
-                      '设备分享', '更多', '高级设置', '退出登录', '删除设备']
+legal_function_ids = ['音频', '录制声音', '可设置设备报警音量及对讲音量', '试听', '音频降噪', '低', '高']
+# legal_function_ids = ['Wi-Fi', '显示', '音频', '灯', '报警设置', '侦测报警', '摄像机录像', '报警通知',
+#                       '手机推送', '邮件通知', 'FTP', '鸣笛', '设备联动', '延时摄影', '安装方式', '更多设置',
+#                       '设备分享', '更多', '高级设置', '退出登录', '删除设备']
 detect_illegal_functions(legal_function_ids)
