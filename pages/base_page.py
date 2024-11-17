@@ -1306,6 +1306,17 @@ class BasePage:
         # 如果未找到目标元素，返回None
         return None
 
+    def back_to_page_top(self):
+        """
+        返回页面顶部
+        :return:
+        """
+        try:
+            logger.info('尝试返回页面顶部...')
+            self.driver(scrollable=True).fling.vert.toBeginning(max_swipes=1000)
+        except Exception as err:
+            pytest.fail(f"函数执行出错: {str(err)}")
+
     def detect_illegal_functions(self, legal_function_ids):
         """
         检查页面非法功能，需要事先定义排除的元素xpath列表
