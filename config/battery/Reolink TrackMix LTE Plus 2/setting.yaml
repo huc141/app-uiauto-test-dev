@@ -1,0 +1,231 @@
+device_list_name: 'Reolink TrackMix LTE Plus 2'
+uid: '952700Y101E7Y184'
+sub_name: ''
+
+ipc:
+  name: '设置'
+  key: 'setting_page'
+  desc: '单机设置页面'
+  type: 'page'
+  items:
+    - name: '预录模式'
+      key: 'pre_recording'
+      desc: '设置>pre_recording'
+      type: 'navigation'
+
+    - name: '电池'
+      key: 'battery'
+      desc: '设置>电池'
+      type: 'navigation'
+
+    - name: '显示'
+      key: 'display'
+      desc: '设置>显示'
+      type: 'navigation'
+
+    - name: '音频'
+      key: 'audio'
+      desc: '设置>音频'
+      type: 'navigation'
+
+    - name: '灯'
+      key: 'light'
+      desc: '设置>灯'
+      type: 'navigation'
+
+    - name: 'PIR传感器'
+      key: 'PIR'
+      desc: '设置>PIR传感器'
+      type: 'navigation'
+
+    - name: '侦测报警'
+      key: 'detection_alarm'
+      desc: '设置>侦测报警'
+      type: 'navigation'
+
+    - name: '摄像机录像'
+      key: 'camera_recording'
+      desc: '设置>摄像机录像'
+      type: 'navigation'
+
+    - name: '手机推送'
+      key: 'notification_push'
+      desc: '设置>手机推送'
+      type: 'navigation'
+
+    - name: '邮件通知'
+      key: 'email_alert'
+      desc: '设置>邮件通知'
+      type: 'navigation'
+
+    - name: 'FTP'
+      key: 'ftp'
+      desc: '设置>FTP'
+      type: 'navigation'
+
+    - name: '鸣笛'
+      key: 'siren'
+      desc: '设置>鸣笛'
+      type: 'navigation'
+
+    - name: '延时摄影'
+      key: 'time_lapse'
+      desc: '设置>延时摄影'
+      type: 'navigation'
+
+    - name: '高级设置'
+      key: 'advanced_setting'
+      desc: '设置>高级设置'
+      type: 'navigation'
+
+hub:
+  name: '设置'
+  key: 'setting_page'
+  desc: '单机设置页面'
+  type: 'page'
+  items:
+    - name: '预录模式'
+      key: 'pre_recording'
+      desc: '设置>pre_recording'
+      type: 'navigation'
+
+    - name: '电池'
+      key: 'battery'
+      desc: '设置>电池'
+      type: 'navigation'
+
+    - name: '显示'
+      key: 'display'
+      desc: '设置>显示'
+      type: 'navigation'
+
+    - name: '音频'
+      key: 'audio'
+      desc: '设置>音频'
+      type: 'navigation'
+
+    - name: '灯'
+      key: 'light'
+      desc: '设置>灯'
+      type: 'navigation'
+
+    - name: 'PIR传感器'
+      key: 'PIR'
+      desc: '设置>PIR传感器'
+      type: 'navigation'
+
+    - name: '侦测报警'
+      key: 'detection_alarm'
+      desc: '设置>侦测报警'
+      type: 'navigation'
+
+    - name: '摄像机录像'
+      key: 'camera_recording'
+      desc: '设置>摄像机录像'
+      type: 'navigation'
+
+    - name: '手机推送'
+      key: 'notification_push'
+      desc: '设置>手机推送'
+      type: 'navigation'
+
+    - name: '邮件通知'
+      key: 'email_alert'
+      desc: '设置>邮件通知'
+      type: 'navigation'
+
+    - name: 'FTP'
+      key: 'ftp'
+      desc: '设置>FTP'
+      type: 'navigation'
+
+    - name: '鸣笛'
+      key: 'siren'
+      desc: '设置>鸣笛'
+      type: 'navigation'
+
+    - name: '延时摄影'
+      key: 'time_lapse'
+      desc: '设置>延时摄影'
+      type: 'navigation'
+
+    - name: '高级设置'
+      key: 'advanced_setting'
+      desc: '设置>高级设置'
+      type: 'navigation'
+
+nvr:
+  name: '设置'
+  key: 'setting_page'
+  desc: '单机设置页面'
+  type: 'page'
+  items:
+    - name: '预录模式'
+      key: 'pre_recording'
+      desc: '设置>pre_recording'
+      type: 'navigation'
+
+    - name: '电池'
+      key: 'battery'
+      desc: '设置>电池'
+      type: 'navigation'
+
+    - name: '显示'
+      key: 'display'
+      desc: '设置>显示'
+      type: 'navigation'
+
+    - name: '音频'
+      key: 'audio'
+      desc: '设置>音频'
+      type: 'navigation'
+
+    - name: '灯'
+      key: 'light'
+      desc: '设置>灯'
+      type: 'navigation'
+
+    - name: 'PIR传感器'
+      key: 'PIR'
+      desc: '设置>PIR传感器'
+      type: 'navigation'
+
+    - name: '侦测报警'
+      key: 'detection_alarm'
+      desc: '设置>侦测报警'
+      type: 'navigation'
+
+    - name: '摄像机录像'
+      key: 'camera_recording'
+      desc: '设置>摄像机录像'
+      type: 'navigation'
+
+    - name: '手机推送'
+      key: 'notification_push'
+      desc: '设置>手机推送'
+      type: 'navigation'
+
+    - name: '邮件通知'
+      key: 'email_alert'
+      desc: '设置>邮件通知'
+      type: 'navigation'
+
+    - name: 'FTP'
+      key: 'ftp'
+      desc: '设置>FTP'
+      type: 'navigation'
+
+    - name: '鸣笛'
+      key: 'siren'
+      desc: '设置>鸣笛'
+      type: 'navigation'
+
+    - name: '延时摄影'
+      key: 'time_lapse'
+      desc: '设置>延时摄影'
+      type: 'navigation'
+
+    - name: '高级设置'
+      key: 'advanced_setting'
+      desc: '设置>高级设置'
+      type: 'navigation'
