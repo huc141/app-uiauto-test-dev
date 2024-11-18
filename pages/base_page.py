@@ -701,12 +701,16 @@ class BasePage:
             if device_name.exists:
                 setting_element = self.driver.xpath(
                     f"//*[@text='{text_to_find}']/following-sibling::*[2][@clickable='true']")
-                if setting_element.exists:
+                setting_element2 = self.driver.xpath(
+                    f"//*[@text='{text_to_find}']/following-sibling::*[3][@clickable='true']")
+                if setting_element.exists and not setting_element2:
                     setting_element.click()
+                elif setting_element2.exists:
+                    setting_element2.click()
                 else:
                     device_name.click()
                 logger.info(f"尝试点击这个 '{text_to_find}' 元素右边的远程设置按钮")
-                time.sleep(5)
+                time.sleep(15)
                 retry_method()
 
                 return True
@@ -1315,16 +1319,17 @@ class BasePage:
             logger.info('尝试返回页面顶部...')
             self.driver(scrollable=True).fling.vert.toBeginning(max_swipes=1000)
         except Exception as err:
-            pytest.fail(f"函数执行出错: {str(err)}")
+            logger.error(f"返回页面顶部出错: {str(err)}")
 
-    def detect_illegal_functions(self, legal_function_ids):
+    def detect_illegal_functions(self, legal_funcs_ids, max_scroll=3):
         """
         检查页面非法功能，需要事先定义排除的元素xpath列表
-        :param legal_function_ids: 预期的合法功能名称列表
+        :param legal_funcs_ids: 预期的合法功能名称列表
+        :param max_scroll: 页面最大滚动次数。默认3次，特别长的页面适当增加滚动次数
         :return:
         """
         try:
-            if isinstance(legal_function_ids, list):
+            if isinstance(legal_funcs_ids, list):
                 # 定义需要排除的元素xpath列表
                 exclude_xpath = [
                     '//*[@resource-id="com.android.systemui:id/wifi_standard"]',
@@ -1338,7 +1343,8 @@ class BasePage:
                     '//*[@resource-id="com.mcu.reolink:id/device_name_tv"]',
                     '//*[@resource-id="com.mcu.reolink:id/device_type_tv"]',
                     '//*[@resource-id="com.mcu.reolink:id/device_storage_tv"]',
-                    '//*[@resource-id="com.mcu.reolink:id/tv_sub_right"]'
+                    '//*[@resource-id="com.mcu.reolink:id/tv_sub_right"]',
+                    '//*[@resource-id="com.mcu.reolink:id/im_title"]'
                 ]
 
                 exclude_elements = []  # 定义需要排除的文案集合
@@ -1348,19 +1354,19 @@ class BasePage:
                 def get_exclude_texts():  # 获取当前页面需要排除的文本内容
                     for i in exclude_xpath:
                         try:
-                            exclude_text = d.xpath(i).all()
+                            exclude_text = self.driver.xpath(i).all()
                             for t in exclude_text:
                                 element_text = t.text  # 获取元素的text属性
                                 exclude_elements.append(element_text)  # 添加至exclude_elements列表
                                 dr_exclude_elements = list(set(exclude_elements))  # 将列表转集合再转列表，去除重复元素
-                        except Exception as err:
-                            print(f'排除的文本内容时出错：{err}')
+                        except Exception as e_err:
+                            logger.error(f'排除的文本内容时出错：{e_err}')
                     logger.info("需排除的内容有：")
                     logger.info(dr_exclude_elements)
                     return dr_exclude_elements
 
                 def get_fullscreen_text():  # 获取当前页面全屏文本
-                    fullscreen_text = d.xpath('//android.widget.TextView').all()  # 获取当前页面所有元素的文本内容
+                    fullscreen_text = self.driver.xpath('//android.widget.TextView').all()  # 获取当前页面所有元素的文本内容
                     for s in fullscreen_text:
                         element_texts = s.text  # 获取元素的text属性
                         all_elements.append(element_texts)
@@ -1369,7 +1375,7 @@ class BasePage:
                     logger.info(dr_all_elements)
                     return dr_all_elements
 
-                for _ in range(3):
+                for _ in range(max_scroll):
                     # 先获取当前页面需要排除的文本内容
                     new_exclude_texts = get_exclude_texts()
                     exclude_elements.extend(new_exclude_texts)
@@ -1400,12 +1406,14 @@ class BasePage:
 
                 # 检查非法功能
                 for element in whole_page_all_elements:
-                    if element not in legal_function_ids:
+                    if element not in legal_funcs_ids:
                         illegal_functions.append(element)
 
                 # 输出非法功能
                 if illegal_functions:
                     logger.info(f"存在非法功能：{illegal_functions}")
+                    pytest.fail(f"存在非法功能：{illegal_functions}")
+                    # return False
                 else:
                     logger.info("没有检测到非法功能。")
                     return True
