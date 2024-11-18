@@ -76,7 +76,7 @@ class RemoteSetting(BasePage):
 
                 if len(ele_not_exists) > 0:
                     logger.info(f"当前页面存在的功能有：{ele_exists}")
-                    logger.info(f"当前页面缺失的功能有：{ele_not_exists}")
+                    logger.warning(f"当前页面缺失的功能有：{ele_not_exists}")
                     self.back_to_page_top()
                     pytest.fail(f"当前页面缺失的功能有：{ele_not_exists}")
 
@@ -89,7 +89,7 @@ class RemoteSetting(BasePage):
                 # 如果 texts 是一个单一的文本，在当前页面滚动查找该文本是否存在
                 ele_status = self.is_element_exists(texts, scroll_or_not=scroll_or_not)
                 if not ele_status:
-                    logger.info(f"当前页面缺失的功能有：{texts}")
+                    logger.warning(f"当前页面缺失的功能有：{texts}")
                     self.back_to_page_top()
                     pytest.fail(f"当前页面缺失的功能有：{ele_not_exists}")
                 else:
@@ -99,7 +99,7 @@ class RemoteSetting(BasePage):
 
         except Exception as err:
             self.back_to_page_top()
-            pytest.fail(f"函数执行出错: {err}")
+            logger.error(f"函数执行出错: {err}")
             # return False
 
     def scroll_check_funcs2(self, texts, selector=None, selector_type='id', scroll_or_not=True):
@@ -144,8 +144,8 @@ class RemoteSetting(BasePage):
                         self.back_to_page_top()
                         logger.info(f"预期功能项有：{texts}")
                         logger.info(f"当前页面实际功能项有：{actual_texts}")
-                        logger.info(f"当前页面缺失的功能有：{ele_not_exists}")
-                        logger.info(f"当前页面多余的功能有：{unique_fun}，功能数量与预期不符！可能存在非法能力集！")
+                        logger.warning(f"当前页面缺失的功能有：{ele_not_exists}")
+                        logger.warning(f"当前页面多余的功能有：{unique_fun}，功能数量与预期不符！可能存在非法能力集！")
                         pytest.fail(f"当前页面多余的功能有：{unique_fun}，缺失的功能有：{ele_not_exists}, 功能数量与预期不符！可能存在非法能力集！")
 
                     else:
@@ -154,8 +154,8 @@ class RemoteSetting(BasePage):
                         self.back_to_page_top()
                         logger.info(f"预期功能项有：{texts}")
                         logger.info(f"当前页面实际功能项有：{actual_texts}")
-                        logger.info(f"当前页面缺失的功能有：{ele_not_exists}")
-                        logger.info(f'当前页面多余的功能有：{unique_fun}')
+                        logger.warning(f"当前页面缺失的功能有：{ele_not_exists}")
+                        logger.warning(f'当前页面多余的功能有：{unique_fun}')
                         pytest.fail(f"当前页面缺失的功能有：{ele_not_exists}")
 
                 elif isinstance(texts, str):
@@ -163,7 +163,7 @@ class RemoteSetting(BasePage):
                     ele_status = self.is_element_exists(element_value=texts, max_scrolls=5, scroll_or_not=scroll_or_not)
                     if not ele_status:
                         self.back_to_page_top()
-                        logger.info(f"当前页面缺失的功能有：{texts}")
+                        logger.warning(f"当前页面缺失的功能有：{texts}")
                         pytest.fail(f"当前页面缺失的功能有：{texts}")
                     else:
                         logger.info(f"需校验的功能项均存在！-->{texts}")
@@ -191,6 +191,44 @@ class RemoteSetting(BasePage):
             self.access_in_remote_setting(text_to_find=device_list_name)
         except Exception as e:
             pytest.fail(f"查找设备在设备列表的名称并点击远程设置按钮出错：{str(e)}")
+
+    def access_in_remote_pre_recording(self, device_list_name, sub_name=None, access_mode='ipc'):
+        """
+        进入指定设备的远程配置的预录模式主页
+        :param device_list_name: 设备列表里单机设备、hub、nvr的昵称。
+        :param sub_name: 若设备接入了hub、nvr设备下的话，则该名称必填。
+        :param access_mode: 设备接入方式，支持ipc、hub、nvr。明确设备是单机还是接入NVR下、接入hub下。
+        :return:
+        """
+        try:
+            # 根据昵称在设备列表中滚动查找该设备并进入远程配置主页
+            self.access_in_remote_setting(device_list_name)
+
+            # 如果设备是单机：
+            if access_mode == 'ipc':
+                time.sleep(2)
+                # 进入预录模式主页
+                self.scroll_and_click_by_text('预录模式')
+
+            # 如果设备接入了nvr：
+            elif access_mode == 'nvr' and sub_name is not None:
+                time.sleep(2)
+                self.scroll_and_click_by_text(self.ivSelectChannelButton, el_type='xpath')
+                # 选择通道并点击
+                self.scroll_and_click_by_text(sub_name)
+                # 进入灯主页
+                self.scroll_and_click_by_text('预录模式')
+
+            # 如果设备接入了hub：
+            elif access_mode == 'hub' and sub_name is not None:
+                time.sleep(2)
+                # 根据名称查找hub下的设备卡片，点击并进入hub下的设备的远程配置主页
+                self.scroll_and_click_by_text(sub_name)
+                # 进入灯主页
+                self.scroll_and_click_by_text('预录模式')
+
+        except Exception as e:
+            pytest.fail(f"函数执行出错: {str(e)}")
 
     def access_in_remote_wifi(self, device_list_name, sub_name=None, access_mode='ipc'):
         """
