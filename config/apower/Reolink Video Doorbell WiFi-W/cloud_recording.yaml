@@ -1,0 +1,96 @@
+device_list_name: &device_name "Reolink Video Doorbell WiFi-W"
+uid: '952700Y0058Y1MGY'
+sub_name: ""
+
+ipc:
+  cloud_recording:
+    name: '云录像'
+    desc: '设置>云录像'
+    type: 'navigation'
+    text:
+      - ''
+
+    items:
+      cloud_recording:
+        name: '云录像'
+        desc: '设置>云录像>云录像主页'
+        type: 'page'
+        text:
+          - *device_name
+          - '云录像'
+          - '录像清晰度'
+          - '存储时长'
+          - '计划'
+          - '测试'
+          - '删除'
+
+      recording_resolution:
+        name: '录像清晰度'
+        desc: '设置>云录像>录像清晰度 页面'
+        type: 'page'
+        text:
+          - '录像清晰度'
+          - '清晰'
+          - '当网络差时会上传流畅清晰度的视频。'
+          - '流畅'
+          - '均衡'
+        options_text:
+          - '清晰'
+          - '流畅'
+          - '均衡'
+
+      storage_duration:
+        name: '存储时长'
+        desc: '设置>云录像>存储时长 页面'
+        type: 'page'
+        text:
+          - ''
+
+      plan:
+        name: '计划'
+        desc: '设置>云录像>计划 页面'
+        type: 'page'
+        text:
+          - ''
+
+        alarm:
+          name: '报警'
+          desc: '设置>云录像>计划主页>报警'
+          type: 'tab'
+          text:
+            - '取消'
+            - '计划'
+            - '保存'
+            - '报警'
+            - '定时'
+            - '设置视频上传到云端的触发条件'
+            - '报警类型'
+          alarm_type:
+            name: '报警类型'
+            desc: '设置>云录像>计划主页>报警>报警类型'
+            type: 'page'
+            text:
+              - '报警类型'
+              - '保存'
+              - '全选'
+              - '访客'
+              - '画面变动'
+              - '人'
+              - '车'
+              - '包裹'
+            option_text:
+              - '访客'
+              - '画面变动'
+              - '人'
+              - '车'
+              - '包裹'
+        timed:
+          name: '定时'
+          desc: '设置>云录像>计划主页>定时'
+          type: 'tab'
+          text:
+            - '计划'
+            - '保存'
+            - '报警'
+            - '定时'
+            - '设置视频上传到云端的触发条件'
