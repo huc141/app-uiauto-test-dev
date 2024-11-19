@@ -27,7 +27,7 @@ class TestRemotePreRecording:
         # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击‘预录模式’菜单项进入
         RemoteSetting().access_in_remote_pre_recording(device_list_name=device_config['device_list_name'])
 
-        # ========= 验证计划 =========
+        # 验证计划
         result = RemotePreRecord().verify_precording_plan(plan_texts=remote_items['pre_record_plan']['text'],
                                                           new_plan_texts=remote_items['add_new_plan']['text'])
 
