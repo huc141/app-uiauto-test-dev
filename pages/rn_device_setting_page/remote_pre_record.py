@@ -64,7 +64,9 @@ class RemotePreRecord(BasePage):
         try:
             self.turn_on_precording()  # 开启预录模式
             main_text_res = RemoteSetting().scroll_check_funcs2(texts=main_text)
-            return main_text_res
+            illegal_funcs_res = self.detect_illegal_functions(legal_funcs_ids=main_text)
+
+            return main_text_res, illegal_funcs_res
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
@@ -148,7 +150,7 @@ class RemotePreRecord(BasePage):
 
             # 点击完成按钮，新增当前计划
             self.scroll_and_click_by_text('完成')
-            custom_plan_res = RemoteSetting().scroll_check_funcs2(texts=['周一', '周二', '周四', '周五'])
+            custom_plan_res = RemoteSetting().scroll_check_funcs2(texts=['周一,周二,周四,周五'])
 
             # 点击保存按钮，保存当前计划
             self.scroll_and_click_by_text('保存')
