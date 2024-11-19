@@ -27,7 +27,7 @@ class TestRemotePreRecording:
         # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击‘预录模式’菜单项进入
         RemoteSetting().access_in_remote_pre_recording(device_list_name=device_config['device_list_name'])
 
-        # ======== 验证帧率（fps）=========
+        # 验证帧率（fps）
         main_text_res = RemotePreRecord().verify_fps(texts=remote_items['FPS']['text'],
                                                      option_text_list=remote_items['FPS']['options_text'])
         BasePage().loop_detect_element_and_click(element_value='帧率(fps)')
