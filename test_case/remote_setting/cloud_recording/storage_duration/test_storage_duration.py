@@ -19,7 +19,7 @@ class TestRemotePreRecording:
     def test_remote_cloud_record_main_page_text(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['cloud_recording']['items']
-        BasePage().check_key_in_yaml(remote_items, 'recording_resolution')
+        BasePage().check_key_in_yaml(remote_items, 'storage_duration')
 
         # 启动app，并开启录屏
         driver.start_app(True)
@@ -28,9 +28,4 @@ class TestRemotePreRecording:
         RemoteSetting().access_in_cloud_recording(device_list_name=device_config['device_list_name'])
 
         # 验证存储时长主页文案
-        main_text_res, illegal_funcs_res = RemoteCloudRecord().check_recording_resolution_text(main_text=remote_items['recording_resolution']['text'],
-                                                                                               option_text_list=remote_items['recording_resolution']['options_text'])
-
-        # 断言
-        assert main_text_res is True
-        assert illegal_funcs_res is True
+        RemoteCloudRecord().check_storage_duration_text()
