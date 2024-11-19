@@ -104,9 +104,12 @@ class BasePage:
             for i in range(loop_times):
                 time.sleep(2)
                 logger.info(f"正在循环检测 {element_value} 元素是否出现，第 {i + 1} 次")
-                if self.is_element_exists(element_value=element_value, selector_type=selector_type,
-                                          max_scrolls=1, scroll_or_not=scroll_or_not):
-                    self.click_by_text(text=element_value)
+                if self.is_element_exists(element_value=element_value,
+                                          selector_type=selector_type,
+                                          max_scrolls=1,
+                                          scroll_or_not=scroll_or_not):
+                    self.scroll_and_click_by_text(text_to_find=element_value,
+                                                  el_type='xpath')
                     return True
             return False
         except Exception as err:
@@ -223,7 +226,6 @@ class BasePage:
             except Exception as err:  # 捕获并处理所有其他类型的异常，确保程序不会因为未处理的异常而崩溃。
                 logger.error("页面中没有找到id为 %s 的元素，原因可能是：%s", text, err)
                 pytest.fail(f"页面中没有找到id为 {text} 的元素，原因可能是：{err}")
-                # raise
         return False
 
     def click_by_id(self, resource_id, retries=2, is_click_again: Literal[True, False] = False):
@@ -710,7 +712,7 @@ class BasePage:
                 else:
                     device_name.click()
                 logger.info(f"尝试点击这个 '{text_to_find}' 元素右边的远程设置按钮")
-                time.sleep(15)
+                time.sleep(25)
                 retry_method()
 
                 return True
