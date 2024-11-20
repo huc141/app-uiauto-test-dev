@@ -51,20 +51,26 @@ ipc:
         desc: '设置>云录像>计划 页面'
         type: 'page'
         text:
-          - ''
+          - &cancel '取消'
+          - &plan '计划'
+          - &save '保存'
+          - &alarm '报警'
+          - &timed '定时'
+          - &little_title '设置视频上传到云端的触发条件'
+          - &alarm_type '报警类型'
 
         alarm:
           name: '报警'
           desc: '设置>云录像>计划主页>报警'
           type: 'tab'
           text:
-            - '取消'
-            - '计划'
-            - '保存'
-            - '报警'
-            - '定时'
-            - '设置视频上传到云端的触发条件'
-            - '报警类型'
+            - *cancel
+            - *plan
+            - *save
+            - *alarm
+            - *timed
+            - *little_title
+            - *alarm_type
           alarm_type:
             name: '报警类型'
             desc: '设置>云录像>计划主页>报警>报警类型'
