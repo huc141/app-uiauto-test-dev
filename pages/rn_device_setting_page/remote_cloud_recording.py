@@ -107,7 +107,20 @@ class RemoteCloudRecord(BasePage):
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
-    def click_and_test_email_alarm_type(self, texts_list, option_text):
+    def check_plan_main_text(self, main_text):
+        """
+        验证云录像>计划主页文案
+        :param main_text: 待验证的文案列表
+        :return:
+        """
+        try:
+            main_text_res = RemoteSetting().scroll_check_funcs2(texts=main_text)
+            illegal_funcs_res = self.detect_illegal_functions(legal_funcs_ids=main_text)
+            return main_text_res, illegal_funcs_res
+        except Exception as e:
+            pytest.fail(f"函数执行出错: {str(e)}")
+
+    def verify_cloud_recording_alarm_type(self, texts_list, option_text):
         """
         点击邮件通知>计划>报警>报警类型，验证文案内容
         :param texts_list: 报警类型页面需要验证的文案列表
@@ -125,11 +138,10 @@ class RemoteCloudRecord(BasePage):
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
-    def verify_plan(self, plan_alarm_text, plan_timed_text, alarm_type_text, alarm_type_option_text):
+    def verify_plan_alarm(self, plan_alarm_text, alarm_type_text, alarm_type_option_text):
         """
-        测试 计划
+        测试 计划>报警tab
         :param plan_alarm_text: 计划>报警> 文案
-        :param plan_timed_text: 计划>定时 文案
         :param alarm_type_text: 计划>报警>报警类型 文案
         :param alarm_type_option_text: 计划>报警>报警类型 操作选项
         :return:
@@ -137,25 +149,39 @@ class RemoteCloudRecord(BasePage):
         try:
             self.scroll_and_click_by_text('计划')
             # 验证计划>报警>文案内容
-            self.scroll_and_click_by_text('报警')
             plan_alarm_main_text_res = RemoteSetting().scroll_check_funcs2(texts=plan_alarm_text)
-
-            # 验证计划>定时 文案内容
-            self.scroll_and_click_by_text('定时')
-            plan_timed_main_text_res = RemoteSetting().scroll_check_funcs2(texts=plan_timed_text)
+            illegal_funcs_res = self.detect_illegal_functions(legal_funcs_ids=plan_alarm_text)
 
             # 点击报警>报警类型
-            self.scroll_and_click_by_text('报警')
-            plan_alarm_type_text_res = self.click_and_test_email_alarm_type(texts_list=alarm_type_text,
-                                                                            option_text=alarm_type_option_text)
+            plan_alarm_type_text_res = self.verify_cloud_recording_alarm_type(texts_list=alarm_type_text,
+                                                                              option_text=alarm_type_option_text)
 
             result = {
                 'plan_alarm_main_text': plan_alarm_main_text_res,
-                'plan_timed_main_text': plan_timed_main_text_res,
+                'illegal_funcs_res': illegal_funcs_res,
                 'plan_alarm_type_text': plan_alarm_type_text_res
             }
 
             return result
+
+        except Exception as e:
+            pytest.fail(f"函数执行出错: {str(e)}")
+
+    def verify_plan_timed(self, plan_timed_text):
+        """
+        测试 计划>定时
+        :param plan_timed_text: 计划>定时 文案
+        :return:
+        """
+        try:
+            self.scroll_and_click_by_text('计划')
+
+            # 验证计划>定时 文案内容
+            self.scroll_and_click_by_text('定时')
+            plan_timed_main_text_res = RemoteSetting().scroll_check_funcs2(texts=plan_timed_text)
+            illegal_funcs_res = self.detect_illegal_functions(legal_funcs_ids=plan_timed_text)
+
+            return plan_timed_main_text_res, illegal_funcs_res
 
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")

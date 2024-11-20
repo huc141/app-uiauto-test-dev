@@ -12,7 +12,7 @@ devices_config = read_yaml.load_device_config(device_dir='apower/Reolink Video D
 
 
 @allure.epic("远程配置>报警设置>云录像")
-class TestRemotePreRecording:
+class TestRemoteCloudRecording:
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("云录像>云录像主页 文案")
     @allure.story("需人工核查日志和录屏")

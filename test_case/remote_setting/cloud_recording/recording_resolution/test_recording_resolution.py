@@ -12,11 +12,11 @@ devices_config = read_yaml.load_device_config(device_dir='apower/Reolink Video D
 
 
 @allure.epic("远程配置>报警设置>云录像")
-class TestRemotePreRecording:
+class TestRemoteCloudRecording:
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("云录像>录像清晰度主页 文案")
     @allure.story("需人工核查日志和录屏")
-    def test_remote_cloud_record_main_page_text(self, device_config):
+    def test_remote_cloud_recording_resolution(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['cloud_recording']['items']
         BasePage().check_key_in_yaml(remote_items, 'recording_resolution')
