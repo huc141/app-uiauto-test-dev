@@ -1,14 +1,5 @@
-import os
-import time
-from typing import Literal
-
-import pytest
-import yaml
 import uiautomator2 as u2
-import wda
-from common_tools.logger import logger
-from common_tools.read_yaml import read_yaml
-from pages.rn_device_setting_page.remote_setting import RemoteSetting
+
 
 d = u2.connect_usb()
 # c = wda.Client('http://localhost:8100')
@@ -45,12 +36,23 @@ d = u2.connect_usb()
 # 安卓滑动条
 # 滑动条
 # 先定位：
-element = d.xpath('//*[@resource-id="RNE__Slider_Thumb"]')
+# element = d.xpath('//*[@resource-id="RNE__Slider_Thumb"]')
+
+# 获取部件的中心点
+x, y = d(text="B83S").center()
+print(x, y)
+
+# 计算新的坐标位置
+new_x = x
+new_y = y + 100  # 向下移动100个像素点
+
+# 在新坐标处进行点击操作
+d.click(new_x, new_y)
 
 # 按下并项右移动
-for i in range(1, 20):
-    element.swipe("right")
-    i += 1
+# for i in range(1, 20):
+#     element.swipe("right")
+#     i += 1
 
 # 按下并向左移动
 # for i in range(1, 20):

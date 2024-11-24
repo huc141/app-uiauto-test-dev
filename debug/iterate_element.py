@@ -63,7 +63,7 @@ def find_element_by_xpath_recursively(d, xpath_prefix, target_id=None, target_te
 d = u2.connect()  # 请根据实际情况填写设备IP或序列号
 
 # 定义起始元素的xpath路径
-start_xpath = '//*[@resource-id="Contrast"]'
+start_xpath = '//android.widget.TextView[@text="B83S"]'
 
 # 调用方法查找目标元素
 target_element = find_element_by_xpath_recursively(d,
