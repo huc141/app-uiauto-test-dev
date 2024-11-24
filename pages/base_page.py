@@ -1163,6 +1163,31 @@ class BasePage:
             # logger.info(f"可能发生了错误: {err}")
             pytest.fail(f"函数执行出错: {str(err)}")
 
+    def get_text_coordinates_center(self, text):
+        """
+        获取某文本元素的中心点坐标
+        :param text:
+        :return:
+        """
+        try:
+            x, y = self.driver(text=text).center()
+            logger.info(f"文本 {text} 的中心点坐标为：{x, y}")
+            return x, y
+        except Exception as err:
+            pytest.fail(f"函数执行出错: {str(err)}")
+
+    def click_by_coordinates(self, x, y):
+        """
+        根据坐标进行点击操作
+        :param x:
+        :param y:
+        :return:
+        """
+        try:
+            self.driver.click(x, y)
+        except Exception as err:
+            pytest.fail(f"函数执行出错: {str(err)}")
+
     @staticmethod
     def check_key_in_yaml(items, key):
         """
@@ -1227,6 +1252,7 @@ class BasePage:
         :return:
         """
         try:
+            logger.info("返回上一页")
             self.click_by_xpath(xpath_expression=xpath_expression)
         except Exception as err:
             pytest.fail(f"函数执行出错: {str(err)}")
@@ -1264,7 +1290,7 @@ class BasePage:
         """
         递归查找页面指定的目标元素，遍历同级和子级元素
 
-        :param d: uiautomator2设备对象
+        :param driver: uiautomator2设备对象
         :param start_xpath_prefix: 当前元素的xpath前缀路径
         :param target_id: 目标元素的resourceId（可选）
         :param target_text: 目标元素的text属性值（可选）
