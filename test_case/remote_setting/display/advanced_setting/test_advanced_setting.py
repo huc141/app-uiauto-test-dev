@@ -12,8 +12,8 @@ devices_config = read_yaml.load_device_config(yaml_file_name='display.yaml')  # 
 
 @allure.feature("远程配置>常规设置>显示")
 class TestRemoteDisplay:
-    pass
 
     # 测高级设置
+    def test_advanced_setting(self):
+        pass
 
-    # 测明暗设置
