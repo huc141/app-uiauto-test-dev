@@ -105,8 +105,9 @@ class RemoteSetting(BasePage):
     def scroll_check_funcs2(self, texts, selector=None, selector_type='id', scroll_or_not=True):
         """
         遍历并判断功能项(名称)是否存在当前页面，同时比对数量是否正确。
-        :param selector_type: 元素的定位方式，根据id进行文本提取。
+        :param texts: 待验证的文案列表
         :param selector: 元素定位的具体id。
+        :param selector_type: 元素的定位方式，根据id进行文本提取。
         :param texts: 存储了预期功能项名称的列表。
         :param scroll_or_not: 是否执行滚动查找。布尔值，默认True滚动查找
         :return:
@@ -216,7 +217,7 @@ class RemoteSetting(BasePage):
                 self.scroll_and_click_by_text(self.ivSelectChannelButton, el_type='xpath')
                 # 选择通道并点击
                 self.scroll_and_click_by_text(sub_name)
-                # 进入灯主页
+                # 进入预录模式主页
                 self.scroll_and_click_by_text('预录模式')
 
             # 如果设备接入了hub：
@@ -224,7 +225,7 @@ class RemoteSetting(BasePage):
                 time.sleep(2)
                 # 根据名称查找hub下的设备卡片，点击并进入hub下的设备的远程配置主页
                 self.scroll_and_click_by_text(sub_name)
-                # 进入灯主页
+                # 进入预录模式主页
                 self.scroll_and_click_by_text('预录模式')
 
         except Exception as e:
@@ -239,52 +240,67 @@ class RemoteSetting(BasePage):
         :param access_mode: 设备接入方式，支持ipc、hub、nvr。明确设备是单机还是接入NVR下、接入hub下。
         :return:
         """
-        # 根据昵称在设备列表中滚动查找该设备并进入远程配置主页
-        self.access_in_remote_setting(device_list_name)
+        try:
+            # 根据昵称在设备列表中滚动查找该设备并进入远程配置主页
+            self.access_in_remote_setting(device_list_name)
 
-        # 如果设备是单机：
-        if access_mode == 'ipc':
-            time.sleep(2)
-            # 进入wifi主页
-            self.scroll_and_click_by_text('Wi-Fi')
+            # 如果设备是单机：
+            if access_mode == 'ipc':
+                time.sleep(2)
+                # 进入wifi主页
+                self.scroll_and_click_by_text('Wi-Fi')
 
-        # 如果设备接入了nvr：
-        elif access_mode == 'nvr' and sub_name is not None:
-            time.sleep(2)
-            self.scroll_and_click_by_text(self.ivSelectChannelButton, el_type='xpath')
-            # 选择通道并点击(但是设备接入nvr后不会显示wifi的远程配置)
-            self.scroll_and_click_by_text(sub_name)
-            logger.info("设备接入了nvr，页面不显示WiFi功能")
+            # 如果设备接入了nvr：
+            elif access_mode == 'nvr' and sub_name is not None:
+                time.sleep(2)
+                self.scroll_and_click_by_text(self.ivSelectChannelButton, el_type='xpath')
+                # 选择通道并点击(但是设备接入nvr后不会显示wifi的远程配置)
+                self.scroll_and_click_by_text(sub_name)
+                logger.info("设备接入了nvr，页面不显示WiFi功能")
 
-        # 如果设备接入了hub：
-        elif access_mode == 'hub' and sub_name is not None:
-            time.sleep(2)
-            # 根据名称查找hub下的设备卡片，点击并进入hub下的设备的远程配置主页
-            self.scroll_and_click_by_text(sub_name)
-            # 进入wifi主页
-            self.scroll_and_click_by_text('Wi-Fi')
+            # 如果设备接入了hub：
+            elif access_mode == 'hub' and sub_name is not None:
+                time.sleep(2)
+                # 根据名称查找hub下的设备卡片，点击并进入hub下的设备的远程配置主页
+                self.scroll_and_click_by_text(sub_name)
+                # 进入wifi主页
+                self.scroll_and_click_by_text('Wi-Fi')
+        except Exception as e:
+            pytest.fail(f"函数执行出错: {str(e)}")
 
     def access_in_display(self, device_list_name, sub_name=None, access_mode='ipc'):
         """
         点击显示，进入显示页面
         :return:
         """
-        # 根据昵称在设备列表中滚动查找该设备并进入远程配置主页
-        self.access_in_remote_setting(device_list_name)
+        try:
+            # 根据昵称在设备列表中滚动查找该设备并进入远程配置主页
+            self.access_in_remote_setting(device_list_name)
 
-        # 如果设备是单机：
-        if access_mode == 'ipc':
-            time.sleep(2)
-            # 进入显示主页
-            self.scroll_and_click_by_text('显示')
+            # 如果设备是单机：
+            if access_mode == 'ipc':
+                time.sleep(2)
+                # 进入显示主页
+                self.loop_detect_element_and_click('显示')
 
-        # 如果设备接入了hub：
-        elif access_mode == 'hub' and sub_name is not None:
-            time.sleep(2)
-            # 根据名称查找hub下的设备卡片，点击并进入hub下的设备的远程配置主页
-            self.scroll_and_click_by_text(sub_name)
-            # 进入显示主页
-            self.scroll_and_click_by_text('显示')
+            # 如果设备接入了nvr：
+            elif access_mode == 'nvr' and sub_name is not None:
+                time.sleep(2)
+                self.scroll_and_click_by_text(self.ivSelectChannelButton, el_type='xpath')
+                # 选择通道并点击
+                self.scroll_and_click_by_text(sub_name)
+                # 进入显示主页
+                self.loop_detect_element_and_click('显示')
+
+            # 如果设备接入了hub：
+            elif access_mode == 'hub' and sub_name is not None:
+                time.sleep(2)
+                # 根据名称查找hub下的设备卡片，点击并进入hub下的设备的远程配置主页
+                self.scroll_and_click_by_text(sub_name)
+                # 进入显示主页
+                self.loop_detect_element_and_click('显示')
+        except Exception as e:
+            pytest.fail(f"函数执行出错: {str(e)}")
 
     def access_in_audio(self, device_list_name, sub_name=None, access_mode='ipc'):
         """
