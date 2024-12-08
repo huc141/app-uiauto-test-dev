@@ -698,25 +698,30 @@ class BasePage:
                 else:
                     break
 
-        def find_and_click_android(xpath_exp):
-            device_name = self.driver.xpath(xpath_exp)
-            if device_name.exists:
-                setting_element = self.driver.xpath(
-                    f"//*[@text='{text_to_find}']/following-sibling::*[2][@clickable='true']")
-                setting_element2 = self.driver.xpath(
-                    f"//*[@text='{text_to_find}']/following-sibling::*[3][@clickable='true']")
-                if setting_element.exists and not setting_element2:
-                    setting_element.click()
-                elif setting_element2.exists:
-                    setting_element2.click()
-                else:
-                    device_name.click()
-                logger.info(f"尝试点击这个 '{text_to_find}' 元素右边的远程设置按钮")
-                time.sleep(25)
-                retry_method()
+        def find_and_click_android(text):
 
+            setting_element1 = f"//*[@text='{text}']/following-sibling::*[1][@clickable='true']"
+
+            setting_element2 = f"//*[@text='{text}']/following-sibling::*[2][@clickable='true']"
+
+            setting_element3 = f"//*[@text='{text}']/following-sibling::*[3][@clickable='true']"
+
+            logger.info(f"尝试点击 '{text}' 元素右边的远程设置按钮")
+
+            if self.driver.xpath(setting_element3).exists:
+                self.driver.xpath(setting_element3).click()
                 return True
-            return False
+
+            elif self.driver.xpath(setting_element2).exists:
+                self.driver.xpath(setting_element2).click()
+                return True
+
+            elif self.driver.xpath(setting_element1).exists:
+                self.driver.xpath(setting_element1).click()
+                return True
+
+            time.sleep(25)
+            retry_method()
 
         def find_and_click_ios(xpath_exp):
             element = self.driver.xpath(xpath_exp)
@@ -728,7 +733,7 @@ class BasePage:
             return False
 
         def find_and_click_android_xpath(text):
-            if find_and_click_android(f"//*[@text='{text}']/following-sibling::*[1][@clickable='true']"):
+            if find_and_click_android(text=text):
                 return True
             else:
                 logger.info(f"没有找到目标元素右边的远程设置按钮: '{text}'")
@@ -1347,7 +1352,7 @@ class BasePage:
             logger.info('尝试返回页面顶部...')
             self.driver(scrollable=True).fling.vert.toBeginning(max_swipes=1000)
         except Exception as err:
-            logger.error(f"返回页面顶部出错: {str(err)}")
+            logger.warning(f"返回页面顶部出错: {str(err)}")
 
     def detect_illegal_functions(self, legal_funcs_ids, max_scroll=3):
         """
