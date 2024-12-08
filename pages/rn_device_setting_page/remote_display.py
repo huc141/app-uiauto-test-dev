@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import time
+import pytest
 from typing import Literal
 from common_tools.logger import logger
 from pages.base_page import BasePage
@@ -16,6 +17,49 @@ class RemoteDisplay(BasePage):
         elif self.platform == 'ios':
             self.shelter_player = ''
             self.slider_brightness_xpath = ''
+
+    def check_display_main_text(self, texts):
+        """
+        验证显示主页文案
+        :param texts: 待验证的文案列表
+        :return:
+        """
+        try:
+            display_main_text_res = RemoteSetting().scroll_check_funcs2(texts=texts, selector='ReoTitle')
+
+            return display_main_text_res
+        except Exception as e:
+            pytest.fail(f"函数执行出错: {str(e)}")
+
+    def click_vertical_flip_switch_button(self):
+        """
+        点击垂直翻转按钮
+        :return:
+        """
+        try:
+            BasePage().scroll_click_right_btn(text_to_find='垂直翻转',
+                                              resourceId_1='ReoTitle',
+                                              className_2='android.view.ViewGroup'
+                                              )
+            return True
+        except Exception as err:
+            logger.info(f"可能发生了错误: {err}")
+            return False
+
+    def click_horizontal_flip_switch_button(self):
+        """
+        点击水平翻转按钮
+        :return:
+        """
+        try:
+            BasePage().scroll_click_right_btn(text_to_find='水平翻转',
+                                              resourceId_1='ReoTitle',
+                                              className_2='android.view.ViewGroup'
+                                              )
+            return True
+        except Exception as err:
+            logger.info(f"可能发生了错误: {err}")
+            return False
 
     def access_in_stream(self, option_text='码流'):
         """
@@ -41,6 +85,8 @@ class RemoteDisplay(BasePage):
         :param option_text: 菜单功能项，该方法默认进入【码流>流畅】
         :return:
         """
+        # 进入码流>流畅页面
+        self.scroll_and_click_by_text(text_to_find=option_text)
 
     def click_resolution(self, option_text='分辨率'):
         """
@@ -63,9 +109,30 @@ class RemoteDisplay(BasePage):
         """
         self.scroll_and_click_by_text(text_to_find=option_text)
 
+    def click_encoding_format(self, option_text='编码格式'):
+        """
+        :param option_text: 菜单功能项，该方法默认点击【编码格式】
+        :return:
+        """
+        self.scroll_and_click_by_text(text_to_find=option_text)
+
+    def click_i_frame_interval(self, option_text='i帧间隔'):
+        """
+        :param option_text: 菜单功能项，该方法默认点击【i帧间隔】
+        :return:
+        """
+        self.scroll_and_click_by_text(text_to_find=option_text)
+
     def click_frame_rate_mode(self, option_text='帧率控制'):
         """
         :param option_text: 菜单功能项，该方法默认点击【帧率控制】
+        :return:
+        """
+        self.scroll_and_click_by_text(text_to_find=option_text)
+
+    def click_rate_mode(self, option_text='码率模式'):
+        """
+        :param option_text: 菜单功能项，该方法默认点击【码率模式】
         :return:
         """
         self.scroll_and_click_by_text(text_to_find=option_text)
@@ -140,7 +207,8 @@ class RemoteDisplay(BasePage):
         """
         try:
 
-            if not self.is_element_exists(element_value='广角画面') and not self.is_element_exists(element_value='左摄像机'):
+            if not self.is_element_exists(element_value='广角画面') and not self.is_element_exists(
+                    element_value='左摄像机'):
                 self.get_coordinates_and_draw(mode=mode, id_or_xpath=self.shelter_player, draw_area=draw_area, num=9)
 
             if self.is_element_exists(element_value='广角画面'):
@@ -162,4 +230,3 @@ class RemoteDisplay(BasePage):
         except Exception as err:
             logger.info(f"可能发生了错误: {err}")
             return False
-
