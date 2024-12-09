@@ -12,11 +12,9 @@ class RemoteDisplay(BasePage):
         super().__init__()
         if self.platform == 'android':
             self.shelter_player = '//*[@resource-id="com.mcu.reolink:id/shelter_player"]'  # 隐私遮盖可画框区域
-            self.slider_brightness_xpath = ''  # 亮度条定位xpath
 
         elif self.platform == 'ios':
             self.shelter_player = ''
-            self.slider_brightness_xpath = ''
 
     def check_display_main_text(self, texts):
         """
@@ -69,6 +67,11 @@ class RemoteDisplay(BasePage):
         """
         # 进入码流页面
         self.scroll_and_click_by_text(text_to_find=option_text)
+
+    def click_moving_mark(self, option_text='移动标记'):
+        """点击移动标记"""
+        # TODO:
+        pass
 
     def access_in_clear(self, option_text='清晰'):
         """
@@ -137,13 +140,6 @@ class RemoteDisplay(BasePage):
         """
         self.scroll_and_click_by_text(text_to_find=option_text)
 
-    def click_anti_flicker(self, option_text='抗闪烁'):
-        """
-        :param option_text: 菜单功能项，该方法默认点击【抗闪烁】
-        :return:
-        """
-        self.scroll_and_click_by_text(text_to_find=option_text)
-
     def click_day_and_night(self, option_text='白天和黑夜'):
         """
         :param option_text: 菜单功能项，该方法默认点击【白天和黑夜】
@@ -151,32 +147,73 @@ class RemoteDisplay(BasePage):
         """
         self.scroll_and_click_by_text(text_to_find=option_text)
 
-    def drag_slider_brightness(self, slider_mode, iteration=20):
+    def click_image_setting(self, option_text='图像设置'):
+        """
+        :param option_text: 菜单功能项，该方法默认点击【图像设置】
+        :return:
+        """
+        self.scroll_and_click_by_text(text_to_find=option_text)
+
+    def drag_slider_brightness(self, slider_mode='obj'):
         """
         对拖动条执行操作，支持上、下、左、右方向拖动
-        :param slider_mode: slider的定位方式，支持id或者xpath
+        :param slider_mode: slider的定位方式，支持id、xpath定位，或者直接使用元素对象obj
         :param id_or_xpath: id或者xpath的定位参数
         :param direction: 方向，支持"left", "right", "up", "down"方向
         :param iteration: 拖动次数，若是ios，则此处为移动“步数”，不支持定义拖动次数，
         :return:
         """
-        # 往右拖动20次
-        self.slider_seek_bar(slider_mode=slider_mode,
-                             id_or_xpath=self.slider_brightness_xpath,
-                             direction='right',
-                             iteration=iteration)
+        element_obj = BasePage().find_element_by_xpath_recursively(
+                                start_xpath_prefix='//*[@resource-id="Brightness"]',
+                                target_id="RNE__Slider_Thumb")
 
-        # 往左拖动30次
+        # 往右拖动15次
         self.slider_seek_bar(slider_mode=slider_mode,
-                             id_or_xpath=self.slider_brightness_xpath,
+                             id_or_xpath=element_obj,
+                             direction='right',
+                             iteration=15)
+
+        # 往左拖动25次
+        self.slider_seek_bar(slider_mode=slider_mode,
+                             id_or_xpath=element_obj,
                              direction='left',
-                             iteration=30)
+                             iteration=25)
 
-        # 往右拖动10次
+        # 往右拖动5次
         self.slider_seek_bar(slider_mode=slider_mode,
-                             id_or_xpath=self.slider_brightness_xpath,
+                             id_or_xpath=element_obj,
                              direction='right',
-                             iteration=10)
+                             iteration=5)
+
+    def verify_mode_switch(self):
+        """
+        验证模式切换
+        :return:
+        """
+        # TODO:
+        pass
+
+    def verify_day_color(self):
+        """验证白天彩色"""
+        # TODO:
+        pass
+
+    def verify_black_and_white(self):
+        """验证黑白"""
+        # TODO:
+        pass
+
+    def verify_night_vision_color(self):
+        """验证夜视彩色"""
+        # TODO:
+        pass
+
+    def click_anti_flicker(self, option_text='抗闪烁'):
+        """
+        :param option_text: 菜单功能项，该方法默认点击【抗闪烁】
+        :return:
+        """
+        self.scroll_and_click_by_text(text_to_find=option_text)
 
     def click_device_name(self, option_text='设备名称'):
         """
