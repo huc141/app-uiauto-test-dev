@@ -346,11 +346,89 @@ ipc:
             - '黑白'
             - '白天彩色'
             - '夜视彩色'
-            - '光线较亮时自动显示彩色，较暗时自动显示黑白。'
           options:
+            - '模式切换'
             - '黑白'
-            - '彩色'
-            - '自动'
+            - '白天彩色'
+            - '夜视彩色'
+
+          mode_switching:
+            name: '模式切换'
+            desc: '白天和黑夜>模式切换'
+            type: 'popup'
+            text:
+              - '模式切换'
+              - '黑白'
+              - '彩色'
+              - '自动'
+              - '光线较亮时自动显示彩色，较暗时自动显示黑白。'
+              - '日夜切换阈值'
+              - '白天和黑夜自动模式下，黑白彩色切换的环境亮度阈值：'
+              - '恢复默认值'
+              - '0'
+              - '100'
+            options:
+              - '黑白'
+              - '彩色'
+              - '自动'
+              - '日夜切换阈值'
+
+          day_color:
+            name: '白天彩色'
+            desc: '白天和黑夜>白天彩色'
+            type: 'popup'
+            text:
+              - '白天彩色'
+              - '自动'
+              - '手动'
+              - '亮度'
+              - '恢复默认值'
+              - '暗部'
+              - '0'
+              - '255'
+            options:
+              - '自动'
+              - '手动'
+              - '亮度'
+              - '暗部'
+
+          black_and_white:
+            name: '黑白'
+            desc: '白天和黑夜>黑白'
+            type: 'popup'
+            text:
+              - '黑白'
+              - '自动'
+              - '手动'
+              - '亮度'
+              - '恢复默认值'
+              - '暗部'
+              - '0'
+              - '255'
+            options:
+              - '自动'
+              - '手动'
+              - '亮度'
+              - '暗部'
+
+          night_vision_color:
+            name: '夜视彩色'
+            desc: '白天和黑夜>夜视彩色'
+            type: 'popup'
+            text:
+              - '夜视彩色'
+              - '自动'
+              - '手动'
+              - '亮度'
+              - '恢复默认值'
+              - '暗部'
+              - '0'
+              - '255'
+            options:
+              - '自动'
+              - '手动'
+              - '亮度'
+              - '暗部'
 
         device_name:
           name: '设备名称'
@@ -429,54 +507,4 @@ ipc:
             options:
               - 4
 
-        advanced_setting:
-          name: '高级设置'
-          desc: '设置>显示>高级设置'
-          type: 'navigation'
-          subpage:
-            name: '高级设置'
-            desc: '设置>显示>高级设置>高级设置'
-            type: 'page'
-            text:
-              - '高级设置'
-              - '阈值'
-              - '自动切换日夜模式'
-            threshold:
-              name: '阈值'
-              desc: '设置>显示>高级设置>阈值'
-              type: 'popup'
-              text:
-                - '日夜切换阈值'
-                - '白天和黑夜自动模式下，黑白彩色切换的环境亮度阈值：'
-                - '恢复默认值'
-                - '取消'
-                - '确定'
-
-        bright_shade_setting:
-          name: '明暗设置'
-          desc: '设置>显示>明暗设置'
-          type: 'navigation'
-          subpage:
-            name: '明暗设置'
-            desc: '设置>显示>明暗设置>明暗设置'
-            type: 'page'
-            text:
-              - '明暗设置'
-              - '白天彩色'
-              - '自动'
-              - '黑白'
-              - '夜视彩色'
-
-            color_day:
-              name: '白天彩色'
-              desc: '设置>显示>明暗设置>明暗设置>白天彩色'
-              type: 'switch'
-            black_and_white:
-              name: '黑白'
-              desc: '设置>显示>明暗设置>明暗设置>黑白'
-              type: 'switch'
-            night_vision_color:
-              name: '夜视彩色'
-              desc: '设置>显示>明暗设置>明暗设置>夜视彩色'
-              type: 'switch'
 
