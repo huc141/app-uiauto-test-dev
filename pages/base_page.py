@@ -561,8 +561,6 @@ class BasePage:
 
         except Exception as err:
             pytest.fail(f"函数执行出错: {str(err)}")
-            # logger.info(f"貌似出错了: {err}")
-            # return False
 
         logger.info(f"没找到要点击的元素： '{text_to_find}' ，已经尝试了： {max_attempts} 次.")
         return False
@@ -1030,16 +1028,29 @@ class BasePage:
         :return:
         """
         try:
+            def operate_on_element(element):
+                logger.info(f'正在朝指定的 {direction} 方向滑动.')
+                for t in range(1, iteration):
+                    element.swipe(direction)
+                    t += 1
+                    time.sleep(1.5)
+                logger.info(f'滑动结束.')
+
+            slider = None
             if self.platform == "android":
                 if slider_mode == 'id':
                     slider = self.driver(resourceId=id_or_xpath)
-                else:
+                elif slider_mode == 'xpath':
                     slider = self.driver.xpath(id_or_xpath)
+                elif slider_mode == 'obj':
+                    operate_on_element(element=id_or_xpath)
 
                 # 按下并朝指定方向移动
-                for i in range(1, iteration):
-                    slider.swipe(direction)
-                    i += 1
+                if slider:
+                    for i in range(1, iteration):
+                        logger.info(f'正在朝指定的 {direction} 方向滑动第{i}次')
+                        slider.swipe(direction)
+                        i += 1
 
             if self.platform == "ios":
                 if slider_mode == 'id':
@@ -1058,7 +1069,6 @@ class BasePage:
                 self.driver.swipe(start_x, start_y, start_x + iteration, start_y, 0.5)  # 1秒完成滑动
 
         except Exception as err:
-            # logger.info(f"可能发生了错误: {err}")
             pytest.fail(f"函数执行出错: {str(err)}")
 
     def get_coordinates_and_draw(self, mode, id_or_xpath, draw_area='左上', num=0):
@@ -1303,7 +1313,7 @@ class BasePage:
         """
         # 初始化同级元素索引
         sibling_index = 1
-
+        time.sleep(2)
         while True:
             # 构建当前同级元素的xpath
             current_xpath = f"{start_xpath_prefix}[{sibling_index}]"
