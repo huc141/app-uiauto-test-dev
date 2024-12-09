@@ -305,22 +305,35 @@ ipc:
                 - '固定码率'
                 - '动态码率'
 
-        anti_flicker:
-          name: '抗闪烁'
-          desc: '设置>显示>抗闪烁'
-          type: 'popup'
+        image_setting:
+          name: '图像设置'
+          desc: '设置>显示>图像设置'
+          type: 'page'
           text:
+            - '亮度'
             - '抗闪烁'
-            - '50HZ'
-            - '60HZ'
-            - '其他'
-            - '关闭'
-            - '取消'
-          options:
-            - '50HZ'
-            - '60HZ'
-            - '其他'
-            - '关闭'
+            - '调整摄像机的拍摄帧率，以减少受到画面中光源闪烁的影响。'
+            - '0'
+            - '255'
+
+          brightness:
+            name: '亮度'
+
+          anti_flicker:
+            name: '抗闪烁'
+            desc: '设置>显示>抗闪烁'
+            type: 'popup'
+            text:
+              - '抗闪烁'
+              - '50HZ'
+              - '60HZ'
+              - '其他'
+              - '关闭'
+            options:
+              - '50HZ'
+              - '60HZ'
+              - '其他'
+              - '关闭'
 
         day_and_night:
           name: '白天和黑夜'
@@ -328,23 +341,16 @@ ipc:
           type: 'popup'
           text:
             - '白天和黑夜'
+            - '模式切换'
+            - '高光/阴影调节'
             - '黑白'
-            - '彩色'
-            - '自动'
+            - '白天彩色'
+            - '夜视彩色'
             - '光线较亮时自动显示彩色，较暗时自动显示黑白。'
           options:
             - '黑白'
             - '彩色'
             - '自动'
-
-        brightness:
-          name: '亮度'
-          desc: '设置>显示>亮度'
-          type: 'slider'
-          options:
-            - ''
-            - ''
-            - ''
 
         device_name:
           name: '设备名称'
