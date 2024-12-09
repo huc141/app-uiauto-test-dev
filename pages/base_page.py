@@ -1321,7 +1321,7 @@ class BasePage:
 
             # 如果当前同级元素不存在，则退出循环
             if not current_element.exists:
-                logger.info('不存在同级元素！')
+                logger.info('当前元素的匹配不到同级元素！准备遍历当前元素的子元素！')
                 break
 
             # 检查是否匹配目标元素的条件.resourceName实际上就是resourceId。这两个名称指的同一个属性，即Android UI元素的资源ID。
