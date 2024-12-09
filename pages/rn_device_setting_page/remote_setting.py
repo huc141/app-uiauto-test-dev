@@ -54,11 +54,12 @@ class RemoteSetting(BasePage):
                 all_names.append(item[key])
         return all_names
 
-    def scroll_check_funcs(self, texts, scroll_or_not=True):
+    def scroll_check_funcs(self, texts, scroll_or_not=True, back2top=True):
         """
         遍历并判断功能项(名称)是否存在当前页面
         :param texts: 存储了预期功能项名称的列表。
         :param scroll_or_not: 是否执行滚动查找。布尔值，默认True滚动查找
+        :param back2top:
         :return: bool
         """
         ele_exists = []
@@ -77,12 +78,14 @@ class RemoteSetting(BasePage):
                 if len(ele_not_exists) > 0:
                     logger.info(f"当前页面存在的功能有：{ele_exists}")
                     logger.warning(f"当前页面缺失的功能有：{ele_not_exists}")
-                    self.back_to_page_top()
+                    if back2top:
+                        self.back_to_page_top()
                     pytest.fail(f"当前页面缺失的功能有：{ele_not_exists}")
 
                 else:
                     logger.info(f"需校验的功能项均存在！-->{ele_exists}")
-                    self.back_to_page_top()
+                    if back2top:
+                        self.back_to_page_top()
                     return True
 
             elif isinstance(texts, str):
@@ -90,19 +93,22 @@ class RemoteSetting(BasePage):
                 ele_status = self.is_element_exists(texts, scroll_or_not=scroll_or_not)
                 if not ele_status:
                     logger.warning(f"当前页面缺失的功能有：{texts}")
-                    self.back_to_page_top()
+                    if back2top:
+                        self.back_to_page_top()
                     pytest.fail(f"当前页面缺失的功能有：{ele_not_exists}")
                 else:
                     logger.info(f"需校验的功能项均存在！-->{texts}")
-                    self.back_to_page_top()
+                    if back2top:
+                        self.back_to_page_top()
                     return True
 
         except Exception as err:
-            self.back_to_page_top()
+            if back2top:
+                self.back_to_page_top()
             logger.error(f"函数执行出错: {err}")
             # return False
 
-    def scroll_check_funcs2(self, texts, selector=None, selector_type='id', scroll_or_not=True):
+    def scroll_check_funcs2(self, texts, selector=None, selector_type='id', scroll_or_not=True, back2top=True):
         """
         遍历并判断功能项(名称)是否存在当前页面，同时比对数量是否正确。
         :param texts: 待验证的文案列表
@@ -110,6 +116,7 @@ class RemoteSetting(BasePage):
         :param selector_type: 元素的定位方式，根据id进行文本提取。
         :param texts: 存储了预期功能项名称的列表。
         :param scroll_or_not: 是否执行滚动查找。布尔值，默认True滚动查找
+        :param back2top: 查找结束后是否返回页面顶部(可能会失败)。布尔值，默认True返回。
         :return:
         """
         ele_exists = []  # 预期存在的功能
@@ -137,12 +144,14 @@ class RemoteSetting(BasePage):
 
                     if all_elements_exist and lengths_are_equal and ele_not_exists == []:
                         logger.info(f"预期功能项均存在！-->{texts}")
-                        self.back_to_page_top()
+                        if back2top:
+                            self.back_to_page_top()
                         return True
 
                     elif len(actual_texts) > len(texts):
                         unique_fun = [item for item in actual_texts if item not in texts]
-                        self.back_to_page_top()
+                        if back2top:
+                            self.back_to_page_top()
                         logger.info(f"预期功能项有：{texts}")
                         logger.info(f"当前页面实际功能项有：{actual_texts}")
                         logger.warning(f"当前页面缺失的功能有：{ele_not_exists}")
@@ -152,7 +161,8 @@ class RemoteSetting(BasePage):
                     else:
                         unique_fun = [item for item in actual_texts if item not in texts]
                         # 将当前页面滑动回顶部
-                        self.back_to_page_top()
+                        if back2top:
+                            self.back_to_page_top()
                         logger.info(f"预期功能项有：{texts}")
                         logger.info(f"当前页面实际功能项有：{actual_texts}")
                         logger.warning(f"当前页面缺失的功能有：{ele_not_exists}")
@@ -163,22 +173,26 @@ class RemoteSetting(BasePage):
                     # 如果 texts 是一个单一的文本，在当前页面滚动查找该文本是否存在
                     ele_status = self.is_element_exists(element_value=texts, max_scrolls=5, scroll_or_not=scroll_or_not)
                     if not ele_status:
-                        self.back_to_page_top()
+                        if back2top:
+                            self.back_to_page_top()
                         logger.warning(f"当前页面缺失的功能有：{texts}")
                         pytest.fail(f"当前页面缺失的功能有：{texts}")
                     else:
                         logger.info(f"需校验的功能项均存在！-->{texts}")
-                        self.back_to_page_top()
+                        if back2top:
+                            self.back_to_page_top()
                         return True
 
             else:
-                return self.scroll_check_funcs(texts=texts, scroll_or_not=scroll_or_not)
+                return self.scroll_check_funcs(texts=texts, scroll_or_not=scroll_or_not, back2top=back2top)
 
             # 将当前页面滑动回顶部
-            self.back_to_page_top()
+            if back2top:
+                self.back_to_page_top()
 
         except Exception as err:
-            self.back_to_page_top()
+            if back2top:
+                self.back_to_page_top()
             logger.info(f"可能发生了错误: {err}")
             return False
 
