@@ -163,50 +163,202 @@ class RemoteDisplay(BasePage):
         :param iteration: 拖动次数，若是ios，则此处为移动“步数”，不支持定义拖动次数，
         :return:
         """
-        element_obj = BasePage().find_element_by_xpath_recursively(
-                                start_xpath_prefix='//*[@resource-id="Brightness"]',
-                                target_id="RNE__Slider_Thumb")
+        try:
+            element_obj = BasePage().find_element_by_xpath_recursively(
+                start_xpath_prefix='//*[@resource-id="Brightness"]',
+                target_id="RNE__Slider_Thumb")
 
-        # 往右拖动15次
-        self.slider_seek_bar(slider_mode=slider_mode,
-                             id_or_xpath=element_obj,
-                             direction='right',
-                             iteration=15)
+            # 往右拖动15次
+            self.slider_seek_bar(slider_mode=slider_mode,
+                                 id_or_xpath=element_obj,
+                                 direction='right',
+                                 iteration=15)
 
-        # 往左拖动25次
-        self.slider_seek_bar(slider_mode=slider_mode,
-                             id_or_xpath=element_obj,
-                             direction='left',
-                             iteration=25)
+            # 往左拖动25次
+            self.slider_seek_bar(slider_mode=slider_mode,
+                                 id_or_xpath=element_obj,
+                                 direction='left',
+                                 iteration=25)
 
-        # 往右拖动5次
-        self.slider_seek_bar(slider_mode=slider_mode,
-                             id_or_xpath=element_obj,
-                             direction='right',
-                             iteration=5)
+            # 往右拖动5次
+            self.slider_seek_bar(slider_mode=slider_mode,
+                                 id_or_xpath=element_obj,
+                                 direction='right',
+                                 iteration=5)
+        except Exception as e:
+            pytest.fail(f"函数执行出错: {str(e)}")
 
-    def verify_mode_switch(self):
+    def day_night_switchover(self, slider_mode='obj'):
+        """
+        日夜切换阈值
+        :param slider_mode: slider的定位方式，支持id、xpath定位，或者直接使用元素对象obj
+        :return:
+        """
+        try:
+            element_obj = BasePage().find_element_by_xpath_recursively(
+                start_xpath_prefix='//*[@resource-id="Brightness"]',
+                target_id="RNE__Slider_Thumb")
+
+            # 往右拖动15次
+            self.slider_seek_bar(slider_mode=slider_mode,
+                                 id_or_xpath=element_obj,
+                                 direction='right',
+                                 iteration=15)
+
+            # 往左拖动25次
+            self.slider_seek_bar(slider_mode=slider_mode,
+                                 id_or_xpath=element_obj,
+                                 direction='left',
+                                 iteration=25)
+
+            # 点击恢复默认值
+            self.scroll_and_click_by_text(text_to_find='恢复默认值')
+
+        except Exception as e:
+            pytest.fail(f"函数执行出错: {str(e)}")
+
+    def verify_mode_switch(self, texts1, texts2):
         """
         验证模式切换
         :return:
         """
-        # TODO:
-        pass
+        try:
+            # 点击进入【白天和黑夜】主页
+            self.click_day_and_night()
 
-    def verify_day_color(self):
-        """验证白天彩色"""
-        # TODO:
-        pass
+            # 点击进入 模式切换
+            self.scroll_and_click_by_text(text_to_find='模式切换')
 
-    def verify_black_and_white(self):
+            # 点击 自动 模式
+            self.scroll_and_click_by_text(text_to_find='自动')
+            time.sleep(3)
+
+            # 验证功能文案
+            RemoteSetting().scroll_check_funcs2(texts=texts1, back2top=False)
+            RemoteSetting().scroll_check_funcs2(texts=texts2, selector='ReoTitle', back2top=False)
+
+            # 拖动日夜切换阈值的拖动条
+            self.day_night_switchover()
+
+            # 点击 黑白 模式
+            self.scroll_and_click_by_text(text_to_find='黑白')
+            time.sleep(3)
+
+            # 点击 彩色 模式
+            self.scroll_and_click_by_text(text_to_find='彩色')
+            time.sleep(3)
+
+        except Exception as e:
+            pytest.fail(f"函数执行出错: {str(e)}")
+
+    def drag_brightness_darkness_slider(self, slider_mode='obj'):
+        """
+        亮度、暗部调节
+        :return:
+        """
+        try:
+            # 亮度的拖动条对象
+            brightness_element_obj = BasePage().find_element_by_xpath_recursively(
+                start_xpath_prefix='//*[@resource-id="Brightness"]',
+                target_id="RNE__Slider_Thumb")
+
+            # 暗部调节的拖动条对象
+            dark_element_obj = BasePage().find_element_by_xpath_recursively(
+                start_xpath_prefix='//*[@resource-id="Shadows"]',
+                target_id="RNE__Slider_Thumb")
+            num = 1
+            for i in (brightness_element_obj, dark_element_obj):
+                # 往右拖动
+                self.slider_seek_bar(slider_mode=slider_mode,
+                                     id_or_xpath=i,
+                                     direction='right',
+                                     iteration=15)
+
+                # 往左拖动
+                self.slider_seek_bar(slider_mode=slider_mode,
+                                     id_or_xpath=i,
+                                     direction='left',
+                                     iteration=20)
+
+                # 点击恢复默认值
+                self.scroll_and_click_by_text(text_to_find=f'(//*[@text="恢复默认值"]){[num]}', el_type='xpath')
+                num += 1
+
+            time.sleep(1)
+
+        except Exception as e:
+            pytest.fail(f"函数执行出错: {str(e)}")
+
+    def verify_day_color(self, texts1, texts2):
+        """
+        验证白天彩色
+        """
+        try:
+            # 点击进入【白天和黑夜】主页
+            self.click_day_and_night()
+
+            # 点击进入 白天彩色
+            self.scroll_and_click_by_text(text_to_find='白天彩色')
+
+            # 点击 手动 模式
+            self.scroll_and_click_by_text(text_to_find='手动')
+            time.sleep(1)
+
+            # 验证功能文案
+            RemoteSetting().scroll_check_funcs2(texts=texts1, back2top=False)
+            RemoteSetting().scroll_check_funcs2(texts=texts2, selector='ReoTitle', back2top=False)
+
+            # 拖动亮度、暗部的拖动条
+            self.drag_brightness_darkness_slider()
+
+        except Exception as e:
+            pytest.fail(f"函数执行出错: {str(e)}")
+
+    def verify_black_and_white(self, texts1, texts2):
         """验证黑白"""
-        # TODO:
-        pass
+        try:
+            # 点击进入【白天和黑夜】主页
+            self.click_day_and_night()
 
-    def verify_night_vision_color(self):
+            # 点击进入 黑白
+            self.scroll_and_click_by_text(text_to_find='黑白')
+
+            # 点击 手动 模式
+            self.scroll_and_click_by_text(text_to_find='手动')
+            time.sleep(1)
+
+            # 验证功能文案
+            RemoteSetting().scroll_check_funcs2(texts=texts1, back2top=False)
+            RemoteSetting().scroll_check_funcs2(texts=texts2, selector='ReoTitle', back2top=False)
+
+            # 拖动亮度、暗部的拖动条
+            self.drag_brightness_darkness_slider()
+
+        except Exception as e:
+            pytest.fail(f"函数执行出错: {str(e)}")
+
+    def verify_night_vision_color(self, texts1, texts2):
         """验证夜视彩色"""
-        # TODO:
-        pass
+        try:
+            # 点击进入【白天和黑夜】主页
+            self.click_day_and_night()
+
+            # 点击进入 夜视彩色
+            self.scroll_and_click_by_text(text_to_find='夜视彩色')
+
+            # 点击 手动 模式
+            self.scroll_and_click_by_text(text_to_find='手动')
+            time.sleep(1)
+
+            # 验证功能文案
+            RemoteSetting().scroll_check_funcs2(texts=texts1, back2top=False)
+            RemoteSetting().scroll_check_funcs2(texts=texts2, selector='ReoTitle', back2top=False)
+
+            # 拖动亮度、暗部的拖动条
+            self.drag_brightness_darkness_slider()
+
+        except Exception as e:
+            pytest.fail(f"函数执行出错: {str(e)}")
 
     def click_anti_flicker(self, option_text='抗闪烁'):
         """
@@ -222,6 +374,16 @@ class RemoteDisplay(BasePage):
         """
         self.scroll_and_click_by_text(text_to_find=option_text)
 
+    def verify_date(self):
+        """验证日期"""
+        # TODO:
+        pass
+
+    def verify_water_mark(self):
+        """验证水印"""
+        # TODO:
+        pass
+
     def access_in_privacy_mask(self, option_text='遮盖区域'):
         """
         :param option_text: 菜单功能项，该方法默认点击【遮盖区域】
@@ -233,6 +395,11 @@ class RemoteDisplay(BasePage):
             self.click_by_text(text='清空并继续')
             logger.info('已点击【清空并继续】')
 
+    def image_layout(self):
+        """验证图像布局"""
+        # TODO:
+        pass
+
     def draw_privacy_mask(self, mode, draw_area='左上'):
         """
         画隐私遮盖区域。
@@ -242,6 +409,7 @@ class RemoteDisplay(BasePage):
         :param num: 画框数量，默认为0，为0时需要指定遮盖区域draw_area，若不指定，则默认左上遮盖。
         :return:
         """
+        # TODO:适配RN
         try:
 
             if not self.is_element_exists(element_value='广角画面') and not self.is_element_exists(
@@ -267,3 +435,8 @@ class RemoteDisplay(BasePage):
         except Exception as err:
             logger.info(f"可能发生了错误: {err}")
             return False
+
+    def indoor_and_outdoor_scenes(self):
+        """场景"""
+        # TODO:
+        pass
