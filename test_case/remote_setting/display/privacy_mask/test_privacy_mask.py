@@ -71,9 +71,3 @@ class TestRemoteDisplay:
 
         # 验证返回竖屏按钮
         RemoteDisplay().verify_portrait_button()
-
-
-
-
-
-
