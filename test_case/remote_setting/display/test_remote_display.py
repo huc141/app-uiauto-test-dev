@@ -27,7 +27,6 @@ class TestRemoteDisplay:
         RemoteSetting().access_in_display(device_list_name=device_config['device_list_name'])
 
         # 验证显示主页文案
-        main_text_res = RemoteDisplay().check_display_main_text(remote_items['text'])
+        RemoteSetting().scroll_check_funcs2(remote_items['text'])
+        RemoteSetting().scroll_check_funcs2(remote_items['options'], selector='ReoTitle')
 
-        # 断言
-        assert main_text_res is True

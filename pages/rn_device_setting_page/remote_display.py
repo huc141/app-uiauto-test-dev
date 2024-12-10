@@ -68,10 +68,17 @@ class RemoteDisplay(BasePage):
         # 进入码流页面
         self.scroll_and_click_by_text(text_to_find=option_text)
 
-    def click_moving_mark(self, option_text='移动标记'):
+    def click_motion_mark(self, option_text='移动标记'):
         """点击移动标记"""
-        # TODO:
-        pass
+        try:
+            # 点击两次
+            for i in range(2):
+                self.scroll_click_right_btn(text_to_find=option_text,
+                                            resourceId_1='ReoTitle',
+                                            className_2='android.view.ViewGroup'
+                                            )
+        except Exception as err:
+            pytest.fail(f"函数执行出错: {err}")
 
     def access_in_clear(self, option_text='清晰'):
         """
@@ -379,21 +386,34 @@ class RemoteDisplay(BasePage):
         # TODO:
         pass
 
-    def verify_water_mark(self):
+    def click_water_mark(self, option_text='水印'):
         """验证水印"""
-        # TODO:
-        pass
+        try:
+            # 点击两次
+            for i in range(2):
+                self.scroll_click_right_btn(text_to_find=option_text,
+                                            resourceId_1='ReoTitle',
+                                            className_2='android.view.ViewGroup'
+                                            )
+        except Exception as err:
+            pytest.fail(f"函数执行出错: {err}")
 
     def access_in_privacy_mask(self, option_text='遮盖区域'):
         """
         :param option_text: 菜单功能项，该方法默认点击【遮盖区域】
         :return:
         """
-        self.scroll_and_click_by_text(text_to_find=option_text)
-        if self.is_element_exists(element_value='清空并继续'):
-            logger.info(f'弹出了遮盖区域提示，正在尝试点击【清空并继续】...')
-            self.click_by_text(text='清空并继续')
-            logger.info('已点击【清空并继续】')
+        try:
+            texts = ['取消', '清空并继续']
+            time.sleep(2)
+            for i in texts:
+                self.scroll_and_click_by_text(text_to_find=option_text)
+                if self.is_element_exists(element_value=i):
+                    logger.info(f'弹出了遮盖区域提示，正在尝试点击【{i}】.')
+                    self.click_by_text(text=i)
+                    logger.info(f'已点击【{i}】')
+        except Exception as err:
+            pytest.fail(f"函数执行出错: {err}")
 
     def image_layout(self):
         """验证图像布局"""

@@ -63,15 +63,15 @@ class TestRemoteDisplay:
         BasePage().check_key_in_yaml(remote_items, 'day_color')
 
         # 启动app，并开启录屏
-        # driver.start_app(True)
+        driver.start_app(True)
 
         # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击‘显示’菜单项进入显示页
-        # RemoteSetting().access_in_display(device_list_name=device_config['device_list_name'])
+        RemoteSetting().access_in_display(device_list_name=device_config['device_list_name'])
 
         # 点击进入白天和黑夜主页,点击进入并验证白天彩色，遍历白天彩色下的选项
         RemoteDisplay().verify_day_color(texts1=remote_items['day_color']['text'],
-                                           texts2=remote_items['day_color']['options']
-                                           )
+                                         texts2=remote_items['day_color']['options']
+                                         )
 
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("白天和黑夜>黑白")
@@ -84,15 +84,15 @@ class TestRemoteDisplay:
         BasePage().check_key_in_yaml(remote_items, 'black_and_white')
 
         # 启动app，并开启录屏
-        # driver.start_app(True)
+        driver.start_app(True)
 
         # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击‘显示’菜单项进入显示页
-        # RemoteSetting().access_in_display(device_list_name=device_config['device_list_name'])
+        RemoteSetting().access_in_display(device_list_name=device_config['device_list_name'])
 
         # 点击进入白天和黑夜主页,点击进入并验证黑白，遍历黑白下的选项
         RemoteDisplay().verify_black_and_white(texts1=remote_items['black_and_white']['text'],
                                                texts2=remote_items['black_and_white']['options']
-                                              )
+                                               )
 
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("白天和黑夜>夜视彩色")
@@ -104,31 +104,12 @@ class TestRemoteDisplay:
         BasePage().check_key_in_yaml(remote_items, 'night_vision_color')
 
         # 启动app，并开启录屏
-        # driver.start_app(True)
+        driver.start_app(True)
 
         # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击‘显示’菜单项进入显示页
-        # RemoteSetting().access_in_display(device_list_name=device_config['device_list_name'])
+        RemoteSetting().access_in_display(device_list_name=device_config['device_list_name'])
 
         # 点击进入白天和黑夜主页,点击进入并验证黑白，遍历黑白下的选项
         RemoteDisplay().verify_night_vision_color(texts1=remote_items['night_vision_color']['text'],
                                                   texts2=remote_items['night_vision_color']['options']
-                                               )
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                                                  )
