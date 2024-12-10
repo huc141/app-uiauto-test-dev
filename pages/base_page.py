@@ -1175,7 +1175,6 @@ class BasePage:
                     self.driver.swipe(top_left_x, top_left_y, bottom_right_x, bottom_right_y, 1)
 
         except Exception as err:
-            # logger.info(f"可能发生了错误: {err}")
             pytest.fail(f"函数执行出错: {str(err)}")
 
     def get_text_coordinates_center(self, text):

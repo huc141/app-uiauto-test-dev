@@ -400,18 +400,77 @@ class RemoteDisplay(BasePage):
 
     def access_in_privacy_mask(self, option_text='遮盖区域'):
         """
-        :param option_text: 菜单功能项，该方法默认点击【遮盖区域】
+        :param option_text: 菜单功能项，该方法默认点击【遮盖区域】，并检测是否弹出了提示，弹出则分别点击【取消】、【清空并继续】，清空后最后点击【保存】
         :return:
         """
         try:
             texts = ['取消', '清空并继续']
+            xpaths = [
+                '//*[@resource-id="CancelDialog-ReoButton-Title"]',
+                '//*[@resource-id="ConfirmDialog-ReoButton-Title"]'
+            ]
+
             time.sleep(2)
-            for i in texts:
-                self.scroll_and_click_by_text(text_to_find=option_text)
-                if self.is_element_exists(element_value=i):
-                    logger.info(f'弹出了遮盖区域提示，正在尝试点击【{i}】.')
-                    self.click_by_text(text=i)
-                    logger.info(f'已点击【{i}】')
+            self.scroll_and_click_by_text(text_to_find=option_text)
+
+            # 判断是否弹出特定提示
+            is_confirmation_prompt_shown = self.is_element_exists(
+                element_value='编辑画面遮盖，将会清空之前所有的遮盖区域，是否继续？')
+
+            if is_confirmation_prompt_shown:
+                for index, text in enumerate(texts):  # 使用enumerate来同时获取索引和元素值
+                    logger.info(f'弹出了遮盖区域提示，正在尝试点击【{text}】.')
+                    self.click_by_xpath(xpath_expression=xpaths[index])
+                    logger.info(f'已点击【{text}】')
+
+                    if text == '取消':
+                        logger.info('点击了【取消】，准备再次点击【遮盖区域】.')
+                        self.scroll_and_click_by_text(text_to_find=option_text)
+                self.click_by_text(text='保存')
+            else:
+                logger.info('该设备没有设置任何遮盖区域')
+
+        except Exception as err:
+            pytest.fail(f"函数执行出错: {err}")
+            # 可以抛出更通用的异常或者进行更详细的包装，这里简单打印详细错误信息后重新抛出异常
+            # logger.error(f"函数执行出错: {err}", exc_info=True)
+            # raise  # 抛出异常让调用者决定如何处理，如果是在pytest中，调用者可以根据需要进行相应的测试失败处理等操作
+
+    def verify_user_tips(self, user_tips_text):
+        """验证用户提示"""
+        try:
+            # 点击左下角用户提示按钮
+            self.click_by_xpath(xpath_expression='//*[@resource-id="ReoIcon-Question"]')
+            # 验证用户提示文案
+            RemoteSetting().scroll_check_funcs2(texts=user_tips_text, scroll_or_not=False, back2top=False)
+            # 验证完毕之后点击我知道了，关闭用户提示
+            self.click_by_text(text='我知道了')
+        except Exception as err:
+            pytest.fail(f"函数执行出错: {err}")
+
+    def verify_delete_button(self):
+        """验证删除按钮"""
+        # TODO:
+        pass
+
+    def verify_clear_all_button(self):
+        """验证清空所有按钮"""
+        # TODO:
+        pass
+
+    def verify_landscape_button(self):
+        """验证横屏按钮"""
+        try:
+            # 点击横屏按钮
+            self.click_by_xpath(xpath_expression='//*[@resource-id="ReoIcon-Fullscreen"]')
+        except Exception as err:
+            pytest.fail(f"函数执行出错: {err}")
+
+    def verify_portrait_button(self):
+        """验证横屏状态下返回竖屏按钮"""
+        try:
+            # 点击返回竖屏按钮
+            self.click_by_xpath(xpath_expression='//*[@resource-id="ReoIcon-Left"]')
         except Exception as err:
             pytest.fail(f"函数执行出错: {err}")
 
@@ -423,7 +482,7 @@ class RemoteDisplay(BasePage):
     def draw_privacy_mask(self, mode, draw_area='左上'):
         """
         画隐私遮盖区域。
-        :param mode: 定位方式，支持id或者xpath。
+        :param mode: 预览区域的定位方式，支持id或者xpath。
         :param id_or_xpath: 可遮盖区域的id或者xpath的定位参数。
         :param draw_area: 需要遮盖的区域，支持[左上]、[左下]、[右上]、[右下]的1/4屏，以及[全屏]遮盖，默认左上。
         :param num: 画框数量，默认为0，为0时需要指定遮盖区域draw_area，若不指定，则默认左上遮盖。
