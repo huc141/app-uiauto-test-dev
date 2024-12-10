@@ -264,12 +264,4 @@ ipc:
             - '30 秒'
             - '60 秒'
 
-      motion_mark:
-        name: '移动标记[已被移动到远程配置首页了，待确认]'
-        desc: '设置>侦测报警>移动标记'
-        type: 'switch'
-        options:
-          - 'switch-on'
-          - 'switch-off'
-
 
