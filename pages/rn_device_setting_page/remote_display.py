@@ -11,7 +11,14 @@ class RemoteDisplay(BasePage):
     def __init__(self):
         super().__init__()
         if self.platform == 'android':
-            self.shelter_player = '//*[@resource-id="com.mcu.reolink:id/shelter_player"]'  # 隐私遮盖可画框区域
+            self.shelter_player = 'PrivacyMask_Operation_Area'  # 隐私遮盖可画框区域
+            self.user_tips_button = '//*[@resource-id="ReoIcon-Question"]'  # 用户提示按钮
+            self.delete_button = '//*[@resource-id="ReoIcon-Delet"]'  # 删除按钮
+            self.clear_all_button = '//*[@resource-id="ReoIcon-Retry1x"]'  # 清空所有按钮
+            self.fullscreen_switch_button = '//*[@resource-id="ReoIcon-Fullscreen"]'  # 全屏按钮
+            self.return_vertical_screen_button = '//*[@resource-id="ReoIcon-Left"]'  # 返回竖屏按钮
+            self.layout_expand_button = '//*[@resource-id="ImageLayoutExpand"]'  # 图像布局 > 展开按钮
+            self.layout_fisheye_button = '//*[@resource-id="ImageLayoutOriginal"]'  # 图像布局 > 鱼眼按钮
 
         elif self.platform == 'ios':
             self.shelter_player = ''
@@ -440,9 +447,13 @@ class RemoteDisplay(BasePage):
         """验证用户提示"""
         try:
             # 点击左下角用户提示按钮
-            self.click_by_xpath(xpath_expression='//*[@resource-id="ReoIcon-Question"]')
+            logger.info('点击左下角用户提示按钮')
+            self.click_by_xpath(xpath_expression=self.user_tips_button)
             # 验证用户提示文案
-            RemoteSetting().scroll_check_funcs2(texts=user_tips_text, scroll_or_not=False, back2top=False)
+            RemoteSetting().scroll_check_funcs2(texts=user_tips_text,
+                                                scroll_or_not=False,
+                                                back2top=False
+                                                )
             # 验证完毕之后点击我知道了，关闭用户提示
             self.click_by_text(text='我知道了')
         except Exception as err:
@@ -450,39 +461,105 @@ class RemoteDisplay(BasePage):
 
     def verify_delete_button(self):
         """验证删除按钮"""
-        # TODO:
-        pass
+        try:
+            # 先在预览区画一个遮盖区域
+            logger.info('正在预览区左上角画一个遮盖区域')
+            self.get_coordinates_and_draw(mode='id',
+                                          id_or_xpath=self.shelter_player,
+                                          draw_area='左上',
+                                          num=1
+                                          )
+            # 点击删除按钮
+            time.sleep(1)
+            logger.info('点击删除按钮')
+            self.click_by_xpath(xpath_expression=self.delete_button)
+        except Exception as err:
+            pytest.fail(f"函数执行出错: {err}")
 
     def verify_clear_all_button(self):
         """验证清空所有按钮"""
-        # TODO:
-        pass
+        try:
+            # 先在预览区画两个遮盖区域
+            logger.info('正在预览区左上角画2个遮盖区域')
+            self.get_coordinates_and_draw(mode='id',
+                                          id_or_xpath=self.shelter_player,
+                                          num=2
+                                          )
+            # 点击清空所有按钮
+            time.sleep(1)
+            logger.info('点击清空所有按钮')
+            self.click_by_xpath(xpath_expression=self.clear_all_button)
+        except Exception as err:
+            pytest.fail(f"函数执行出错: {err}")
 
     def verify_landscape_button(self):
         """验证横屏按钮"""
         try:
             # 点击横屏按钮
-            self.click_by_xpath(xpath_expression='//*[@resource-id="ReoIcon-Fullscreen"]')
+            self.click_by_xpath(xpath_expression=self.fullscreen_switch_button)
         except Exception as err:
             pytest.fail(f"函数执行出错: {err}")
 
-    def verify_portrait_button(self):
+    def verify_return_vertical_screen_button(self):
         """验证横屏状态下返回竖屏按钮"""
         try:
             # 点击返回竖屏按钮
-            self.click_by_xpath(xpath_expression='//*[@resource-id="ReoIcon-Left"]')
+            self.click_by_xpath(xpath_expression=self.return_vertical_screen_button)
         except Exception as err:
             pytest.fail(f"函数执行出错: {err}")
 
-    def image_layout(self):
-        """验证图像布局"""
-        # TODO:
-        pass
-
-    def draw_privacy_mask(self, mode, draw_area='左上'):
+    def verify_image_layout(self):
         """
-        画隐私遮盖区域。
-        :param mode: 预览区域的定位方式，支持id或者xpath。
+        点击进入并验证图像布局
+        :return:
+        """
+        try:
+            layout_type = ['鱼眼', '展开']
+            choose_button = ['取消', '保存']
+            choose_button_tips = ['注意：', '取消', '切换后，摄像机将会重启，并且会清除隐私区域、报警区域、目标尺寸等配置，确定要切换吗？', '保存']
+
+            def check_choose_button_tips():
+                for c in choose_button:
+                    self.scroll_and_click_by_text(text_to_find='保存')
+                    RemoteSetting().scroll_check_funcs2(
+                                                        texts=choose_button_tips,
+                                                        scroll_or_not=False,
+                                                        back2top=False)
+                    self.click_by_text(text=c)
+            # 先将预览视图往上拉至最小
+            self.slider_seek_bar(slider_mode='xpath',
+                                 id_or_xpath='//com.horcrux.svg.SvgView',
+                                 direction='up',
+                                 iteration=10)
+
+            for i in layout_type:
+                # 先找到图像布局菜单项
+                self.is_element_exists(element_value='图像布局')
+                # 再查出当前的图像布局类型是否为鱼眼
+                current_layout = self.is_element_exists(element_value=i)
+                if current_layout:
+                    # 滚动查找图像布局按钮
+                    self.scroll_and_click_by_text(text_to_find='图像布局')
+                    logger.info(f'当前布局为【{i}】，切换{i[1]}布局类型')
+                    # 点击【展开】模式
+                    self.click_by_xpath(xpath_expression=self.layout_expand_button)
+
+                else:
+                    # 滚动查找图像布局按钮
+                    self.scroll_and_click_by_text(text_to_find='图像布局')
+                    # 点击【鱼眼】模式
+                    self.click_by_xpath(xpath_expression=self.layout_fisheye_button)
+                    logger.info(f'当前布局为【{i}】，切换{i[0]}布局类型')
+
+                # 验证弹窗提示内容和按钮选项
+                check_choose_button_tips()
+        except Exception as err:
+            pytest.fail(f"函数执行出错: {err}")
+
+    def draw_privacy_mask(self, mode=id, draw_area='左上'):
+        """
+        画隐私遮盖区域。一般来说：电源最多4个，电池最多8个或者3个。如果是双目，则每个通道独立计数。
+        :param mode: 预览区域的定位方式，支持id或者xpath。当前默认id
         :param id_or_xpath: 可遮盖区域的id或者xpath的定位参数。
         :param draw_area: 需要遮盖的区域，支持[左上]、[左下]、[右上]、[右下]的1/4屏，以及[全屏]遮盖，默认左上。
         :param num: 画框数量，默认为0，为0时需要指定遮盖区域draw_area，若不指定，则默认左上遮盖。
@@ -490,7 +567,7 @@ class RemoteDisplay(BasePage):
         """
         # TODO:适配RN
         try:
-
+            # 暂时没法直接区分电源电池，所以，干脆画满
             if not self.is_element_exists(element_value='广角画面') and not self.is_element_exists(
                     element_value='左摄像机'):
                 self.get_coordinates_and_draw(mode=mode, id_or_xpath=self.shelter_player, draw_area=draw_area, num=9)

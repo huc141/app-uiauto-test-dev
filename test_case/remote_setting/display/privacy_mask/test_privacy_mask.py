@@ -25,16 +25,13 @@ class TestRemoteDisplay:
         BasePage().check_key_in_yaml(remote_items, 'private_mark')
 
         # 启动app，并开启录屏
-        # driver.start_app(True)
+        driver.start_app(True)
 
         # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击‘显示’菜单项进入显示页
-        # RemoteSetting().access_in_display(device_list_name=device_config['device_list_name'])
+        RemoteSetting().access_in_display(device_list_name=device_config['device_list_name'])
 
-        # 点击进入遮盖区域主页
+        # 点击进入遮盖区域主页，测试弹窗的【取消】、【清空并继续】
         RemoteDisplay().access_in_privacy_mask()
-
-        # 此处的定位方式默认xpath
-        # RemoteDisplay().draw_privacy_mask(mode='xpath')
 
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("显示>遮盖区域")
@@ -61,13 +58,13 @@ class TestRemoteDisplay:
         RemoteDisplay().verify_user_tips(user_tips_text=remote_items['private_mark']['user_tips'])
 
         # 验证删除按钮
-        # TODO:
+        RemoteDisplay().verify_delete_button()
 
         # 验证清空所有按钮
-        # TODO:
+        RemoteDisplay().verify_clear_all_button()
 
         # 验证横屏按钮
         RemoteDisplay().verify_landscape_button()
 
         # 验证返回竖屏按钮
-        RemoteDisplay().verify_portrait_button()
+        RemoteDisplay().verify_return_vertical_screen_button()
