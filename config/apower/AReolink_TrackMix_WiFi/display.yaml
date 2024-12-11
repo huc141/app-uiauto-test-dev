@@ -524,13 +524,3 @@ ipc:
           wide_angle: True
           telephoto: True
 
-        image_layout:
-          name: '图像布局'
-          desc: '设置>显示>图像布局'
-          type: 'page'
-          text:
-            - '取消'
-            - '图像布局'
-            - '保存'
-            - '鱼眼'
-            - '展开'
