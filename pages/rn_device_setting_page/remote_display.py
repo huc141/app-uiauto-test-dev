@@ -508,13 +508,13 @@ class RemoteDisplay(BasePage):
         except Exception as err:
             pytest.fail(f"函数执行出错: {err}")
 
-    def verify_image_layout(self):
+    def verify_image_layout(self, texts):
         """
         点击进入并验证图像布局
+        :param texts: 预期显示的文案列表
         :return:
         """
         try:
-            layout_type = ['鱼眼', '展开']
             choose_button = ['取消', '保存']
             choose_button_tips = ['注意：', '取消', '切换后，摄像机将会重启，并且会清除隐私区域、报警区域、目标尺寸等配置，确定要切换吗？', '保存']
 
@@ -526,33 +526,47 @@ class RemoteDisplay(BasePage):
                                                         scroll_or_not=False,
                                                         back2top=False)
                     self.click_by_text(text=c)
-            # 先将预览视图往上拉至最小
-            self.slider_seek_bar(slider_mode='xpath',
-                                 id_or_xpath='//com.horcrux.svg.SvgView',
-                                 direction='up',
-                                 iteration=10)
 
-            for i in layout_type:
-                # 先找到图像布局菜单项
-                self.is_element_exists(element_value='图像布局')
-                # 再查出当前的图像布局类型是否为鱼眼
-                current_layout = self.is_element_exists(element_value=i)
-                if current_layout:
-                    # 滚动查找图像布局按钮
-                    self.scroll_and_click_by_text(text_to_find='图像布局')
-                    logger.info(f'当前布局为【{i}】，切换{i[1]}布局类型')
-                    # 点击【展开】模式
-                    self.click_by_xpath(xpath_expression=self.layout_expand_button)
+                    if c == '保存':
+                        logger.info('等待30秒，等待摄像机重启.验证返回设备列表页')
+                        RemoteSetting().scroll_check_funcs2(texts='设备即将重启，稍后将返回设备列表',
+                                                            scroll_or_not=False,
+                                                            back2top=False)
+                        time.sleep(30)
 
-                else:
-                    # 滚动查找图像布局按钮
-                    self.scroll_and_click_by_text(text_to_find='图像布局')
-                    # 点击【鱼眼】模式
-                    self.click_by_xpath(xpath_expression=self.layout_fisheye_button)
-                    logger.info(f'当前布局为【{i}】，切换{i[0]}布局类型')
+                        # 验证重启后的页面
+                        if not self.is_element_exists(element_value='摄像机', scroll_or_not=False):
+                            pytest.fail('未能成功返回设备列表页！')
 
-                # 验证弹窗提示内容和按钮选项
-                check_choose_button_tips()
+            # 先将预览视图往上拉至最小,以便于滚动查找图像布局按钮
+            self.drag_element(element_xpath='//com.horcrux.svg.SvgView', direction='up', distance=700, duration=1)
+
+            # 先找到图像布局菜单项
+            self.is_element_exists(element_value='图像布局')
+            # 再查出当前的图像布局类型是否为鱼眼
+            current_layout = self.is_element_exists(element_value='鱼眼')
+            if current_layout:
+                # 滚动查找图像布局按钮
+                self.scroll_and_click_by_text(text_to_find='图像布局')
+                time.sleep(1)
+                # 验证图像布局主页文案
+                RemoteSetting().scroll_check_funcs2(texts=texts, back2top=False)
+                logger.info(f'当前布局为【鱼眼】，切换【展开】布局类型')
+                # 点击【展开】模式
+                self.click_by_xpath(xpath_expression=self.layout_expand_button)
+
+            else:
+                # 滚动查找图像布局按钮
+                self.scroll_and_click_by_text(text_to_find='图像布局')
+                time.sleep(1)
+                # 验证图像布局主页文案
+                RemoteSetting().scroll_check_funcs2(texts=texts, back2top=False)
+                # 点击【鱼眼】模式
+                self.click_by_xpath(xpath_expression=self.layout_fisheye_button)
+                logger.info(f'当前布局为【展开】，切换【鱼眼】布局类型')
+
+            # 验证弹窗提示内容和按钮选项
+            check_choose_button_tips()
         except Exception as err:
             pytest.fail(f"函数执行出错: {err}")
 
