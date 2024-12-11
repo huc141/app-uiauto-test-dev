@@ -1071,6 +1071,41 @@ class BasePage:
         except Exception as err:
             pytest.fail(f"函数执行出错: {str(err)}")
 
+    def drag_element(self, element_xpath, direction, distance, duration=1):
+        """
+        拖动元素到指定方向上的一定距离，支持上、下、左、右方向
+        :param element_xpath:  元素的xpath
+        :param direction:  方向，支持向"left", "right", "up", "down"方向拖动元素
+        :param distance:  距离，单位为像素，int类型
+        :param duration:  滑动时间，单位为秒
+        :return:
+        """
+        try:
+            if self.platform == "android":
+                element = self.driver.xpath(element_xpath)
+                # 获取元素的边界坐标
+                bounds = element.info['bounds']
+                # 计算元素的中心坐标
+                center_x = (bounds['left'] + bounds['right']) // 2
+                center_y = (bounds['top'] + bounds['bottom']) // 2
+                logger.info(f"需要拖动的元素中心坐标为: ({center_x}, {center_y})")
+
+                if direction == "left":
+                    # 向左拖动
+                    self.driver.drag(center_x, center_y, center_x - distance, center_y, duration)
+                elif direction == "right":
+                    # 向右拖动
+                    self.driver.drag(center_x, center_y, center_x + distance, center_y, duration)
+                elif direction == "up":
+                    # 向上拖动
+                    self.driver.drag(center_x, center_y, center_x, center_y - distance, duration)
+                elif direction == "down":
+                    # 向下拖动
+                    self.driver.drag(center_x, center_y, center_x, center_y + distance, duration)
+
+        except Exception as err:
+            pytest.fail(f"函数执行出错: {str(err)}")
+
     def get_coordinates_and_draw(self, mode, id_or_xpath, draw_area='左上', num=0):
         """
         获取元素的xy轴坐标并画黑框遮盖，支持目前现有设备的画框数量
