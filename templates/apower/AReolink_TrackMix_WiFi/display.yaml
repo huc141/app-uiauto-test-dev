@@ -1,4 +1,5 @@
 device_list_name: "yulong-test-sd7"
+uid: '952700Y006ZP1IJ5'
 sub_name: ""
 
 ipc:
@@ -6,967 +7,549 @@ ipc:
     name: '显示'
     desc: '设置>显示'
     type: 'navigation'
+
     items:
-      vertical_flip:
-        name: '垂直翻转'
-        desc: '设置>显示>垂直翻转'
-        type: 'switch'
-        options:
-          - 'switch_on'
-          - 'switch_off'
-
-      horizontal_flip:
-        name: '水平翻转'
-        desc: '设置>显示>水平翻转'
-        type: 'switch'
-        options:
-          - 'switch_on'
-          - 'switch_off'
-
-      stream:
-        name: '码流'
-        desc: '设置>显示>码流'
+      display:
+        name: '显示'
+        desc: '设置>显示'
         type: 'navigation'
-        subpage:
-          name: '码流'
-          desc: '设置>显示>码流>码流'
-          type: 'navigation'
-          text:
-            - '码流'
-            - '清晰'
-            - '分辨率'
-            - '帧率(fps)'
-            - '最大码率(kbps)'
-            - '流畅'
-            - '帧率控制'
-
-          clear:
-            name: '清晰'
-            desc: '设置>显示>码流>码流>清晰'
-            type: 'navigation'
-            subpage:
-              name: '清晰'
-              desc: '设置>显示>码流>码流>清晰'
-              type: 'page'
-              text:
-                - '取消'
-                - '清晰'
-                - '保存'
-                - '分辨率'
-                - '帧率(fps)'
-                - '最大码率(kbps)'
-
-              resolution:
-                name: '分辨率'
-                desc: '设置>显示>码流>码流>清晰>分辨率'
-                type: 'popup'
-                text:
-                  - '分辨率'
-                  - '越高视频越清晰'
-                  - '取消'
-                  - '3840*2160'
-                options:
-                  - '3840*2160'
-                  - '取消'
-
-              frame_rate:
-                name: '帧率(fps)'
-                desc: '设置>显示>码流>码流>清晰>帧率(fps)'
-                type: 'popup'
-                text:
-                  - '帧率(fps)'
-                  - '每秒钟的帧数，越高画面越流畅'
-                  - '取消'
-                options:
-                  - '25'
-                  - '22'
-                  - '20'
-                  - '18'
-                  - '16'
-                  - '15(默认)'
-                  - '12'
-                  - '10'
-                  - '取消'
-
-              max_bit_rate:
-                desc: '设置>显示>码流>码流>清晰>最大码率(kbps)'
-                type: 'popup'
-                text:
-                  - '最大码率(kbps)'
-                  - '相同的分辨率、帧率下，码率越大画质越好，网络要求也越高'
-                options:
-                  - '4096(默认)'
-                  - '5120'
-                  - '6144'
-                  - '7168'
-                  - '8192'
-                  - '取消'
-
-          fluent:
-            name: '流畅'
-            desc: '设置>显示>码流>码流>流畅'
-            type: 'navigation'
-            subpage:
-              name: '流畅'
-              desc: '设置>显示>码流>码流>流畅'
-              type: 'page'
-              text:
-                - '取消'
-                - '流畅'
-                - '保存'
-                - '分辨率'
-                - '帧率(fps)'
-                - '最大码率(kbps)'
-
-              resolution:
-                name: '分辨率'
-                desc: '设置>显示>码流>码流>流畅>分辨率'
-                type: 'popup'
-                text:
-                  - '分辨率'
-                  - '越高视频越清晰'
-                options:
-                  - '896*512'
-                  - '取消'
-
-              frame_rate:
-                name: '帧率(fps)'
-                desc: '设置>显示>码流>码流>流畅>帧率(fps)'
-                type: 'popup'
-                text:
-                  - '帧率(fps)'
-                  - '每秒钟的帧数，越高画面越流畅'
-                options:
-                  - '20'
-                  - '18'
-                  - '16'
-                  - '15(默认)'
-                  - '12'
-                  - '8'
-                  - '6'
-                  - '4'
-                  - '取消'
-
-              max_bit_rate:
-                desc: '设置>显示>码流>码流>流畅>最大码率(kbps)'
-                type: 'popup'
-                text:
-                  - '最大码率(kbps)'
-                  - '相同的分辨率、帧率下，码率越大画质越好，网络要求也越高'
-                options:
-                  - '128'
-                  - '256'
-                  - '384'
-                  - '512'
-                  - '672'
-                  - '768(默认)'
-                  - '1024'
-                  - '1228'
-                  - '取消'
-
-          frame_rate_mode:
-            name: '帧率控制'
-            desc: '设置>显示>码流>码流>帧率控制'
-            type: 'popup'
-            text:
-              - '帧率控制'
-              - '自动'
-              - '可变帧率，自动调节帧率来保持画质（不适用有快速运动的物体）。'
-              - '恒定'
-              - '恒定帧率，流畅优先。'
-              - '取消'
-            options:
-              - '自动'
-              - '恒定'
-              - '取消'
-
-      anti_flicker:
-        name: '抗闪烁'
-        desc: '设置>显示>抗闪烁'
-        type: 'popup'
         text:
-          - '抗闪烁'
-          - '50HZ'
-          - '60HZ'
-          - '其他'
-          - '关闭'
-          - '取消'
-        options:
-          - '50HZ'
-          - '60HZ'
-          - '其他'
-          - '关闭'
-          - '取消'
-
-      day_and_night:
-        name: '白天和黑夜'
-        desc: '白天和黑夜'
-        type: 'popup'
-        text:
-          - '白天和黑夜'
-          - '黑白'
-          - '彩色'
-          - '自动'
-          - '光线较亮时自动显示彩色，较暗时自动显示黑白。'
-          - '取消'
-        options:
-          - '黑白'
-          - '彩色'
-          - '自动'
-          - '取消'
-
-      brightness:
-        name: '亮度'
-        desc: '设置>显示>亮度'
-        type: 'slider'
-        options:
-          - ''
-          - ''
-          - ''
-
-      device_name:
-        name: '设备名称'
-        desc: '设置>显示>设备名称'
-        type: 'popup'
-        text:
+          - '垂直翻转'
+          - '水平翻转'
+          - '码流'
+          - '移动标记'
+          - '画面为清晰时，智能检测到移动事物将进行标记。'
           - '设备名称'
-          - '左上'
-          - '中上'
-          - '右上'
-          - '左下'
-          - '中下'
-          - '右下'
-          - '隐藏'
-          - '取消'
-        options:
-          - '左上'
-          - '中上'
-          - '右上'
-          - '左下'
-          - '中下'
-          - '右下'
-          - '隐藏'
-          - '取消'
-
-      date:
-        name: '日期'
-        desc: '设置>显示>日期'
-        type: 'popup'
-        text:
           - '日期'
-          - '左上'
-          - '中上'
-          - '右上'
-          - '左下'
-          - '中下'
-          - '右下'
-          - '隐藏'
-          - '取消'
+          - '水印'
+          - '图像设置'
+          - '白天和黑夜'
+          - '遮盖区域'
         options:
-          - '左上'
-          - '中上'
-          - '右上'
-          - '左下'
-          - '中下'
-          - '右下'
-          - '隐藏'
-          - '取消'
+          - '垂直翻转'
+          - '水平翻转'
+          - '码流'
+          - '移动标记'
+          - '设备名称'
+          - '日期'
+          - '水印'
+          - '图像设置'
+          - '白天和黑夜'
+          - '遮盖区域'
 
-      watermark:
-        name: '水印'
-        desc: '设置>显示>水印'
-        type: 'switch'
-        options:
-          - 'switch_on'
-          - 'switch_off'
-
-      private_mark:
-        name: '遮盖区域'
-        desc: '设置>显示>遮盖区域'
-        type: 'navigation'
-        subpage:
-          name: '遮盖区域'
-          desc: '设置>显示>遮盖区域>遮盖区域'
-          type: 'page'
-          wide_angle_image: True
-          telephoto_image: True
-          text:
-            - '取消'
-            - '遮盖区域'
-            - '保存'
-            - '广角画面'
-            - '长焦画面'
-            - '清空当前通道'
-            - '在画面中通过手指滑动添加黑色遮挡区域，监控视频中的遮挡区域将不可见，最多可遮挡4个区域。'
+        vertical_flip:
+          name: '垂直翻转'
+          desc: '设置>显示>垂直翻转'
+          type: 'switch'
           options:
-            - 4
+            - 'switch_on'
+            - 'switch_off'
 
-      advanced_setting:
-        name: '高级设置'
-        desc: '设置>显示>高级设置'
-        type: 'navigation'
-        subpage:
-          name: '高级设置'
-          desc: '设置>显示>高级设置>高级设置'
+        horizontal_flip:
+          name: '水平翻转'
+          desc: '设置>显示>水平翻转'
+          type: 'switch'
+          options:
+            - 'switch_on'
+            - 'switch_off'
+
+        stream:
+          name: '码流'
+          desc: '设置>显示>码流'
+          type: 'navigation'
+          subpage:
+            name: '码流'
+            desc: '设置>显示>码流>码流'
+            type: 'navigation'
+            text:
+              - '码流'
+              - '清晰'
+              - '分辨率'
+              - '帧率(FPS)'
+              - '最大码率(kbps)'
+              - '流畅'
+              - '编码格式'
+              - 'i帧间隔'
+              - '帧率控制'
+
+            clear:
+              name: '清晰'
+              desc: '设置>显示>码流>码流>清晰'
+              type: 'navigation'
+              subpage:
+                name: '清晰'
+                desc: '设置>显示>码流>码流>清晰'
+                type: 'page'
+                text:
+                  - '取消'
+                  - '清晰'
+                  - '保存'
+                  - '分辨率'
+                  - '帧率(fps)'
+                  - '最大码率(kbps)'
+                  - '编码格式'
+                  - 'i帧间隔'
+
+                resolution:
+                  name: '分辨率'
+                  desc: '设置>显示>码流>码流>清晰>分辨率'
+                  type: 'popup'
+                  text:
+                    - '分辨率'
+                    - '越高视频越清晰'
+                    - '3840*2160'
+                  options:
+                    - '3840*2160'
+
+                frame_rate:
+                  name: '帧率(fps)'
+                  desc: '设置>显示>码流>码流>清晰>帧率(fps)'
+                  type: 'popup'
+                  text:
+                    - '帧率(fps)'
+                    - '每秒钟的帧数，越高画面越流畅'
+                    - '25'
+                    - '22'
+                    - '20'
+                    - '18'
+                    - '16'
+                    - '15(默认)'
+                    - '12'
+                    - '10'
+                    - '8'
+                    - '6'
+                    - '4'
+                    - '2'
+                  options:
+                    - '25'
+                    - '22'
+                    - '20'
+                    - '18'
+                    - '16'
+                    - '15(默认)'
+                    - '12'
+                    - '10'
+                    - '8'
+                    - '6'
+                    - '4'
+                    - '2'
+
+                max_bit_rate:
+                  name: '最大码率(kbps)'
+                  desc: '设置>显示>码流>码流>清晰>最大码率(kbps)'
+                  type: 'popup'
+                  text:
+                    - '最大码率(Kbps)'
+                    - '相同的分辨率、帧率下，码率越大画质越好，网络要求也越高'
+                    - '4096(默认)'
+                    - '5120'
+                    - '6144'
+                    - '7168'
+                    - '8192'
+                  options:
+                    - '4096(默认)'
+                    - '5120'
+                    - '6144'
+                    - '7168'
+                    - '8192'
+
+                encoding_format:
+                  name: '编码格式'
+                  desc: '设置>显示>码流>码流>清晰>编码格式'
+                  type: 'popup'
+                  text:
+                    - '编码格式'
+                    - 'H.265相较于H.264具有更高的编码效率，可以提供更高质量的视频，但相应地需要更高的计算能力和更先进的设备支持。'
+                    - 'H264'
+                    - 'H.265'
+                  options:
+                    - 'H264'
+                    - 'H265'
+
+                i_frame_interval:
+                  name: 'i帧间隔'
+                  desc: '设置>显示>码流>码流>清晰>i帧间隔'
+                  type: 'popup'
+                  text:
+                    - 'i帧间隔'
+                    - 'I帧间隔小，视频质量高，但文件大。I帧间隔大，文件小，但质量低。'
+                    - '1x'
+                    - '2x'
+                  options:
+                    - '1x'
+                    - '2x'
+
+            fluent:
+              name: '流畅'
+              desc: '设置>显示>码流>码流>流畅'
+              type: 'navigation'
+              subpage:
+                name: '流畅'
+                desc: '设置>显示>码流>码流>流畅'
+                type: 'page'
+                text:
+                  - '取消'
+                  - '流畅'
+                  - '保存'
+                  - '分辨率'
+                  - '帧率(fps)'
+                  - '最大码率(kbps)'
+                  - '编码格式'
+                  - 'i帧间隔'
+
+                resolution:
+                  name: '分辨率'
+                  desc: '设置>显示>码流>码流>流畅>分辨率'
+                  type: 'popup'
+                  text:
+                    - '分辨率'
+                    - '越高视频越清晰'
+                    - '896*512'
+                  options:
+                    - '896*512'
+
+                frame_rate:
+                  name: '帧率(fps)'
+                  desc: '设置>显示>码流>码流>流畅>帧率(fps)'
+                  type: 'popup'
+                  text:
+                    - '帧率(fps)'
+                    - '每秒钟的帧数，越高画面越流畅'
+                    - '20'
+                    - '18'
+                    - '16'
+                    - '15(默认)'
+                    - '12'
+                    - '8'
+                    - '6'
+                    - '4'
+                  options:
+                    - '20'
+                    - '18'
+                    - '16'
+                    - '15(默认)'
+                    - '12'
+                    - '8'
+                    - '6'
+                    - '4'
+
+                max_bit_rate:
+                  desc: '设置>显示>码流>码流>流畅>最大码率(kbps)'
+                  type: 'popup'
+                  text:
+                    - '最大码率(kbps)'
+                    - '相同的分辨率、帧率下，码率越大画质越好，网络要求也越高'
+                    - '128'
+                    - '256'
+                    - '384'
+                    - '512'
+                    - '672'
+                    - '768(默认)'
+                    - '1024'
+                    - '1228'
+                  options:
+                    - '128'
+                    - '256'
+                    - '384'
+                    - '512'
+                    - '672'
+                    - '768(默认)'
+                    - '1024'
+                    - '1228'
+
+                encoding_format:
+                  name: '编码格式'
+                  desc: '设置>显示>码流>码流>流畅>编码格式'
+                  type: 'popup'
+                  text:
+                    - '编码格式'
+                    - 'H.265相较于H.264具有更高的编码效率，可以提供更高质量的视频，但相应地需要更高的计算能力和更先进的设备支持。'
+                    - 'H.264'
+                    - 'H.265'
+                  options:
+                    - 'H.264'
+                    - 'H.265'
+
+                interval_frame:
+                  name: 'i帧间隔'
+                  desc: '设置>显示>码流>码流>流畅>i帧间隔'
+                  type: 'popup'
+                  text:
+                    - 'i帧间隔'
+                    - 'I帧间隔小，视频质量高，但文件大。I帧间隔大，文件小，但质量低。'
+                    - '1x'
+                    - '2x'
+                    - '3x'
+                    - '4x'
+                  options:
+                    - '1x'
+                    - '2x'
+                    - '3x'
+                    - '4x'
+
+            frame_rate_mode:
+              name: '帧率控制'
+              desc: '设置>显示>码流>码流>帧率控制'
+              type: 'popup'
+              text:
+                - '帧率控制'
+                - '自动'
+                - '可变帧率，自动调节帧率来保持画质（不适用有快速运动的物体）。'
+                - '恒定'
+                - '恒定帧率，流畅优先。'
+              options:
+                - '自动'
+                - '恒定'
+
+            rate_mode:
+              name: '码率模式'
+              desc: '设置>显示>码流>码流>码率模式'
+              type: 'popup'
+              text:
+                - '码率模式'
+                - '固定码率'
+                - '不同的码率控制模式会影响画质和文件存储大小。'
+                - '动态码率'
+                - '自动根据视频内容的复杂度进行码率控制。码率不足时，视频可能会变得模糊。'
+              options:
+                - '固定码率'
+                - '动态码率'
+
+        motion_mark:
+          name: '移动标记'
+          desc: '设置>显示>移动标记'
+          type: 'switch'
+          text:
+            - '移动标记'
+            - '画面为清晰时，智能检测到移动事物将进行标记。'
+          options:
+            - 'switch-on'
+            - 'switch-off'
+
+        device_name:
+          name: '设备名称'
+          desc: '设置>显示>设备名称'
+          type: 'popup'
+          text:
+            - '设备名称'
+            - '左上'
+            - '中上'
+            - '右上'
+            - '左下'
+            - '中下'
+            - '右下'
+            - '隐藏'
+            - '取消'
+          options:
+            - '左上'
+            - '中上'
+            - '右上'
+            - '左下'
+            - '中下'
+            - '右下'
+            - '隐藏'
+            - '取消'
+
+        date:
+          name: '日期'
+          desc: '设置>显示>日期'
+          type: 'popup'
+          text:
+            - '日期'
+            - '左上'
+            - '中上'
+            - '右上'
+            - '左下'
+            - '中下'
+            - '右下'
+            - '隐藏'
+            - '取消'
+          options:
+            - '左上'
+            - '中上'
+            - '右上'
+            - '左下'
+            - '中下'
+            - '右下'
+            - '隐藏'
+            - '取消'
+
+        watermark:
+          name: '水印'
+          desc: '设置>显示>水印'
+          type: 'switch'
+          options:
+            - 'switch_on'
+            - 'switch_off'
+
+        image_setting:
+          name: '图像设置'
+          desc: '设置>显示>图像设置'
           type: 'page'
           text:
-            - '高级设置'
-            - '阈值'
-            - '自动切换日夜模式'
-          threshold:
-            name: '阈值'
-            desc: '设置>显示>高级设置>阈值'
+            - '亮度'
+            - '抗闪烁'
+            - '调整摄像机的拍摄帧率，以减少受到画面中光源闪烁的影响。'
+            - '0'
+            - '255'
+
+          brightness:
+            name: '亮度'
+
+          anti_flicker:
+            name: '抗闪烁'
+            desc: '设置>显示>抗闪烁'
             type: 'popup'
             text:
+              - '抗闪烁'
+              - '50HZ'
+              - '60HZ'
+              - '其他'
+              - '关闭'
+            options:
+              - '50HZ'
+              - '60HZ'
+              - '其他'
+              - '关闭'
+
+        day_and_night:
+          name: '白天和黑夜'
+          desc: '白天和黑夜'
+          type: 'popup'
+          text:
+            - '白天和黑夜'
+            - '模式切换'
+            - '高光/阴影调节'
+            - '黑白'
+            - '白天彩色'
+            - '夜视彩色'
+          options:
+            - '模式切换'
+            - '黑白'
+            - '白天彩色'
+            - '夜视彩色'
+
+          mode_switching:
+            name: '模式切换'
+            desc: '白天和黑夜>模式切换'
+            type: 'popup'
+            text:
+              - '模式切换'
+              - '黑白'
+              - '彩色'
+              - '自动'
+              - '光线较亮时自动显示彩色，较暗时自动显示黑白。'
               - '日夜切换阈值'
               - '白天和黑夜自动模式下，黑白彩色切换的环境亮度阈值：'
               - '恢复默认值'
-              - '取消'
-              - '确定'
+              - '0'
+              - '100'
+            options:
+              - '黑白'
+              - '彩色'
+              - '自动'
+              - '日夜切换阈值'
 
-      bright_shade_setting:
-        name: '明暗设置'
-        desc: '设置>显示>明暗设置'
-        type: 'navigation'
-        subpage:
-          name: '明暗设置'
-          desc: '设置>显示>明暗设置>明暗设置'
-          type: 'page'
-          text:
-            - '明暗设置'
-            - '白天彩色'
-            - '自动'
-            - '黑白'
-            - '夜视彩色'
-
-          color_day:
+          day_color:
             name: '白天彩色'
-            desc: '设置>显示>明暗设置>明暗设置>白天彩色'
-            type: 'switch'
-          black_and_white:
-            name: '黑白'
-            desc: '设置>显示>明暗设置>明暗设置>黑白'
-            type: 'switch'
-          night_vision_color:
-            name: '夜视彩色'
-            desc: '设置>显示>明暗设置>明暗设置>夜视彩色'
-            type: 'switch'
-
-hub:
-  display:
-    name: '显示'
-    desc: '设置>显示'
-    type: 'navigation'
-    items:
-      vertical_flip:
-        name: '垂直翻转'
-        desc: '设置>显示>垂直翻转'
-        type: 'switch'
-        options:
-          - 'switch_on'
-          - 'switch_off'
-
-      horizontal_flip:
-        name: '水平翻转'
-        desc: '设置>显示>水平翻转'
-        type: 'switch'
-        options:
-          - 'switch_on'
-          - 'switch_off'
-
-      stream:
-        name: '码流'
-        desc: '设置>显示>码流'
-        type: 'navigation'
-        subpage:
-          name: '码流'
-          desc: '设置>显示>码流>码流'
-          type: 'navigation'
-          text:
-            - '码流'
-            - '清晰'
-            - '分辨率'
-            - '帧率(fps)'
-            - '最大码率(kbps)'
-            - '流畅'
-            - '帧率控制'
-
-          clear:
-            name: '清晰'
-            desc: '设置>显示>码流>码流>清晰'
-            type: 'navigation'
-            subpage:
-              name: '清晰'
-              desc: '设置>显示>码流>码流>清晰'
-              type: 'page'
-              text:
-                - '取消'
-                - '清晰'
-                - '保存'
-                - '分辨率'
-                - '帧率(fps)'
-                - '最大码率(kbps)'
-
-              resolution:
-                name: '分辨率'
-                desc: '设置>显示>码流>码流>清晰>分辨率'
-                type: 'popup'
-                text:
-                  - '分辨率'
-                  - '越高视频越清晰'
-                  - '取消'
-                options:
-                  - '3840*2160'
-                  - '取消'
-
-              frame_rate:
-                name: '帧率(fps)'
-                desc: '设置>显示>码流>码流>清晰>帧率(fps)'
-                type: 'popup'
-                text:
-                  - '帧率(fps)'
-                  - '每秒钟的帧数，越高画面越流畅'
-                options:
-                  - '25'
-                  - '22'
-                  - '20'
-                  - '18'
-                  - '16'
-                  - '15(默认)'
-                  - '12'
-                  - '10'
-                  - '取消'
-
-              max_bit_rate:
-                desc: '设置>显示>码流>码流>清晰>最大码率(kbps)'
-                type: 'popup'
-                text:
-                  - '最大码率(kbps)'
-                  - '相同的分辨率、帧率下，码率越大画质越好，网络要求也越高'
-                options:
-                  - '4096(默认)'
-                  - '5120'
-                  - '6144'
-                  - '7168'
-                  - '8192'
-                  - '取消'
-
-          fluent:
-            name: '流畅'
-            desc: '设置>显示>码流>码流>流畅'
-            type: 'navigation'
-            subpage:
-              name: '流畅'
-              desc: '设置>显示>码流>码流>流畅'
-              type: 'page'
-
-              resolution:
-                name: '分辨率'
-                desc: '设置>显示>码流>码流>流畅>分辨率'
-                type: 'popup'
-                text:
-                  - '分辨率'
-                  - '越高视频越清晰'
-                  - '取消'
-                options:
-                  - '896*512'
-                  - '取消'
-
-              frame_rate:
-                name: '帧率(fps)'
-                desc: '设置>显示>码流>码流>流畅>帧率(fps)'
-                type: 'popup'
-                text:
-                  - '帧率(fps)'
-                  - '每秒钟的帧数，越高画面越流畅'
-                options:
-                  - '20'
-                  - '18'
-                  - '16'
-                  - '15(默认)'
-                  - '12'
-                  - '8'
-                  - '6'
-                  - '4'
-                  - '取消'
-
-              max_bit_rate:
-                desc: '设置>显示>码流>码流>流畅>最大码率(kbps)'
-                type: 'popup'
-                text:
-                  - '最大码率(kbps)'
-                  - '相同的分辨率、帧率下，码率越大画质越好，网络要求也越高'
-                options:
-                  - '128'
-                  - '256'
-                  - '384'
-                  - '512'
-                  - '672'
-                  - '768(默认)'
-                  - '1024'
-                  - '1228'
-                  - '取消'
-
-          frame_rate_mode:
-            name: '帧率控制'
-            desc: '设置>显示>码流>码流>帧率控制'
+            desc: '白天和黑夜>白天彩色'
             type: 'popup'
             text:
-              - '帧率控制'
+              - '白天彩色'
               - '自动'
-              - '可变帧率，自动调节帧率来保持画质（不适用有快速运动的物体）。'
-              - '恒定'
-              - '恒定帧率，流畅优先。'
-              - '取消'
+              - '手动'
+              - '亮度'
+              - '恢复默认值'
+              - '暗部'
+              - '0'
+              - '255'
             options:
               - '自动'
-              - '恒定'
-              - '取消'
+              - '手动'
+              - '亮度'
+              - '暗部'
 
-      anti_flicker:
-        name: '抗闪烁'
-        desc: '设置>显示>抗闪烁'
-        type: 'popup'
-        text:
-          - '抗闪烁'
-        options:
-          - '50HZ'
-          - '60HZ'
-          - '其他'
-          - '关闭'
-          - '取消'
+          black_and_white:
+            name: '黑白'
+            desc: '白天和黑夜>黑白'
+            type: 'popup'
+            text:
+              - '黑白'
+              - '自动'
+              - '手动'
+              - '亮度'
+              - '恢复默认值'
+              - '暗部'
+              - '0'
+              - '255'
+            options:
+              - '自动'
+              - '手动'
+              - '亮度'
+              - '暗部'
 
-      day_and_night:
-        name: '白天和黑夜'
-        desc: '白天和黑夜'
-        type: 'popup'
-        text:
-          - '光线较亮时自动显示彩色，较暗时自动显示黑白。'
-        options:
-          - '黑白'
-          - '彩色'
-          - '自动'
-          - '取消'
+          night_vision_color:
+            name: '夜视彩色'
+            desc: '白天和黑夜>夜视彩色'
+            type: 'popup'
+            text:
+              - '夜视彩色'
+              - '自动'
+              - '手动'
+              - '亮度'
+              - '恢复默认值'
+              - '暗部'
+              - '0'
+              - '255'
+            options:
+              - '自动'
+              - '手动'
+              - '亮度'
+              - '暗部'
 
-      brightness:
-        name: '亮度'
-        desc: '设置>显示>亮度'
-        type: 'slider'
-        options:
-          - ''
-          - ''
-          - ''
-
-      device_name:
-        name: '设备名称'
-        desc: '设置>显示>设备名称'
-        type: 'popup'
-        options:
-          - '左上'
-          - '中上'
-          - '右上'
-          - '左下'
-          - '中下'
-          - '右下'
-          - '隐藏'
-          - '取消'
-
-      date:
-        name: '日期'
-        desc: '设置>显示>日期'
-        type: 'popup'
-        options:
-          - '左上'
-          - '中上'
-          - '右上'
-          - '左下'
-          - '中下'
-          - '右下'
-          - '隐藏'
-          - '取消'
-
-      watermark:
-        name: '水印'
-        desc: '设置>显示>水印'
-        type: 'switch'
-        options:
-          - 'switch_on'
-          - 'switch_off'
-
-      private_mark:
-        name: '遮盖区域'
-        desc: '设置>显示>遮盖区域'
-        type: 'navigation'
-        subpage:
+        private_mark:
           name: '遮盖区域'
-          desc: '设置>显示>遮盖区域>遮盖区域'
-          type: 'page'
+          desc: '设置>显示>遮盖区域'
+          type: 'navigation'
           text:
             - '取消'
             - '遮盖区域'
             - '保存'
             - '广角画面'
             - '长焦画面'
-            - '清空当前通道'
+            - '清空所有'
+          user_tips:
             - '在画面中通过手指滑动添加黑色遮挡区域，监控视频中的遮挡区域将不可见，最多可遮挡4个区域。'
+            - '我知道了'
+          wide_angle: True
+          telephoto: True
 
-      advanced_setting:
-        name: '高级设置'
-        desc: '设置>显示>高级设置'
-        type: 'navigation'
-        subpage:
-          name: '高级设置'
-          desc: '设置>显示>高级设置>高级设置'
-          type: 'page'
-          text:
-            - '高级设置'
-            - '阈值'
-            - '自动切换日夜模式'
-          threshold:
-            name: '阈值'
-            desc: '设置>显示>高级设置>阈值'
-            type: 'popup'
-            text:
-              - '日夜切换阈值'
-              - '白天和黑夜自动模式下，黑白彩色切换的环境亮度阈值：'
-              - '恢复默认值'
-              - '取消'
-              - '确定'
-
-      bright_shade_setting:
-        name: '明暗设置'
-        desc: '设置>显示>明暗设置'
-        type: 'navigation'
-        subpage:
-          name: '明暗设置'
-          desc: '设置>显示>明暗设置>明暗设置'
-          type: 'page'
-          text:
-            - '明暗设置'
-            - '白天彩色'
-            - '自动'
-            - '黑白'
-            - '夜视彩色'
-
-          color_day:
-            name: '白天彩色'
-            desc: '设置>显示>明暗设置>明暗设置>白天彩色'
-            type: 'switch'
-          black_and_white:
-            name: '黑白'
-            desc: '设置>显示>明暗设置>明暗设置>黑白'
-            type: 'switch'
-          night_vision_color:
-            name: '夜视彩色'
-            desc: '设置>显示>明暗设置>明暗设置>夜视彩色'
-            type: 'switch'
-
-
-nvr:
-  display:
-    name: '显示'
-    desc: '设置>显示'
-    type: 'navigation'
-    items:
-      vertical_flip:
-        name: '垂直翻转'
-        desc: '设置>显示>垂直翻转'
-        type: 'switch'
-        options:
-          - 'switch_on'
-          - 'switch_off'
-
-      horizontal_flip:
-        name: '水平翻转'
-        desc: '设置>显示>水平翻转'
-        type: 'switch'
-        options:
-          - 'switch_on'
-          - 'switch_off'
-
-      stream:
-        name: '码流'
-        desc: '设置>显示>码流'
-        type: 'navigation'
-        subpage:
-          name: '码流'
-          desc: '设置>显示>码流>码流'
-          type: 'navigation'
-          text:
-            - '码流'
-            - '清晰'
-            - '分辨率'
-            - '帧率(fps)'
-            - '最大码率(kbps)'
-            - '流畅'
-            - '帧率控制'
-
-          clear:
-            name: '清晰'
-            desc: '设置>显示>码流>码流>清晰'
-            type: 'navigation'
-            subpage:
-              name: '清晰'
-              desc: '设置>显示>码流>码流>清晰'
-              type: 'page'
-              text:
-                - '取消'
-                - '清晰'
-                - '保存'
-                - '分辨率'
-                - '帧率(fps)'
-                - '最大码率(kbps)'
-
-              resolution:
-                name: '分辨率'
-                desc: '设置>显示>码流>码流>清晰>分辨率'
-                type: 'popup'
-                text:
-                  - '分辨率'
-                  - '越高视频越清晰'
-                  - '取消'
-                options:
-                  - '3840*2160'
-                  - '取消'
-
-              frame_rate:
-                name: '帧率(fps)'
-                desc: '设置>显示>码流>码流>清晰>帧率(fps)'
-                type: 'popup'
-                text:
-                  - '帧率(fps)'
-                  - '每秒钟的帧数，越高画面越流畅'
-                options:
-                  - '25'
-                  - '22'
-                  - '20'
-                  - '18'
-                  - '16'
-                  - '15(默认)'
-                  - '12'
-                  - '10'
-                  - '取消'
-
-              max_bit_rate:
-                desc: '设置>显示>码流>码流>清晰>最大码率(kbps)'
-                type: 'popup'
-                text:
-                  - '最大码率(kbps)'
-                  - '相同的分辨率、帧率下，码率越大画质越好，网络要求也越高'
-                options:
-                  - '4096(默认)'
-                  - '5120'
-                  - '6144'
-                  - '7168'
-                  - '8192'
-                  - '取消'
-
-          fluent:
-            name: '流畅'
-            desc: '设置>显示>码流>码流>流畅'
-            type: 'navigation'
-            subpage:
-              name: '流畅'
-              desc: '设置>显示>码流>码流>流畅'
-              type: 'page'
-
-              resolution:
-                name: '分辨率'
-                desc: '设置>显示>码流>码流>流畅>分辨率'
-                type: 'popup'
-                text:
-                  - '分辨率'
-                  - '越高视频越清晰'
-                  - '取消'
-                options:
-                  - '896*512'
-                  - '取消'
-
-              frame_rate:
-                name: '帧率(fps)'
-                desc: '设置>显示>码流>码流>流畅>帧率(fps)'
-                type: 'popup'
-                text:
-                  - '帧率(fps)'
-                  - '每秒钟的帧数，越高画面越流畅'
-                options:
-                  - '20'
-                  - '18'
-                  - '16'
-                  - '15(默认)'
-                  - '12'
-                  - '8'
-                  - '6'
-                  - '4'
-                  - '取消'
-
-              max_bit_rate:
-                desc: '设置>显示>码流>码流>流畅>最大码率(kbps)'
-                type: 'popup'
-                text:
-                  - '最大码率(kbps)'
-                  - '相同的分辨率、帧率下，码率越大画质越好，网络要求也越高'
-                options:
-                  - '128'
-                  - '256'
-                  - '384'
-                  - '512'
-                  - '672'
-                  - '768(默认)'
-                  - '1024'
-                  - '1228'
-                  - '取消'
-
-          frame_rate_mode:
-            name: '帧率控制'
-            desc: '设置>显示>码流>码流>帧率控制'
-            type: 'popup'
-            text:
-              - '帧率控制'
-              - '自动'
-              - '可变帧率，自动调节帧率来保持画质（不适用有快速运动的物体）。'
-              - '恒定'
-              - '恒定帧率，流畅优先。'
-              - '取消'
-            options:
-              - '自动'
-              - '恒定'
-              - '取消'
-
-      anti_flicker:
-        name: '抗闪烁'
-        desc: '设置>显示>抗闪烁'
-        type: 'popup'
-        text:
-          - '抗闪烁'
-        options:
-          - '50HZ'
-          - '60HZ'
-          - '其他'
-          - '关闭'
-          - '取消'
-
-      day_and_night:
-        name: '白天和黑夜'
-        desc: '白天和黑夜'
-        type: 'popup'
-        text:
-          - '光线较亮时自动显示彩色，较暗时自动显示黑白。'
-        options:
-          - '黑白'
-          - '彩色'
-          - '自动'
-          - '取消'
-
-      brightness:
-        name: '亮度'
-        desc: '设置>显示>亮度'
-        type: 'slider'
-        options:
-          - ''
-          - ''
-          - ''
-
-      device_name:
-        name: '设备名称'
-        desc: '设置>显示>设备名称'
-        type: 'popup'
-        options:
-          - '左上'
-          - '中上'
-          - '右上'
-          - '左下'
-          - '中下'
-          - '右下'
-          - '隐藏'
-          - '取消'
-
-      date:
-        name: '日期'
-        desc: '设置>显示>日期'
-        type: 'popup'
-        options:
-          - '左上'
-          - '中上'
-          - '右上'
-          - '左下'
-          - '中下'
-          - '右下'
-          - '隐藏'
-          - '取消'
-
-      watermark:
-        name: '水印'
-        desc: '设置>显示>水印'
-        type: 'switch'
-        options:
-          - 'switch_on'
-          - 'switch_off'
-
-      private_mark:
-        name: '遮盖区域'
-        desc: '设置>显示>遮盖区域'
-        type: 'navigation'
-        subpage:
-          name: '遮盖区域'
-          desc: '设置>显示>遮盖区域>遮盖区域'
+        image_layout:
+          name: '图像布局'
+          desc: '设置>显示>图像布局'
           type: 'page'
           text:
             - '取消'
-            - '遮盖区域'
+            - '图像布局'
             - '保存'
-            - '广角画面'
-            - '长焦画面'
-            - '清空当前通道'
-            - '在画面中通过手指滑动添加黑色遮挡区域，监控视频中的遮挡区域将不可见，最多可遮挡4个区域。'
+            - '鱼眼'
+            - '展开'
 
-      advanced_setting:
-        name: '高级设置'
-        desc: '设置>显示>高级设置'
-        type: 'navigation'
-        subpage:
-          name: '高级设置'
-          desc: '设置>显示>高级设置>高级设置'
+        display_mode:
+          name: '显示模式'
+          desc: '设置>显示>显示模式'
           type: 'page'
           text:
-            - '高级设置'
-            - '阈值'
-            - '自动切换日夜模式'
-          threshold:
-            name: '阈值'
-            desc: '设置>显示>高级设置>阈值'
-            type: 'popup'
-            text:
-              - '日夜切换阈值'
-              - '白天和黑夜自动模式下，黑白彩色切换的环境亮度阈值：'
-              - '恢复默认值'
-              - '取消'
-              - '确定'
-
-      bright_shade_setting:
-        name: '明暗设置'
-        desc: '设置>显示>明暗设置'
-        type: 'navigation'
-        subpage:
-          name: '明暗设置'
-          desc: '设置>显示>明暗设置>明暗设置'
-          type: 'page'
-          text:
-            - '明暗设置'
-            - '白天彩色'
-            - '自动'
-            - '黑白'
-            - '夜视彩色'
-
-          color_day:
-            name: '白天彩色'
-            desc: '设置>显示>明暗设置>明暗设置>白天彩色'
-            type: 'switch'
-          black_and_white:
-            name: '黑白'
-            desc: '设置>显示>明暗设置>明暗设置>黑白'
-            type: 'switch'
-          night_vision_color:
-            name: '夜视彩色'
-            desc: '设置>显示>明暗设置>明暗设置>夜视彩色'
-            type: 'switch'
+            - '显示模式'
+            - '安装方式'
+            - '桌面'
+            - '吸顶'
+            - '壁挂'
+            - '旋转画面'
+            - ' -45°'
+            - '45°'
+          little-Title:
+            - '旋转画面'
+            - '安装方式'
+          ReoTitle:
+            - '旋转画面'
