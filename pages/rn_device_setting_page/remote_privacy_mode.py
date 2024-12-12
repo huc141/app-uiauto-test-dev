@@ -33,7 +33,7 @@ class RemotePrivacyMode(BasePage):
                     status = self.loop_detect_element_exist(element_value='摄像机', loop_times=1)
                     if status:
                         break
-                    self.back_previous_page_by_xpath(xpath_expression='//*[@resource-id="com.mcu.reolink:id/base_left_button"]')
+                    self.back_previous_page_by_xpath()
 
             # 返回设备列表
             back_to_devices_list()
@@ -74,8 +74,7 @@ class RemotePrivacyMode(BasePage):
             else:
                 # 返回设备列表，
                 # self.back_previous_page()
-                self.back_previous_page_by_xpath(
-                    xpath_expression='//*[@resource-id="com.mcu.reolink:id/fold_button"]')
+                self.back_previous_page_by_xpath()
 
                 return False
 

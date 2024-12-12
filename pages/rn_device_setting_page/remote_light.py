@@ -99,7 +99,7 @@ class RemoteLight(BasePage):
                     # 操作红外灯配置
                     self.scroll_and_click_by_text(text_to_find=i)
                     # 返回上一页
-                    self.back_previous_page_by_xpath(xpath_expression=self.base_left_button)
+                    self.back_previous_page_by_xpath()
                     # 断言
                     if not self.scroll_and_click_by_text(text_to_find=i):
                         pytest.fail(f"红外灯选择【{i}】后，未检查到回显！")
@@ -144,7 +144,7 @@ class RemoteLight(BasePage):
                     self.scroll_and_click_by_text('保存')
 
                 # 返回灯主页，验证照明灯模式回显
-                self.back_previous_page_by_xpath(xpath_expression=self.base_left_button)
+                self.back_previous_page_by_xpath()
                 if not RemoteSetting().scroll_check_funcs2(texts='夜间智能模式'):
                     pytest.fail(f"照明灯选择【夜间智能模式】后，未检查到回显！")
 
@@ -200,7 +200,7 @@ class RemoteLight(BasePage):
                 self.scroll_and_click_by_text(text_to_find='确定')
 
                 # 返回灯主页，验证照明灯模式回显
-                self.back_previous_page_by_xpath(xpath_expression=self.base_left_button)
+                self.back_previous_page_by_xpath()
                 if not RemoteSetting().scroll_check_funcs2(texts='智能模式'):
                     pytest.fail(f"照明灯选择【智能模式】后，未检查到回显！")
 
@@ -257,7 +257,7 @@ class RemoteLight(BasePage):
                 self.scroll_and_click_by_text(text_to_find='确定')
 
                 # 返回灯聚合页，验证照明灯模式回显
-                self.back_previous_page_by_xpath(xpath_expression=self.base_left_button)
+                self.back_previous_page_by_xpath()
                 if not RemoteSetting().scroll_check_funcs2(texts='定时模式'):
                     pytest.fail(f"照明灯选择【定时模式】后，未检查到回显！")
 
@@ -320,7 +320,7 @@ class RemoteLight(BasePage):
                 preview_opens_text_res = RemoteSetting().scroll_check_funcs2(texts=flood_light_texts)
 
                 # 返回灯聚合页，验证照明灯模式回显
-                self.back_previous_page_by_xpath(xpath_expression=self.base_left_button)
+                self.back_previous_page_by_xpath()
                 if not RemoteSetting().scroll_check_funcs2(texts='夜视常亮'):
                     pytest.fail(f"照明灯选择【夜视常亮】后，未检查到回显！")
 
@@ -348,7 +348,7 @@ class RemoteLight(BasePage):
                 light_off_main_text_res = RemoteSetting().scroll_check_funcs2(texts=flood_light_texts)
 
                 # 返回灯聚合页，验证照明灯模式回显
-                self.back_previous_page_by_xpath(xpath_expression=self.base_left_button)
+                self.back_previous_page_by_xpath()
                 if not RemoteSetting().scroll_check_funcs2(texts='关闭'):
                     pytest.fail(f"照明灯选择【关闭模式】后，未检查到回显！")
 
@@ -378,7 +378,7 @@ class RemoteLight(BasePage):
                 flood_light_texts = RemoteSetting().scroll_check_funcs2(texts=flood_light_texts)
 
                 # 返回灯聚合页，验证照明灯模式回显
-                self.back_previous_page_by_xpath(xpath_expression=self.base_left_button)
+                self.back_previous_page_by_xpath()
                 if not RemoteSetting().scroll_check_funcs2(texts='自动模式'):
                     pytest.fail(f"照明灯选择【关闭模式】后，未检查到回显！")
 
@@ -408,7 +408,7 @@ class RemoteLight(BasePage):
                 status_lights_main_text_res = RemoteSetting().scroll_check_funcs2(texts=status_lights_texts)
 
                 # 返回灯聚合页，验证状态灯模式回显
-                self.back_previous_page_by_xpath(xpath_expression=self.base_left_button)
+                self.back_previous_page_by_xpath()
                 if not RemoteSetting().scroll_check_funcs2(texts='关闭'):
                     pytest.fail(f"状态灯选择【关闭】后，未检查到回显！")
 
@@ -439,7 +439,7 @@ class RemoteLight(BasePage):
                 status_lights_main_text_res = RemoteSetting().scroll_check_funcs2(texts=status_lights_texts)
 
                 # 返回灯聚合页，验证状态灯模式回显
-                self.back_previous_page_by_xpath(xpath_expression=self.base_left_button)
+                self.back_previous_page_by_xpath()
                 if not RemoteSetting().scroll_check_funcs2(texts='开启'):
                     pytest.fail(f"状态灯选择【开启】后，未检查到回显！")
 
@@ -472,7 +472,7 @@ class RemoteLight(BasePage):
                 self.scroll_and_click_by_text(text_to_find='关闭')
 
                 # 返回灯聚合页，验证按钮灯模式回显
-                self.back_previous_page_by_xpath(xpath_expression=self.base_left_button)
+                self.back_previous_page_by_xpath()
                 if not RemoteSetting().scroll_check_funcs2(texts='关闭'):
                     pytest.fail(f"状态灯选择【关闭】后，未检查到回显！")
 
@@ -502,7 +502,7 @@ class RemoteLight(BasePage):
                 button_light__main_text_res = RemoteSetting().scroll_check_funcs2(texts=button_light_texts)
 
                 # 返回灯聚合页，验证按钮灯模式回显
-                self.back_previous_page_by_xpath(xpath_expression=self.base_left_button)
+                self.back_previous_page_by_xpath()
                 if not RemoteSetting().scroll_check_funcs2(texts='自动'):
                     pytest.fail(f"状态灯选择【自动】后，未检查到回显！")
 
@@ -532,7 +532,7 @@ class RemoteLight(BasePage):
                 button_light__main_text_res = RemoteSetting().scroll_check_funcs2(texts=button_light_texts)
 
                 # 返回灯聚合页，验证按钮灯模式回显
-                self.back_previous_page_by_xpath(xpath_expression=self.base_left_button)
+                self.back_previous_page_by_xpath()
                 if not RemoteSetting().scroll_check_funcs2(texts='自动且夜间常亮'):
                     pytest.fail(f"状态灯选择【自动且夜间常亮】后，未检查到回显！")
 
@@ -562,7 +562,7 @@ class RemoteLight(BasePage):
                 button_light__main_text_res = RemoteSetting().scroll_check_funcs2(texts=button_light_texts)
 
                 # 返回灯聚合页，验证按钮灯模式回显
-                self.back_previous_page_by_xpath(xpath_expression=self.base_left_button)
+                self.back_previous_page_by_xpath()
                 if not RemoteSetting().scroll_check_funcs2(texts='常亮'):
                     pytest.fail(f"状态灯选择【常亮】后，未检查到回显！")
 
