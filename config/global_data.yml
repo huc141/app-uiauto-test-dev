@@ -8,4 +8,4 @@ WiFi_setting: ''
 display_setting: ''
 
 # 左上角通用返回上一页按钮：
-back: '//*[@resource-id="PageHeaderLeft"]'
+back: '//*[@resource-id="HeaderLeft-ReoIcon"]'

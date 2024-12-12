@@ -63,21 +63,24 @@ def find_element_by_xpath_recursively(d, xpath_prefix, target_id=None, target_te
 d = u2.connect()  # 请根据实际情况填写设备IP或序列号
 
 # 定义起始元素的xpath路径
-start_xpath = '//*[@resource-id="Brightness"]'
+start_xpath = '//*[@resource-id="ChannelNameOSD-ReoCell-Navigator"]'
 
+ele = d.xpath(xpath=start_xpath)
+print(ele.info)
 # 调用方法查找目标元素
-target_element = find_element_by_xpath_recursively(d,
-                                                   start_xpath,
-                                                   target_id="RNE__Slider_Thumb")
+# target_element = find_element_by_xpath_recursively(d,
+#                                                    start_xpath,
+#                                                    target_id="ReoValue")
 
 
 def operate_on_element(element):
     # 检查查找结果
     if element:
         print("找到目标元素:", element.info)
-        element.swipe('right')
+        print(element.info.get('text'))
+        # element.swipe('right')
     else:
         print("未找到目标元素")
 
 
-operate_on_element(target_element)
+# operate_on_element(target_element)

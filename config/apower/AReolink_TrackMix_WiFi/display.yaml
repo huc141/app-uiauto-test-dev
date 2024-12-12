@@ -363,7 +363,6 @@ ipc:
             - '中下'
             - '右下'
             - '隐藏'
-            - '取消'
           options:
             - '左上'
             - '中上'
@@ -372,7 +371,6 @@ ipc:
             - '中下'
             - '右下'
             - '隐藏'
-            - '取消'
 
         watermark:
           name: '水印'
@@ -523,4 +521,3 @@ ipc:
             - '我知道了'
           wide_angle: True
           telephoto: True
-

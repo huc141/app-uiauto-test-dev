@@ -363,7 +363,6 @@ ipc:
             - '中下'
             - '右下'
             - '隐藏'
-            - '取消'
           options:
             - '左上'
             - '中上'
@@ -372,7 +371,6 @@ ipc:
             - '中下'
             - '右下'
             - '隐藏'
-            - '取消'
 
         watermark:
           name: '水印'
@@ -548,8 +546,20 @@ ipc:
             - '旋转画面'
             - ' -45°'
             - '45°'
-          little-Title:
+          ReoCellGroup-Title:
             - '旋转画面'
             - '安装方式'
           ReoTitle:
             - '旋转画面'
+
+        scenes:
+          name: '场景'
+          desc: '设置>显示>场景'
+          type: 'page'
+          text:
+            - '场景'
+            - '室外'
+            - '室内'
+          options:
+            - '室外'
+            - '室内'
