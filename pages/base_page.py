@@ -5,13 +5,16 @@ from datetime import datetime
 from uiautomator2.exceptions import XPathElementNotFoundError
 from common_tools.app_driver import driver
 from common_tools.logger import logger
-from typing import Literal
+from typing import Literal, List, Any
 import pytest
 import xml.etree.ElementTree as ET
 from common_tools.handle_alerts import handle_alert
 from uiautomator2 import Direction
 
+from common_tools.read_yaml import read_yaml
+
 DEFAULT_SECONDS = 15
+g_config_back = read_yaml.get_data(key="back", source="global_data")  # 读取全局配置
 
 
 class BasePage:
@@ -565,7 +568,7 @@ class BasePage:
         logger.info(f"没找到要点击的元素： '{text_to_find}' ，已经尝试了： {max_attempts} 次.")
         return False
 
-    def iterate_and_click_popup_text(self, option_text_list, menu_text, el_type='text'):
+    def iterate_and_click_popup_text(self, option_text_list: List[Any], menu_text, el_type='text'):
         """
         根据文本遍历popup弹窗的单选项，执行点击操作，适合点击某个选项后自动返回上一页的操作。
         :param option_text_list: 需要遍历的文本列表
@@ -622,10 +625,7 @@ class BasePage:
                     return True
 
         try:
-            # 关闭popup弹窗
-            # self.click_by_text('取消')
-            # time.sleep(1)
-
+            print(option_text_list)
             # 遍历文本，执行点击操作
             for i in option_text_list:
                 self.scroll_and_click_by_text(text_to_find=menu_text, el_type=el_type)
@@ -1102,6 +1102,7 @@ class BasePage:
                 elif direction == "down":
                     # 向下拖动
                     self.driver.drag(center_x, center_y, center_x, center_y + distance, duration)
+            time.sleep(1)
 
         except Exception as err:
             pytest.fail(f"函数执行出错: {str(err)}")
@@ -1295,7 +1296,7 @@ class BasePage:
             # logger.info(f"可能发生了错误: {err}")
             pytest.fail(f"函数执行出错: {str(err)}")
 
-    def back_previous_page_by_xpath(self, xpath_expression):
+    def back_previous_page_by_xpath(self, xpath_expression=g_config_back):
         """
         RN: 根据xpath定位左上角返回上一页的按钮
         :return:
@@ -1497,3 +1498,17 @@ class BasePage:
 
         except Exception as err:
             logger.info(f"函数执行出错: {str(err)}")
+
+    def get_element_info(self, xpath_exp):
+        """
+        获取元素属性
+        :return:
+        """
+        try:
+            element = self.driver.xpath(xpath=xpath_exp)
+            return element
+        except Exception as err:
+            logger.error(f"获取元素属性出错: {str(err)}")
+
+
+
