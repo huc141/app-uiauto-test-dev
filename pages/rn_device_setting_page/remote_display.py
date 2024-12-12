@@ -25,9 +25,26 @@ class RemoteDisplay(BasePage):
             self.display_mode_type_FLOOR = '//*[@resource-id="FLOOR"]'  # 显示模式 > 桌面
             self.display_mode_type_TOP = '//*[@resource-id="TOP"]'  # 显示模式 > 吸顶
             self.display_mode_type_WALL = '//*[@resource-id="WALL"]'  # 显示模式 > 壁挂
+            self.pull_down_element = '//com.horcrux.svg.SvgView'  # 显示页面的上拉元素
 
         elif self.platform == 'ios':
             self.shelter_player = ''
+
+    # 定义一个判断当前页面是否需要上拉的方法
+    def need_pull_down(self, pull_down: bool = True):
+        """
+        判断当前页面是否需要上拉
+        :return:
+        """
+        try:
+            if RemoteSetting().is_element_exists(element_value=self.pull_down_element, selector_type='xpath',
+                                                 scroll_or_not=False) and pull_down:
+                self.drag_element(element_xpath=self.pull_down_element,
+                                  direction='up', distance=700, duration=1)
+            else:
+                logger.info('当前页面无需进行上拉操作')
+        except Exception as err:
+            logger.error(f"上拉页面发生错误: {err}")
 
     def check_display_main_text(self, texts):
         """
@@ -387,55 +404,109 @@ class RemoteDisplay(BasePage):
         """
         self.scroll_and_click_by_text(text_to_find=option_text)
 
-    def click_device_name(self, option_text='设备名称'):
+    def verify_device_name(self, device_name_list_text, device_name_options):
         """
-        :param option_text: 菜单功能项，该方法默认点击【设备名称】
+        验证设备名称
+        :param device_name_list_text: 设备名称配置页的所有文案
+        :param device_name_options:  设备名称配置页的选项文案
         :return:
         """
-        self.scroll_and_click_by_text(text_to_find=option_text)
+        try:
+            # 先将预览视图往上拉至最小,以便于滚动查找设备名称菜单
+            self.need_pull_down()
+
+            # 先获取日期菜单项的ReoValue值
+            target_element = self.find_element_by_xpath_recursively(
+                start_xpath_prefix='//*[@resource-id="TimeOSD-ReoCell-Navigator"]',
+                target_id="ReoValue")
+            target_date_value = target_element.info.get('text')
+            logger.info(f'当前日期OSD位置为：{target_date_value}')
+
+            # 进入设备名称配置页，点击ReoValue值
+            self.scroll_and_click_by_text(text_to_find='设备名称')
+
+            # 验证设备名称配置页文案
+            RemoteSetting().scroll_check_funcs2(texts=device_name_list_text, back2top=False)
+            # 验证设备名称配置页的选项文案
+            RemoteSetting().scroll_check_funcs2(texts=device_name_options, selector='ReoTitle', back2top=False)
+
+            # 点击已经被选中的选项，验证点击无效，停留在当前设备名称配置页,若为隐藏，则无需验证置灰，且不点击【隐藏】选项
+            if target_date_value != '隐藏':
+                self.scroll_and_click_by_text(text_to_find=target_date_value)
+
+            # 获取当前页面标题文本，验证osd冲突的情况下应置灰指定选项
+            element = self.get_element_info(xpath_exp='//*[@resource-id="HeaderTitle"]')
+            current_page_title = element.info.get('text')
+            if current_page_title != '设备名称':
+                pytest.fail('日期OSD位置与设备名称OSD位置冲突，但日期配置页未置灰指定选项！或置灰选项可选！')
+            elif target_date_value == '隐藏':
+                logger.info('日期OSD位置为隐藏，设备名称配置页无需置灰指定选项！')
+            else:
+                logger.info(f'设备名称配置页已置灰指定【{target_date_value}】选项')
+
+            # 返回上一页
+            self.back_previous_page_by_xpath()
+            # 将上述的【target_device_name_value】从date_options列表中剔除
+            if target_date_value != '隐藏':
+                device_name_options.remove(target_date_value)
+            logger.info(f'新的设备名称操作列表为：{device_name_options}')
+
+            # 开始遍历验证除了置灰选项外的日期选项
+            self.iterate_and_click_popup_text(option_text_list=device_name_options,
+                                              menu_text='设备名称')
+
+        except Exception as err:
+            pytest.fail(f"函数执行出错: {err}")
 
     def verify_date(self, date_list_text, date_options):
         """
         验证日期
-        :param date_list_text:
-        :param date_options:
+        :param date_list_text: 日期配置页的所有文案
+        :param date_options: 日期配置页的选项文案
         :return:
         """
         try:
-            # 获取设备名称菜单项的ReoValue值
-            target_element = self.find_element_by_xpath_recursively(
-                                   start_xpath_prefix='//*[@resource-id="ChannelNameOSD-ReoCell-Navigator"]',
-                                   target_id="ReoValue")
-            target_device_name_value = target_element.info.get('text')
-
             # 先将预览视图往上拉至最小,以便于滚动查找日期菜单
-            self.drag_element(element_xpath='//com.horcrux.svg.SvgView',
-                              direction='up', distance=700, duration=1)
+            self.need_pull_down()
+
+            # 先获取设备名称菜单项的ReoValue值
+            target_element = self.find_element_by_xpath_recursively(
+                start_xpath_prefix='//*[@resource-id="ChannelNameOSD-ReoCell-Navigator"]',
+                target_id="ReoValue")
+            target_device_name_value = target_element.info.get('text')
+            logger.info(f'当前设备名称OSD位置为：{target_device_name_value}')
 
             # 进入日期配置页，点击ReoValue值
             self.scroll_and_click_by_text(text_to_find='日期')
 
             # 验证日期配置页文案
-            RemoteSetting().scroll_check_funcs2(texts=date_list_text)
+            RemoteSetting().scroll_check_funcs2(texts=date_list_text, back2top=False)
             # 验证日期配置页的选项文案
-            RemoteSetting().scroll_check_funcs2(texts=date_options, selector='ReoTitle')
+            RemoteSetting().scroll_check_funcs2(texts=date_options, selector='ReoTitle', back2top=False)
 
-            # 点击已经被选中的选项，验证点击无效，停留在当前日期配置页
-            self.scroll_and_click_by_text(text_to_find=target_device_name_value)
+            # 点击已经被选中的选项，验证点击无效，停留在当前日期配置页,若为隐藏，则无需验证置灰，且不点击【隐藏】选项
+            if target_device_name_value != '隐藏':
+                self.scroll_and_click_by_text(text_to_find=target_device_name_value)
 
             # 获取当前页面标题文本，验证osd冲突的情况下应置灰指定选项
             element = self.get_element_info(xpath_exp='//*[@resource-id="HeaderTitle"]')
             current_page_title = element.info.get('text')
             if current_page_title != '日期':
-                pytest.fail('设备名称OSD位置与日期OSD位置冲突，但日期配置页未置灰指定选项！')
+                pytest.fail('设备名称OSD位置与日期OSD位置冲突，但日期配置页未置灰指定选项！或置灰选项可选！')
+            elif target_device_name_value == '隐藏':
+                logger.info('当前设备名称OSD位置为隐藏，日期配置页无需置灰指定选项！')
+            else:
+                logger.info(f'日期配置页已置灰指定【{target_device_name_value}】选项')
 
             # 返回上一页
             self.back_previous_page_by_xpath()
             # 将上述的【target_device_name_value】从date_options列表中剔除
-            new_options_list = date_options.remove(target_device_name_value)
+            if target_device_name_value != '隐藏':
+                date_options.remove(target_device_name_value)
+            logger.info(f'新的日期操作列表为：{date_options}')
 
             # 开始遍历验证除了置灰选项外的日期选项
-            self.iterate_and_click_popup_text(option_text_list=new_options_list,
+            self.iterate_and_click_popup_text(option_text_list=date_options,
                                               menu_text='日期')
 
         except Exception as err:
@@ -589,7 +660,8 @@ class RemoteDisplay(BasePage):
                             pytest.fail('未能成功返回设备列表页！')
 
             # 先将预览视图往上拉至最小,以便于滚动查找图像布局按钮
-            self.drag_element(element_xpath='//com.horcrux.svg.SvgView', direction='up', distance=700, duration=1)
+            # self.drag_element(element_xpath='//com.horcrux.svg.SvgView', direction='up', distance=700, duration=1)
+            self.need_pull_down()
 
             # 先找到图像布局菜单项
             self.is_element_exists(element_value='图像布局')
@@ -642,8 +714,9 @@ class RemoteDisplay(BasePage):
                 self.click_by_text(text='保存')
 
             # 先将预览视图往上拉至最小,以便于滚动查找图像布局按钮
-            self.drag_element(element_xpath='//com.horcrux.svg.SvgView',
-                              direction='up', distance=700, duration=1)
+            # self.drag_element(element_xpath='//com.horcrux.svg.SvgView', direction='up', distance=700, duration=1)
+            self.need_pull_down()
+
             # 先找到图像布局菜单项
             self.is_element_exists(element_value='图像布局')
 
@@ -687,10 +760,12 @@ class RemoteDisplay(BasePage):
         """
         try:
             # 先将预览视图往上拉至最小,以便于滚动查找显示模式按钮
-            self.drag_element(element_xpath='//com.horcrux.svg.SvgView', direction='up', distance=700, duration=1)
+            # self.drag_element(element_xpath='//com.horcrux.svg.SvgView', direction='up', distance=700, duration=1)
+            self.need_pull_down()
+
             # 再找到并点击显示模式菜单项
             self.scroll_and_click_by_text(text_to_find='显示模式')
-            # 进入显示模式配置页后，不拖动预览窗口（拖动之后预览窗部分画面被遮挡，影响录屏回放后的查看验证）
+            # 进入显示模式配置页后，不拖动预览窗口（拖动之后预览窗部分画面被遮挡，可能影响录屏回放后的查看验证）
             # 遍历安装方式
             # 定义显示模式与对应的XPath映射
             display_modes = {
@@ -770,10 +845,8 @@ class RemoteDisplay(BasePage):
         """
         try:
             # 先将预览视图往上拉至最小,以便于滚动查找显示模式按钮
-            self.drag_element(element_xpath='//com.horcrux.svg.SvgView',
-                              direction='up',
-                              distance=700,
-                              duration=1)
+            # self.drag_element(element_xpath='//com.horcrux.svg.SvgView', direction='up', distance=700, duration=1)
+            self.need_pull_down()
 
             # 先点击场景菜单进入配置页，验证配置页文案和选项
             self.scroll_and_click_by_text('场景')

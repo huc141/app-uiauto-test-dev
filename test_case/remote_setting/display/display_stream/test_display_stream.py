@@ -12,10 +12,10 @@ devices_config = read_yaml.load_device_config(device_dir='apower/AReolink_TrackM
 
 @allure.epic("远程配置>常规设置>显示")
 class TestRemoteDisplay:
-    # 测码流
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("显示>码流")
     @allure.story("需人工核查日志和录屏")
+    @allure.title("测试进入显示>码流页面， 并验证清晰和流畅页面的配置文本和操作")
     @pytest.mark.skip
     def test_remote_stream(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
@@ -169,6 +169,7 @@ class TestRemoteDisplay:
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("显示>码流>帧率控制")
     @allure.story("需人工核查日志和录屏")
+    @allure.title("测试进入帧率控制页面，遍历帧率控制配置")
     def test_remote_frame_rate_control(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['display']['items']['display']['stream']['subpage']
@@ -198,6 +199,7 @@ class TestRemoteDisplay:
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("显示>码流>码率模式")
     @allure.story("需人工核查日志和录屏")
+    @allure.title("测试进入码率模式页面，遍历码率模式配置")
     def test_remote_rate_mode(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['display']['items']['display']['stream']['subpage']

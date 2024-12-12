@@ -625,7 +625,6 @@ class BasePage:
                     return True
 
         try:
-            print(option_text_list)
             # 遍历文本，执行点击操作
             for i in option_text_list:
                 self.scroll_and_click_by_text(text_to_find=menu_text, el_type=el_type)

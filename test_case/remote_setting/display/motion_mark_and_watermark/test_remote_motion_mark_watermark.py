@@ -15,6 +15,8 @@ devices_config = read_yaml.load_device_config(device_dir='apower/AReolink_TrackM
 class TestRemoteDisplay:
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("显示>移动标记")
+    @allure.story("需人工核查日志和录屏")
+    @allure.title("测试移动标记开关按钮")
     @pytest.mark.skip
     def test_remote_motion_mark(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
@@ -32,6 +34,8 @@ class TestRemoteDisplay:
 
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("显示>水印")
+    @allure.story("需人工核查日志和录屏")
+    @allure.title("测试水印开关按钮")
     def test_remote_watermark(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['display']['items']['display']

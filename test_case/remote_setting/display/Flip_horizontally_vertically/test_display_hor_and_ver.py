@@ -13,9 +13,10 @@ devices_config = read_yaml.load_device_config(yaml_file_name='display.yaml')  # 
 @allure.epic("远程配置>常规设置>显示")
 class TestRemoteDisplay:
 
-    # 测垂直翻转
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("显示>垂直翻转")
+    @allure.story("需人工核查日志和录屏")
+    @allure.title("测试 垂直翻转 主页功能项，点击切换按钮")
     def test_remote_vertical_flip(self, device_config):
         # 获取yaml文件指定配置
         remote_items = device_config['ipc']['display']['items']['display']
@@ -32,9 +33,10 @@ class TestRemoteDisplay:
         # 点击垂直翻转按钮
         RemoteDisplay().click_vertical_flip_switch_button()
 
-    # 测水平翻转
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("显示>水平翻转")
+    @allure.story("需人工核查日志和录屏")
+    @allure.title("测试 水平翻转 主页功能项，点击切换按钮")
     def test_remote_horizontal_flip(self, device_config):
         # 获取yaml文件指定配置
         remote_items = device_config['ipc']['display']['items']['display']

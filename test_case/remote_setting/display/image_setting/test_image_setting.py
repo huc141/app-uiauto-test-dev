@@ -10,10 +10,12 @@ from pages.rn_device_setting_page.remote_display import RemoteDisplay
 devices_config = read_yaml.load_device_config(device_dir='apower/AReolink_TrackMix_WiFi', yaml_file_name='display.yaml')  # 读取参数化文件
 
 
-@allure.epic("远程配置>常规设置>显示>图像设置")
+@allure.epic("远程配置>常规设置>显示")
 class TestRemoteDisplay:
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("图像设置>亮度")
+    @allure.story("需人工核查日志和录屏")
+    @allure.title("测试 进入显示>图像设置页面，拖动亮度条")
     def test_remote_brightness(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['display']['items']['display']['image_setting']
@@ -33,6 +35,8 @@ class TestRemoteDisplay:
 
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("图像设置>抗闪烁")
+    @allure.story("需人工核查日志和录屏")
+    @allure.title("测试 进入显示>图像设置页面，遍历抗闪烁")
     def test_remote_anti_flicker(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['display']['items']['display']['image_setting']
