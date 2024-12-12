@@ -2,9 +2,12 @@
 import time
 import pytest
 from typing import Literal
+from common_tools.read_yaml import read_yaml
 from common_tools.logger import logger
 from pages.base_page import BasePage
 from pages.rn_device_setting_page.remote_setting import RemoteSetting
+
+g_config_back = read_yaml.get_data(key="back", source="global_data")  # 读取全局配置
 
 
 class RemoteDisplay(BasePage):
@@ -19,6 +22,9 @@ class RemoteDisplay(BasePage):
             self.return_vertical_screen_button = '//*[@resource-id="ReoIcon-Left"]'  # 返回竖屏按钮
             self.layout_expand_button = '//*[@resource-id="ImageLayoutExpand"]'  # 图像布局 > 展开按钮
             self.layout_fisheye_button = '//*[@resource-id="ImageLayoutOriginal"]'  # 图像布局 > 鱼眼按钮
+            self.display_mode_type_FLOOR = '//*[@resource-id="FLOOR"]'  # 显示模式 > 桌面
+            self.display_mode_type_TOP = '//*[@resource-id="TOP"]'  # 显示模式 > 吸顶
+            self.display_mode_type_WALL = '//*[@resource-id="WALL"]'  # 显示模式 > 壁挂
 
         elif self.platform == 'ios':
             self.shelter_player = ''
@@ -388,10 +394,52 @@ class RemoteDisplay(BasePage):
         """
         self.scroll_and_click_by_text(text_to_find=option_text)
 
-    def verify_date(self):
-        """验证日期"""
-        # TODO:
-        pass
+    def verify_date(self, date_list_text, date_options):
+        """
+        验证日期
+        :param date_list_text:
+        :param date_options:
+        :return:
+        """
+        try:
+            # 获取设备名称菜单项的ReoValue值
+            target_element = self.find_element_by_xpath_recursively(
+                                   start_xpath_prefix='//*[@resource-id="ChannelNameOSD-ReoCell-Navigator"]',
+                                   target_id="ReoValue")
+            target_device_name_value = target_element.info.get('text')
+
+            # 先将预览视图往上拉至最小,以便于滚动查找日期菜单
+            self.drag_element(element_xpath='//com.horcrux.svg.SvgView',
+                              direction='up', distance=700, duration=1)
+
+            # 进入日期配置页，点击ReoValue值
+            self.scroll_and_click_by_text(text_to_find='日期')
+
+            # 验证日期配置页文案
+            RemoteSetting().scroll_check_funcs2(texts=date_list_text)
+            # 验证日期配置页的选项文案
+            RemoteSetting().scroll_check_funcs2(texts=date_options, selector='ReoTitle')
+
+            # 点击已经被选中的选项，验证点击无效，停留在当前日期配置页
+            self.scroll_and_click_by_text(text_to_find=target_device_name_value)
+
+            # 获取当前页面标题文本，验证osd冲突的情况下应置灰指定选项
+            element = self.get_element_info(xpath_exp='//*[@resource-id="HeaderTitle"]')
+            current_page_title = element.info.get('text')
+            if current_page_title != '日期':
+                pytest.fail('设备名称OSD位置与日期OSD位置冲突，但日期配置页未置灰指定选项！')
+
+            # 返回上一页
+            self.back_previous_page_by_xpath()
+            # 将上述的【target_device_name_value】从date_options列表中剔除
+            new_options_list = date_options.remove(target_device_name_value)
+
+            # 开始遍历验证除了置灰选项外的日期选项
+            self.iterate_and_click_popup_text(option_text_list=new_options_list,
+                                              menu_text='日期')
+
+        except Exception as err:
+            pytest.fail(f"函数执行出错: {err}")
 
     def click_water_mark(self, option_text='水印'):
         """验证水印"""
@@ -516,15 +564,17 @@ class RemoteDisplay(BasePage):
         """
         try:
             choose_button = ['取消', '保存']
-            choose_button_tips = ['注意：', '取消', '切换后，摄像机将会重启，并且会清除隐私区域、报警区域、目标尺寸等配置，确定要切换吗？', '保存']
+            choose_button_tips = ['注意：', '取消',
+                                  '切换后，摄像机将会重启，并且会清除隐私区域、报警区域、目标尺寸等配置，确定要切换吗？',
+                                  '保存']
 
             def check_choose_button_tips():
                 for c in choose_button:
                     self.scroll_and_click_by_text(text_to_find='保存')
                     RemoteSetting().scroll_check_funcs2(
-                                                        texts=choose_button_tips,
-                                                        scroll_or_not=False,
-                                                        back2top=False)
+                        texts=choose_button_tips,
+                        scroll_or_not=False,
+                        back2top=False)
                     self.click_by_text(text=c)
 
                     if c == '保存':
@@ -570,6 +620,111 @@ class RemoteDisplay(BasePage):
         except Exception as err:
             pytest.fail(f"函数执行出错: {err}")
 
+    def set_image_layout_type(self, layout_type, device_list_name):
+        """
+        设置图像布局类型
+        :param layout_type: 需要设置的图像布局类型，支持【展开】和【鱼眼】两种类型。
+        :param device_list_name: 设备重启后需要从设备列表重新进入远程配置，重新进入显示页面。
+        :return:
+        """
+        try:
+            def click_layout_button(set_layout_type):
+                # 点击指定布局类型按钮
+                if layout_type == '展开':
+                    logger.info(f'当前布局为【鱼眼】，切换【展开】布局类型')
+                    self.click_by_xpath(xpath_expression=self.layout_expand_button)
+                elif layout_type == '鱼眼':
+                    logger.info(f'当前布局为【展开】，切换【鱼眼】布局类型')
+                    self.click_by_xpath(xpath_expression=self.layout_fisheye_button)
+                # 点击保存
+                self.click_by_text(text='保存')
+                # 点击提示的保存
+                self.click_by_text(text='保存')
+
+            # 先将预览视图往上拉至最小,以便于滚动查找图像布局按钮
+            self.drag_element(element_xpath='//com.horcrux.svg.SvgView',
+                              direction='up', distance=700, duration=1)
+            # 先找到图像布局菜单项
+            self.is_element_exists(element_value='图像布局')
+
+            # 再查出当前的图像布局类型是否为指定的类型
+            current_layout = self.is_element_exists(element_value=layout_type)
+            if current_layout:
+                logger.info(f'当前布局已经是【{layout_type}】布局类型，无需切换！')
+            else:
+                # 设置成指定的布局类型
+                self.scroll_and_click_by_text(text_to_find='图像布局')
+                time.sleep(1)
+                # 点击指定布局类型按钮
+                click_layout_button(set_layout_type=layout_type)
+                logger.info('等待30秒，等待摄像机重启后执行显示模式的测试用例')
+                time.sleep(30)
+                # 进入远程配置>显示>显示模式
+                RemoteSetting().access_in_display(device_list_name=device_list_name)
+        except Exception as err:
+            pytest.fail(f"函数执行出错: {err}")
+
+    def check_echo(self):
+        """
+        验证显示方式的回显
+        :return:
+        """
+        try:
+            # 返回上一页
+            self.back_previous_page_by_xpath()
+            # 验证回显的安装方式是否正确
+            RemoteSetting().scroll_check_funcs2(texts='壁挂',
+                                                scroll_or_not=False,
+                                                back2top=False)
+        except Exception as err:
+            pytest.fail(f"函数执行出错: {err}")
+
+    def verify_display_mode_and_rotating_picture(self):
+        """
+        点击进入并验证显示模式,并旋转画面
+        :param mode: 显示模式类型，支持【桌面】【吸顶】【壁挂】3种类型。
+        :return:
+        """
+        try:
+            # 先将预览视图往上拉至最小,以便于滚动查找显示模式按钮
+            self.drag_element(element_xpath='//com.horcrux.svg.SvgView', direction='up', distance=700, duration=1)
+            # 再找到并点击显示模式菜单项
+            self.scroll_and_click_by_text(text_to_find='显示模式')
+            # 进入显示模式配置页后，不拖动预览窗口（拖动之后预览窗部分画面被遮挡，影响录屏回放后的查看验证）
+            # 遍历安装方式
+            # 定义显示模式与对应的XPath映射
+            display_modes = {
+                '桌面': self.display_mode_type_FLOOR,
+                '吸顶': self.display_mode_type_TOP,
+                '壁挂': self.display_mode_type_WALL
+            }
+
+            # 遍历并点击每种显示模式
+            for mode_name, xpath in display_modes.items():
+                logger.info(f'点击【{mode_name}】模式')
+                self.click_by_xpath(xpath_expression=xpath)
+                logger.info('等待3秒，录屏预览区域变化')
+                time.sleep(3)
+
+            # 旋转画面: 向右
+            self.slider_seek_bar(slider_mode='xpath',
+                                 id_or_xpath='//*[@resource-id="RNE__Slider_Thumb"]',
+                                 direction='right',
+                                 iteration=15)
+            # 旋转画面: 向左
+            self.slider_seek_bar(slider_mode='xpath',
+                                 id_or_xpath='//*[@resource-id="RNE__Slider_Thumb"]',
+                                 direction='left',
+                                 iteration=25)
+            # 旋转画面: 向右
+            self.slider_seek_bar(slider_mode='xpath',
+                                 id_or_xpath='//*[@resource-id="RNE__Slider_Thumb"]',
+                                 direction='right',
+                                 iteration=15)
+
+        except Exception as err:
+            pytest.fail(f"函数执行出错: {err}")
+
     def draw_privacy_mask(self, mode=id, draw_area='左上'):
         """
         画隐私遮盖区域。一般来说：电源最多4个，电池最多8个或者3个。如果是双目，则每个通道独立计数。
@@ -606,7 +761,35 @@ class RemoteDisplay(BasePage):
             logger.info(f"可能发生了错误: {err}")
             return False
 
-    def indoor_and_outdoor_scenes(self):
-        """场景"""
-        # TODO:
-        pass
+    def verify_scenes(self, scenes_list, options):
+        """
+        遍历切换室内外场景
+        :param scenes_list: 需要遍历的场景配置页文案列表
+        :param options: 需要点击和验证的选项列表
+        :return:
+        """
+        try:
+            # 先将预览视图往上拉至最小,以便于滚动查找显示模式按钮
+            self.drag_element(element_xpath='//com.horcrux.svg.SvgView',
+                              direction='up',
+                              distance=700,
+                              duration=1)
+
+            # 先点击场景菜单进入配置页，验证配置页文案和选项
+            self.scroll_and_click_by_text('场景')
+            RemoteSetting().scroll_check_funcs2(texts=scenes_list,
+                                                scroll_or_not=False,
+                                                back2top=False)
+
+            RemoteSetting().scroll_check_funcs2(texts=options,
+                                                selector='ReoTitle',
+                                                scroll_or_not=False,
+                                                back2top=False)
+            # 返回上一页
+            self.back_previous_page_by_xpath()
+            # 遍历切换场景
+            self.iterate_and_click_popup_text(option_text_list=options,
+                                              menu_text='场景')
+
+        except Exception as err:
+            pytest.fail(f"函数执行出错: {err}")

@@ -95,7 +95,7 @@ class RemoteSetting(BasePage):
                     logger.warning(f"当前页面缺失的功能有：{texts}")
                     if back2top:
                         self.back_to_page_top()
-                    pytest.fail(f"当前页面缺失的功能有：{ele_not_exists}")
+                    pytest.fail(f"当前页面缺失的功能有：{texts}")
                 else:
                     logger.info(f"需校验的功能项均存在！-->{texts}")
                     if back2top:
