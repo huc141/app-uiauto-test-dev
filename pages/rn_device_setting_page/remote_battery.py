@@ -22,12 +22,12 @@ class RemoteBattery(BasePage):
     def check_battery_page(self, text, options):
         """
         验证电池主页文案和开关操作
-       :param text: 未开启电池统计数据前的页面文案列表
-       :param options: 开启电池统计数据后的页面文案列表
-       :return:
+        :param text: 未开启电池统计数据前的页面文案列表
+        :param options: 开启电池统计数据后的页面文案列表
+        :return:
         """
         try:
-            # 定义一个电量使用统计弹窗内容列表
+            # 定义一个电池WiFi设备的电量使用统计弹窗内容列表
             battery_off_button = ['电量使用统计', '关闭统计，将停止对设备进行记录和统计，并删除相关数据。', '取消', '确定']
 
             # wifi设备
@@ -53,10 +53,10 @@ class RemoteBattery(BasePage):
                     time.sleep(2)
                     RemoteSetting().scroll_check_funcs2(texts=text, scroll_or_not=False, back2top=False)
 
-                if self.loop_detect_element_exist(element_value='同意并继续'):
+                if self.loop_detect_element_exist(element_value='同意并继续', loop_times=2, scroll_or_not=False):
                     RemoteSetting().scroll_check_funcs2(texts=text, scroll_or_not=False, back2top=False)
                     check_and_click_agree()
-                elif self.loop_detect_element_exist(element_value='最近4周运行时长'):
+                elif self.loop_detect_element_exist(element_value='最近4周运行时长', loop_times=2, scroll_or_not=False):
                     RemoteSetting().scroll_check_funcs2(texts=options, scroll_or_not=False, back2top=False)
                     confirm_close_statistics()
                 else:
@@ -69,8 +69,13 @@ class RemoteBattery(BasePage):
                                                     scroll_or_not=False,
                                                     back2top=False)
 
-            verify_wifi_battery_page()
-            verify_4g_battery_page()
+            # 先检测是电池WiFi设备/电池4G设备
+            if self.loop_detect_element_exist(element_value='最近30天的每日剩余电量', loop_times=2, scroll_or_not=False):
+                logger.info('检测到“最近30天的每日剩余电量”文案，可能是4G设备，执行4G设备的验证')
+                verify_4g_battery_page()
+            else:
+                logger.info('未检测到“最近30天的每日剩余电量”文案，可能是WiFi设备，执行WiFi设备的验证')
+                verify_wifi_battery_page()
 
         except Exception as e:
             pytest.fail(f'验证失败，错误信息：{e}')
