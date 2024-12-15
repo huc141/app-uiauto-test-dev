@@ -16,10 +16,8 @@ class ReadYaml:
         for fname in os.listdir(self.config_root_dir):
             if fname.split('.')[-1] not in ['yml', 'yaml']:
                 continue
-            with open(file=os.path.join(self.config_root_dir, fname),
-                      encoding='utf-8') as stream:
-                self.__raw_data[fname.split('.')[0]] = yaml.safe_load(
-                    stream)
+            with open(file=os.path.join(self.config_root_dir, fname), encoding='utf-8') as stream:
+                self.__raw_data[fname.split('.')[0]] = yaml.safe_load(stream)
 
         # 配置常规参数
         self.config_device_sn = self.get_data('config_device_sn', '')  # 获取手机序列号
@@ -73,6 +71,18 @@ class ReadYaml:
             return self.__raw_data[source][key]
         else:
             return default
+
+    def read_global_data(self, source: str = 'global_data'):
+        try:
+            if self.__raw_data[source]:
+                g_config = self.__raw_data[source]
+                return g_config
+        except FileNotFoundError:
+            print(f"文件 {source} 未找到。")
+            return None
+        except yaml.YAMLError as e:
+            print(f"解析 YAML 文件时出错: {e}")
+            return None
 
 
 read_yaml = ReadYaml()
