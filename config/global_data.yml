@@ -9,3 +9,8 @@ display_setting: ''
 
 # 左上角通用返回上一页按钮：
 back: '//*[@resource-id="HeaderLeft-ReoIcon"]'
+
+# 选择用例执行时，测试单机或hub或nvr，并填写对应的nvr和hub名称：
+access_mode: 'ipc'
+nvr_name: 'Reolink home hub pro'
+hub_name: 'Reolink-NVR'
