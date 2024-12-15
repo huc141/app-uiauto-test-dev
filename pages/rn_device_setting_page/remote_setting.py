@@ -2,7 +2,13 @@
 import time
 import pytest
 from common_tools.logger import logger
+from common_tools.read_yaml import read_yaml
 from pages.base_page import BasePage
+
+g_config = read_yaml.read_global_data(source="global_data")  # 读取全局配置
+_access_mode = g_config.get('access_mode')  # 设备接入方式
+_nvr_name = g_config.get('nvr_name')  # nvr名称
+_hub_name = g_config.get('hub_name')  # hub名称
 
 
 class RemoteSetting(BasePage):
@@ -17,22 +23,6 @@ class RemoteSetting(BasePage):
             self.ivSelectChannelButton = '(//XCUIElementTypeButton)[2]'
             self.base_navigationbar_title = ''
             self.base_left_button = ''
-
-    # def check_remote_setting_text(self, expected_text, exclude_texts,
-    #                               xml_az_parse_conditions, xml_ios_parse_conditions):
-    #     """
-    #     根据设备名，检查对应设备的远程配置功能是否和预期一致
-    #     :param xml_az_parse_conditions: 安卓的远程配置主(一级)页面解析条件，用于排除无关文本，筛选出页面功能
-    #     :param xml_ios_parse_conditions: iOS的远程配置主(一级)页面解析条件，用于排除无关文本，筛选出页面功能
-    #     :param expected_text: 需要检查的预期文本
-    #     :param exclude_texts: 需要排除的文本(额外添加需要排除的文本)
-    #     :return:
-    #     """
-    #     return self.verify_page_text(expected_text=expected_text,
-    #                                  exclude_texts=exclude_texts,
-    #                                  xml_az_parse_conditions=xml_az_parse_conditions,
-    #                                  xml_ios_parse_conditions=xml_ios_parse_conditions
-    #                                  )
 
     @staticmethod
     def extract_yaml_names(dict_list, key):
@@ -209,7 +199,7 @@ class RemoteSetting(BasePage):
         except Exception as e:
             pytest.fail(f"查找设备在设备列表的名称并点击远程设置按钮出错：{str(e)}")
 
-    def access_in_remote_pre_recording(self, device_list_name, sub_name=None, access_mode='ipc'):
+    def access_in_remote_pre_recording(self, device_list_name, sub_name=None, access_mode=_access_mode):
         """
         进入指定设备的远程配置的预录模式主页
         :param device_list_name: 设备列表里单机设备、hub、nvr的昵称。
@@ -629,7 +619,7 @@ class RemoteSetting(BasePage):
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
-    def access_in_pir(self, device_list_name, sub_name=None, access_mode='ipc'):
+    def access_in_pir(self, device_list_name, nvr_name=_nvr_name, hub_name=_hub_name, access_mode=_access_mode):
         """
         点击PIR传感器，进入PIR传感器页
         :return:
@@ -645,17 +635,17 @@ class RemoteSetting(BasePage):
                 self.loop_detect_element_and_click('PIR 传感器')
 
             # 如果设备接入了nvr：
-            elif access_mode == 'nvr' and sub_name is not None:
+            elif access_mode == 'nvr' and nvr_name is not None:
                 time.sleep(2)
                 self.loop_detect_element_and_click(self.ivSelectChannelButton, selector_type='xpath')
                 # 选择通道并点击
-                self.loop_detect_element_and_click(sub_name)
+                self.loop_detect_element_and_click(nvr_name)
 
             # 如果设备接入了hub：
-            elif access_mode == 'hub' and sub_name is not None:
+            elif access_mode == 'hub' and hub_name is not None:
                 time.sleep(2)
                 # 根据名称查找hub下的设备卡片，点击并进入hub下的设备的远程配置主页
-                self.loop_detect_element_and_click(sub_name)
+                self.loop_detect_element_and_click(hub_name)
                 # 进入PIR传感器主页
                 self.loop_detect_element_and_click('PIR 传感器')
 
