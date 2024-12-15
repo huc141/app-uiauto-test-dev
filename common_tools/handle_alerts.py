@@ -28,7 +28,7 @@ class HandleAlerts:
             if self.platform == 'android':
                 for button in android_alert_buttons:
                     if self.driver(resourceId=button).exists:
-                        print(f"识别到安卓相关弹窗按钮: {button}")
+                        logger.info(f"识别到安卓相关弹窗按钮: {button}")
                         self.driver(resourceId=button).click()
                         return True
 
@@ -36,7 +36,7 @@ class HandleAlerts:
                 session = self.driver.session()
                 for button in ios_alert_buttons:
                     if session(label=button).exists:
-                        print(f"识别到iOS相关弹窗按钮: {button}")
+                        logger.info(f"识别到iOS相关弹窗按钮: {button}")
                         time.sleep(1)
                         session(label=button).tap()
                         logger.info(f"点击权限弹窗按钮: {button}")
