@@ -43,8 +43,7 @@ def pytest_runtest_makereport(item, call):
             img_byte_arr = BytesIO()  # 将Image对象转换为字节流
             img.save(img_byte_arr, format='PNG')  # 将截图保存到BytesIO对象中，格式为PNG
             img_byte_arr = img_byte_arr.getvalue()  # 将截图保存到BytesIO对象中，格式为PNG
-            allure.attach(img_byte_arr, '自动截图',
-                          allure.attachment_type.PNG)  # 将指定内容作为附件添加到测试报告。这里将截图的二进制数据作为附件，标题为“自动截图”，类型为PNG。
+            allure.attach(img_byte_arr, '自动截图', allure.attachment_type.PNG)  # 将指定内容作为附件添加到测试报告。这里将截图的二进制数据作为附件，标题为“自动截图”，类型为PNG。
             logger.info("用例执行成功/失败，已自动截图")
 
             base_path = os.path.join(os.getcwd(), 'screen_record')  # 获取录屏文件的保存路径
