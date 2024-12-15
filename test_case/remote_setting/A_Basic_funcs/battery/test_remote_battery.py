@@ -24,7 +24,7 @@ class TestRemoteBattery:
         BasePage().check_key_in_yaml(remote_items, 'text')
 
         # 启动app，并开启录屏
-        # driver.start_app(True)
+        driver.start_app(True)
 
         # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击‘显示’菜单项进入显示主页
         RemoteSetting().access_in_battery(device_list_name=device_config['device_list_name'])
