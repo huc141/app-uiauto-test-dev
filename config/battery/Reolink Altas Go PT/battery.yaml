@@ -1,0 +1,25 @@
+device_list_name: "Reolink Altas Go PT"
+uid: '952700Y101HU184P'
+sub_name: ""
+
+ipc:
+  battery:
+    name: '电池'
+    desc: '设置>电池'
+    type: 'navigation'
+    text:
+      - ''
+
+    items:
+      battery:
+        name: '电池'
+        desc: '设置>电池'
+        type: 'navigation'
+        text:
+          - '电池'
+          - '最近30天的每日剩余电量'
+          - '设备重启后，数据将重新开始统计。'
+        options:
+          - '电池'
+          - '最近30天的每日剩余电量'
+          - '设备重启后，数据将重新开始统计。'
