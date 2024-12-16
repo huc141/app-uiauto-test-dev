@@ -194,6 +194,29 @@ class RemoteDisplay(BasePage):
         """
         self.scroll_and_click_by_text(text_to_find=option_text)
 
+    def verify_hdr(self, text1, text2):
+        """
+        验证HDR
+        :param text1: 全局文案列表
+        :param text2: ReoTitle的功能项文案列表
+        :return:
+        """
+        try:
+            # 找到HDR
+            self.scroll_and_click_by_text(text_to_find='HDR')
+
+            # 验证HDR文案
+            RemoteSetting().scroll_check_funcs2(texts=text1, scroll_or_not=False, back2top=False)
+            RemoteSetting().scroll_check_funcs2(texts=text2, selector='ReoTitle', scroll_or_not=False, back2top=False)
+
+            # 返回上一级
+            self.back_previous_page_by_xpath()
+
+            # 开始遍历验证除了置灰选项外的日期选项
+            self.iterate_and_click_popup_text(option_text_list=text2, menu_text='HDR')
+        except Exception as e:
+            pytest.fail(f"函数执行出错: {str(e)}")
+
     def drag_slider_brightness(self, slider_mode='obj'):
         """
         对拖动条执行操作，支持上、下、左、右方向拖动
@@ -206,6 +229,102 @@ class RemoteDisplay(BasePage):
         try:
             element_obj = BasePage().find_element_by_xpath_recursively(
                 start_xpath_prefix='//*[@resource-id="Brightness"]',
+                target_id="RNE__Slider_Thumb")
+
+            # 往右拖动15次
+            self.slider_seek_bar(slider_mode=slider_mode,
+                                 id_or_xpath=element_obj,
+                                 direction='right',
+                                 iteration=15)
+
+            # 往左拖动25次
+            self.slider_seek_bar(slider_mode=slider_mode,
+                                 id_or_xpath=element_obj,
+                                 direction='left',
+                                 iteration=25)
+
+            # 往右拖动5次
+            self.slider_seek_bar(slider_mode=slider_mode,
+                                 id_or_xpath=element_obj,
+                                 direction='right',
+                                 iteration=5)
+        except Exception as e:
+            pytest.fail(f"函数执行出错: {str(e)}")
+
+    def drag_slider_contrast(self, slider_mode='obj'):
+        """
+        对拖动条执行操作，支持上、下、左、右方向拖动
+        :param slider_mode: slider的定位方式，支持id、xpath定位，或者直接使用元素对象obj
+        :param id_or_xpath: id或者xpath的定位参数
+        """
+        # TODO: start_xpath_prefix待提取
+        try:
+            element_obj = BasePage().find_element_by_xpath_recursively(
+                start_xpath_prefix='//*[@resource-id="对比度条的xpath"]',
+                target_id="RNE__Slider_Thumb")
+
+            # 往右拖动15次
+            self.slider_seek_bar(slider_mode=slider_mode,
+                                 id_or_xpath=element_obj,
+                                 direction='right',
+                                 iteration=15)
+
+            # 往左拖动25次
+            self.slider_seek_bar(slider_mode=slider_mode,
+                                 id_or_xpath=element_obj,
+                                 direction='left',
+                                 iteration=25)
+
+            # 往右拖动5次
+            self.slider_seek_bar(slider_mode=slider_mode,
+                                 id_or_xpath=element_obj,
+                                 direction='right',
+                                 iteration=5)
+        except Exception as e:
+            pytest.fail(f"函数执行出错: {str(e)}")
+
+    def drag_slider_saturation(self, slider_mode='obj'):
+        """
+        对拖动条执行操作，支持上、下、左、右方向拖动
+        :param slider_mode: slider的定位方式，支持id、xpath定位，或者直接使用元素对象obj
+        :param id_or_xpath: id或者xpath的定位参数
+        """
+        # TODO: start_xpath_prefix待提取
+        try:
+            element_obj = BasePage().find_element_by_xpath_recursively(
+                start_xpath_prefix='//*[@resource-id="饱和度条"]',
+                target_id="RNE__Slider_Thumb")
+
+            # 往右拖动15次
+            self.slider_seek_bar(slider_mode=slider_mode,
+                                 id_or_xpath=element_obj,
+                                 direction='right',
+                                 iteration=15)
+
+            # 往左拖动25次
+            self.slider_seek_bar(slider_mode=slider_mode,
+                                 id_or_xpath=element_obj,
+                                 direction='left',
+                                 iteration=25)
+
+            # 往右拖动5次
+            self.slider_seek_bar(slider_mode=slider_mode,
+                                 id_or_xpath=element_obj,
+                                 direction='right',
+                                 iteration=5)
+        except Exception as e:
+            pytest.fail(f"函数执行出错: {str(e)}")
+
+    def drag_slider_sharpness(self, slider_mode='obj'):
+        """
+        对拖动条执行操作，支持上、下、左、右方向拖动
+        :param slider_mode: slider的定位方式，支持id、xpath定位，或者直接使用元素对象obj
+        :param id_or_xpath: id或者xpath的定位参数
+        """
+        # TODO: start_xpath_prefix待提取
+        try:
+            element_obj = BasePage().find_element_by_xpath_recursively(
+                start_xpath_prefix='//*[@resource-id="锐度条"]',
                 target_id="RNE__Slider_Thumb")
 
             # 往右拖动15次
@@ -521,6 +640,18 @@ class RemoteDisplay(BasePage):
             # 点击两次
             for i in range(2):
                 self.scroll_click_right_btn(text_to_find=option_text,
+                                            resourceId_1='ReoTitle',
+                                            className_2='android.view.ViewGroup'
+                                            )
+        except Exception as err:
+            pytest.fail(f"函数执行出错: {err}")
+
+    def verify_auto_zoom(self):
+        """验证自动对焦"""
+        try:
+            # 点击两次
+            for i in range(2):
+                self.scroll_click_right_btn(text_to_find='自动对焦',
                                             resourceId_1='ReoTitle',
                                             className_2='android.view.ViewGroup'
                                             )

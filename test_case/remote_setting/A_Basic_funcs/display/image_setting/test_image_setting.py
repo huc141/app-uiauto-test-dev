@@ -35,6 +35,69 @@ class TestRemoteDisplay:
         RemoteDisplay().drag_slider_brightness()
 
     @pytest.mark.parametrize("device_config", devices_config)
+    @allure.feature("图像设置>对比度")
+    @allure.story("需人工核查日志和录屏")
+    @allure.title("测试 进入显示>图像设置页面，拖动对比度条")
+    def test_remote_contrast(self, device_config):
+        # 检查键是否存在，存在则执行当前用例，否则跳过
+        remote_items = device_config['ipc']['display']['items']['display']['image_setting']
+        BasePage().check_key_in_yaml(remote_items, 'contrast')
+
+        # 启动app，并开启录屏
+        driver.start_app(True)
+
+        # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击‘显示’菜单项进入显示页
+        RemoteSetting().access_in_display(device_list_name=device_config['device_list_name'])
+
+        # 进入图像设置
+        RemoteDisplay().click_image_setting()
+
+        # 拖动对比度条
+        RemoteDisplay().drag_slider_contrast()
+
+    @pytest.mark.parametrize("device_config", devices_config)
+    @allure.feature("图像设置>饱和度")
+    @allure.story("需人工核查日志和录屏")
+    @allure.title("测试 进入显示>图像设置页面，拖动饱和度条")
+    def test_remote_saturation(self, device_config):
+        # 检查键是否存在，存在则执行当前用例，否则跳过
+        remote_items = device_config['ipc']['display']['items']['display']['image_setting']
+        BasePage().check_key_in_yaml(remote_items, 'saturation')
+
+        # 启动app，并开启录屏
+        driver.start_app(True)
+
+        # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击‘显示’菜单项进入显示页
+        RemoteSetting().access_in_display(device_list_name=device_config['device_list_name'])
+
+        # 进入图像设置
+        RemoteDisplay().click_image_setting()
+
+        # 拖动饱和度条
+        RemoteDisplay().drag_slider_saturation()
+
+    @pytest.mark.parametrize("device_config", devices_config)
+    @allure.feature("图像设置>锐度")
+    @allure.story("需人工核查日志和录屏")
+    @allure.title("测试 进入显示>图像设置页面，拖动锐度条")
+    def test_remote_sharpness(self, device_config):
+        # 检查键是否存在，存在则执行当前用例，否则跳过
+        remote_items = device_config['ipc']['display']['items']['display']['image_setting']
+        BasePage().check_key_in_yaml(remote_items, 'saturation')
+
+        # 启动app，并开启录屏
+        driver.start_app(True)
+
+        # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击‘显示’菜单项进入显示页
+        RemoteSetting().access_in_display(device_list_name=device_config['device_list_name'])
+
+        # 进入图像设置
+        RemoteDisplay().click_image_setting()
+
+        # 拖动锐度条
+        RemoteDisplay().drag_slider_sharpness()
+
+    @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("图像设置>抗闪烁")
     @allure.story("需人工核查日志和录屏")
     @allure.title("测试 进入显示>图像设置页面，遍历抗闪烁")
@@ -85,4 +148,24 @@ class TestRemoteDisplay:
         # 夜视通透模式
         RemoteDisplay().verify_night_transparent_vision()
 
+    @pytest.mark.parametrize("device_config", devices_config)
+    @allure.feature("图像设置>HDR")
+    @allure.story("需人工核查日志和录屏")
+    @allure.title("测试 进入显示>图像设置页面，测试HDR")
+    def test_remote_hdr(self, device_config):
+        # 检查键是否存在，存在则执行当前用例，否则跳过
+        remote_items = device_config['ipc']['display']['items']['display']['image_setting']
+        BasePage().check_key_in_yaml(remote_items, 'hdr')
+
+        # 启动app，并开启录屏
+        driver.start_app(True)
+
+        # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击‘显示’菜单项进入显示页
+        RemoteSetting().access_in_display(device_list_name=device_config['device_list_name'])
+
+        # 进入图像设置
+        RemoteDisplay().click_image_setting()
+
+        # 遍历HDR
+        RemoteDisplay().verify_hdr(remote_items['hdr']['text'], remote_items['hdr']['options'])
 
