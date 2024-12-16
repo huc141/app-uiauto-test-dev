@@ -1,0 +1,23 @@
+[
+    {"context":{"equipment selection":3,"fill_in_the_email_address":0,"purchase_channel_selection":5,"fill_in_the_order_number":7},"id":"registration_extension_not_submitted","pageId":"03_01_0001","type":"Click"},
+    {"context":{},"id":"see_the_insurance_reminder","pageId":"01_01_0001","type":"View"},
+    {"context":{},"id":"show_device_list","pageId":"01_01_0001","type":"View"},
+    {"context":{},"id":"see_the_insurance_reminder","pageId":"01_01_0001","type":"View"},
+    {"context":{},"id":"show_device_list","pageId":"01_01_0001","type":"View"},
+    {"context":{"enter_path":0},"id":"view_registered_warranty","pageId":"03_01_0001","type":"View"},
+    {"context":{"equipment selection":3,"fill_in_the_email_address":1,"purchase_channel_selection":5,"fill_in_the_order_number":7},"id":"registration_extension_not_submitted","pageId":"03_01_0001","type":"Click"},
+    {"context":{"equipment selection":3,"fill_in_the_email_address":1,"purchase_channel_selection":5,"fill_in_the_order_number":7},"id":"registration_extension_not_submitted","pageId":"03_01_0001","type":"Click"},
+    {"context":{"equipment selection":3,"fill_in_the_email_address":1,"purchase_channel_selection":5,"fill_in_the_order_number":7},"id":"registration_extension_not_submitted","pageId":"03_01_0001","type":"Click"},
+    {"context":{"equipment selection":3,"fill_in_the_email_address":1,"purchase_channel_selection":5,"fill_in_the_order_number":7},"id":"registration_extension_not_submitted","pageId":"03_01_0001","type":"Click"},
+    {"context":{"equipment selection":3,"fill_in_the_email_address":1,"purchase_channel_selection":5,"fill_in_the_order_number":7},"id":"registration_extension_not_submitted","pageId":"03_01_0001","type":"Click"},
+    {"context":{"equipment selection":3,"fill_in_the_email_address":1,"purchase_channel_selection":5,"fill_in_the_order_number":7},"id":"registration_extension_not_submitted","pageId":"03_01_0001","type":"Click"},
+    {"context":{},"id":"see_the_insurance_reminder","pageId":"01_01_0001","type":"View"},
+    {"context":{},"id":"show_device_list","pageId":"01_01_0001","type":"View"},
+    {"context":{},"id":"see_the_insurance_reminder","pageId":"01_01_0001","type":"View"},
+    {"context":{},"id":"show_device_list","pageId":"01_01_0001","type":"View"},
+    {"context":{"enter_path":0},"id":"view_registered_warranty","pageId":"03_01_0001","type":"View"},
+    {"context":{"equipment selection":3,"fill_in_the_email_address":1,"purchase_channel_selection":5,"fill_in_the_order_number":7},"id":"registration_extension_not_submitted","pageId":"03_01_0001","type":"Click"},
+    {"context":{"equipment selection":3,"fill_in_the_email_address":1,"purchase_channel_selection":5,"fill_in_the_order_number":7},"id":"registration_extension_not_submitted","pageId":"03_01_0001","type":"Click"},
+    {"context":{"equipment selection":3,"fill_in_the_email_address":1,"purchase_channel_selection":5,"fill_in_the_order_number":7},"id":"registration_extension_not_submitted","pageId":"03_01_0001","type":"Click"},
+    {"context":{"equipment selection":3,"fill_in_the_email_address":1,"purchase_channel_selection":5,"fill_in_the_order_number":7},"id":"registration_extension_not_submitted","pageId":"03_01_0001","type":"Click"}
+]

@@ -4,56 +4,71 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c077db73-d056-43c3-9790-913cc6b8d70e" name="Changes" comment="新增方法和优化结构">
-      <change afterPath="$PROJECT_DIR$/templates/apower/AReolink_TrackMix_WiFi/advanced_setting.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/apower/AReolink_TrackMix_WiFi/audio.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/apower/AReolink_TrackMix_WiFi/camera_record.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/apower/AReolink_TrackMix_WiFi/detection_alarm.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/apower/AReolink_TrackMix_WiFi/display.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/apower/AReolink_TrackMix_WiFi/email_alerts.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/apower/AReolink_TrackMix_WiFi/ftp.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/apower/AReolink_TrackMix_WiFi/light.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/apower/AReolink_TrackMix_WiFi/push.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/apower/AReolink_TrackMix_WiFi/setting.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/apower/AReolink_TrackMix_WiFi/share_the_camera.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/apower/AReolink_TrackMix_WiFi/siren.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/apower/AReolink_TrackMix_WiFi/test.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/apower/AReolink_TrackMix_WiFi/wifi.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/apower/AReolink_TrackMix_WiFi/wifi2.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/battery/Reolink_Doorbell_Battery/audio.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/battery/Reolink_Doorbell_Battery/detection_alarm.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/battery/Reolink_Doorbell_Battery/light.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test_case/remote_setting/audio/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test_case/remote_setting/detection_alarm/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test_case/remote_setting/detection_alarm/alarm_delay/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test_case/remote_setting/detection_alarm/alarm_delay/test_detection_alarm_alarm_delay.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test_case/remote_setting/detection_alarm/non_detection_area/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test_case/remote_setting/detection_alarm/non_detection_area/test_detection_alarm_non_detect_area.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test_case/remote_setting/detection_alarm/object_size/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test_case/remote_setting/detection_alarm/object_size/test_detection_alarm_object_size.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test_case/remote_setting/detection_alarm/sensitivity/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test_case/remote_setting/detection_alarm/sensitivity/test_detection_alarm_sensitivity.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test_case/remote_setting/detection_alarm/smart_detection/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test_case/remote_setting/detection_alarm/smart_detection/test_detection_alarm_smart_detection.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test_case/remote_setting/detection_alarm/smart_tracking/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test_case/remote_setting/detection_alarm/smart_tracking/test_detection_alarm_smart_tracking.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test_case/remote_setting/lights/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test_case/remote_setting/lights/floodlight/test_floodlight_light.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test_case/remote_setting/lights/status_lights/test_status_lights.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test_case/remote_setting/lights/test_remote_light.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test_case/remote_setting/wifi/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test_case/remote_setting/wifi/add_other_network/test_wifi_add_other_network.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test_case/remote_setting/wifi/wifi_band_preference/test_wifi_wifi_band_preference.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test_case/remote_setting/wifi/wifi_disconnect/test_wifi_disconnect.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test_case/remote_setting/wifi/wifi_test_speed/test_wifi_test_speed.py" afterDir="false" />
+    <list default="true" id="c077db73-d056-43c3-9790-913cc6b8d70e" name="Changes" comment="调试">
+      <change afterPath="$PROJECT_DIR$/c_templates/apower/display.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/c_templates/battery/display.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/apower/Duo 2V PoE/display.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/apower/E1 Outdoor Pro/display.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/apower/E1/display.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/apower/FE-P/display.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/apower/RLC-1212A/display.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/apower/RLC-1224A/display.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/apower/RLC-410W/display.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/apower/RLC-823A 16X/display.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/apower/Reolink Duo PoE/display.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/apower/Reolink TrackMix PoE/display.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/apower/Reolink Video Doorbell PoE/display.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/battery/Reolink Argus 2E/display.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/battery/Reolink TrackMix/display.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test_case/remote_setting/remote_setting_home_page/yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/apower/AReolink_TrackMix_WiFi/display.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/apower/AReolink_TrackMix_WiFi/display.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/apower/AReolink_TrackMix_WiFi/test.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/battery/Argus PT Ultra/light.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/debug/battery/Argus PT Ultra/light.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/battery/Argus Track/light.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/debug/battery/Argus Track/light.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/battery/Reolink Altas Go PT/battery.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/debug/battery/Reolink Altas Go PT/battery.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/battery/Reolink Altas PT Ultra/battery.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/c_templates/battery/battery.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/battery/Reolink Altas PT Ultra/light.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/debug/battery/Reolink Altas PT Ultra/light.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/battery/Reolink Altas PT Ultra/wifi.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/debug/battery/Reolink Altas PT Ultra/wifi.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/battery/Reolink Altas PT Ultra（SD13）/pre_recording_mode.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/debug/battery/Reolink Altas PT Ultra（SD13）/pre_recording_mode.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/battery/Reolink Argus 2E/wifi.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/debug/battery/Reolink Argus 2E/wifi.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/battery/Reolink Go Ranger PT/light.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/debug/battery/Reolink Go Ranger PT/light.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/battery/Reolink Go Ranger PT/pir.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/debug/battery/Reolink Go Ranger PT/pir.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/battery/Reolink TrackMix LTE Plus 2/pre_recording_mode.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/debug/battery/Reolink TrackMix LTE Plus 2/pre_recording_mode.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/battery/Reolink TrackMix LTE Plus 2/setting.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/debug/battery/Reolink TrackMix LTE Plus 2/setting.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/battery/Reolink TrackMix/wifi.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/debug/battery/Reolink TrackMix/wifi.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/battery/Reolink Video Doorbell/light.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/debug/battery/Reolink Video Doorbell/light.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/battery/Reolink_Doorbell_Battery/audio.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/c_templates/battery/audio.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/battery/Reolink_Doorbell_Battery/detection_alarm.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/c_templates/battery/detection_alarm.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/battery/Reolink_Doorbell_Battery/light.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/debug/battery/Reolink_Doorbell_Battery/light.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/battery/Reolink_Doorbell_Battery/push.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/debug/battery/Reolink_Doorbell_Battery/push.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/phone.yml" beforeDir="false" afterPath="$PROJECT_DIR$/config/phone.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/rn_device_setting_page/remote_detection_alarm.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/rn_device_setting_page/remote_detection_alarm.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/base_page.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/base_page.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/rn_device_setting_page/remote_display.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/rn_device_setting_page/remote_display.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/rn_device_setting_page/remote_setting.py" beforeDir="false" afterPath="$PROJECT_DIR$/pages/rn_device_setting_page/remote_setting.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/shared_v_name.txt" beforeDir="false" afterPath="$PROJECT_DIR$/shared_v_name.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_case/remote_setting/test_remote_audio.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_case/remote_setting/audio/test_remote_audio.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_case/remote_setting/test_remote_detection_alarm.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_case/remote_setting/detection_alarm/test_remote_detection_alarm.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_case/remote_setting/test_remote_light.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_case/remote_setting/lights/doorbell_button_light/test_doorbell_button_light.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_case/remote_setting/test_remote_wifi.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_case/remote_setting/wifi/test_remote_wifi.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/apower/AReolink_TrackMix_WiFi/advanced_setting.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/c_templates/apower/advanced_setting.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/apower/AReolink_TrackMix_WiFi/audio.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/c_templates/apower/audio.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/apower/AReolink_TrackMix_WiFi/camera_record.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/c_templates/apower/camera_record.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/apower/AReolink_TrackMix_WiFi/detection_alarm.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/c_templates/apower/detection_alarm.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/apower/AReolink_TrackMix_WiFi/display.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/apower/Reolink Duo 3 PoE/display.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/apower/AReolink_TrackMix_WiFi/email_alerts.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/c_templates/apower/email_alerts.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/apower/AReolink_TrackMix_WiFi/ftp.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/c_templates/apower/ftp.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/apower/AReolink_TrackMix_WiFi/light.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/c_templates/apower/light.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/apower/AReolink_TrackMix_WiFi/push.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/c_templates/apower/push.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/apower/AReolink_TrackMix_WiFi/setting.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/c_templates/apower/setting.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/apower/AReolink_TrackMix_WiFi/share_the_camera.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/c_templates/apower/share_the_camera.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/apower/AReolink_TrackMix_WiFi/siren.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/c_templates/apower/siren.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/apower/AReolink_TrackMix_WiFi/test.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/apower/AReolink_TrackMix_WiFi/wifi.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/c_templates/apower/wifi.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/battery/Reolink_Doorbell_Battery/audio.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/debug/battery/Reolink_Doorbell_Battery/audio.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/battery/Reolink_Doorbell_Battery/battery.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/debug/battery/Reolink Altas PT Ultra/battery.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/battery/Reolink_Doorbell_Battery/detection_alarm.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/debug/battery/Reolink_Doorbell_Battery/detection_alarm.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/battery/Reolink_Doorbell_Battery/light.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/c_templates/battery/light.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/battery/Reolink_Doorbell_Battery/pir.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/c_templates/battery/pir.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_case/remote_setting/A_Basic_funcs/display/image_setting/test_image_setting.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_case/remote_setting/A_Basic_funcs/display/image_setting/test_image_setting.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_case/remote_setting/A_Basic_funcs/display/splice_region/test_splice_region.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_case/remote_setting/A_Basic_funcs/display/splice_region/test_splice_region.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_case/remote_setting/A_Basic_funcs/display/test_remote_display.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_case/remote_setting/A_Basic_funcs/display/test_remote_display.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -119,23 +134,30 @@
     "Python 测试.Python tests for test_welcome.TestWelcome.executor": "Run",
     "Python 测试.Python 测试 (ddriver.py 内).executor": "Run",
     "Python 测试.ddriver.test_driver 的 Python 测试.executor": "Run",
+    "Python 测试.test_remote_audio.TestRemoteAudio.test_remote_audio_main_page_text 的 Python 测试.executor": "Run",
     "Python.app_driver.executor": "Debug",
     "Python.app_info.executor": "Run",
+    "Python.click_right_button.executor": "Run",
     "Python.config.executor": "Run",
     "Python.ddriver.executor": "Run",
     "Python.devices.executor": "Run",
+    "Python.drag_test.executor": "Run",
+    "Python.iterate_element.executor": "Run",
     "Python.new.executor": "Run",
     "Python.new2.executor": "Run",
     "Python.new3.executor": "Run",
     "Python.read_yaml.executor": "Run",
     "Python.run.executor": "Run",
     "Python.test.executor": "Run",
+    "Python.traffic_conversation.executor": "Run",
+    "Python.try_click.executor": "Run",
+    "Python.tttt.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "D:/app-uiauto-test-dev/test_case/remote_setting/lights/doorbell_button_light",
-    "settings.editor.selected.configurable": "reference.settingsdialog.IDE.editor.colors.Python"
+    "last_opened_file_path": "D:/app-uiauto-test-dev/config/battery/Reolink Argus 2E",
+    "settings.editor.selected.configurable": "com.codeverse.userSettings.AppSettingsConfigurable"
   }
 }]]></component>
   <component name="PyConsoleOptionsProvider">
@@ -149,18 +171,18 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\app-uiauto-test-dev\test_case\remote_setting\lights\doorbell_button_light" />
-      <recent name="D:\app-uiauto-test-dev\test_case\remote_setting\lights\status_lights" />
-      <recent name="D:\app-uiauto-test-dev\test_case\remote_setting\lights\floodlight" />
-      <recent name="D:\app-uiauto-test-dev\test_case\remote_setting\wifi\add_other_network" />
-      <recent name="D:\app-uiauto-test-dev\test_case\remote_setting\wifi\wifi_disconnect" />
+      <recent name="D:\app-uiauto-test-dev\config\battery\Reolink Argus 2E" />
+      <recent name="D:\app-uiauto-test-dev\config\battery\Reolink TrackMix" />
+      <recent name="D:\app-uiauto-test-dev\c_templates\battery" />
+      <recent name="D:\app-uiauto-test-dev\config\apower\FE-P" />
+      <recent name="D:\app-uiauto-test-dev\config\apower\RLC-1212A" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\app-uiauto-test-dev\test_case\remote_setting\lights" />
-      <recent name="D:\app-uiauto-test-dev\test_case\remote_setting\audio" />
-      <recent name="D:\app-uiauto-test-dev\test_case\remote_setting\wifi" />
-      <recent name="D:\app-uiauto-test-dev\test_case\remote_setting\detection_alarm" />
-      <recent name="D:\app-uiauto-test-dev\config\Reolink_Doorbell_Battery" />
+      <recent name="D:\app-uiauto-test-dev\debug\battery" />
+      <recent name="D:\app-uiauto-test-dev\c_templates\battery" />
+      <recent name="D:\app-uiauto-test-dev\c_templates\apower" />
+      <recent name="D:\app-uiauto-test-dev\test_case\remote_setting\Alarm_setting" />
+      <recent name="D:\app-uiauto-test-dev\test_case\remote_setting\A_Basic_funcs\display" />
     </key>
   </component>
   <component name="RunAnythingCache">
@@ -172,7 +194,7 @@
       <visibility group="运行配置" flag="true" />
     </myKeys>
   </component>
-  <component name="RunManager" selected="Python.new">
+  <component name="RunManager" selected="Python.iterate_element">
     <configuration name="app_info" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="app-uiauto-test-dev" />
       <option name="ENV_FILES" value="" />
@@ -187,6 +209,28 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/common_tools/app_info.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="click_right_button" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="app-uiauto-test-dev" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/debug/click_right_button.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -217,6 +261,50 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="drag_test" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="app-uiauto-test-dev" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/debug/drag_test.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="iterate_element" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="app-uiauto-test-dev" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/debug" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/debug/iterate_element.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="new" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="app-uiauto-test-dev" />
       <option name="ENV_FILES" value="" />
@@ -231,28 +319,6 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/debug/new.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="new2" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="app-uiauto-test-dev" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/debug/new2.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -283,7 +349,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="test" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="traffic_conversation" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="app-uiauto-test-dev" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -292,11 +358,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/temp" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/debug" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/temp/test.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/debug/traffic_conversation.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -305,53 +371,85 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="Python tests for test_welcome.TestWelcome" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+    <configuration name="try_click" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="app-uiauto-test-dev" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/debug/try_click.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="tttt" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="app-uiauto-test-dev" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/debug/tttt.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Python tests for test_case.remote_setting.A_Basic_funcs.audio.test_remote_audio.TestRemoteAudio.test_remote_audio_main_page_text" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="app-uiauto-test-dev" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test_case" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test_case/remote_setting/A_Basic_funcs/audio" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_welcome.TestWelcome&quot;" />
+      <option name="_new_target" value="&quot;test_case.remote_setting.A_Basic_funcs.audio.test_remote_audio.TestRemoteAudio.test_remote_audio_main_page_text&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Python tests in D:/app-uiauto-test-dev/temp/ddriver.py" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
-      <module name="app-uiauto-test-dev" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/temp" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;$PROJECT_DIR$/temp/ddriver.py&quot;" />
-      <option name="_new_targetType" value="&quot;PATH&quot;" />
-      <method v="2" />
-    </configuration>
     <list>
-      <item itemvalue="Python.new3" />
       <item itemvalue="Python.app_info" />
+      <item itemvalue="Python.click_right_button" />
       <item itemvalue="Python.devices" />
-      <item itemvalue="Python.new2" />
+      <item itemvalue="Python.drag_test" />
+      <item itemvalue="Python.new3" />
+      <item itemvalue="Python.try_click" />
+      <item itemvalue="Python.iterate_element" />
       <item itemvalue="Python.new" />
-      <item itemvalue="Python.test" />
-      <item itemvalue="Python 测试.Python tests in D:/app-uiauto-test-dev/temp/ddriver.py" />
-      <item itemvalue="Python 测试.Python tests for test_welcome.TestWelcome" />
+      <item itemvalue="Python.traffic_conversation" />
+      <item itemvalue="Python.tttt" />
+      <item itemvalue="Python 测试.Python tests for test_case.remote_setting.A_Basic_funcs.audio.test_remote_audio.TestRemoteAudio.test_remote_audio_main_page_text" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.iterate_element" />
+        <item itemvalue="Python 测试.Python tests for test_case.remote_setting.A_Basic_funcs.audio.test_remote_audio.TestRemoteAudio.test_remote_audio_main_page_text" />
+        <item itemvalue="Python.tttt" />
+        <item itemvalue="Python.traffic_conversation" />
         <item itemvalue="Python.new" />
-        <item itemvalue="Python.new2" />
-        <item itemvalue="Python 测试.Python tests for test_welcome.TestWelcome" />
-        <item itemvalue="Python.test" />
-        <item itemvalue="Python 测试.Python tests in D:/app-uiauto-test-dev/temp/ddriver.py" />
       </list>
     </recent_temporary>
   </component>
@@ -371,399 +469,399 @@
       <option name="presentableId" value="Default" />
       <updated>1714295931594</updated>
     </task>
-    <task id="LOCAL-00021" summary="新增scroll_check_function方法">
+    <task id="LOCAL-00088" summary="将红外灯用例拆出来">
       <option name="closed" value="true" />
-      <created>1725240327463</created>
-      <option name="number" value="00021" />
-      <option name="presentableId" value="LOCAL-00021" />
+      <created>1730798976490</created>
+      <option name="number" value="00088" />
+      <option name="presentableId" value="LOCAL-00088" />
       <option name="project" value="LOCAL" />
-      <updated>1725240327463</updated>
+      <updated>1730798976490</updated>
     </task>
-    <task id="LOCAL-00022" summary="iterate_and_click_popup_text方法中嵌套子方法scroll_check_function">
+    <task id="LOCAL-00089" summary="没有找到元素则直接标记为pytest.fail">
       <option name="closed" value="true" />
-      <created>1725453075109</created>
-      <option name="number" value="00022" />
-      <option name="presentableId" value="LOCAL-00022" />
+      <created>1730890100003</created>
+      <option name="number" value="00089" />
+      <option name="presentableId" value="LOCAL-00089" />
       <option name="project" value="LOCAL" />
-      <updated>1725453075109</updated>
+      <updated>1730890100003</updated>
     </task>
-    <task id="LOCAL-00023" summary="调试">
+    <task id="LOCAL-00090" summary="新增">
       <option name="closed" value="true" />
-      <created>1725453086072</created>
-      <option name="number" value="00023" />
-      <option name="presentableId" value="LOCAL-00023" />
+      <created>1730890115717</created>
+      <option name="number" value="00090" />
+      <option name="presentableId" value="LOCAL-00090" />
       <option name="project" value="LOCAL" />
-      <updated>1725453086072</updated>
+      <updated>1730890115717</updated>
     </task>
-    <task id="LOCAL-00024" summary="新增yaml文件">
+    <task id="LOCAL-00091" summary="新增">
       <option name="closed" value="true" />
-      <created>1725453096957</created>
-      <option name="number" value="00024" />
-      <option name="presentableId" value="LOCAL-00024" />
+      <created>1730890148060</created>
+      <option name="number" value="00091" />
+      <option name="presentableId" value="LOCAL-00091" />
       <option name="project" value="LOCAL" />
-      <updated>1725453096957</updated>
+      <updated>1730890148060</updated>
     </task>
-    <task id="LOCAL-00025" summary="调试用例">
+    <task id="LOCAL-00092" summary="修改用例代码校验顺序">
       <option name="closed" value="true" />
-      <created>1725453108619</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
+      <created>1730890211652</created>
+      <option name="number" value="00092" />
+      <option name="presentableId" value="LOCAL-00092" />
       <option name="project" value="LOCAL" />
-      <updated>1725453108619</updated>
+      <updated>1730890211652</updated>
     </task>
-    <task id="LOCAL-00026" summary="新增用例">
+    <task id="LOCAL-00093" summary="优化">
       <option name="closed" value="true" />
-      <created>1725453136764</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
+      <created>1730890246767</created>
+      <option name="number" value="00093" />
+      <option name="presentableId" value="LOCAL-00093" />
       <option name="project" value="LOCAL" />
-      <updated>1725453136764</updated>
+      <updated>1730890246767</updated>
     </task>
-    <task id="LOCAL-00027" summary="调试">
+    <task id="LOCAL-00094" summary="调试">
       <option name="closed" value="true" />
-      <created>1725532257546</created>
-      <option name="number" value="00027" />
-      <option name="presentableId" value="LOCAL-00027" />
+      <created>1730890260842</created>
+      <option name="number" value="00094" />
+      <option name="presentableId" value="LOCAL-00094" />
       <option name="project" value="LOCAL" />
-      <updated>1725532257546</updated>
+      <updated>1730890260842</updated>
     </task>
-    <task id="LOCAL-00028" summary="新增slider_seek_bar滑动条方法，get_coordinates_and_draw隐私遮盖画框方法">
+    <task id="LOCAL-00095" summary="调试">
       <option name="closed" value="true" />
-      <created>1726309868706</created>
-      <option name="number" value="00028" />
-      <option name="presentableId" value="LOCAL-00028" />
+      <created>1730976410671</created>
+      <option name="number" value="00095" />
+      <option name="presentableId" value="LOCAL-00095" />
       <option name="project" value="LOCAL" />
-      <updated>1726309868706</updated>
+      <updated>1730976410672</updated>
     </task>
-    <task id="LOCAL-00029" summary="调试">
+    <task id="LOCAL-00096" summary="调试">
       <option name="closed" value="true" />
-      <created>1726309878044</created>
-      <option name="number" value="00029" />
-      <option name="presentableId" value="LOCAL-00029" />
+      <created>1731501157279</created>
+      <option name="number" value="00096" />
+      <option name="presentableId" value="LOCAL-00096" />
       <option name="project" value="LOCAL" />
-      <updated>1726309878044</updated>
+      <updated>1731501157279</updated>
     </task>
-    <task id="LOCAL-00030" summary="新增draw_privacy_mask，待完善">
+    <task id="LOCAL-00097" summary="调试">
       <option name="closed" value="true" />
-      <created>1726309912652</created>
-      <option name="number" value="00030" />
-      <option name="presentableId" value="LOCAL-00030" />
+      <created>1731501161005</created>
+      <option name="number" value="00097" />
+      <option name="presentableId" value="LOCAL-00097" />
       <option name="project" value="LOCAL" />
-      <updated>1726309912652</updated>
+      <updated>1731501161005</updated>
     </task>
-    <task id="LOCAL-00031" summary="添加测试帧率控制用例">
+    <task id="LOCAL-00098" summary="调试">
       <option name="closed" value="true" />
-      <created>1726309938645</created>
-      <option name="number" value="00031" />
-      <option name="presentableId" value="LOCAL-00031" />
+      <created>1731501175591</created>
+      <option name="number" value="00098" />
+      <option name="presentableId" value="LOCAL-00098" />
       <option name="project" value="LOCAL" />
-      <updated>1726309938645</updated>
+      <updated>1731501175591</updated>
     </task>
-    <task id="LOCAL-00032" summary="测试远程配置&gt;音频，待完善">
+    <task id="LOCAL-00099" summary="新增detect_illegal_functions方法">
       <option name="closed" value="true" />
-      <created>1726655231147</created>
-      <option name="number" value="00032" />
-      <option name="presentableId" value="LOCAL-00032" />
+      <created>1731501188472</created>
+      <option name="number" value="00099" />
+      <option name="presentableId" value="LOCAL-00099" />
       <option name="project" value="LOCAL" />
-      <updated>1726655231147</updated>
+      <updated>1731501188472</updated>
     </task>
-    <task id="LOCAL-00033" summary="调试">
+    <task id="LOCAL-00100" summary="调试detect_illegal_functions方法，未修改完成">
       <option name="closed" value="true" />
-      <created>1726655244099</created>
-      <option name="number" value="00033" />
-      <option name="presentableId" value="LOCAL-00033" />
+      <created>1731558562029</created>
+      <option name="number" value="00100" />
+      <option name="presentableId" value="LOCAL-00100" />
       <option name="project" value="LOCAL" />
-      <updated>1726655244099</updated>
+      <updated>1731558562029</updated>
     </task>
-    <task id="LOCAL-00034" summary="添加音频的页面的共用方法">
+    <task id="LOCAL-00101" summary="调试、新增yaml内容">
       <option name="closed" value="true" />
-      <created>1726742506148</created>
-      <option name="number" value="00034" />
-      <option name="presentableId" value="LOCAL-00034" />
+      <created>1731932719595</created>
+      <option name="number" value="00101" />
+      <option name="presentableId" value="LOCAL-00101" />
       <option name="project" value="LOCAL" />
-      <updated>1726742506148</updated>
+      <updated>1731932719595</updated>
     </task>
-    <task id="LOCAL-00035" summary="修改了drag_slider_brightness方法，根据platform引用亮度条的定位参数">
+    <task id="LOCAL-00102" summary="新增预录模式用例">
       <option name="closed" value="true" />
-      <created>1726742557459</created>
-      <option name="number" value="00035" />
-      <option name="presentableId" value="LOCAL-00035" />
+      <created>1731932857471</created>
+      <option name="number" value="00102" />
+      <option name="presentableId" value="LOCAL-00102" />
       <option name="project" value="LOCAL" />
-      <updated>1726742557459</updated>
+      <updated>1731932857471</updated>
     </task>
-    <task id="LOCAL-00036" summary="修改了drag_slider_brightness方法，用哪种定位方式，待测试">
+    <task id="LOCAL-00103" summary="优化access_in_remote_setting方法">
       <option name="closed" value="true" />
-      <created>1726742599722</created>
-      <option name="number" value="00036" />
-      <option name="presentableId" value="LOCAL-00036" />
+      <created>1731932875678</created>
+      <option name="number" value="00103" />
+      <option name="presentableId" value="LOCAL-00103" />
       <option name="project" value="LOCAL" />
-      <updated>1726742599722</updated>
+      <updated>1731932875679</updated>
     </task>
-    <task id="LOCAL-00037" summary="新增定位参数和公共方法">
+    <task id="LOCAL-00104" summary="优化scroll_check_funcs方法">
       <option name="closed" value="true" />
-      <created>1726828095310</created>
-      <option name="number" value="00037" />
-      <option name="presentableId" value="LOCAL-00037" />
+      <created>1731932895397</created>
+      <option name="number" value="00104" />
+      <option name="presentableId" value="LOCAL-00104" />
       <option name="project" value="LOCAL" />
-      <updated>1726828095310</updated>
+      <updated>1731932895398</updated>
     </task>
-    <task id="LOCAL-00038" summary="修改注释">
+    <task id="LOCAL-00105" summary="调试">
       <option name="closed" value="true" />
-      <created>1726828111952</created>
-      <option name="number" value="00038" />
-      <option name="presentableId" value="LOCAL-00038" />
+      <created>1731932910576</created>
+      <option name="number" value="00105" />
+      <option name="presentableId" value="LOCAL-00105" />
       <option name="project" value="LOCAL" />
-      <updated>1726828111952</updated>
+      <updated>1731932910576</updated>
     </task>
-    <task id="LOCAL-00039" summary="修改音频yaml文件">
+    <task id="LOCAL-00106" summary="新增云录像相关方法和用例">
       <option name="closed" value="true" />
-      <created>1726828123600</created>
-      <option name="number" value="00039" />
-      <option name="presentableId" value="LOCAL-00039" />
+      <created>1732019288312</created>
+      <option name="number" value="00106" />
+      <option name="presentableId" value="LOCAL-00106" />
       <option name="project" value="LOCAL" />
-      <updated>1726828123600</updated>
+      <updated>1732019288312</updated>
     </task>
-    <task id="LOCAL-00040" summary="新增yaml文件">
+    <task id="LOCAL-00107" summary="修改loop_detect_element_and_click方法代码">
       <option name="closed" value="true" />
-      <created>1726914637144</created>
-      <option name="number" value="00040" />
-      <option name="presentableId" value="LOCAL-00040" />
+      <created>1732019331299</created>
+      <option name="number" value="00107" />
+      <option name="presentableId" value="LOCAL-00107" />
       <option name="project" value="LOCAL" />
-      <updated>1726914637144</updated>
+      <updated>1732019331299</updated>
     </task>
-    <task id="LOCAL-00041" summary="调试">
+    <task id="LOCAL-00108" summary="新增">
       <option name="closed" value="true" />
-      <created>1726914653412</created>
-      <option name="number" value="00041" />
-      <option name="presentableId" value="LOCAL-00041" />
+      <created>1732019347766</created>
+      <option name="number" value="00108" />
+      <option name="presentableId" value="LOCAL-00108" />
       <option name="project" value="LOCAL" />
-      <updated>1726914653412</updated>
+      <updated>1732019347766</updated>
     </task>
-    <task id="LOCAL-00042" summary="移动代码；新增click_checkbox_by_text方法">
+    <task id="LOCAL-00109" summary="修改注释">
       <option name="closed" value="true" />
-      <created>1727088520128</created>
-      <option name="number" value="00042" />
-      <option name="presentableId" value="LOCAL-00042" />
+      <created>1732019364509</created>
+      <option name="number" value="00109" />
+      <option name="presentableId" value="LOCAL-00109" />
       <option name="project" value="LOCAL" />
-      <updated>1727088520128</updated>
+      <updated>1732019364509</updated>
     </task>
-    <task id="LOCAL-00043" summary="调试">
+    <task id="LOCAL-00110" summary="修改注释">
       <option name="closed" value="true" />
-      <created>1727088532922</created>
-      <option name="number" value="00043" />
-      <option name="presentableId" value="LOCAL-00043" />
+      <created>1732019374289</created>
+      <option name="number" value="00110" />
+      <option name="presentableId" value="LOCAL-00110" />
       <option name="project" value="LOCAL" />
-      <updated>1727088532922</updated>
+      <updated>1732019374289</updated>
     </task>
-    <task id="LOCAL-00044" summary="新增公共方法">
+    <task id="LOCAL-00111" summary="优化">
       <option name="closed" value="true" />
-      <created>1727088575924</created>
-      <option name="number" value="00044" />
-      <option name="presentableId" value="LOCAL-00044" />
+      <created>1732019384122</created>
+      <option name="number" value="00111" />
+      <option name="presentableId" value="LOCAL-00111" />
       <option name="project" value="LOCAL" />
-      <updated>1727088575924</updated>
+      <updated>1732019384122</updated>
     </task>
-    <task id="LOCAL-00045" summary="加装饰器和标记需要人工复查的用例">
+    <task id="LOCAL-00112" summary="加锚点">
       <option name="closed" value="true" />
-      <created>1727088641249</created>
-      <option name="number" value="00045" />
-      <option name="presentableId" value="LOCAL-00045" />
+      <created>1732105603483</created>
+      <option name="number" value="00112" />
+      <option name="presentableId" value="LOCAL-00112" />
       <option name="project" value="LOCAL" />
-      <updated>1727088641249</updated>
+      <updated>1732105603483</updated>
     </task>
-    <task id="LOCAL-00046" summary="调试allur装饰器">
+    <task id="LOCAL-00113" summary="完成云录像的测试用例脚本">
       <option name="closed" value="true" />
-      <created>1727175030306</created>
-      <option name="number" value="00046" />
-      <option name="presentableId" value="LOCAL-00046" />
+      <created>1732105659162</created>
+      <option name="number" value="00113" />
+      <option name="presentableId" value="LOCAL-00113" />
       <option name="project" value="LOCAL" />
-      <updated>1727175030306</updated>
+      <updated>1732105659162</updated>
     </task>
-    <task id="LOCAL-00047" summary="添加终止录屏进程，防止用例跳过之后，录屏进程还继续的问题">
+    <task id="LOCAL-00114" summary="重命名预录模式的文件夹">
       <option name="closed" value="true" />
-      <created>1727237883600</created>
-      <option name="number" value="00047" />
-      <option name="presentableId" value="LOCAL-00047" />
+      <created>1733199886234</created>
+      <option name="number" value="00114" />
+      <option name="presentableId" value="LOCAL-00114" />
       <option name="project" value="LOCAL" />
-      <updated>1727237883600</updated>
+      <updated>1733199886235</updated>
     </task>
-    <task id="LOCAL-00048" summary="调试">
+    <task id="LOCAL-00115" summary="调整结构">
       <option name="closed" value="true" />
-      <created>1727237895076</created>
-      <option name="number" value="00048" />
-      <option name="presentableId" value="LOCAL-00048" />
+      <created>1733401698442</created>
+      <option name="number" value="00115" />
+      <option name="presentableId" value="LOCAL-00115" />
       <option name="project" value="LOCAL" />
-      <updated>1727237895076</updated>
+      <updated>1733401698442</updated>
     </task>
-    <task id="LOCAL-00049" summary="调试">
+    <task id="LOCAL-00116" summary="拆分用例">
       <option name="closed" value="true" />
-      <created>1727269989879</created>
-      <option name="number" value="00049" />
-      <option name="presentableId" value="LOCAL-00049" />
+      <created>1733401715619</created>
+      <option name="number" value="00116" />
+      <option name="presentableId" value="LOCAL-00116" />
       <option name="project" value="LOCAL" />
-      <updated>1727269989879</updated>
+      <updated>1733401715619</updated>
     </task>
-    <task id="LOCAL-00050" summary="新增测试用例">
+    <task id="LOCAL-00117" summary="拆分用例,新增图像设置模块，并把亮度和抗闪烁用例归属于该模块">
       <option name="closed" value="true" />
-      <created>1727353881124</created>
-      <option name="number" value="00050" />
-      <option name="presentableId" value="LOCAL-00050" />
+      <created>1733740013048</created>
+      <option name="number" value="00117" />
+      <option name="presentableId" value="LOCAL-00117" />
       <option name="project" value="LOCAL" />
-      <updated>1727353881125</updated>
+      <updated>1733740013048</updated>
     </task>
-    <task id="LOCAL-00051" summary="iterate_and_click_popup_text方法增加可以使用xpath定位">
+    <task id="LOCAL-00118" summary="优化slider_seek_bar方法，使得该方法可以接受一个元素对象，并使用该元素对象进行滑动操作">
       <option name="closed" value="true" />
-      <created>1728299228247</created>
-      <option name="number" value="00051" />
-      <option name="presentableId" value="LOCAL-00051" />
+      <created>1733740073921</created>
+      <option name="number" value="00118" />
+      <option name="presentableId" value="LOCAL-00118" />
       <option name="project" value="LOCAL" />
-      <updated>1728299228247</updated>
+      <updated>1733740073921</updated>
     </task>
-    <task id="LOCAL-00052" summary="新增yaml">
+    <task id="LOCAL-00119" summary="调试">
       <option name="closed" value="true" />
-      <created>1728299243081</created>
-      <option name="number" value="00052" />
-      <option name="presentableId" value="LOCAL-00052" />
+      <created>1733740089346</created>
+      <option name="number" value="00119" />
+      <option name="presentableId" value="LOCAL-00119" />
       <option name="project" value="LOCAL" />
-      <updated>1728299243081</updated>
+      <updated>1733740089346</updated>
     </task>
-    <task id="LOCAL-00053" summary="新增">
+    <task id="LOCAL-00120" summary="调整结构">
       <option name="closed" value="true" />
-      <created>1728299267025</created>
-      <option name="number" value="00053" />
-      <option name="presentableId" value="LOCAL-00053" />
+      <created>1733740100422</created>
+      <option name="number" value="00120" />
+      <option name="presentableId" value="LOCAL-00120" />
       <option name="project" value="LOCAL" />
-      <updated>1728299267025</updated>
+      <updated>1733740100422</updated>
     </task>
-    <task id="LOCAL-00054" summary="修改注释">
+    <task id="LOCAL-00121" summary="新增click_image_setting方法，修改drag_slider_brightness方法为使用元素对象进行滑动操作，新增verify_mode_switch、verify_day_color、verify_black_and_white、verify_night_vision_color方法">
       <option name="closed" value="true" />
-      <created>1728299282087</created>
-      <option name="number" value="00054" />
-      <option name="presentableId" value="LOCAL-00054" />
+      <created>1733740196927</created>
+      <option name="number" value="00121" />
+      <option name="presentableId" value="LOCAL-00121" />
       <option name="project" value="LOCAL" />
-      <updated>1728299282087</updated>
+      <updated>1733740196927</updated>
     </task>
-    <task id="LOCAL-00055" summary="新增">
+    <task id="LOCAL-00122" summary="白天和黑夜模块的用例需要拆分，待完成">
       <option name="closed" value="true" />
-      <created>1728299299114</created>
-      <option name="number" value="00055" />
-      <option name="presentableId" value="LOCAL-00055" />
+      <created>1733740240661</created>
+      <option name="number" value="00122" />
+      <option name="presentableId" value="LOCAL-00122" />
       <option name="project" value="LOCAL" />
-      <updated>1728299299114</updated>
+      <updated>1733740240661</updated>
     </task>
-    <task id="LOCAL-00056" summary="新增">
+    <task id="LOCAL-00123" summary="新增图像设置的用例，并将亮度和抗闪烁用例归属于该模块">
       <option name="closed" value="true" />
-      <created>1728390437878</created>
-      <option name="number" value="00056" />
-      <option name="presentableId" value="LOCAL-00056" />
+      <created>1733740288345</created>
+      <option name="number" value="00123" />
+      <option name="presentableId" value="LOCAL-00123" />
       <option name="project" value="LOCAL" />
-      <updated>1728390437878</updated>
+      <updated>1733740288345</updated>
     </task>
-    <task id="LOCAL-00057" summary="新增">
+    <task id="LOCAL-00124" summary="调整结构">
       <option name="closed" value="true" />
-      <created>1728390458961</created>
-      <option name="number" value="00057" />
-      <option name="presentableId" value="LOCAL-00057" />
+      <created>1733834234173</created>
+      <option name="number" value="00124" />
+      <option name="presentableId" value="LOCAL-00124" />
       <option name="project" value="LOCAL" />
-      <updated>1728390458961</updated>
+      <updated>1733834234173</updated>
     </task>
-    <task id="LOCAL-00058" summary="优化代码">
+    <task id="LOCAL-00125" summary="调试">
       <option name="closed" value="true" />
-      <created>1728477199987</created>
-      <option name="number" value="00058" />
-      <option name="presentableId" value="LOCAL-00058" />
+      <created>1733834241445</created>
+      <option name="number" value="00125" />
+      <option name="presentableId" value="LOCAL-00125" />
       <option name="project" value="LOCAL" />
-      <updated>1728477199987</updated>
+      <updated>1733834241445</updated>
     </task>
-    <task id="LOCAL-00059" summary="延长等待时间">
+    <task id="LOCAL-00126" summary="新增用例">
       <option name="closed" value="true" />
-      <created>1728559819788</created>
-      <option name="number" value="00059" />
-      <option name="presentableId" value="LOCAL-00059" />
+      <created>1733834265102</created>
+      <option name="number" value="00126" />
+      <option name="presentableId" value="LOCAL-00126" />
       <option name="project" value="LOCAL" />
-      <updated>1728559819788</updated>
+      <updated>1733834265102</updated>
     </task>
-    <task id="LOCAL-00060" summary="调试">
+    <task id="LOCAL-00127" summary="调试">
       <option name="closed" value="true" />
-      <created>1728559832136</created>
-      <option name="number" value="00060" />
-      <option name="presentableId" value="LOCAL-00060" />
+      <created>1733834277883</created>
+      <option name="number" value="00127" />
+      <option name="presentableId" value="LOCAL-00127" />
       <option name="project" value="LOCAL" />
-      <updated>1728559832136</updated>
+      <updated>1733834277883</updated>
     </task>
-    <task id="LOCAL-00061" summary="调试">
+    <task id="LOCAL-00128" summary="新增测试用例">
       <option name="closed" value="true" />
-      <created>1728559858179</created>
-      <option name="number" value="00061" />
-      <option name="presentableId" value="LOCAL-00061" />
+      <created>1733920492541</created>
+      <option name="number" value="00128" />
+      <option name="presentableId" value="LOCAL-00128" />
       <option name="project" value="LOCAL" />
-      <updated>1728559858179</updated>
+      <updated>1733920492541</updated>
     </task>
-    <task id="LOCAL-00062" summary="重命名">
+    <task id="LOCAL-00129" summary="新增模板内容">
       <option name="closed" value="true" />
-      <created>1728559865985</created>
-      <option name="number" value="00062" />
-      <option name="presentableId" value="LOCAL-00062" />
+      <created>1733920509610</created>
+      <option name="number" value="00129" />
+      <option name="presentableId" value="LOCAL-00129" />
       <option name="project" value="LOCAL" />
-      <updated>1728559865985</updated>
+      <updated>1733920509610</updated>
     </task>
-    <task id="LOCAL-00063" summary="代码适配为rn交互，待完善">
+    <task id="LOCAL-00130" summary="调试">
       <option name="closed" value="true" />
-      <created>1728643036934</created>
-      <option name="number" value="00063" />
-      <option name="presentableId" value="LOCAL-00063" />
+      <created>1733920515347</created>
+      <option name="number" value="00130" />
+      <option name="presentableId" value="LOCAL-00130" />
       <option name="project" value="LOCAL" />
-      <updated>1728643036934</updated>
+      <updated>1733920515347</updated>
     </task>
-    <task id="LOCAL-00064" summary="调整结构">
+    <task id="LOCAL-00131" summary="调试">
       <option name="closed" value="true" />
-      <created>1728910065298</created>
-      <option name="number" value="00064" />
-      <option name="presentableId" value="LOCAL-00064" />
+      <created>1734006415221</created>
+      <option name="number" value="00131" />
+      <option name="presentableId" value="LOCAL-00131" />
       <option name="project" value="LOCAL" />
-      <updated>1728910065299</updated>
+      <updated>1734006415221</updated>
     </task>
-    <task id="LOCAL-00065" summary="调试">
+    <task id="LOCAL-00132" summary="新增全局元素">
       <option name="closed" value="true" />
-      <created>1728910071802</created>
-      <option name="number" value="00065" />
-      <option name="presentableId" value="LOCAL-00065" />
+      <created>1734006439991</created>
+      <option name="number" value="00132" />
+      <option name="presentableId" value="LOCAL-00132" />
       <option name="project" value="LOCAL" />
-      <updated>1728910071802</updated>
+      <updated>1734006439991</updated>
     </task>
-    <task id="LOCAL-00066" summary="优化与补充代码">
+    <task id="LOCAL-00133" summary="修改为使用全局元素的返回按钮">
       <option name="closed" value="true" />
-      <created>1728910084497</created>
-      <option name="number" value="00066" />
-      <option name="presentableId" value="LOCAL-00066" />
+      <created>1734006465643</created>
+      <option name="number" value="00133" />
+      <option name="presentableId" value="LOCAL-00133" />
       <option name="project" value="LOCAL" />
-      <updated>1728910084497</updated>
+      <updated>1734006465643</updated>
     </task>
-    <task id="LOCAL-00067" summary="新增long_click_by长按方法，未调试ios手机">
+    <task id="LOCAL-00134" summary="新增用例">
       <option name="closed" value="true" />
-      <created>1729081603303</created>
-      <option name="number" value="00067" />
-      <option name="presentableId" value="LOCAL-00067" />
+      <created>1734006488138</created>
+      <option name="number" value="00134" />
+      <option name="presentableId" value="LOCAL-00134" />
       <option name="project" value="LOCAL" />
-      <updated>1729081603304</updated>
+      <updated>1734006488138</updated>
     </task>
-    <task id="LOCAL-00068" summary="新增和优化结构">
+    <task id="LOCAL-00135" summary="新增用例、调整结构">
       <option name="closed" value="true" />
-      <created>1729081627457</created>
-      <option name="number" value="00068" />
-      <option name="presentableId" value="LOCAL-00068" />
+      <created>1734086886327</created>
+      <option name="number" value="00135" />
+      <option name="presentableId" value="LOCAL-00135" />
       <option name="project" value="LOCAL" />
-      <updated>1729081627457</updated>
+      <updated>1734086886328</updated>
     </task>
-    <task id="LOCAL-00069" summary="新增方法和优化结构">
+    <task id="LOCAL-00136" summary="调试">
       <option name="closed" value="true" />
-      <created>1729081650818</created>
-      <option name="number" value="00069" />
-      <option name="presentableId" value="LOCAL-00069" />
+      <created>1734086899621</created>
+      <option name="number" value="00136" />
+      <option name="presentableId" value="LOCAL-00136" />
       <option name="project" value="LOCAL" />
-      <updated>1729081650818</updated>
+      <updated>1734086899621</updated>
     </task>
-    <option name="localTasksCounter" value="70" />
+    <option name="localTasksCounter" value="137" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -782,31 +880,31 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/weditor" />
     </ignored-roots>
-    <MESSAGE value="修改了drag_slider_brightness方法，根据platform引用亮度条的定位参数" />
-    <MESSAGE value="修改了drag_slider_brightness方法，用哪种定位方式，待测试" />
-    <MESSAGE value="新增定位参数和公共方法" />
-    <MESSAGE value="修改音频yaml文件" />
-    <MESSAGE value="新增yaml文件" />
-    <MESSAGE value="移动代码；新增click_checkbox_by_text方法" />
-    <MESSAGE value="新增公共方法" />
-    <MESSAGE value="加装饰器和标记需要人工复查的用例" />
-    <MESSAGE value="调试allur装饰器" />
-    <MESSAGE value="添加终止录屏进程，防止用例跳过之后，录屏进程还继续的问题" />
-    <MESSAGE value="新增测试用例" />
-    <MESSAGE value="iterate_and_click_popup_text方法增加可以使用xpath定位" />
-    <MESSAGE value="新增yaml" />
-    <MESSAGE value="修改注释" />
+    <MESSAGE value="新增预录模式用例" />
+    <MESSAGE value="优化access_in_remote_setting方法" />
+    <MESSAGE value="优化scroll_check_funcs方法" />
+    <MESSAGE value="新增云录像相关方法和用例" />
+    <MESSAGE value="修改loop_detect_element_and_click方法代码" />
     <MESSAGE value="新增" />
-    <MESSAGE value="优化代码" />
-    <MESSAGE value="延长等待时间" />
-    <MESSAGE value="重命名" />
-    <MESSAGE value="代码适配为rn交互，待完善" />
+    <MESSAGE value="修改注释" />
+    <MESSAGE value="优化" />
+    <MESSAGE value="加锚点" />
+    <MESSAGE value="完成云录像的测试用例脚本" />
+    <MESSAGE value="重命名预录模式的文件夹" />
+    <MESSAGE value="拆分用例" />
+    <MESSAGE value="拆分用例,新增图像设置模块，并把亮度和抗闪烁用例归属于该模块" />
+    <MESSAGE value="优化slider_seek_bar方法，使得该方法可以接受一个元素对象，并使用该元素对象进行滑动操作" />
+    <MESSAGE value="新增click_image_setting方法，修改drag_slider_brightness方法为使用元素对象进行滑动操作，新增verify_mode_switch、verify_day_color、verify_black_and_white、verify_night_vision_color方法" />
+    <MESSAGE value="白天和黑夜模块的用例需要拆分，待完成" />
+    <MESSAGE value="新增图像设置的用例，并将亮度和抗闪烁用例归属于该模块" />
     <MESSAGE value="调整结构" />
+    <MESSAGE value="新增测试用例" />
+    <MESSAGE value="新增模板内容" />
+    <MESSAGE value="新增全局元素" />
+    <MESSAGE value="修改为使用全局元素的返回按钮" />
+    <MESSAGE value="新增用例" />
+    <MESSAGE value="新增用例、调整结构" />
     <MESSAGE value="调试" />
-    <MESSAGE value="优化与补充代码" />
-    <MESSAGE value="新增long_click_by长按方法，未调试ios手机" />
-    <MESSAGE value="新增和优化结构" />
-    <MESSAGE value="新增方法和优化结构" />
-    <option name="LAST_COMMIT_MESSAGE" value="新增方法和优化结构" />
+    <option name="LAST_COMMIT_MESSAGE" value="调试" />
   </component>
 </project>

@@ -731,6 +731,7 @@ class BasePage:
         :param max_attempts: 最大尝试次数
         :param scroll_pause: 滚动后的暂停时间，秒
         """
+        # TODO: 需要适配hub、nvr
 
         def retry_connection(num_retries=4):
             for _ in range(num_retries):
@@ -757,6 +758,8 @@ class BasePage:
                     return True
                 else:
                     continue
+            # 若均不存在，则为hub，点击名称进入
+            self.click_by_text(text)
 
         def find_and_click_remote_setting_ios(text):
             for i in range(3, 0, -1):

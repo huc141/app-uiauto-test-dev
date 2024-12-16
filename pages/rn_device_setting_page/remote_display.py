@@ -46,16 +46,19 @@ class RemoteDisplay(BasePage):
         except Exception as err:
             logger.error(f"上拉页面发生错误: {err}")
 
-    def check_display_main_text(self, texts):
+    def check_display_main_text(self, text1, text2):
         """
         验证显示主页文案
-        :param texts: 待验证的文案列表
+        :param text1: 全局文案列表
+        :param text2: ReoTitle的功能项文案列表
         :return:
         """
         try:
-            display_main_text_res = RemoteSetting().scroll_check_funcs2(texts=texts, selector='ReoTitle')
-
-            return display_main_text_res
+            # 先将预览视图往上拉至最小,以便于滚动查找设备名称菜单
+            self.need_pull_down()
+            # 验证显示主页文案
+            RemoteSetting().scroll_check_funcs2(texts=text1)
+            RemoteSetting().scroll_check_funcs2(texts=text2, selector='ReoTitle')
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
@@ -864,5 +867,39 @@ class RemoteDisplay(BasePage):
             self.iterate_and_click_popup_text(option_text_list=options,
                                               menu_text='场景')
 
+        except Exception as err:
+            pytest.fail(f"函数执行出错: {err}")
+
+    def verify_night_transparent_vision(self):
+        """
+        验证夜视通透功能
+        :return:
+        """
+        try:
+            self.scroll_click_right_btn(text_to_find='夜视通透模式',
+                                        resourceId_1='ReoTitle',
+                                        className_2='android.view.ViewGroup')
+            time.sleep(3)
+            self.scroll_click_right_btn(text_to_find='夜视通透模式',
+                                        resourceId_1='ReoTitle',
+                                        className_2='android.view.ViewGroup')
+        except Exception as err:
+            pytest.fail(f"函数执行出错: {err}")
+
+    def verify_splice_region(self, text1, text2):
+        """
+        验证拼接区域
+        :return:
+        """
+        try:
+            self.scroll_and_click_by_text('拼接区域')
+            time.sleep(3)
+            RemoteSetting().scroll_check_funcs2(texts=text1,
+                                                scroll_or_not=False,
+                                                back2top=False)
+
+            RemoteSetting().scroll_check_funcs2(texts=text2,
+                                                scroll_or_not=False,
+                                                back2top=False)
         except Exception as err:
             pytest.fail(f"函数执行出错: {err}")

@@ -625,27 +625,32 @@ class RemoteSetting(BasePage):
         :return:
         """
         try:
-            # 根据昵称在设备列表中滚动查找该设备并进入远程配置主页
-            self.access_in_remote_setting(device_list_name)
-
             # 如果设备是单机：
             if access_mode == 'ipc':
+                # 根据昵称在设备列表中滚动查找该设备并进入远程配置主页
+                self.access_in_remote_setting(device_list_name)
                 time.sleep(2)
                 # 进入PIR传感器主页
                 self.loop_detect_element_and_click('PIR 传感器')
 
             # 如果设备接入了nvr：
             elif access_mode == 'nvr' and nvr_name is not None:
+                # 根据昵称在设备列表中滚动查找该nvr设备并进入远程配置主页
+                self.access_in_remote_setting(nvr_name)
                 time.sleep(2)
                 self.loop_detect_element_and_click(self.ivSelectChannelButton, selector_type='xpath')
                 # 选择通道并点击
-                self.loop_detect_element_and_click(nvr_name)
+                self.loop_detect_element_and_click(device_list_name)
+                # 进入PIR传感器主页
+                self.loop_detect_element_and_click('PIR 传感器')
 
             # 如果设备接入了hub：
             elif access_mode == 'hub' and hub_name is not None:
+                # 根据昵称在设备列表中滚动查找该hub设备并进入远程配置主页
+                self.access_in_remote_setting(hub_name)
                 time.sleep(2)
                 # 根据名称查找hub下的设备卡片，点击并进入hub下的设备的远程配置主页
-                self.loop_detect_element_and_click(hub_name)
+                self.loop_detect_element_and_click(device_list_name)
                 # 进入PIR传感器主页
                 self.loop_detect_element_and_click('PIR 传感器')
 

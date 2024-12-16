@@ -7,8 +7,7 @@ from pages.base_page import BasePage
 from pages.rn_device_setting_page.remote_setting import RemoteSetting
 from pages.rn_device_setting_page.remote_display import RemoteDisplay
 
-devices_config = read_yaml.load_device_config(device_dir='apower/AReolink_TrackMix_WiFi',
-                                              yaml_file_name='display.yaml')  # 读取参数化文件
+devices_config = read_yaml.load_device_config(yaml_file_name='display.yaml')  # 读取参数化文件
 
 
 @allure.epic("远程配置>常规设置>显示")
@@ -29,6 +28,6 @@ class TestRemoteDisplay:
         RemoteSetting().access_in_display(device_list_name=device_config['device_list_name'])
 
         # 验证显示主页文案
-        RemoteSetting().scroll_check_funcs2(remote_items['text'])
-        RemoteSetting().scroll_check_funcs2(remote_items['options'], selector='ReoTitle')
+        RemoteDisplay().check_display_main_text(remote_items['text'],
+                                                remote_items['options'])
 
