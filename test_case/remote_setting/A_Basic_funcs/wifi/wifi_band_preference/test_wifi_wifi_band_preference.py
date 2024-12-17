@@ -7,7 +7,8 @@ from common_tools.read_yaml import read_yaml
 from pages.rn_device_setting_page.remote_wifi import RemoteWiFi
 from pages.rn_device_setting_page.remote_setting import RemoteSetting
 
-devices_config = read_yaml.load_device_config(device_dir='apower/AReolink_TrackMix_WiFi', yaml_file_name='wifi.yaml')  # 读取参数化文件
+devices_config = read_yaml.load_device_config(device_dir='apower/AReolink_TrackMix_WiFi',
+                                              yaml_file_name='wifi.yaml')  # 读取参数化文件
 
 
 @allure.epic("远程配置>Wi-Fi")
@@ -28,8 +29,6 @@ class TestRemoteWifi:
         RemoteSetting().access_in_remote_wifi(device_list_name=device_config['device_list_name'])
 
         # 测试WiFi频段偏好
-        wifi_band_preference_text = RemoteWiFi().access_in_wifi_band_preference(
-            text_list=remote_items['wifi_band_preference']['text'],
-            option_text_list=remote_items['wifi_band_preference']['options_text'])
+        RemoteWiFi().access_in_wifi_band_preference(text1=remote_items['wifi_band_preference']['text'],
+                                                    text2=remote_items['wifi_band_preference']['options'])
 
-        assert wifi_band_preference_text is True

@@ -19,23 +19,24 @@ class RemoteWiFi(BasePage):
             pass
 
     @staticmethod
-    def check_wifi_main_text(texts):
+    def check_wifi_main_text(text1, text2):
         """
         验证Wi-Fi主页文案
-        :param texts: 待验证的文案列表
+        :param text1: 待验证的文案列表
+        :param text2: ReoTitle验证的文案列表
         :return:
         """
         try:
-            wifi_main_text_res = RemoteSetting().scroll_check_funcs2(texts=texts)
-            return wifi_main_text_res
+            RemoteSetting().scroll_check_funcs2(texts=text1)
+            RemoteSetting().scroll_check_funcs2(texts=text2, selector='ReoTitle')
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
-    def access_in_wifi_band_preference(self, text_list, option_text_list):
+    def access_in_wifi_band_preference(self, text1, text2):
         """
         进入并测试wifi频段偏好页面，验证文案和遍历操作选项
-        :param text_list: wifi频段偏好 文案
-        :param option_text_list: 操作选项
+        :param text1: wifi频段偏好 文案
+        :param text2: 操作选项列表
         :return:
         """
         try:
@@ -44,30 +45,16 @@ class RemoteWiFi(BasePage):
             self.loop_detect_element_and_click(element_value='Wi-Fi 频段偏好')
 
             # 检查wifi频段偏好页面文案
-            wifi_band_preference_text = RemoteSetting().scroll_check_funcs2(texts=text_list)
+            RemoteSetting().scroll_check_funcs2(texts=text1, scroll_or_not=False, back2top=False)
+            RemoteSetting().scroll_check_funcs2(texts=text2, selector='ReoTitle', scroll_or_not=False, back2top=False)
 
             # 遍历操作选项
-            self.iterate_and_click_popup_text(option_text_list=option_text_list, menu_text='Wi-Fi 频段偏好')
-
-            # 遍历文本，执行点击操作
-            # for i in text_list:
-            #     self.scroll_and_click_by_text(text_to_find='Wi-Fi 频段偏好')
-            #     time.sleep(0.5)
-            #     logger.info('点击 ' + i)
-            #     self.click_by_text(i)
-            #     time.sleep(1)
-            #     page_options = RemoteSetting().scroll_check_funcs(i)  # 断言
-            #     if i != '取消':
-            #         assert page_options is True
-            #     elif i == '取消':
-            #         assert page_options is False
-
-            return wifi_band_preference_text
+            self.iterate_and_click_popup_text(option_text_list=text2, menu_text='Wi-Fi 频段偏好')
 
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
-    def access_in_wifi_test(self, text_list):
+    def access_in_wifi_test(self, text):
         """
         进入wifi测速页面，验证文本内容存在,点击开始测速
         :return:
@@ -78,37 +65,26 @@ class RemoteWiFi(BasePage):
             self.loop_detect_element_and_click(element_value='Wi-Fi测速')
 
             # 检查Wi-Fi测速页面文案
-            wifi_test_speed_text = RemoteSetting().scroll_check_funcs2(texts=text_list)
-
-            # 遍历文本，检查当前页面的文本内容
-            # for i in text_list:
-            #     page_element_status = self.is_element_exists(element_value=i)
-            #     if page_element_status:
-            #         logger.info('元素 ' + i + '存在')
-            #         assert True
-            #     else:
-            #         logger.info('元素 ' + i + '缺失')
-            #         assert False
+            RemoteSetting().scroll_check_funcs2(texts=text)
 
             # 点击开始测速
             self.loop_detect_element_and_click(element_value='开始测速')
+
             # 验证测速页面是否打开
             time.sleep(2)
-            google_speed_page = self.loop_detect_element_exist(element_value='How fast are you going?',
-                                                               scroll_or_not=False)
-            self.back_previous_page()  # 返回Wi-Fi测速页
-
-            # 返回Wi-Fi主页，有可能失败
-            self.back_previous_page()
-
-            return wifi_test_speed_text, google_speed_page
+            speed_text = 'How fast are you going?'
+            if not self.loop_detect_element_exist(element_value=speed_text, scroll_or_not=False):
+                pytest.fail('未进入测速页面,或测速页面错误！')
 
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
-    def access_in_add_network(self, text_list, wifi_name=None, wifi_passw=None):
+    def access_in_add_network(self, text_list, wifi_name='test_name', wifi_passw='reolink123'):
         """
-        进入添加其他网络页面
+        进入添加其他网络页面,输入wifi名称和密码,点击保存和跳过并保存.
+        :param text_list: 待验证的文案列表
+        :param wifi_name: wifi名称
+        :param wifi_passw: wifi密码
         :return:
         """
         try:
@@ -117,17 +93,7 @@ class RemoteWiFi(BasePage):
             self.loop_detect_element_and_click(element_value='添加其他网络')
 
             # 检查添加其他网络页面文案
-            add_network_text = RemoteSetting().scroll_check_funcs2(texts=text_list)
-
-            # 遍历文本，检查当前页面的文本内容
-            # for i in text_list:
-            #     page_element_status = self.is_element_exists(element_value=i)
-            #     if page_element_status:
-            #         logger.info('元素 ' + i + '存在')
-            #         assert True
-            #     else:
-            #         logger.info('元素 ' + i + '缺失')
-            #         assert False
+            RemoteSetting().scroll_check_funcs2(texts=text_list)
 
             # 点击输入Wi-Fi名称
             self.loop_detect_element_and_click(element_value='Wi-Fi名称')
@@ -143,8 +109,6 @@ class RemoteWiFi(BasePage):
 
             # 点击跳过并保存
             self.loop_detect_element_and_click(element_value='跳过并保存')
-
-            return add_network_text
 
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")

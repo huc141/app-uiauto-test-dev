@@ -1,0 +1,26 @@
+device_list_name: "Reolink Altas PT Ultra"
+uid: '952700Y100BF19GB'
+sub_name: ""
+
+ipc:
+  battery:
+    name: '电池'
+    desc: '设置>电池'
+    type: 'navigation'
+    text:
+      - ''
+
+    items:
+      battery:
+        name: '电池'
+        desc: '设置>电池'
+        type: 'navigation'
+        text:
+          - '电池'
+          - '是否允许本应用统计设备电池在过去4周的使用情况信息？'
+          - '为向您提供准确的设备电池使用数据，本应用需获得读取设备在线情况信息的权限。点击“同意并继续”即表示您同意授权。您可以随时在本页面取消授权。'
+          - '同意并继续'
+        options:
+          - '电池'
+          - '最近4周运行时长'
+          - '运行时长包括设备报警录像的时长和访问设备的时长。'

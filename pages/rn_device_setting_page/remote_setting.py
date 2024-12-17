@@ -237,110 +237,124 @@ class RemoteSetting(BasePage):
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
-    def access_in_remote_wifi(self, device_list_name, sub_name=None, access_mode='ipc'):
+    def access_in_remote_wifi(self, device_list_name, nvr_name=_nvr_name, hub_name=_hub_name, access_mode=_access_mode):
         """
         进入指定设备的远程配置的wifi页面.
         接入hub、nvr的设备名称在命名时不能过长导致省略隐藏。
         :param device_list_name: 设备列表里单机设备、hub、nvr的昵称。
-        :param sub_name: 若设备接入了hub、nvr设备下的话，则该名称必填。
+        :param nvr_name: 若设备接入了hub、nvr设备下的话，则该名称必填。
+        :param hub_name: 若设备接入了hub、nvr设备下的话，则该名称必填。
         :param access_mode: 设备接入方式，支持ipc、hub、nvr。明确设备是单机还是接入NVR下、接入hub下。
         :return:
         """
         try:
-            # 根据昵称在设备列表中滚动查找该设备并进入远程配置主页
-            self.access_in_remote_setting(device_list_name)
-
             # 如果设备是单机：
             if access_mode == 'ipc':
+                # 根据昵称在设备列表中滚动查找该设备并进入远程配置主页
+                self.access_in_remote_setting(device_list_name)
                 time.sleep(2)
-                # 进入wifi主页
+                # 进入PIR传感器主页
                 self.loop_detect_element_and_click('Wi-Fi')
 
             # 如果设备接入了nvr：
-            elif access_mode == 'nvr' and sub_name is not None:
+            elif access_mode == 'nvr' and nvr_name is not None:
+                # 根据昵称在设备列表中滚动查找该nvr设备并进入远程配置主页
+                self.access_in_remote_setting(nvr_name)
                 time.sleep(2)
                 self.loop_detect_element_and_click(self.ivSelectChannelButton, selector_type='xpath')
-                # 选择通道并点击(但是设备接入nvr后不会显示wifi的远程配置)
-                self.loop_detect_element_and_click(sub_name)
-                logger.info("设备接入了nvr，页面不显示WiFi功能")
+                # 选择通道并点击
+                self.loop_detect_element_and_click(device_list_name)
+                # 进入PIR传感器主页
+                self.loop_detect_element_and_click('Wi-Fi')
 
             # 如果设备接入了hub：
-            elif access_mode == 'hub' and sub_name is not None:
+            elif access_mode == 'hub' and hub_name is not None:
+                # 根据昵称在设备列表中滚动查找该hub设备并进入远程配置主页
+                self.access_in_remote_setting(hub_name)
                 time.sleep(2)
                 # 根据名称查找hub下的设备卡片，点击并进入hub下的设备的远程配置主页
-                self.loop_detect_element_and_click(sub_name)
-                # 进入wifi主页
+                self.loop_detect_element_and_click(device_list_name)
+                # 进入PIR传感器主页
                 self.loop_detect_element_and_click('Wi-Fi')
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
-    def access_in_battery(self, device_list_name, sub_name=None, access_mode='ipc'):
+    def access_in_battery(self, device_list_name, nvr_name=_nvr_name, hub_name=_hub_name, access_mode=_access_mode):
         """
         进入指定设备的远程配置的电池页面.
         接入hub、nvr的设备名称在命名时不能过长导致省略隐藏。
         :param device_list_name: 设备列表里单机设备、hub、nvr的昵称。
-        :param sub_name: 若设备接入了hub、nvr设备下的话，则该名称必填。
+        :param nvr_name: 若设备接入了hub、nvr设备下的话，则该名称必填。
+        :param hub_name: 若设备接入了hub、nvr设备下的话，则该名称必填。
         :param access_mode: 设备接入方式，支持ipc、hub、nvr。明确设备是单机还是接入NVR下、接入hub下。
         :return:
         """
         try:
-            # 根据昵称在设备列表中滚动查找该设备并进入远程配置主页
-            self.access_in_remote_setting(device_list_name)
-
             # 如果设备是单机：
             if access_mode == 'ipc':
+                # 根据昵称在设备列表中滚动查找该设备并进入远程配置主页
+                self.access_in_remote_setting(device_list_name)
                 time.sleep(2)
-                # 进入电池主页
+                # 进入PIR传感器主页
                 self.loop_detect_element_and_click('电池')
 
             # 如果设备接入了nvr：
-            elif access_mode == 'nvr' and sub_name is not None:
+            elif access_mode == 'nvr' and nvr_name is not None:
+                # 根据昵称在设备列表中滚动查找该nvr设备并进入远程配置主页
+                self.access_in_remote_setting(nvr_name)
                 time.sleep(2)
                 self.loop_detect_element_and_click(self.ivSelectChannelButton, selector_type='xpath')
                 # 选择通道并点击
-                self.loop_detect_element_and_click(sub_name)
+                self.loop_detect_element_and_click(device_list_name)
+                # 进入PIR传感器主页
+                self.loop_detect_element_and_click('电池')
 
             # 如果设备接入了hub：
-            elif access_mode == 'hub' and sub_name is not None:
+            elif access_mode == 'hub' and hub_name is not None:
+                # 根据昵称在设备列表中滚动查找该hub设备并进入远程配置主页
+                self.access_in_remote_setting(hub_name)
                 time.sleep(2)
                 # 根据名称查找hub下的设备卡片，点击并进入hub下的设备的远程配置主页
-                self.loop_detect_element_and_click(sub_name)
-                # 进入电池主页
+                self.loop_detect_element_and_click(device_list_name)
+                # 进入PIR传感器主页
                 self.loop_detect_element_and_click('电池')
 
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
-    def access_in_display(self, device_list_name, sub_name=None, access_mode='ipc'):
+    def access_in_display(self, device_list_name, nvr_name=_nvr_name, hub_name=_hub_name, access_mode=_access_mode):
         """
         点击显示，进入显示页面
         :return:
         """
         try:
-            # 根据昵称在设备列表中滚动查找该设备并进入远程配置主页
-            self.access_in_remote_setting(device_list_name)
-
             # 如果设备是单机：
             if access_mode == 'ipc':
+                # 根据昵称在设备列表中滚动查找该设备并进入远程配置主页
+                self.access_in_remote_setting(device_list_name)
                 time.sleep(2)
-                # 进入显示主页
+                # 进入PIR传感器主页
                 self.loop_detect_element_and_click('显示')
 
             # 如果设备接入了nvr：
-            elif access_mode == 'nvr' and sub_name is not None:
+            elif access_mode == 'nvr' and nvr_name is not None:
+                # 根据昵称在设备列表中滚动查找该nvr设备并进入远程配置主页
+                self.access_in_remote_setting(nvr_name)
                 time.sleep(2)
-                self.scroll_and_click_by_text(self.ivSelectChannelButton, el_type='xpath')
+                self.loop_detect_element_and_click(self.ivSelectChannelButton, selector_type='xpath')
                 # 选择通道并点击
-                self.scroll_and_click_by_text(sub_name)
-                # 进入显示主页
+                self.loop_detect_element_and_click(device_list_name)
+                # 进入PIR传感器主页
                 self.loop_detect_element_and_click('显示')
 
             # 如果设备接入了hub：
-            elif access_mode == 'hub' and sub_name is not None:
+            elif access_mode == 'hub' and hub_name is not None:
+                # 根据昵称在设备列表中滚动查找该hub设备并进入远程配置主页
+                self.access_in_remote_setting(hub_name)
                 time.sleep(2)
                 # 根据名称查找hub下的设备卡片，点击并进入hub下的设备的远程配置主页
-                self.scroll_and_click_by_text(sub_name)
-                # 进入显示主页
+                self.loop_detect_element_and_click(device_list_name)
+                # 进入PIR传感器主页
                 self.loop_detect_element_and_click('显示')
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
@@ -380,37 +394,40 @@ class RemoteSetting(BasePage):
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
-    def access_in_light(self, device_list_name, sub_name=None, access_mode='ipc'):
+    def access_in_light(self, device_list_name, nvr_name=_nvr_name, hub_name=_hub_name, access_mode=_access_mode):
         """
         点击灯，进入灯主页或者灯的配置页。
         :return:
         """
         try:
-            # 根据昵称在设备列表中滚动查找该设备并进入远程配置主页
-            self.access_in_remote_setting(device_list_name)
-
             # 如果设备是单机：
             if access_mode == 'ipc':
+                # 根据昵称在设备列表中滚动查找该设备并进入远程配置主页
+                self.access_in_remote_setting(device_list_name)
                 time.sleep(2)
                 # 进入灯主页
-                self.scroll_and_click_by_text('灯')
+                self.loop_detect_element_and_click('灯')
 
             # 如果设备接入了nvr：
-            elif access_mode == 'nvr' and sub_name is not None:
+            elif access_mode == 'nvr' and nvr_name is not None:
+                # 根据昵称在设备列表中滚动查找该nvr设备并进入远程配置主页
+                self.access_in_remote_setting(nvr_name)
                 time.sleep(2)
-                self.scroll_and_click_by_text(self.ivSelectChannelButton, el_type='xpath')
+                self.loop_detect_element_and_click(self.ivSelectChannelButton, selector_type='xpath')
                 # 选择通道并点击
-                self.scroll_and_click_by_text(sub_name)
+                self.loop_detect_element_and_click(device_list_name)
                 # 进入灯主页
-                self.scroll_and_click_by_text('灯')
+                self.loop_detect_element_and_click('灯')
 
             # 如果设备接入了hub：
-            elif access_mode == 'hub' and sub_name is not None:
+            elif access_mode == 'hub' and hub_name is not None:
+                # 根据昵称在设备列表中滚动查找该hub设备并进入远程配置主页
+                self.access_in_remote_setting(hub_name)
                 time.sleep(2)
                 # 根据名称查找hub下的设备卡片，点击并进入hub下的设备的远程配置主页
-                self.scroll_and_click_by_text(sub_name)
+                self.loop_detect_element_and_click(device_list_name)
                 # 进入灯主页
-                self.scroll_and_click_by_text('灯')
+                self.loop_detect_element_and_click('灯')
 
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")

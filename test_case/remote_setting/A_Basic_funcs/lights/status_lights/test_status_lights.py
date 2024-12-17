@@ -16,13 +16,13 @@ class TestRemoteLight:
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("灯>状态灯 > 关闭 模式")
     @allure.story("需人工核查日志和录屏")
-    @pytest.mark.skip
+    @allure.title("验证关闭状态灯")
     def test_status_lights_off(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
-        remote_items = device_config['ipc']['light']['items']['light']
-        BasePage().check_key_in_yaml(remote_items, 'status_lights')
+        remote_items1 = device_config['ipc']['light']['items']['light']
+        BasePage().check_key_in_yaml(remote_items1, 'status_lights')
 
-        remote_items = device_config['ipc']['light']['items']['light']['status_lights']['subpage']
+        remote_items = device_config['ipc']['light']['items']['light']['status_lights']
         BasePage().check_key_in_yaml(remote_items, 'light_off_mode')
 
         # 启动app，并开启录屏
@@ -32,24 +32,22 @@ class TestRemoteLight:
         RemoteSetting().access_in_light(device_list_name=device_config['device_list_name'])
 
         # 点击并测试状态灯 > 关闭模式
-        count_lights = device_config['ipc']['light']['items']['light']['text']
+        count_lights = remote_items1['text']
         lights_num = RemoteLight().verify_lights_list_length(texts=count_lights)  # 判断灯数量
-        status_lights_main_text_res = RemoteLight().click_test_status_lights_off(lights_num=lights_num,
-                                                                                 status_lights_texts=remote_items[
-                                                                                     'text'])
-
-        assert status_lights_main_text_res is True
+        RemoteLight().click_test_status_lights_off(lights_num=lights_num,
+                                                   status_lights_texts=remote_items['text'],
+                                                   options=remote_items['options'])
 
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("灯>状态灯 > 开启 模式")
     @allure.story("需人工核查日志和录屏")
-    @pytest.mark.skip
+    @allure.title("验证开启状态灯")
     def test_status_lights_on(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
-        remote_items = device_config['ipc']['light']['items']['light']
-        BasePage().check_key_in_yaml(remote_items, 'status_lights')
+        remote_items1 = device_config['ipc']['light']['items']['light']
+        BasePage().check_key_in_yaml(remote_items1, 'status_lights')
 
-        remote_items = device_config['ipc']['light']['items']['light']['status_lights']['subpage']
+        remote_items = device_config['ipc']['light']['items']['light']['status_lights']
         BasePage().check_key_in_yaml(remote_items, 'light_on_mode')
 
         # 启动app，并开启录屏
@@ -59,11 +57,10 @@ class TestRemoteLight:
         RemoteSetting().access_in_light(device_list_name=device_config['device_list_name'])
 
         # 点击并测试状态灯 > 开启模式
-        count_lights = device_config['ipc']['light']['items']['light']['text']
+        count_lights = remote_items1['text']
         lights_num = RemoteLight().verify_lights_list_length(texts=count_lights)  # 判断灯数量
-        status_lights_main_text_res = RemoteLight().click_test_status_lights_on(lights_num=lights_num,
-                                                                                status_lights_texts=remote_items[
-                                                                                    'text'])
+        RemoteLight().click_test_status_lights_on(lights_num=lights_num,
+                                                  status_lights_texts=remote_items['text'],
+                                                  options=remote_items['options'])
 
-        assert status_lights_main_text_res is True
 
