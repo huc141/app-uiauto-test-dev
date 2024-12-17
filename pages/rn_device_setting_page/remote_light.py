@@ -60,6 +60,29 @@ class RemoteLight(BasePage):
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
+    def check_floodlight_main_text(self, lights_num, text1, text2):
+        """
+        验证灯主页文案
+        :param text1: 全局待验证的文案列表
+        :param text2: 配置页操作项
+        :param lights_num: 布尔值，灯的数量大于1:True,  等于1：False
+        :return:
+        """
+        try:
+            def validate_floodlight_texts():
+                """验证灯主页或配置页文案"""
+                RemoteSetting().scroll_check_funcs2(texts=text1)
+                RemoteSetting().scroll_check_funcs2(texts=text2, selector='ReoTitle')
+
+            if lights_num:
+                self.scroll_and_click_by_text(text_to_find='白光灯')
+                validate_floodlight_texts()
+            else:
+                validate_floodlight_texts()
+
+        except Exception as e:
+            pytest.fail(f"函数执行出错: {str(e)}")
+
     @staticmethod
     def verify_lights_list_length(texts):
         """
@@ -84,82 +107,84 @@ class RemoteLight(BasePage):
         :param options_text: 红外灯 配置页操作项
         :return:
         """
-        try:
-            # 如果是多个灯，则点击红外灯
-            if lights_num:
-                self.scroll_and_click_by_text(text_to_find='红外灯')
-
-            # 验证红外灯主页文案
-            RemoteSetting().scroll_check_funcs2(texts=infrared_light_texts, scroll_or_not=False, back2top=False)
-
-            # 定义一个函数来处理每个选项
-            def handle_option(option_text):
-                # 操作红外灯配置
-                self.scroll_and_click_by_text(text_to_find=option_text)
+        # 定义一个函数来处理每个选项
+        def handle_option(option_text, is_back):
+            # 操作红外灯配置
+            self.scroll_and_click_by_text(text_to_find=option_text)
+            if is_back:
                 # 返回上一页
                 self.back_previous_page_by_xpath()
                 # 断言回显
                 if not self.scroll_and_click_by_text(text_to_find=option_text):
                     pytest.fail(f"红外灯选择【{option_text}】后，未检查到回显！")
 
-            # 遍历操作选项
-            for option in options_text:
-                handle_option(option)
+        try:
+            # 如果是多个灯，则点击红外灯
+            if lights_num:
+                self.scroll_and_click_by_text(text_to_find='红外灯')
+
+                # 验证红外灯主页文案
+                RemoteSetting().scroll_check_funcs2(texts=infrared_light_texts, scroll_or_not=False, back2top=False)
+
+                # 遍历操作选项
+                for option in options_text:
+                    handle_option(option, True)
+
+            else:
+                # 验证红外灯主页文案
+                RemoteSetting().scroll_check_funcs2(texts=infrared_light_texts, scroll_or_not=False, back2top=False)
+                # 遍历操作选项
+                for option in options_text:
+                    handle_option(option, False)
 
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
-    def click_test_floodlight_night_smart_mode(self, lights_num, supported_detect_type, flood_light_texts,
-                                               options_text):
+    def verify_floodlight_night_smart_mode(self, lights_num, supported_detect_type, options_text):
         """
-        点击并测试照明灯的夜间智能模式，（没有验证侦测页的文案）
+        点击并测试白光灯的夜间智能模式，（没有验证侦测页的文案）
         :param lights_num: 布尔值，灯的数量大于1:True,  等于1：False
         :param supported_detect_type: 是否支持 侦测
-        :param flood_light_texts: 配置页文案
         :param options_text: 配置页操作项
         :return:
         """
+        # TODO: 验证侦测类型选项文案需要写id
+        def handle_detect_type():
+            """处理侦测类型页面的遍历和保存操作"""
+            detect_text = options_text['detect_type']['text']  # 侦测类型全局文案
+            detect_options = options_text['detect_type']['option_text']  # 侦测类型选项文案
+            self.click_checkbox_by_text(option_text_list=detect_options, menu_text='侦测')
+            self.scroll_and_click_by_text(text_to_find=detect_options[0])  # 保底选项，防止下一步无法点击保存
+            RemoteSetting().scroll_check_funcs2(texts=detect_text)  # 验证侦测类型全局文案
+            RemoteSetting().scroll_check_funcs2(texts=detect_options, selector='??????')  # 验证侦测类型选项文案
+            self.scroll_and_click_by_text('保存')
+
         try:
-            # 如果是多个灯，则点击照明灯》夜间智能模式
+            # 如果是多个灯，则先点击白光灯
             if lights_num:
-                self.scroll_and_click_by_text(text_to_find='照明灯')
-                self.scroll_and_click_by_text(text_to_find='夜间智能模式')
-                # 验证照明灯主页文案
-                floodlight_main_text_res = RemoteSetting().scroll_check_funcs2(texts=flood_light_texts)
+                self.scroll_and_click_by_text(text_to_find='白光灯')
 
-                # 如果支持侦测类型，则点击侦测类型，否则返回灯主页：
-                if supported_detect_type:
-                    # 点击侦测类型，进入侦测页面遍历,遍历完成点击保存，回到灯主页
-                    self.click_checkbox_by_text(option_text_list=options_text, menu_text='侦测')
-                    self.scroll_and_click_by_text(text_to_find=options_text[0])  # 保底选项，防止下一步无法点击保存
-                    self.scroll_and_click_by_text('保存')
+                self.scroll_and_click_by_text(text_to_find='夜间智能模式')  # 点击夜间智能模式
 
-                # 返回灯主页，验证照明灯模式回显
-                self.back_previous_page_by_xpath()
+                if supported_detect_type:  # 如果支持侦测类型，处理侦测类型
+                    handle_detect_type()
+
+                self.back_previous_page_by_xpath()  # 返回灯主页并验证模式回显
                 if not RemoteSetting().scroll_check_funcs2(texts='夜间智能模式'):
-                    pytest.fail(f"照明灯选择【夜间智能模式】后，未检查到回显！")
-
-                return floodlight_main_text_res
+                    pytest.fail("白光灯选择【夜间智能模式】后，未检查到回显！")
 
             else:
+                # 单灯情况：直接点击夜间智能模式
                 self.scroll_and_click_by_text(text_to_find='夜间智能模式')
-                # 验证照明灯主页文案
-                floodlight_main_text_res = RemoteSetting().scroll_check_funcs2(texts=flood_light_texts)
-                # 如果支持侦测类型，则点击侦测类型，否则返回灯主页：
-                if RemoteSetting().scroll_check_funcs2(texts='侦测'):
-                    # 点击侦测类型，进入侦测页面遍历,遍历完成点击保存，回到照明灯的配置页
-                    self.click_checkbox_by_text(option_text_list=options_text, menu_text='侦测')
-                    self.scroll_and_click_by_text(text_to_find=options_text[0])  # 保底选项，防止下一步无法点击保存
-                    self.scroll_and_click_by_text('保存')
-
-                return floodlight_main_text_res
+                if supported_detect_type:
+                    handle_detect_type()
 
         except Exception as e:
-            pytest.fail(f"函数执行出错: {str(e)}")
+            pytest.fail(f"verify_floodlight_night_smart_mode 执行出错: {e}")
 
     def click_test_floodlight_smart_mode(self, lights_num, supported_detect_type, flood_light_texts, options_text):
         """
-        点击并测试照明灯的智能模式（没有验证侦测页的文案）
+        点击并测试白光灯的智能模式（没有验证侦测页的文案）
         :param lights_num: 布尔值，灯的数量大于1:True,  等于1：False
         :param supported_detect_type: 是否支持 侦测
         :param flood_light_texts: 配置页文案
@@ -167,11 +192,11 @@ class RemoteLight(BasePage):
         :return:
         """
         try:
-            # 如果是多个灯，则点击照明灯》智能模式
+            # 如果是多个灯，则点击白光灯》智能模式
             if lights_num:
-                self.scroll_and_click_by_text(text_to_find='照明灯')
+                self.scroll_and_click_by_text(text_to_find='白光灯')
                 self.scroll_and_click_by_text(text_to_find='智能模式')
-                # 验证照明灯主页文案
+                # 验证白光灯主页文案
                 floodlight_main_text_res = RemoteSetting().scroll_check_funcs2(texts=flood_light_texts)
 
                 # 如果支持侦测类型，则点击侦测类型，否则返回灯主页：
@@ -190,20 +215,20 @@ class RemoteLight(BasePage):
                 self.time_selector(iteration=2)  # 选择时、分
                 self.scroll_and_click_by_text(text_to_find='确定')
 
-                # 返回灯主页，验证照明灯模式回显
+                # 返回灯主页，验证白光灯模式回显
                 self.back_previous_page_by_xpath()
                 if not RemoteSetting().scroll_check_funcs2(texts='智能模式'):
-                    pytest.fail(f"照明灯选择【智能模式】后，未检查到回显！")
+                    pytest.fail(f"白光灯选择【智能模式】后，未检查到回显！")
 
                 return floodlight_main_text_res
 
             else:
                 self.scroll_and_click_by_text(text_to_find='智能模式')
-                # 验证照明灯主页文案
+                # 验证白光灯主页文案
                 floodlight_main_text_res = RemoteSetting().scroll_check_funcs2(texts=flood_light_texts)
                 # 如果支持侦测类型，则点击侦测类型，否则返回灯主页：
                 if supported_detect_type:
-                    # 点击侦测类型，进入侦测页面遍历,遍历完成点击保存，回到照明灯的配置页
+                    # 点击侦测类型，进入侦测页面遍历,遍历完成点击保存，回到白光灯的配置页
                     self.click_checkbox_by_text(option_text_list=options_text, menu_text='侦测')
                     self.scroll_and_click_by_text(text_to_find=options_text[0])  # 保底选项，防止下一步无法点击保存
                     self.scroll_and_click_by_text('保存')
@@ -222,57 +247,43 @@ class RemoteLight(BasePage):
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
-    def click_test_floodlight_timer_mode(self, lights_num, flood_light_texts):
+    def verify_floodlight_timer_mode(self, lights_num):
         """
         点击并测试白光灯的定时模式
         :param lights_num: 布尔值，灯的数量大于1:True,  等于1：False
-        :param flood_light_texts: 配置页文案
         :return:
         """
+
+        def set_timer():
+            """设置开始和结束时间"""
+            # 点击开始时间
+            self.scroll_and_click_by_text(text_to_find='开始时间')
+            self.time_selector(iteration=1)  # 选择时、分
+            self.scroll_and_click_by_text(text_to_find='确定')
+
+            # 点击结束时间
+            self.scroll_and_click_by_text(text_to_find='结束时间')
+            self.time_selector(iteration=2)  # 选择时、分
+            self.scroll_and_click_by_text(text_to_find='确定')
+
         try:
-            # 如果是多个灯，则点击照明灯》定时模式
+            # 如果是多个灯，点击白光灯后进入定时模式
             if lights_num:
-                self.scroll_and_click_by_text(text_to_find='照明灯')
+                self.scroll_and_click_by_text(text_to_find='白光灯')
                 self.scroll_and_click_by_text(text_to_find='定时模式')
-                # 验证照明灯主页文案
-                timer_main_text_res = RemoteSetting().scroll_check_funcs2(texts=flood_light_texts)
+                set_timer()
 
-                # 点击开始时间
-                self.scroll_and_click_by_text(text_to_find='开始时间')
-                self.time_selector(iteration=1)  # 选择时、分
-                self.scroll_and_click_by_text(text_to_find='确定')
-
-                # 点击结束时间
-                self.scroll_and_click_by_text(text_to_find='结束时间')
-                self.time_selector(iteration=2)  # 选择时、分
-                self.scroll_and_click_by_text(text_to_find='确定')
-
-                # 返回灯聚合页，验证照明灯模式回显
+                # 返回灯聚合页，验证定时模式回显
                 self.back_previous_page_by_xpath()
                 if not RemoteSetting().scroll_check_funcs2(texts='定时模式'):
-                    pytest.fail(f"照明灯选择【定时模式】后，未检查到回显！")
-
-                return timer_main_text_res
-
+                    pytest.fail("白光灯选择【定时模式】后，未检查到回显！")
             else:
+                # 单个灯直接进入定时模式并设置定时
                 self.scroll_and_click_by_text(text_to_find='定时模式')
-                # 验证照明灯主页文案
-                timer_main_text_res = RemoteSetting().scroll_check_funcs2(texts=flood_light_texts)
-
-                # 点击开始时间
-                self.scroll_and_click_by_text(text_to_find='开始时间')
-                self.time_selector(iteration=1)  # 选择时、分
-                self.scroll_and_click_by_text(text_to_find='确定')
-
-                # 点击结束时间
-                self.scroll_and_click_by_text(text_to_find='结束时间')
-                self.time_selector(iteration=2)  # 选择时、分
-                self.scroll_and_click_by_text(text_to_find='确定')
-
-                return timer_main_text_res
+                set_timer()
 
         except Exception as e:
-            pytest.fail(f"函数执行出错: {str(e)}")
+            pytest.fail(f"verify_floodlight_timer_mode 执行出错: {e}")
 
     def click_test_floodlight_night_vision_steady_light_mode(self, lights_num, flood_light_texts):
         """
@@ -280,18 +291,18 @@ class RemoteLight(BasePage):
         :return:
         """
         try:
-            # 如果是多个灯，则点击照明灯》夜视常亮 模式
+            # 如果是多个灯，则点击白光灯》夜视常亮 模式
             if lights_num:
-                self.scroll_and_click_by_text(text_to_find='照明灯')
+                self.scroll_and_click_by_text(text_to_find='白光灯')
                 self.scroll_and_click_by_text(text_to_find='夜视常亮')
-                # 验证照明灯主页文案
+                # 验证白光灯主页文案
                 light_steady_main_text_res = RemoteSetting().scroll_check_funcs2(texts=flood_light_texts)
 
                 return light_steady_main_text_res
 
             else:
                 self.scroll_and_click_by_text(text_to_find='夜视常亮')
-                # 验证照明灯主页文案
+                # 验证白光灯主页文案
                 light_off_main_text_res = RemoteSetting().scroll_check_funcs2(texts=flood_light_texts)
                 return light_off_main_text_res
         except Exception as e:
@@ -299,27 +310,27 @@ class RemoteLight(BasePage):
 
     def click_test_preview_opens_auto(self, lights_num, flood_light_texts):
         """
-        点击测试 照明灯>预览自动开启 的switch切换按钮
+        点击测试 白光灯>预览自动开启 的switch切换按钮
         :return:
         """
         try:
-            # 如果是多个灯，则点击照明灯》预览自动开启
+            # 如果是多个灯，则点击白光灯》预览自动开启
             if lights_num:
-                self.scroll_and_click_by_text(text_to_find='照明灯')
+                self.scroll_and_click_by_text(text_to_find='白光灯')
                 self.scroll_click_right_btn(text_to_find='预览自动开启')
-                # 验证照明灯主页文案
+                # 验证白光灯主页文案
                 preview_opens_text_res = RemoteSetting().scroll_check_funcs2(texts=flood_light_texts)
 
-                # 返回灯聚合页，验证照明灯模式回显
+                # 返回灯聚合页，验证白光灯模式回显
                 self.back_previous_page_by_xpath()
                 if not RemoteSetting().scroll_check_funcs2(texts='夜视常亮'):
-                    pytest.fail(f"照明灯选择【夜视常亮】后，未检查到回显！")
+                    pytest.fail(f"白光灯选择【夜视常亮】后，未检查到回显！")
 
                 return preview_opens_text_res
 
             else:
                 self.scroll_click_right_btn(text_to_find='预览自动开启')
-                # 验证照明灯主页文案
+                # 验证白光灯主页文案
                 preview_opens_text_res = RemoteSetting().scroll_check_funcs2(texts=flood_light_texts)
                 return preview_opens_text_res
         except Exception as e:
@@ -331,23 +342,23 @@ class RemoteLight(BasePage):
         :return:
         """
         try:
-            # 如果是多个灯，则点击照明灯》关闭模式
+            # 如果是多个灯，则点击白光灯》关闭模式
             if lights_num:
-                self.scroll_and_click_by_text(text_to_find='照明灯')
+                self.scroll_and_click_by_text(text_to_find='白光灯')
                 self.scroll_and_click_by_text(text_to_find='关闭')
-                # 验证照明灯主页文案
+                # 验证白光灯主页文案
                 light_off_main_text_res = RemoteSetting().scroll_check_funcs2(texts=flood_light_texts)
 
-                # 返回灯聚合页，验证照明灯模式回显
+                # 返回灯聚合页，验证白光灯模式回显
                 self.back_previous_page_by_xpath()
                 if not RemoteSetting().scroll_check_funcs2(texts='关闭'):
-                    pytest.fail(f"照明灯选择【关闭模式】后，未检查到回显！")
+                    pytest.fail(f"白光灯选择【关闭模式】后，未检查到回显！")
 
                 return light_off_main_text_res
 
             else:
                 self.scroll_and_click_by_text(text_to_find='关闭')
-                # 验证照明灯主页文案
+                # 验证白光灯主页文案
                 light_off_main_text_res = RemoteSetting().scroll_check_funcs2(texts=flood_light_texts)
                 return light_off_main_text_res
         except Exception as e:
@@ -355,29 +366,29 @@ class RemoteLight(BasePage):
 
     def click_test_light_auto_mode(self, lights_num, flood_light_texts):
         """
-        点击测试照明灯>自动模式
+        点击测试白光灯>自动模式
         :param lights_num:
         :param flood_light_texts:
         :return:
         """
         try:
-            # 如果是多个灯，则点击照明灯》自动模式
+            # 如果是多个灯，则点击白光灯》自动模式
             if lights_num:
-                self.scroll_and_click_by_text(text_to_find='照明灯')
+                self.scroll_and_click_by_text(text_to_find='白光灯')
                 self.scroll_and_click_by_text(text_to_find='自动模式')
-                # 验证照明灯主页文案
+                # 验证白光灯主页文案
                 flood_light_texts = RemoteSetting().scroll_check_funcs2(texts=flood_light_texts)
 
-                # 返回灯聚合页，验证照明灯模式回显
+                # 返回灯聚合页，验证白光灯模式回显
                 self.back_previous_page_by_xpath()
                 if not RemoteSetting().scroll_check_funcs2(texts='自动模式'):
-                    pytest.fail(f"照明灯选择【关闭模式】后，未检查到回显！")
+                    pytest.fail(f"白光灯选择【关闭模式】后，未检查到回显！")
 
                 return flood_light_texts
 
             else:
                 self.scroll_and_click_by_text(text_to_find='自动模式')
-                # 验证照明灯主页文案
+                # 验证白光灯主页文案
                 flood_light_texts = RemoteSetting().scroll_check_funcs2(texts=flood_light_texts)
                 return flood_light_texts
         except Exception as e:
