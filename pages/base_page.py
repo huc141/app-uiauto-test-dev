@@ -614,6 +614,7 @@ class BasePage:
 
                     attempt += 1
 
+            time.sleep(2)
         except Exception as err:
             pytest.fail(f"函数执行出错: {str(err)}")
 
