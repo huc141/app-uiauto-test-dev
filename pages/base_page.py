@@ -1517,8 +1517,8 @@ class BasePage:
             # 检查下一个同级元素
             sibling_index += 1
 
-        # 如果未找到目标元素，返回None
-        return None
+        # 如果未找到目标元素，返回False
+        return False
 
     def back_to_page_top(self):
         """

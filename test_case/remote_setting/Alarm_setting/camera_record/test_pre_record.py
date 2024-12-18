@@ -12,6 +12,7 @@ devices_config = read_yaml.load_device_config(yaml_file_name='camera_record.yaml
 
 @allure.epic("远程配置>摄像机录像")
 class TestRemoteCameraRecord:
+    # TODO: 待修改
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("报警录像>预录像")
     @allure.story("需人工核查日志和录屏")

@@ -16,6 +16,7 @@ class TestRemoteCameraRecord:
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("报警录像>录像延时时长")
     @allure.story("需人工核查日志和录屏")
+    @allure.title('验证录像延时时长')
     def test_remote_record_delay_duration(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['camera_record']['items']
@@ -28,9 +29,5 @@ class TestRemoteCameraRecord:
         RemoteSetting().access_in_camera_record(device_list_name=device_config['device_list_name'])
 
         # 点击录像延时时长，验证文案、遍历延时选项
-        main_text_res = RemoteCameraRecord().click_test_record_delay_duration(
-            texts_list=remote_items['record_delay_duration']['text'],
-            option_text_list=remote_items['record_delay_duration']['option_text'])
-
-        # 断言
-        assert main_text_res is True
+        RemoteCameraRecord().verify_record_delay_duration(texts_list=remote_items['record_delay_duration']['text'],
+                                                          options=remote_items['record_delay_duration']['options'])
