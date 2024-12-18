@@ -7,8 +7,7 @@ from pages.base_page import BasePage
 from pages.rn_device_setting_page.remote_setting import RemoteSetting
 from pages.rn_device_setting_page.remote_pir_setting import RemotePirSetting
 
-devices_config = read_yaml.load_device_config(device_dir='battery/Reolink Go Ranger PT',
-                                              yaml_file_name='pir.yaml')  # 读取参数化文件
+devices_config = read_yaml.load_device_config(yaml_file_name='pir.yaml')  # 读取参数化文件
 
 
 @allure.epic("远程配置>报警设置>PIR传感器")

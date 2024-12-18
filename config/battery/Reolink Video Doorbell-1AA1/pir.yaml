@@ -1,5 +1,5 @@
-device_list_name: "Reolink Go Ranger PT"
-uid: '952700Y004WOIYNY'
+device_list_name: "952700Y101JN1AA1"
+uid: '952700Y101JN1AA1'
 
 ipc:
   pir:
@@ -18,12 +18,10 @@ ipc:
           - 'PIR 传感器'
           - '摄像机检测到画面内有物体移动时会触发报警，并通过手机推送、声音报警、邮件通知用户。'
           - '探测精度'
-          - '报警时限'
           - '触发间隔'
         options:
           - 'PIR 传感器'
           - '探测精度'
-          - '报警时限'
           - '触发间隔'
 
         sensitivity:
@@ -44,22 +42,9 @@ ipc:
             - '0'
             - '100'
 
-        alarm_time_limit:
-          name: '报警时限'
-          desc: '设置>pir>报警时限'
-          type: 'page'
-          text:
-            - '报警时限'
-            - '不限制'
-            - '15s'
-            - '30s'
-            - '1min'
-            - '2min'
-            - '5min'
-
         trigger_interval:
           name: '触发间隔'
-          desc: '设置>pir>触发间隔'
+          desc: '设置>pir>触发间隔（这台设备在原生上为滑动条5-120s）'
           type: 'page'
           text:
             - '触发间隔'

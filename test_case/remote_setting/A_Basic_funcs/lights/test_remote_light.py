@@ -29,5 +29,6 @@ class TestRemoteLight:
 
         # 验证灯主页文案
         lights_num = RemoteLight().verify_lights_list_length(texts=remote_items['light']['text'])  # 判断灯数量
-        RemoteLight().check_lights_main_text(lights_num=lights_num, texts=remote_items['light']['text'])
+        RemoteLight().check_lights_main_text(lights_num=lights_num,
+                                             texts=remote_items['light']['text'])
 

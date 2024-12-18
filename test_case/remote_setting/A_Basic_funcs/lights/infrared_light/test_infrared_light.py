@@ -30,9 +30,9 @@ class TestRemoteLight:
 
         # 点击并测试红外灯和配置
         lights_num = RemoteLight().verify_lights_list_length(texts=remote_items['text'])  # 判断灯数量
-        RemoteLight().click_and_test_infrared_light(lights_num=lights_num,
-                                                    infrared_light_texts=remote_items['infrared_light']['text'],
-                                                    options_text=remote_items['infrared_light']['options'])
+        RemoteLight().verify_and_test_infrared_light(lights_num=lights_num,
+                                                     infrared_light_texts=remote_items['infrared_light']['text'],
+                                                     options_text=remote_items['infrared_light']['options'])
 
 
 

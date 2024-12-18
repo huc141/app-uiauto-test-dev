@@ -1,5 +1,6 @@
 device_list_name: "Reolink Go Ranger PT"
 uid: '952700Y004WOIYNY'
+sub_name: ""
 
 ipc:
   pir:

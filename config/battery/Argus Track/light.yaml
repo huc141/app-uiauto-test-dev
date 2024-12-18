@@ -1,5 +1,5 @@
-device_list_name: "yulong-test-sd7"
-uid: '952700Y006ZP1IJ5'
+device_list_name: "sd11"
+uid: '952700Y100AALKZY'
 
 ipc:
   light:
@@ -15,8 +15,30 @@ ipc:
         desc: '设置>灯主页'
         type: 'page'
         text:
-          - '照明灯'
+          - '状态灯'
           - '红外灯'
+          - '白光灯'
+
+        status_lights:
+          name: '状态灯/指示灯'
+          desc: '设置>灯>状态灯'
+          type: 'navigation'
+          text:
+            - '指示灯'
+            - '位于镜头附近的一个表示摄像机连接状态的灯。'
+            - '了解更多'
+            - '关闭'
+            - '状态灯将保持关闭'
+            - '开启'
+            - '状态灯将始终亮起'
+          options:
+            - '开启'
+            - '关闭'
+
+          light_off_mode:
+            name: '关闭'
+          light_on_mode:
+            name: '开启'
 
         infrared_light:
           name: '红外灯'
@@ -36,31 +58,24 @@ ipc:
             - '自动'
 
         floodlight:
-          name: '照明灯'
-          desc: '设置>灯>照明灯'
+          name: '白光灯'
+          desc: '设置>灯>白光灯'
           type: 'navigation'
           text:
             - '关闭'
             - '白光灯将保持关闭'
             - '夜间智能模式'
             - '当相机在夜间检测到事件时自动打开。'
-            - '定时模式'
-            - '在预定的时间段内保持开启。'
+            - '预览自动开启'
+            - '夜晚查看预览时，自动开启，结束后关闭。'
           options:
             - '关闭'
             - '夜间智能模式'
-            - '定时模式'
+            - '预览自动开启'
 
           light_off_mode:
             name: '关闭'
-            desc: '设置>灯>照明灯>关闭'
-            type: 'menu'
-            text:
-              - ''
-
-          timer_mode:
-            name: '定时模式'
-            desc: '设置>灯>照明灯>定时模式'
+            desc: '设置>灯>白光灯>关闭'
             type: 'menu'
             text:
               - ''
@@ -71,18 +86,8 @@ ipc:
             type: 'menu'
             text:
               - ''
-            detect_type:
-              desc: '设置>灯>照明灯>夜间智能模式>侦测'
-              type: 'navigation'
-              text:
-                - '报警类型'
-                - '保存'
-                - '全选'
-                - '画面变动'
-                - '人'
-                - '车'
-                - '动物'
-              option_text:
-                  - '人'
-                  - '车'
-                  - '动物'
+
+          preview_opens_auto:
+            name: '预览自动开启'
+            desc: '设置>灯>照明灯>预览自动开启'
+            type: 'switch'

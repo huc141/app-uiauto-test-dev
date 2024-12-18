@@ -1,5 +1,5 @@
-device_list_name: "Reolink Lumus"
-uid: '952700Y006BDF1TT'
+device_list_name: "Argus PT Ultra Sd93"
+uid: '952700Y002PO3HHP'
 
 ipc:
   light:
@@ -57,48 +57,6 @@ ipc:
             - '关闭'
             - '自动'
 
-        button_light:
-          name: '按钮灯'
-          desc: '设置>灯>按钮灯'
-          type: 'navigation'
-          text:
-            - '按钮灯'
-            - '按钮周围的一圈表示门铃连接状态的灯。'
-            - '了解更多'
-            - '关闭'
-            - '按钮灯将保持关闭'
-            - '自动'
-            - '按钮灯会自动在侦测到人、按压按钮和对讲时有灯光的反馈。'
-            - '自动且夜视常亮'
-            - '按钮灯将在检测到人员、按下按钮和双向通话时 24/7 亮起，并在夜间保持稳定的白色。'
-            - '常亮'
-            - '按钮灯将始终亮起'
-          options:
-            - '自动'
-            - '自动且夜视常亮'
-            - '常亮'
-            - '保持关闭'
-
-          light_off_mode:
-            name: '关闭'
-            desc: '设置>灯>按钮灯>关闭'
-            type: 'menu'
-
-          light_auto_mode:
-            name: '自动'
-            desc: '设置>灯>按钮灯>自动'
-            type: 'menu'
-
-          light_auto_on_night_mode:
-            name: '自动且夜间常亮'
-            desc: '设置>灯>按钮灯>自动且夜间常亮'
-            type: 'menu'
-
-          light_always_on_mode:
-            name: '常亮'
-            desc: '设置>灯>按钮灯>自动且夜间常亮'
-            type: 'menu'
-
         floodlight:
           name: '白光灯'
           desc: '设置>灯>白光灯'
@@ -108,23 +66,16 @@ ipc:
             - '白光灯将保持关闭'
             - '夜间智能模式'
             - '当相机在夜间检测到事件时自动打开。'
-            - '定时模式'
-            - '在预定的时间段内保持开启。'
+            - '预览自动开启'
+            - '夜晚查看预览时，自动开启，结束后关闭。'
           options:
             - '关闭'
             - '夜间智能模式'
-            - '定时模式'
+            - '预览自动开启'
 
           light_off_mode:
             name: '关闭'
             desc: '设置>灯>白光灯>关闭'
-            type: 'menu'
-            text:
-              - ''
-
-          timer_mode:
-            name: '定时模式'
-            desc: '设置>灯>照明灯>定时模式'
             type: 'menu'
             text:
               - ''
@@ -150,3 +101,8 @@ ipc:
                 - '人'
                 - '车'
                 - '动物'
+
+          preview_opens_auto:
+            name: '预览自动开启'
+            desc: '设置>灯>照明灯>预览自动开启'
+            type: 'switch'

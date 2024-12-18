@@ -1,0 +1,35 @@
+device_list_name: "Reolink Go Ranger PT"
+uid: '952700Y004WOIYNY'
+
+ipc:
+  light:
+    name: '灯'
+    desc: '设置>灯'
+    type: 'navigation'
+    text:
+      - ''
+
+    items:
+      light:
+        name: '灯'
+        desc: '设置>灯主页'
+        type: 'page'
+        text:
+          - '红外灯'
+
+        infrared_light:
+          name: '红外灯'
+          desc: '设置>灯>红外灯'
+          type: 'navigation'
+          text:
+            - '红外灯'
+            - '红外灯补光时，能让你在夜晚或光线较暗时拍出更清晰的影像。'
+            - '关'
+            - '开'
+            - '关闭'
+            - '关闭红外灯后，夜视环境下效果会较差。'
+            - '自动'
+            - '光线较亮时自动开启，光线较暗时自动关闭。'
+          options:
+            - '关闭'
+            - '自动'

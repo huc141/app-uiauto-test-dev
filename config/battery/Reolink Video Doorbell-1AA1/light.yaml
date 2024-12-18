@@ -1,5 +1,5 @@
-device_list_name: "Reolink Video Doorbell WiFi-W"
-uid: '952700Y0058Y1MGY'
+device_list_name: "Reolink Video Doorbell"
+uid: '952700Y101JN1AA1'
 
 ipc:
   light:
@@ -15,8 +15,30 @@ ipc:
         desc: '设置>灯主页'
         type: 'page'
         text:
+          - '指示灯'
           - '红外灯'
           - '按钮灯'
+
+        status_lights:
+          name: '指示灯'
+          desc: '设置>灯>指示灯'
+          type: 'navigation'
+          text:
+            - '指示灯'
+            - '位于镜头附近的一个表示摄像机连接状态的灯。'
+            - '了解更多'
+            - '关闭'
+            - '指示灯将保持关闭'
+            - '开启'
+            - '指示灯将始终亮起'
+          options:
+            - '开启'
+            - '关闭'
+
+          light_off_mode:
+            name: '关闭'
+          light_on_mode:
+            name: '开启'
 
         infrared_light:
           name: '红外灯'
@@ -24,15 +46,16 @@ ipc:
           type: 'navigation'
           text:
             - '红外灯'
-            - '红外补光灯，能让你在夜晚或光线较暗时拍出更清晰的影像。'
-            - '红外灯关闭'
-            - '红外灯亮起'
+            - '红外灯补光时，能让你在夜晚或光线较暗时拍出更清晰的影像。'
+            - '关'
+            - '开'
+            - '关闭'
+            - '关闭红外灯后，夜视环境下效果会较差。'
             - '自动'
-            - '光线较暗时自动开启，光线较亮时自动关闭。'
-            - '保持关闭'
-          options_text:
+            - '光线较亮时自动开启，光线较暗时自动关闭。'
+          options:
+            - '关闭'
             - '自动'
-            - '保持关闭'
 
         button_light:
           name: '按钮灯'
@@ -53,7 +76,6 @@ ipc:
           options:
             - '自动'
             - '自动且夜视常亮'
-            - '常亮'
             - '保持关闭'
 
           light_off_mode:
