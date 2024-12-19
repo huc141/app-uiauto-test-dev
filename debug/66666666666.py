@@ -4,7 +4,7 @@ import json
 # 假设LogUtil和StepType在Python中不需要，因为我们可以直接打印日志
 # 假设我们有一个配置字典来代替androidStepHandler.globalParams
 config = {
-    "api_server": "http://192.168.100.159:8002",
+    "api_server": "http",
     "is_default": True,
     "username": "admin",
     "password": "reolink123",
