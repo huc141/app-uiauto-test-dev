@@ -724,7 +724,7 @@ class BasePage:
         except Exception as err:
             pytest.fail(f"函数执行出错: {str(err)}")
 
-    def access_in_remote_setting(self, text_to_find, el_type='text', max_attempts=15, scroll_pause=0.5):
+    def access_in_remote_setting(self, text_to_find, el_type='text', max_attempts=30, scroll_pause=0.5):
         """
         在设备列表中滚动查找指定设备名称(支持单机、nvr、hub),并点击远程设置按钮。
         :param el_type: 元素查找类型，支持 文本text(label).
@@ -737,13 +737,13 @@ class BasePage:
         def retry_connection(num_retries=4):
             for _ in range(num_retries):
                 # 优先检查是否已成功进入报警设置页面
-                if self.wait_for_element(text='报警设置'):
+                if self.wait_for_element(text='报警通知'):
                     logger.info('远程配置页面已成功加载！')
                     break
 
-                if self.wait_for_element(text='连接失败，点击重试'):
+                if self.wait_for_element(text='加载失败，请点击重试'):
                     logger.warning("检测到连接失败，尝试点击重试按钮...")
-                    self.click_by_text('连接失败，点击重试')
+                    self.click_by_text('重试')
                 else:
                     logger.info('loading中，继续等待')
                     time.sleep(7)
@@ -751,6 +751,7 @@ class BasePage:
                 pytest.fail(f'已重试 {num_retries} 次，未能连接上该设备！')
 
         def find_and_click_remote_setting(text):
+            time.sleep(2)
             for i in range(3, 0, -1):  # 从3开始递减到1，先检查第三个兄弟元素
                 setting_xpath = f"//*[@text='{text}']/following-sibling::*[{i}][@clickable='true']"
                 if self.driver.xpath(setting_xpath).exists:

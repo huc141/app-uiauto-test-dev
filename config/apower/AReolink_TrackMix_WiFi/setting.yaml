@@ -1,189 +1,173 @@
-device_list_name: 'yulong-test-sd7'
-uid: '952700Y006ZP1IJ5'
-sub_name: ''
-
-ipc:
-  name: '设置'
-  key: 'setting_page'
-  desc: '单机设置页面'
-  type: 'page'
-  items:
-    - name: 'Wi-Fi'
-      key: 'Wi-Fi'
-      desc: '设置>Wi-Fi'
-      type: 'navigation'
-
-    - name: '显示'
-      key: 'display'
-      desc: '设置>显示'
-      type: 'navigation'
-
-    - name: '音频'
-      key: 'audio'
-      desc: '设置>音频'
-      type: 'navigation'
-
-    - name: '灯'
-      key: 'light'
-      desc: '设置>灯'
-      type: 'navigation'
-
-    - name: '侦测报警'
-      key: 'detection_alarm'
-      desc: '设置>侦测报警'
-      type: 'navigation'
-
-    - name: '摄像机录像'
-      key: 'camera_recording'
-      desc: '设置>摄像机录像'
-      type: 'navigation'
-
-    - name: '手机推送'
-      key: 'notification_push'
-      desc: '设置>手机推送'
-      type: 'navigation'
-
-    - name: '邮件通知'
-      key: 'email_alert'
-      desc: '设置>邮件通知'
-      type: 'navigation'
-
-    - name: 'FTP'
-      key: 'ftp'
-      desc: '设置>FTP'
-      type: 'navigation'
-
-    - name: '鸣笛'
-      key: 'siren'
-      desc: '设置>鸣笛'
-      type: 'navigation'
-
-    - name: '已联动的设备'
-      key: 'linked_device'
-      desc: '设置>已联动的设备'
-      type: 'navigation'
-
-    - name: '分享摄像机'
-      key: 'share_camera'
-      desc: '设置>分享摄像机'
-      type: 'navigation'
-
-    - name: '延时摄影'
-      key: 'time_lapse'
-      desc: '设置>延时摄影'
-      type: 'navigation'
-
-    - name: '高级设置'
-      key: 'advanced_setting'
-      desc: '设置>高级设置'
-      type: 'navigation'
-
+device_list_name: yulong-test-sd7
 hub:
-  name: '设置'
-  key: 'setting_page'
-  desc: '接入hub后的单机设置页面'
-  type: 'page'
+  desc: 接入hub后的单机设置页面
   items:
-    - name: '显示'
-      key: 'display'
-      desc: '设置>显示'
-      type: 'navigation'
-    - name: '音频'
-      key: 'audio'
-      desc: '设置>音频'
-      type: 'navigation'
-    - name: '灯'
-      key: 'light'
-      desc: '设置>灯'
-      type: 'navigation'
-    - name: '侦测报警'
-      key: 'detection_alarm'
-      desc: '设置>侦测报警'
-      type: 'navigation'
-    - name: '摄像机录像'
-      key: 'camera_recording'
-      desc: '设置>摄像机录像'
-      type: 'navigation'
-    - name: '手机推送'
-      key: 'notification_push'
-      desc: '设置>手机推送'
-      type: 'navigation'
-    - name: '邮件通知'
-      key: 'email_alert'
-      desc: '设置>邮件通知'
-      type: 'navigation'
-    - name: 'FTP'
-      key: 'ftp'
-      desc: '设置>FTP'
-      type: 'navigation'
-    - name: '已联动的设备'
-      key: 'linked_device'
-      desc: '设置>已联动的设备'
-      type: 'navigation'
-    - name: '分享摄像机'
-      key: 'share_camera'
-      desc: '设置>分享摄像机'
-      type: 'navigation'
-    - name: '延时摄影'
-      key: 'time_lapse'
-      desc: '设置>延时摄影'
-      type: 'navigation'
-    - name: '高级设置'
-      key: 'advanced_setting'
-      desc: '设置>高级设置'
-      type: 'navigation'
-
+  - desc: 设置>显示
+    key: display
+    name: 显示
+    type: navigation
+  - desc: 设置>音频
+    key: audio
+    name: 音频
+    type: navigation
+  - desc: 设置>灯
+    key: light
+    name: 灯
+    type: navigation
+  - desc: 设置>侦测报警
+    key: detection_alarm
+    name: 侦测报警
+    type: navigation
+  - desc: 设置>摄像机录像
+    key: camera_recording
+    name: 摄像机录像
+    type: navigation
+  - desc: 设置>手机推送
+    key: notification_push
+    name: 手机推送
+    type: navigation
+  - desc: 设置>邮件通知
+    key: email_alert
+    name: 邮件通知
+    type: navigation
+  - desc: 设置>FTP
+    key: ftp
+    name: FTP
+    type: navigation
+  - desc: 设置>已联动的设备
+    key: linked_device
+    name: 已联动的设备
+    type: navigation
+  - desc: 设置>分享摄像机
+    key: share_camera
+    name: 分享摄像机
+    type: navigation
+  - desc: 设置>延时摄影
+    key: time_lapse
+    name: 延时摄影
+    type: navigation
+  - desc: 设置>高级设置
+    key: advanced_setting
+    name: 高级设置
+    type: navigation
+  key: setting_page
+  name: 设置
+  type: page
+ipc:
+  desc: 单机设置页面
+  items:
+  - desc: 设置>Wi-Fi
+    key: Wi-Fi
+    name: Wi-Fi
+    type: navigation
+  - desc: 设置>显示
+    key: display
+    name: 显示
+    type: navigation
+  - desc: 设置>音频
+    key: audio
+    name: 音频
+    type: navigation
+  - desc: 设置>灯
+    key: light
+    name: 灯
+    type: navigation
+  - desc: 设置>侦测报警
+    key: detection_alarm
+    name: 侦测报警
+    type: navigation
+  - desc: 设置>摄像机录像
+    key: camera_recording
+    name: 摄像机录像
+    type: navigation
+  - desc: 设置>手机推送
+    key: notification_push
+    name: 手机推送
+    type: navigation
+  - desc: 设置>邮件通知
+    key: email_alert
+    name: 邮件通知
+    type: navigation
+  - desc: 设置>FTP
+    key: ftp
+    name: FTP
+    type: navigation
+  - desc: 设置>鸣笛
+    key: siren
+    name: 鸣笛
+    type: navigation
+  - desc: 设置>已联动的设备
+    key: linked_device
+    name: 已联动的设备
+    type: navigation
+  - desc: 设置>分享摄像机
+    key: share_camera
+    name: 分享摄像机
+    type: navigation
+  - desc: 设置>延时摄影
+    key: time_lapse
+    name: 延时摄影
+    type: navigation
+  - desc: 设置>高级设置
+    key: advanced_setting
+    name: 高级设置
+    type: navigation
+  key: setting_page
+  name: 设置
+  type: page
 nvr:
-  name: '设置'
-  key: 'setting_page'
-  desc: '接入nvr后的设置页面'
-  type: 'page'
+  desc: 接入nvr后的设置页面
   items:
-    - name: '显示'
-      key: 'display'
-      desc: '设置>显示'
-      type: 'navigation'
-    - name: '音频'
-      key: 'audio'
-      desc: '设置>音频'
-      type: 'navigation'
-    - name: '灯'
-      key: 'light'
-      desc: '设置>灯'
-      type: 'navigation'
-    - name: '侦测报警'
-      key: 'detection_alarm'
-      desc: '设置>侦测报警'
-      type: 'navigation'
-    - name: '摄像机录像'
-      key: 'camera_recording'
-      desc: '设置>摄像机录像'
-      type: 'navigation'
-    - name: '手机推送'
-      key: 'notification_push'
-      desc: '设置>手机推送'
-      type: 'navigation'
-    - name: '邮件通知'
-      key: 'email_alert'
-      desc: '设置>邮件通知'
-      type: 'navigation'
-    - name: 'FTP'
-      key: 'ftp'
-      desc: '设置>FTP'
-      type: 'navigation'
-    - name: '已联动的设备'
-      key: 'linked_device'
-      desc: '设置>已联动的设备'
-      type: 'navigation'
-    - name: '分享摄像机'
-      key: 'share_camera'
-      desc: '设置>分享摄像机'
-      type: 'navigation'
-    - name: '延时摄影'
-      key: 'time_lapse'
-      desc: '设置>延时摄影'
-      type: 'navigation'
-    - name: '高级设置'
-      key: 'advanced_setting'
-      desc: '设置>高级设置'
-      type: 'navigation'
+  - desc: 设置>显示
+    key: display
+    name: 显示
+    type: navigation
+  - desc: 设置>音频
+    key: audio
+    name: 音频
+    type: navigation
+  - desc: 设置>灯
+    key: light
+    name: 灯
+    type: navigation
+  - desc: 设置>侦测报警
+    key: detection_alarm
+    name: 侦测报警
+    type: navigation
+  - desc: 设置>摄像机录像
+    key: camera_recording
+    name: 摄像机录像
+    type: navigation
+  - desc: 设置>手机推送
+    key: notification_push
+    name: 手机推送
+    type: navigation
+  - desc: 设置>邮件通知
+    key: email_alert
+    name: 邮件通知
+    type: navigation
+  - desc: 设置>FTP
+    key: ftp
+    name: FTP
+    type: navigation
+  - desc: 设置>已联动的设备
+    key: linked_device
+    name: 已联动的设备
+    type: navigation
+  - desc: 设置>分享摄像机
+    key: share_camera
+    name: 分享摄像机
+    type: navigation
+  - desc: 设置>延时摄影
+    key: time_lapse
+    name: 延时摄影
+    type: navigation
+  - desc: 设置>高级设置
+    key: advanced_setting
+    name: 高级设置
+    type: navigation
+  key: setting_page
+  name: 设置
+  type: page
+sub_name: ''
+uid: 952700Y006ZP1IJ5

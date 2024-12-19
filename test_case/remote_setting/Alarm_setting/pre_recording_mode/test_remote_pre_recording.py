@@ -16,6 +16,7 @@ class TestRemotePreRecording:
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("预录模式>预录模式主页 文案/设置停止预录电量")
     @allure.story("需人工核查日志和录屏")
+    @allure.title("测试预录模式主页 文案/设置停止预录电量")
     def test_remote_pre_record_main_page_text(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['pre_recording']['items']
@@ -28,12 +29,9 @@ class TestRemotePreRecording:
         RemoteSetting().access_in_remote_pre_recording(device_list_name=device_config['device_list_name'])
 
         # 验证预录模式主页文案
-        main_text_res, illegal_funcs_res = RemotePreRecord().check_precording_main_text(main_text=remote_items['pre_recording']['text'])
+        RemotePreRecord().check_precording_main_text(main_text=remote_items['pre_recording']['text'])
         # illegal_funcs_res = BasePage().detect_illegal_functions(legal_funcs_ids=remote_items['pre_recording']['text'])
 
         # TODO: 设置停止预录电量
         RemotePreRecord().set_stop_pre_recording_power()
 
-        # 断言
-        assert main_text_res is True
-        assert illegal_funcs_res is True

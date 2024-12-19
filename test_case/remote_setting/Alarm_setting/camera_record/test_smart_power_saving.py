@@ -12,11 +12,11 @@ devices_config = read_yaml.load_device_config(yaml_file_name='camera_record.yaml
 
 @allure.epic("远程配置>摄像机录像")
 class TestRemoteCameraRecord:
-    # TODO: 待修改
 
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("定时录像>智能省电模式")
     @allure.story("需人工核查日志和录屏")
+    @allure.title('测试智能省电模式')
     def test_remote_smart_power_saving(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['camera_record']['items']
@@ -29,7 +29,10 @@ class TestRemoteCameraRecord:
         RemoteSetting().access_in_camera_record(device_list_name=device_config['device_list_name'])
 
         # 点击测试智能省电模式开关按钮
-        RemoteCameraRecord().click_test_smart_power_saving_mode(
-            texts_list=remote_items['smart_power_saving_mode']['text'],
-            frame_rate_texts=remote_items['smart_power_saving_mode']['frame_rate']['text'],
-            option_text=remote_items['smart_power_saving_mode']['frame_rate']['option_text'])
+        key_res = BasePage().is_key_in_yaml(remote_items['smart_power_saving_mode'], 'fps')  # 是否支持帧率
+        RemoteCameraRecord().verify_smart_power_saving_mode(texts_list=remote_items['smart_power_saving_mode']['text'],
+                                                            support_frame_rate=key_res,
+                                                            options=remote_items['smart_power_saving_mode']['options'],
+                                                            fps_texts=remote_items['smart_power_saving_mode']['fps'])
+
+

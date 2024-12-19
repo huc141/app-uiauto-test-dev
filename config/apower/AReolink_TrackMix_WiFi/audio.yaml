@@ -1,61 +1,55 @@
-device_list_name: "yulong-test-sd7"
-uid: '952700Y006ZP1IJ5'
-sub_name: ""
-
+device_list_name: yulong-test-sd7
 ipc:
   audio:
-    name: '音频'
-    desc: '设置>音频'
-    type: 'navigation'
-    text:
-      - ''
-
+    desc: 设置>音频
     items:
       audio:
-        name: '音频'
-        desc: '设置>音频>音频主页'
-        type: 'page'
-        text:
-          - '音频'
-          - '录制声音'
-          - '关闭后，将不会录制声音到回放文件中'
-          - '设备音量'
-          - '报警音量和对讲音量'
-          - '试听'
-          - '音频降噪'
-
-        record_audio:
-          name: '录制声音'
-          desc: '设置>音频'
-          type: 'switch'
-          text:
-            - ''
-          option_text:
-            - 'switch_on'
-            - 'switch_off'
-
+        desc: 设置>音频>音频主页
         device_volume_and_speaker_volume:
-          name: '设备音量'
-          desc: '设置>音频>设备音量'
-          type: 'slider'
-          text:
-            - ''
+          desc: 设置>音频>设备音量
+          name: 设备音量
           option_text:
-            - ''
-
-        sound_test:
-          name: '试听'
-          desc: '设置>音频>试听'
-          type: 'button'
-
+          - ''
+          text:
+          - ''
+          type: slider
+        name: 音频
         noise_reduction:
-          name: '音频降噪'
-          desc: '设置>音频>音频降噪'
-          type: 'switch'
-          text:
-            - '降噪强度'
-            - '低'
-            - '高'
+          desc: 设置>音频>音频降噪
+          name: 音频降噪
           option_text:
-            - 'switch_on'
-            - 'switch_off'
+          - switch_on
+          - switch_off
+          text:
+          - 降噪强度
+          - 低
+          - 高
+          type: switch
+        record_audio:
+          desc: 设置>音频
+          name: 录制声音
+          option_text:
+          - switch_on
+          - switch_off
+          text:
+          - ''
+          type: switch
+        sound_test:
+          desc: 设置>音频>试听
+          name: 试听
+          type: button
+        text:
+        - 音频
+        - 录制声音
+        - 关闭后，将不会录制声音到回放文件中
+        - 设备音量
+        - 报警音量和对讲音量
+        - 试听
+        - 音频降噪
+        type: page
+    name: 音频
+    text:
+    - ''
+    type: navigation
+sub_name: ''
+uid: 952700Y006ZP1IJ5

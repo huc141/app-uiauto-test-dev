@@ -1,67 +1,63 @@
-device_list_name: "yulong-test-sd7"
-uid: '952700Y006ZP1IJ5'
-sub_name: ""
-
+device_list_name: yulong-test-sd7
 ipc:
   siren:
-    name: '鸣笛'
-    desc: '设置>鸣笛'
-    type: 'navigation'
-    text:
-      - ''
-
+    desc: 设置>鸣笛
     items:
-      siren:
-        name: '鸣笛主页'
-        desc: '设置>鸣笛>鸣笛主页'
-        type: 'page'
-        text:
-          - '检测到移动事件时，会自动鸣笛警示。'
-          - '鸣笛'
-          - '鸣笛声音'
-          - '默认声音'
-          - '添加自定义声音'
-          - '计划'
-          - '可筛选报警类型或进行时间规划。'
-
-      siren_sound:
-        name: '鸣笛声音'
-        desc: '设置>鸣笛>鸣笛主页>鸣笛声音'
-        type: 'page'
-        text:
-          - ''
-        record_sound:
-          name: '录制声音'
-          desc: '设置>鸣笛>鸣笛主页>鸣笛声音>添加自定义声音>录制声音'
-          type: 'page'
-          text:
-            - '录制声音的页面验证文案直接写在代码里了，因为内容固定'
-
       plan:
-        name: '计划'
-        desc: '设置>鸣笛>鸣笛主页>计划主页'
-        type: 'navigation'
-        text:
-          - '取消'
-          - '计划'
-          - '保存'
-          - '可筛选报警类型或进行时间规划。'
-          - '报警类型'
         alarm_type:
-          name: '报警类型'
-          desc: '设置>鸣笛>鸣笛主页>计划>报警类型'
-          type: 'page'
-          text:
-            - '取消'
-            - '报警类型'
-            - '保存'
-            - '全选'
-            - '画面变动'
-            - '人'
-            - '车'
-            - '动物'
+          desc: 设置>鸣笛>鸣笛主页>计划>报警类型
+          name: 报警类型
           option_text:
-            - '画面变动'
-            - '人'
-            - '车'
-            - '动物'
+          - 画面变动
+          - 人
+          - 车
+          - 动物
+          text:
+          - 取消
+          - 报警类型
+          - 保存
+          - 全选
+          - 画面变动
+          - 人
+          - 车
+          - 动物
+          type: page
+        desc: 设置>鸣笛>鸣笛主页>计划主页
+        name: 计划
+        text:
+        - 取消
+        - 计划
+        - 保存
+        - 可筛选报警类型或进行时间规划。
+        - 报警类型
+        type: navigation
+      siren:
+        desc: 设置>鸣笛>鸣笛主页
+        name: 鸣笛主页
+        text:
+        - 检测到移动事件时，会自动鸣笛警示。
+        - 鸣笛
+        - 鸣笛声音
+        - 默认声音
+        - 添加自定义声音
+        - 计划
+        - 可筛选报警类型或进行时间规划。
+        type: page
+      siren_sound:
+        desc: 设置>鸣笛>鸣笛主页>鸣笛声音
+        name: 鸣笛声音
+        record_sound:
+          desc: 设置>鸣笛>鸣笛主页>鸣笛声音>添加自定义声音>录制声音
+          name: 录制声音
+          text:
+          - 录制声音的页面验证文案直接写在代码里了，因为内容固定
+          type: page
+        text:
+        - ''
+        type: page
+    name: 鸣笛
+    text:
+    - ''
+    type: navigation
+sub_name: ''
+uid: 952700Y006ZP1IJ5

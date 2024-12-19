@@ -12,11 +12,11 @@ devices_config = read_yaml.load_device_config(yaml_file_name='camera_record.yaml
 
 @allure.epic("远程配置>摄像机录像")
 class TestRemoteCameraRecord:
-    # TODO: 待修改
 
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("定时录像>定时录像计划")
     @allure.story("需人工核查日志和录屏")
+    @allure.title('测试定时录像计划')
     def test_remote_alarm_recording_plan(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['camera_record']['items']
@@ -30,15 +30,10 @@ class TestRemoteCameraRecord:
 
         # 验证 摄像机主页>定时录像>定时录像计划 文案内容、报警类型筛选页的文案内容
         key_res = BasePage().is_key_in_yaml(remote_items['timed_recording_plan'], 'alarm_type')
-        alarm_recording_plan_text_res, alarm_type_text_res = RemoteCameraRecord().click_test_timed_recording_plan(
-                                                                texts_list=remote_items['timed_recording_plan']['text'],
-                                                                supported_alarm_type=key_res,
-                                                                alarm_type_text=remote_items['timed_recording_plan']['alarm_type']['text'],
-                                                                option_text=remote_items['timed_recording_plan']['alarm_type']['option_text'])
+        RemoteCameraRecord().verify_timed_recording_plan(texts_list=remote_items['timed_recording_plan']['text'],
+                                                         supported_alarm_type=key_res,
+                                                         options_text=remote_items['timed_recording_plan']['alarm_type'])
 
-        # 断言
-        assert alarm_recording_plan_text_res is True
-        assert alarm_type_text_res is True
 
 
 

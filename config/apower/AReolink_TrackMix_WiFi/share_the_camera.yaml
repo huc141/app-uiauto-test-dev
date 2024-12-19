@@ -1,12 +1,11 @@
-device_list_name: "yulong-test-sd7"
-uid: '952700Y006ZP1IJ5'
-sub_name: ""
-
+device_list_name: yulong-test-sd7
 ipc:
   share_camera:
-    name: '分享摄像机'
-    desc: '设置>分享摄像机'
-    type: 'navigation'
+    desc: 设置>分享摄像机
+    name: 分享摄像机
     text:
-      - '分享摄像机'
-      - '请让您的家人或者好友打开app, 点击添加按钮，扫描此二维码'
+    - 分享摄像机
+    - 请让您的家人或者好友打开app, 点击添加按钮，扫描此二维码
+    type: navigation
+sub_name: ''
+uid: 952700Y006ZP1IJ5

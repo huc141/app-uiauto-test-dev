@@ -1,27 +1,9 @@
-device_list_name: yulong-test-sd7
+device_list_name: Reolink Lumus
 ipc:
   camera_record:
     desc: 设置>摄像机录像
     items:
       alarm_recording_plan:
-        alarm_type:
-          desc: 设置>摄像机录像>报警录像>报警录像计划>报警类型
-          options:
-          - 画面变动
-          - 人
-          - 车
-          - 动物
-          - 其他
-          text:
-          - 报警类型
-          - 保存
-          - 全选
-          - 画面变动
-          - 人
-          - 车
-          - 动物
-          - 其他
-          type: navigation
         desc: 设置>摄像机录像>报警录像>报警录像计划
         name: 报警录像计划
         text:
@@ -37,7 +19,6 @@ ipc:
         options:
         - 摄像机录像
         - 报警录像计划
-        - 定时录像计划
         - 录像延时时长
         - 预录像
         text:
@@ -83,15 +64,6 @@ ipc:
         - 30秒
         - 1分钟
         type: popup
-      timed_recording_plan:
-        desc: 设置>摄像机录像>定时录像>定时录像计划
-        name: 定时录像计划
-        text:
-        - 取消
-        - 定时录像计划
-        - 保存
-        - 配置持续录像的时间计划，启用的时间段会持续不间断地录像。
-        type: navigation
     name: 摄像机录像
     type: navigation
-uid: 952700Y006ZP1IJ5
+uid: 952700Y006BDF1TT

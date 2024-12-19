@@ -1,4 +1,4 @@
-device_list_name: yulong-test-sd7
+device_list_name: Reolink Duo 3 PoE
 ipc:
   camera_record:
     desc: 设置>摄像机录像
@@ -94,4 +94,4 @@ ipc:
         type: navigation
     name: 摄像机录像
     type: navigation
-uid: 952700Y006ZP1IJ5
+uid: 952700Y1007SIHX8

@@ -1,85 +1,74 @@
-device_list_name: "yulong-test-sd7"
-uid: '952700Y006ZP1IJ5'
-sub_name: ""
-
+device_list_name: yulong-test-sd7
 ipc:
   advanced_setting:
-    name: '高级设置'
-    desc: '设置>高级设置'
-    type: 'navigation'
-    text:
-      - ''
-
+    desc: 设置>高级设置
     items:
       advanced_setting:
-        name: '高级设置主页'
-        desc: '设置>高级设置>高级设置主页'
-        type: 'page'
+        desc: 设置>高级设置>高级设置主页
+        name: 高级设置主页
         text:
-          - '用户管理'
-          - '日期和时间'
-          - '重启'
-          - '恢复出厂'
-
-      user_management:
-        name: '用户管理主页'
-        desc: '设置>高级设置>用户管理主页'
-        type: 'page'
-        text:
-          - '用户管理'
-
-        illegal_login_lockout:
-          name: '用户管理主页'
-          desc: '设置>高级设置>用户管理主页'
-          type: 'switch'
-          text:
-            - '非法登录锁定'
-            - '3分钟内登录错误达到限定次数后，设备将被锁定几分钟'
-
-        manager:
-          name: '管理员'
-          desc: '设置>高级设置>用户管理主页>管理员'
-          type: 'page'
-          text:
-            - '管理员'
-            - '拥有设备所有设置、查看权限以及用户管理权限。'
-            - 'admin (当前用户)'
-            - '添加管理员'
-          current_user:
-            name: '管理员'
-            desc: '设置>高级设置>用户管理主页>管理员>admin(当前用户)'
-            type: 'page'
-            text:
-              - '用户名'
-              - 'admin'
-              - '修改密码'
-            option_text:
-              - '修改密码'
-
-
-          add_manager:
-            name: '管理员'
-            desc: '设设置>高级设置>用户管理主页>管理员>添加管理员'
-            type: 'page'
-            text:
-              - ''
-
-
-        user:
-          name: '用户'
-          desc: '设置>高级设置>用户管理主页>用户'
-          type: 'page'
-          text:
-            - '用户'
-            - '拥有设备查看权限以及当前用户密码修改权限，无法更改设备配置。'
-            - '添加用户'
-          option_text:
-            - '添加用户'
-
+        - 用户管理
+        - 日期和时间
+        - 重启
+        - 恢复出厂
+        type: page
       date_and_time:
-        name: '日期和时间主页'
-        desc: '设置>高级设置>日期和时间日期和时间主页'
-        type: 'page'
+        desc: 设置>高级设置>日期和时间日期和时间主页
+        name: 日期和时间主页
         text:
-          - '此设备的日期和时间'
-          - '设备时间与手机时间不一致时，可手动校正，校正后时区、时间、日期、时间格式等均匀手机同步。'
+        - 此设备的日期和时间
+        - 设备时间与手机时间不一致时，可手动校正，校正后时区、时间、日期、时间格式等均匀手机同步。
+        type: page
+      user_management:
+        desc: 设置>高级设置>用户管理主页
+        illegal_login_lockout:
+          desc: 设置>高级设置>用户管理主页
+          name: 用户管理主页
+          text:
+          - 非法登录锁定
+          - 3分钟内登录错误达到限定次数后，设备将被锁定几分钟
+          type: switch
+        manager:
+          add_manager:
+            desc: 设设置>高级设置>用户管理主页>管理员>添加管理员
+            name: 管理员
+            text:
+            - ''
+            type: page
+          current_user:
+            desc: 设置>高级设置>用户管理主页>管理员>admin(当前用户)
+            name: 管理员
+            option_text:
+            - 修改密码
+            text:
+            - 用户名
+            - admin
+            - 修改密码
+            type: page
+          desc: 设置>高级设置>用户管理主页>管理员
+          name: 管理员
+          text:
+          - 管理员
+          - 拥有设备所有设置、查看权限以及用户管理权限。
+          - admin (当前用户)
+          - 添加管理员
+          type: page
+        name: 用户管理主页
+        text:
+        - 用户管理
+        type: page
+        user:
+          desc: 设置>高级设置>用户管理主页>用户
+          name: 用户
+          option_text:
+          - 添加用户
+          text:
+          - 用户
+          - 拥有设备查看权限以及当前用户密码修改权限，无法更改设备配置。
+          - 添加用户
+          type: page
+    name: 高级设置
+    text:
+    - ''
+    type: navigation
+uid: 952700Y006ZP1IJ5

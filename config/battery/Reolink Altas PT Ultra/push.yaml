@@ -1,5 +1,5 @@
-device_list_name: "yulong-test-sd7"
-sub_name: ""
+device_list_name: "Reolink Altas PT Ultra"
+uid: '952700Y100BF19GB'
 
 ipc:
   push:

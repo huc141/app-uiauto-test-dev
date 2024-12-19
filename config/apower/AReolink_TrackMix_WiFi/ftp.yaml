@@ -1,284 +1,263 @@
-device_list_name: "yulong-test-sd7"
-uid: '952700Y006ZP1IJ5'
-sub_name: ""
-
+device_list_name: yulong-test-sd7
 ipc:
   ftp:
-    name: 'FTP'
-    desc: '设置>FTP'
-    type: 'navigation'
-    text:
-      - ''
-
+    desc: 设置>FTP
     items:
       ftp:
-        name: 'ftp主页'
-        desc: '设置>FTP>ftp主页'
-        type: 'page'
+        desc: 设置>FTP>ftp主页
+        name: ftp主页
         text:
-          - 'FTP'
-          - '测试'
-          - '计划'
-          - '可筛选报警类型或进行时间规划。'
-          - 'FTP设置'
-
-      plan:
-        name: '计划'
-        desc: '设置>FTP>ftp主页'
-        type: 'navigation'
-        text:
-          - ''
-
-        alarm:
-          name: '报警'
-          desc: '设置>FTP>ftp主页>报警'
-          type: 'tab'
-          text:
-            - '取消'
-            - '计划'
-            - '保存'
-            - '报警'
-            - '定时'
-            - '配置ftp上传文件的每周计划。'
-            - '报警类型'
-          subpage:
-            name: '报警类型'
-            desc: '设置>FTP>ftp主页>报警>报警类型'
-            type: 'page'
-            text:
-              - '画面变动'
-              - '人'
-              - '车'
-              - '动物'
-        timed:
-          name: '定时'
-          desc: '设置>FTP>ftp主页>定时'
-          type: 'tab'
-          text:
-            - '取消'
-            - '计划'
-            - '保存'
-            - '报警'
-            - '定时'
-            - '配置定时发送邮件的时间计划，启用的时间段内会按照一定的邮件间隔定时发送邮件。'
-
+        - FTP
+        - 测试
+        - 计划
+        - 可筛选报警类型或进行时间规划。
+        - FTP设置
+        type: page
       ftp_config:
-        name: 'FTP设置'
-        desc: '设置>FTP>ftp主页>FTP设置'
-        type: 'navigation'
-        text:
-          - '取消'
-          - 'FTP设置'
-          - '保存'
-          - 'FTP服务器'
-          - '服务器地址'
-          - '端口'
-          - '匿名传输'
-          - '用户名'
-          - '密码'
-          - '传输模式'
-          - '不允许未加密的FTP明文传输'
-          - '使用加密传输，请在FTP服务器上的FTPS选项配置页面进行设置。'
-          - '远程目录'
-          - '生成子目录'
-          - '上传内容'
-          - '视频'
-          - '分辨率'
-          - 'FTP录像延长'
-          - '文件最大容量(MB)'
-          - '覆盖策略'
-          - '图片'
-          - '分辨率'
-          - '间隔'
-          - '摄像机上传文件后，在设定的间隔时间内不会再上传。'
-          - '覆盖策略'
-
-        transmission_mode:
-          name: '传输模式'
-          desc: '设置>FTP>ftp主页>FTP设置>传输模式'
-          type: 'popup'
-          text:
-            - '传输模式'
-            - '自动'
-            - 'PORT'
-            - 'PASV'
-            - '取消'
-          option_text:
-            - '自动'
-            - 'PORT'
-            - 'PASV'
-
-        generate_subdirectories:
-          name: '生成子目录'
-          desc: '设置>FTP>ftp主页>FTP设置>生成子目录'
-          type: 'popup'
-          text:
-            - '生成子目录'
-            - '关'
-            - 'YYYY-MM'
-            - 'YYYY-MM-DD'
-            - '取消'
-          option_text:
-            - '关'
-            - 'YYYY-MM'
-            - 'YYYY-MM-DD'
-
-        upload:
-          name: '上传'
-          desc: '设置>FTP>ftp主页>FTP设置>上传'
-          type: 'popup'
-          text:
-            - '上传'
-            - '视频'
-            - '图片'
-            - '视频和图片'
-            - '取消'
-          option_text:
-            - '视频'
-            - '图片'
-            - '视频和图片'
-
-        video_resolution:
-          name: '分辨率'
-          desc: '设置>FTP>ftp主页>FTP设置>视频-分辨率'
-          type: 'popup'
-          text:
-            - '分辨率'
-            - '清晰的视频'
-            - '流畅的视频'
-            - '取消'
-          option_text:
-            - '清晰的视频'
-            - '流畅的视频'
-
         FTP_recording_extension:
-          name: 'FTP录像延长'
-          desc: '设置>FTP>ftp主页>FTP设置>FTP录像延长'
-          type: 'popup'
-          text:
-            - 'FTP录像延长'
-            - '15秒'
-            - '30秒'
-            - '60秒'
-            - '5分'
-            - '10分'
-            - '30分'
-            - '取消'
-
+          desc: 设置>FTP>ftp主页>FTP设置>FTP录像延长
+          name: FTP录像延长
           option_text:
-            - '15秒'
-            - '30秒'
-            - '60秒'
-            - '5分'
-            - '10分'
-            - '30分'
-
+          - 15秒
+          - 30秒
+          - 60秒
+          - 5分
+          - 10分
+          - 30分
+          text:
+          - FTP录像延长
+          - 15秒
+          - 30秒
+          - 60秒
+          - 5分
+          - 10分
+          - 30分
+          - 取消
+          type: popup
+        desc: 设置>FTP>ftp主页>FTP设置
+        generate_subdirectories:
+          desc: 设置>FTP>ftp主页>FTP设置>生成子目录
+          name: 生成子目录
+          option_text:
+          - 关
+          - YYYY-MM
+          - YYYY-MM-DD
+          text:
+          - 生成子目录
+          - 关
+          - YYYY-MM
+          - YYYY-MM-DD
+          - 取消
+          type: popup
         maximum_video_size:
-          name: '文件最大容量(MB)'
-          desc: '设置>FTP>ftp主页>FTP设置>文件最大容量(MB)'
-          type: 'popup'
-          text:
-            - '文件最大容量(MB)'
-            - '10'
-            - '50'
-            - '100'
-            - '200'
-            - '400'
-            - '600'
-            - '800'
-            - '1024'
-            - '自定义'
-            - '取消'
-
+          desc: 设置>FTP>ftp主页>FTP设置>文件最大容量(MB)
+          name: 文件最大容量(MB)
           option_text:
-            - '10'
-            - '50'
-            - '100'
-            - '200'
-            - '400'
-            - '600'
-            - '800'
-            - '1024'
-            - '自定义'
-
-        video_cover:
-          name: '覆盖'
-          desc: '设置>FTP>ftp主页>FTP设置>视频-覆盖'
-          type: 'popup'
+          - '10'
+          - '50'
+          - '100'
+          - '200'
+          - '400'
+          - '600'
+          - '800'
+          - '1024'
+          - 自定义
           text:
-            - '覆盖'
-            - '不覆盖'
-            - '单文件覆盖'
-            - '只保留最新那一份文件'
-            - '双文件交替覆盖'
-            - '此选项会产生临时文件'
-            - '取消'
-
-          option_text:
-            - '不覆盖'
-            - '单文件覆盖'
-            - '双文件交替覆盖'
-
-        picture_resolution:
-          name: '分辨率'
-          desc: '设置>FTP>ftp主页>FTP设置>图片-分辨率'
-          type: 'popup'
-          text:
-            - '分辨率'
-            - '清晰'
-            - '流畅'
-            - '取消'
-          option_text:
-            - '清晰'
-            - '流畅'
-
-        picture_interval:
-          name: '间隔'
-          desc: '设置>FTP>ftp主页>FTP设置>图片-间隔'
-          type: 'popup'
-          text:
-            - '间隔'
-            - '2秒'
-            - '网速不足时，图片有可能会损坏'
-            - '5秒'
-            - '网速不足时，图片有可能会损坏'
-            - '10秒'
-            - '15秒'
-            - '30秒'
-            - '60秒'
-            - '5分'
-            - '10分'
-            - '30分'
-            - '自定义'
-            - '取消'
-          option_text:
-            - '2秒'
-            - '5秒'
-            - '10秒'
-            - '15秒'
-            - '30秒'
-            - '60秒'
-            - '5分'
-            - '10分'
-            - '30分'
-            - '自定义'
-
+          - 文件最大容量(MB)
+          - '10'
+          - '50'
+          - '100'
+          - '200'
+          - '400'
+          - '600'
+          - '800'
+          - '1024'
+          - 自定义
+          - 取消
+          type: popup
+        name: FTP设置
         picture_cover:
-          name: '覆盖'
-          desc: '设置>FTP>ftp主页>FTP设置>图片-覆盖'
-          type: 'popup'
-          text:
-            - '覆盖'
-            - '不覆盖'
-            - '单文件覆盖'
-            - '只保留最新那一份文件'
-            - '双文件交替覆盖'
-            - '此选项会产生临时文件'
-            - '取消'
-
+          desc: 设置>FTP>ftp主页>FTP设置>图片-覆盖
+          name: 覆盖
           option_text:
-            - '不覆盖'
-            - '单文件覆盖'
-            - '双文件交替覆盖'
-
-
+          - 不覆盖
+          - 单文件覆盖
+          - 双文件交替覆盖
+          text:
+          - 覆盖
+          - 不覆盖
+          - 单文件覆盖
+          - 只保留最新那一份文件
+          - 双文件交替覆盖
+          - 此选项会产生临时文件
+          - 取消
+          type: popup
+        picture_interval:
+          desc: 设置>FTP>ftp主页>FTP设置>图片-间隔
+          name: 间隔
+          option_text:
+          - 2秒
+          - 5秒
+          - 10秒
+          - 15秒
+          - 30秒
+          - 60秒
+          - 5分
+          - 10分
+          - 30分
+          - 自定义
+          text:
+          - 间隔
+          - 2秒
+          - 网速不足时，图片有可能会损坏
+          - 5秒
+          - 网速不足时，图片有可能会损坏
+          - 10秒
+          - 15秒
+          - 30秒
+          - 60秒
+          - 5分
+          - 10分
+          - 30分
+          - 自定义
+          - 取消
+          type: popup
+        picture_resolution:
+          desc: 设置>FTP>ftp主页>FTP设置>图片-分辨率
+          name: 分辨率
+          option_text:
+          - 清晰
+          - 流畅
+          text:
+          - 分辨率
+          - 清晰
+          - 流畅
+          - 取消
+          type: popup
+        text:
+        - 取消
+        - FTP设置
+        - 保存
+        - FTP服务器
+        - 服务器地址
+        - 端口
+        - 匿名传输
+        - 用户名
+        - 密码
+        - 传输模式
+        - 不允许未加密的FTP明文传输
+        - 使用加密传输，请在FTP服务器上的FTPS选项配置页面进行设置。
+        - 远程目录
+        - 生成子目录
+        - 上传内容
+        - 视频
+        - 分辨率
+        - FTP录像延长
+        - 文件最大容量(MB)
+        - 覆盖策略
+        - 图片
+        - 分辨率
+        - 间隔
+        - 摄像机上传文件后，在设定的间隔时间内不会再上传。
+        - 覆盖策略
+        transmission_mode:
+          desc: 设置>FTP>ftp主页>FTP设置>传输模式
+          name: 传输模式
+          option_text:
+          - 自动
+          - PORT
+          - PASV
+          text:
+          - 传输模式
+          - 自动
+          - PORT
+          - PASV
+          - 取消
+          type: popup
+        type: navigation
+        upload:
+          desc: 设置>FTP>ftp主页>FTP设置>上传
+          name: 上传
+          option_text:
+          - 视频
+          - 图片
+          - 视频和图片
+          text:
+          - 上传
+          - 视频
+          - 图片
+          - 视频和图片
+          - 取消
+          type: popup
+        video_cover:
+          desc: 设置>FTP>ftp主页>FTP设置>视频-覆盖
+          name: 覆盖
+          option_text:
+          - 不覆盖
+          - 单文件覆盖
+          - 双文件交替覆盖
+          text:
+          - 覆盖
+          - 不覆盖
+          - 单文件覆盖
+          - 只保留最新那一份文件
+          - 双文件交替覆盖
+          - 此选项会产生临时文件
+          - 取消
+          type: popup
+        video_resolution:
+          desc: 设置>FTP>ftp主页>FTP设置>视频-分辨率
+          name: 分辨率
+          option_text:
+          - 清晰的视频
+          - 流畅的视频
+          text:
+          - 分辨率
+          - 清晰的视频
+          - 流畅的视频
+          - 取消
+          type: popup
+      plan:
+        alarm:
+          desc: 设置>FTP>ftp主页>报警
+          name: 报警
+          subpage:
+            desc: 设置>FTP>ftp主页>报警>报警类型
+            name: 报警类型
+            text:
+            - 画面变动
+            - 人
+            - 车
+            - 动物
+            type: page
+          text:
+          - 取消
+          - 计划
+          - 保存
+          - 报警
+          - 定时
+          - 配置ftp上传文件的每周计划。
+          - 报警类型
+          type: tab
+        desc: 设置>FTP>ftp主页
+        name: 计划
+        text:
+        - ''
+        timed:
+          desc: 设置>FTP>ftp主页>定时
+          name: 定时
+          text:
+          - 取消
+          - 计划
+          - 保存
+          - 报警
+          - 定时
+          - 配置定时发送邮件的时间计划，启用的时间段内会按照一定的邮件间隔定时发送邮件。
+          type: tab
+        type: navigation
+    name: FTP
+    text:
+    - ''
+    type: navigation
+sub_name: ''
+uid: 952700Y006ZP1IJ5

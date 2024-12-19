@@ -12,10 +12,10 @@ devices_config = read_yaml.load_device_config(yaml_file_name='camera_record.yaml
 
 @allure.epic("远程配置>摄像机录像")
 class TestRemoteCameraRecord:
-    # TODO: 待修改
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("报警录像>预录像")
     @allure.story("需人工核查日志和录屏")
+    @allure.title("测试预录像功能按钮")
     def test_remote_pre_record(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['camera_record']['items']
@@ -28,4 +28,5 @@ class TestRemoteCameraRecord:
         RemoteSetting().access_in_camera_record(device_list_name=device_config['device_list_name'])
 
         # 点击两次预录像的开关按钮
-        RemoteCameraRecord().click_test_pre_recording()
+        RemoteCameraRecord().verify_test_pre_recording()
+

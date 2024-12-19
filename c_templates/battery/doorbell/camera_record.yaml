@@ -1,0 +1,91 @@
+device_list_name: "952700Y101JN1AA1"
+uid: '952700Y101JN1AA1'
+
+ipc:
+  camera_record:
+    name: '摄像机录像'
+    desc: '设置>摄像机录像'
+    type: 'navigation'
+
+    items:
+      camera_record:
+        name: '摄像机录像'
+        desc: '设置>摄像机录像'
+        type: 'navigation'
+        text:
+          - '摄像机录像'
+          - '录制监控视频，以便查看回放。'
+          - '报警录像'
+          - '报警录像计划'
+          - '配置报警录像（检测到报警事件时触发录像）的触发类型和时间计划。'
+          - '录像延时时长'
+          - '触发事件停止后延后录制的时长'
+
+        options:
+          - '摄像机录像'
+          - '报警录像计划'
+          - '录像延时时长'
+
+      alarm_recording_plan:
+        name: '报警录像计划'
+        desc: '设置>摄像机录像>报警录像>报警录像计划'
+        type: 'navigation'
+        text:
+          - '取消'
+          - '报警录像计划'
+          - '保存'
+          - '配置报警录像（检测到报警事件时触发录像）的触发类型和时间计划。'
+          - '报警类型'
+
+        alarm_type:
+          desc: '设置>摄像机录像>报警录像>报警录像计划>报警类型'
+          type: 'navigation'
+          text:
+            - '报警类型'
+            - '保存'
+            - '全选'
+            - '响铃'
+            - '人'
+            - '车'
+            - '包裹'
+            - '其他'
+          options:
+            - '响铃'
+            - '人'
+            - '车'
+            - '包裹'
+            - '其他'
+
+      record_delay_duration:
+        name: '录像延时时长'
+        desc: '设置>摄像机录像>报警录像>录像延时时长'
+        type: 'popup'
+        text:
+          - '录像延时时长'
+          - '延时越长，能耗越大。'
+          - '8秒'
+          - '15秒'
+          - '30秒'
+        option_text:
+          - '8秒'
+          - '15秒'
+          - '30秒'
+
+      timed_recording_plan:
+        name: '定时录像计划'
+        desc: '设置>摄像机录像>定时录像>定时录像计划'
+        type: 'navigation'
+        text:
+          - '取消'
+          - '定时录像计划'
+          - '保存'
+          - '配置持续录像的时间计划，启用的时间段会持续不间断录像。'
+
+      overwrite_record:
+        name: '覆盖录像'
+        desc: '设置>摄像机录像>覆盖录像'
+        type: 'page'
+        text:
+          - '覆盖录像'
+          - '当存储空间满时，将覆盖最早的录像文件。'
+

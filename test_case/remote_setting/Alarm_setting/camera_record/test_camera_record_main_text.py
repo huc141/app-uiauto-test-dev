@@ -7,7 +7,8 @@ from pages.base_page import BasePage
 from pages.rn_device_setting_page.remote_setting import RemoteSetting
 from pages.rn_device_setting_page.remote_camera_record import RemoteCameraRecord
 
-devices_config = read_yaml.load_device_config(yaml_file_name='camera_record.yaml')  # 读取参数化文件
+devices_config = read_yaml.load_device_config(device_dir='battery/Reolink Video Doorbell-1AA1',
+                                              yaml_file_name='camera_record.yaml')  # 读取参数化文件
 
 
 @allure.epic("远程配置>摄像机录像")

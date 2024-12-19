@@ -1,73 +1,66 @@
-device_list_name: "yulong-test-sd7"
-uid: '952700Y006ZP1IJ5'
-sub_name: ""
-
+device_list_name: yulong-test-sd7
 ipc:
   push:
-    name: '手机推送'
-    desc: '设置>手机推送'
-    type: 'switch'
-    text:
-      - ''
-
+    desc: 设置>手机推送
     items:
       push:
-        name: '手机推送'
-        desc: '设置>手机推送'
-        type: 'switch'
+        desc: 设置>手机推送
+        name: 手机推送
         push_text:
-          - '手机推送'
-          - '测试'
-          - '打开后，接收移动事件通知。'
-
-      schedule:
-        name: '计划'
-        desc: '设置>手机推送>计划'
-        type: 'navigation'
-        text:
-          - '计划'
-          - '可筛选报警类型或进行时间规划。'
-        plan_main_text:
-          - '取消'
-          - '计划'
-          - '保存'
-          - '配置推送的触发类型和时间计划。'
-          - '报警类型'
-        alarm_type:
-          name: '报警类型'
-          desc: '设置>手机推送>计划>报警类型'
-          type: 'page'
-          text:
-            - '取消'
-            - '报警类型'
-            - '保存'
-            - '全选'
-            - '画面变动'
-            - '人'
-            - '车'
-            - '动物'
-          option_text:
-            - '画面变动'
-            - '人'
-            - '车'
-            - '动物'
-
+        - 手机推送
+        - 测试
+        - 打开后，接收移动事件通知。
+        type: switch
       push_interval:
-        name: '推送间隔'
-        desc: '设置>手机推送>推送间隔'
-        type: 'popup'
-        text:
-          - '推送间隔(秒)'
-          - '20'
-          - '30'
-          - '60'
-          - '120'
-          - '取消'
+        desc: 设置>手机推送>推送间隔
+        name: 推送间隔
         option_text:
-          - '120'
-          - '60'
-          - '30'
-          - '20'
-
-
-
+        - '120'
+        - '60'
+        - '30'
+        - '20'
+        text:
+        - 推送间隔(秒)
+        - '20'
+        - '30'
+        - '60'
+        - '120'
+        - 取消
+        type: popup
+      schedule:
+        alarm_type:
+          desc: 设置>手机推送>计划>报警类型
+          name: 报警类型
+          option_text:
+          - 画面变动
+          - 人
+          - 车
+          - 动物
+          text:
+          - 取消
+          - 报警类型
+          - 保存
+          - 全选
+          - 画面变动
+          - 人
+          - 车
+          - 动物
+          type: page
+        desc: 设置>手机推送>计划
+        name: 计划
+        plan_main_text:
+        - 取消
+        - 计划
+        - 保存
+        - 配置推送的触发类型和时间计划。
+        - 报警类型
+        text:
+        - 计划
+        - 可筛选报警类型或进行时间规划。
+        type: navigation
+    name: 手机推送
+    text:
+    - ''
+    type: switch
+sub_name: ''
+uid: 952700Y006ZP1IJ5
