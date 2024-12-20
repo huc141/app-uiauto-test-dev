@@ -15,7 +15,7 @@ config = {
 }
 
 
-def test_rest_api_1():
+def t_rest_api_1():
     server = config["api_server"]
     is_use_uid = config["is_default"]
     username = config["username"]
@@ -41,10 +41,10 @@ def test_rest_api_1():
         print(f"Failed to get token: {response.status_code}")
 
 
-test_rest_api_1()
+t_rest_api_1()
 
 
-def test_rest_api_2():
+def t_rest_api_2():
     json_data = config["api_params"]
     json_data["token"] = config["api_token"]
     url = f"{config['api_server']}{config['api_path']}"
@@ -62,5 +62,5 @@ def test_rest_api_2():
         print(f"Failed to get API data: {response.status_code}")
 
 
-test_rest_api_2()
+t_rest_api_2()
 
