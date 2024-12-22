@@ -1,5 +1,5 @@
-device_list_name: 'yulong-test-sd7'
-uid: '952700Y006ZP1IJ5'
+device_list_name: ""
+uid: ''
 
 ipc:
   email_alerts:
@@ -25,10 +25,13 @@ ipc:
           name: '报警类型'
           desc: '设置>邮件通知>计划主页>报警>报警类型(只需要配置options)'
           options:
+            - '响铃'
             - '画面变动'
             - '人'
             - '车'
             - '动物'
+            - '包裹'
+            - '其他'
         timed:
           name: '定时'
           desc: '设置>邮件通知>计划主页>定时（无需配置）'
@@ -48,24 +51,6 @@ ipc:
           - ''
         supported_move_track: false
         supported_resolution: false
-
-      email_interval:
-        name: '邮箱间隔'
-        desc: '设置>邮件通知>邮箱间隔(配置全局文案text和options)'
-        type: 'popup'
-        text:
-          - '邮箱间隔'
-          - '30 秒'
-          - '1 分钟'
-          - '5 分钟'
-          - '10 分钟'
-          - '30 分钟'
-        options:
-          - '30 秒'
-          - '1 分钟'
-          - '5 分钟'
-          - '10 分钟'
-          - '30 分钟'
 
       email_not_received:
         name: '未收到邮件？'

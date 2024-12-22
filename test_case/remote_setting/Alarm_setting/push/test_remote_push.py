@@ -141,7 +141,6 @@ class TestRemotePush:
         RemoteSetting().access_in_push_notifications(device_list_name=device_config['device_list_name'])
 
         # 遍历延迟时间
-        RemotePush().click_and_test_delay_notifications(
-            text=remote_items['delay_notifications']['delay_time']['text'],
-            options=remote_items['delay_notifications']['delay_time']['option_text'])
+        RemotePush().verify_delay_notifications(text=remote_items['delay_notifications']['delay_time']['text'],
+                                                options=remote_items['delay_notifications']['delay_time']['option_text'])
 

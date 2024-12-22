@@ -1437,6 +1437,7 @@ class BasePage:
         try:
             logger.info("返回上一页")
             self.click_by_xpath(xpath_expression=xpath_expression)
+            time.sleep(1)
         except Exception as err:
             pytest.fail(f"点击右上角返回按钮执行出错: {str(err)}")
 

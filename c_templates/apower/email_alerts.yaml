@@ -1,5 +1,5 @@
-device_list_name: "yulong-test-sd7"
-sub_name: ""
+device_list_name: ""
+uid: ''
 
 ipc:
   email_alerts:
@@ -12,95 +12,67 @@ ipc:
     items:
       email_alerts:
         name: '邮件通知主页'
-        desc: '设置>邮件通知>邮件通知主页'
+        desc: '设置>邮件通知>邮件通知主页(当前模块只需配置supported_test)'
         type: 'page'
         text:
-          - '邮件通知'
-          - '测试'
-          - '检测到移动事件时，自动发送邮件提醒用户。'
-          - '计划'
-          - '可筛选报警类型或进行时间规划。'
-          - '邮件设置'
-          - '邮件内容'
-          - '邮箱间隔'
-          - '未收到邮件？'
+          - ''
+        options:
+          - ''
+        supported_test: '是否支持测试按钮，支持就保留该键，否则删除'
 
       plan:
-        name: '计划'
-        desc: '设置>邮件通知>计划主页'
-        type: 'navigation'
-        text:
-          - ''
-
-        alarm:
-          name: '报警'
-          desc: '设置>邮件通知>计划主页>报警'
-          type: 'tab'
-          text:
-            - '取消'
-            - '计划'
-            - '保存'
-            - '报警'
-            - '定时'
-            - '配置报警邮件（检测到报警事件时发送邮件通知）的触发类型和时间计划。'
-            - '报警类型'
-          subpage:
-            name: '报警类型'
-            desc: '设置>邮件通知>计划主页>报警>报警类型'
-            type: 'page'
-            option_text:
-              - '画面变动'
-              - '人'
-              - '车'
-              - '动物'
+        alarm_type:
+          name: '报警类型'
+          desc: '设置>邮件通知>计划主页>报警>报警类型(只需要配置options)'
+          options:
+            - '响铃'
+            - '画面变动'
+            - '人'
+            - '车'
+            - '动物'
+            - '包裹'
+            - '其他'
         timed:
           name: '定时'
-          desc: '设置>邮件通知>计划主页>定时'
-          type: 'tab'
-          text:
-            - '取消'
-            - '计划'
-            - '保存'
-            - '报警'
-            - '定时'
-            - '配置定时发送邮件的时间计划，启用的时间段内会按照一定的邮件间隔定时发送邮件。'
+          desc: '设置>邮件通知>计划主页>定时（无需配置）'
 
       email_config:
         name: '邮件设置'
-        desc: '设置>邮件通知>邮件设置'
+        desc: '设置>邮件通知>邮件设置（无需配置）'
         type: 'navigation'
         text:
-          - '邮件设置'
-          - '清空'
-          - '发件邮箱'
-          - '收件邮箱'
-          - '添加邮箱'
+          - ''
 
       email_content:
         name: '邮件内容'
-        desc: '设置>邮件通知>邮件内容'
+        desc: '设置>邮件通知>邮件内容(只需要配置是否支持移动轨迹和分辨率)'
         type: 'popup'
         text:
-          - '文字'
-          - '图片'
-          - '图片和文字'
-          - '视频和文字'
+          - ''
+        supported_move_track: false
+        supported_resolution: false
 
       email_interval:
         name: '邮箱间隔'
-        desc: '设置>邮件通知>邮箱间隔'
+        desc: '设置>邮件通知>邮箱间隔(配置全局文案text和options)'
         type: 'popup'
         text:
+          - '邮箱间隔'
           - '30 秒'
-          - '1 分'
-          - '5 分'
-          - '10 分'
-          - '30 分'
+          - '1 分钟'
+          - '5 分钟'
+          - '10 分钟'
+          - '30 分钟'
+        options:
+          - '30 秒'
+          - '1 分钟'
+          - '5 分钟'
+          - '10 分钟'
+          - '30 分钟'
 
       email_not_received:
         name: '未收到邮件？'
-        desc: '设置>邮件通知>未收到邮件？'
+        desc: '设置>邮件通知>未收到邮件？（无需配置）'
         type: 'page'
-        text:
-          - ''
+
 

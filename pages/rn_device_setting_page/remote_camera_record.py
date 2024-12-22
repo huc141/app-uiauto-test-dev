@@ -3,17 +3,26 @@ import time
 from typing import Literal
 import pytest
 from common_tools.logger import logger
+from common_tools.read_yaml import read_yaml
 from pages.base_page import BasePage
 from pages.rn_device_setting_page.remote_setting import RemoteSetting
+
+g_config = read_yaml.read_global_data(source="global_data")  # 读取全局配置
+_ReoIcon_Draw = g_config.get('ReoIcon_Draw')  # 计划主页底部涂画按钮
+_ReoIcon_Erase = g_config.get('ReoIcon_Erase')  # 计划主页底部擦除按钮
+draw_text = g_config.get('draw_text')  # 选择涂抹按钮后显示的文案
+erase_text = g_config.get('erase_text')  # 选择擦除按钮后显示的文案
+alarm_type_selector = g_config.get('alarm_type_selector')  # 计划>报警类型 选项
 
 
 class RemoteCameraRecord(BasePage):
     def __init__(self):
         super().__init__()
         if self.platform == 'android':
-            self.alarm_type__selector = 'ReoTitle'  # 报警录像计划>报警类型 选项
-            self.ReoIcon_Draw = '//*[@resource-id="ReoIcon-Draw"]'  # 报警录像计划主页底部涂画按钮
-            self.ReoIcon_Erase = '//*[@resource-id="ReoIcon-Erase"]'  # 报警录像计划主页底部擦除按钮
+            pass
+            # self.alarm_type_selector = 'ReoTitle'  # 报警录像计划>报警类型 选项
+            # self.ReoIcon_Draw = '//*[@resource-id="ReoIcon-Draw"]'  # 报警录像计划主页底部涂画按钮
+            # self.ReoIcon_Erase = '//*[@resource-id="ReoIcon-Erase"]'  # 报警录像计划主页底部擦除按钮
 
         elif self.platform == 'ios':
             pass
@@ -87,7 +96,7 @@ class RemoteCameraRecord(BasePage):
             self.click_checkbox_by_text(option_text_list=detect_options, menu_text='报警类型')
             self.scroll_and_click_by_text(text_to_find=detect_options[0])  # 保底选项，防止下一步无法点击保存
             RemoteSetting().scroll_check_funcs2(texts=detect_text)  # 验证报警类型全局文案
-            RemoteSetting().scroll_check_funcs2(texts=detect_options, selector=self.alarm_type__selector)  # 验证报警类型选项文案
+            RemoteSetting().scroll_check_funcs2(texts=detect_options, selector=alarm_type_selector)  # 验证报警类型选项文案
             self.scroll_and_click_by_text('保存')
 
         try:
@@ -97,11 +106,11 @@ class RemoteCameraRecord(BasePage):
             # 验证报警录像计划文案
             RemoteSetting().scroll_check_funcs2(texts=texts_list)
             # 验证底部涂抹按钮文案：涂画
-            self.click_by_xpath(xpath_expression=self.ReoIcon_Draw)
-            RemoteSetting().scroll_check_funcs2(texts='涂抹以选择时间')
+            self.click_by_xpath(xpath_expression=_ReoIcon_Draw)
+            RemoteSetting().scroll_check_funcs2(texts=draw_text, scroll_or_not=False, back2top=False)
             # 验证底部涂抹按钮文案：擦除
-            self.click_by_xpath(xpath_expression=self.ReoIcon_Erase)
-            RemoteSetting().scroll_check_funcs2(texts='涂抹以取消选择时间')
+            self.click_by_xpath(xpath_expression=_ReoIcon_Erase)
+            RemoteSetting().scroll_check_funcs2(texts=erase_text, scroll_or_not=False, back2top=False)
 
             # 如果支持选择报警类型：
             if supported_alarm_type:
@@ -143,7 +152,7 @@ class RemoteCameraRecord(BasePage):
             self.click_checkbox_by_text(option_text_list=detect_options, menu_text='报警类型')
             self.scroll_and_click_by_text(text_to_find=detect_options[0])  # 保底选项，防止下一步无法点击保存
             RemoteSetting().scroll_check_funcs2(texts=detect_text)  # 验证报警类型全局文案
-            RemoteSetting().scroll_check_funcs2(texts=detect_options, selector=self.alarm_type__selector)  # 验证报警类型选项文案
+            RemoteSetting().scroll_check_funcs2(texts=detect_options, selector=alarm_type_selector)  # 验证报警类型选项文案
             self.scroll_and_click_by_text('保存')
 
         try:
@@ -153,11 +162,11 @@ class RemoteCameraRecord(BasePage):
             # 验证报警录像计划文案
             RemoteSetting().scroll_check_funcs2(texts=texts_list)
             # 验证底部涂抹按钮文案：涂画
-            self.click_by_xpath(xpath_expression=self.ReoIcon_Draw)
-            RemoteSetting().scroll_check_funcs2(texts='涂抹以选择时间')
+            self.click_by_xpath(xpath_expression=_ReoIcon_Draw)
+            RemoteSetting().scroll_check_funcs2(texts=draw_text, scroll_or_not=False, back2top=False)
             # 验证底部涂抹按钮文案：擦除
-            self.click_by_xpath(xpath_expression=self.ReoIcon_Erase)
-            RemoteSetting().scroll_check_funcs2(texts='涂抹以取消选择时间')
+            self.click_by_xpath(xpath_expression=_ReoIcon_Erase)
+            RemoteSetting().scroll_check_funcs2(texts=erase_text, scroll_or_not=False, back2top=False)
 
             # 如果支持选择报警类型：
             if supported_alarm_type:

@@ -1,5 +1,15 @@
 # 远程配置主页能力集提取id：
 remote_setting: 'ReoTitle'
+# 计划>报警类型 选项提取id
+alarm_type_selector: 'ReoTitle'
+# ReoTitle选项id
+reo_title_id: 'ReoTitle'
+
+# switch开关状态：
+# 开关打开状态
+switch_on: 'ReoSwitch:1'
+# 开关关闭状态
+switch_off: 'ReoSwitch:0'
 
 # 远程配置>WiFi主页：
 WiFi_setting: ''
@@ -14,3 +24,58 @@ back: '//*[@resource-id="HeaderLeft-ReoIcon"]'
 access_mode: 'ipc'
 nvr_name: 'Reolink home hub pro'
 hub_name: 'Reolink-NVR'
+
+# 通用模块的内容
+# 计划主页底部涂画按钮
+ReoIcon_Draw: '//*[@resource-id="ReoIcon-Draw"]'
+# 计划主页底部擦除按钮
+ReoIcon_Erase: '//*[@resource-id="ReoIcon-Erase"]'
+
+# 计划主页底部选择不同按钮后显示的文案
+# 选择涂抹按钮
+draw_text: ['涂抹以选择时间', '全选']
+# 选择擦除按钮
+erase_text: ['涂抹以取消选择时间', '全部清除']
+# 计划表【全部清除】按钮二次确认弹窗内容
+erase_all_btn: ['删除提示', '确定要清除该计划表的内容？', '取消', '全部清除']
+
+# SSL or TLS 弹窗
+SSL_or_TLS: ['建议保持开启SSL/TLS，以保障数据的传输安全。确认关闭？', '取消', '确定']
+
+
+# 远程配置>邮件通知的通用配置
+# 邮件通知关闭状态下主页内容
+common_email_alerts_off_texts: ['邮件通知', '检测到移动事件时，自动发送邮件提醒用户。']
+# 邮箱现在设置页的内容
+common_email_now_setting_texts: ['邮件通知', '未设置收件箱将无法收到邮件通知', '现在设置']
+# 邮箱设置页下的【为什么要输入邮箱密码】xpath
+common_email_passw_help: '//*[@resource-id="HelpNavigate"]'
+# 邮箱设置页下的【为什么要输入邮箱密码】的帮助内容
+common_email_passw_help_texts: ['帮助', '为什么要输入邮箱密码？', '为保证邮件内容的信息安全性和隐私性，邮件内容将通过你的邮箱发送，因此需要输入邮箱的密码或安全等级更高的app专用密码。该密码只会用于发送报警邮件，不会用作其他用途。
+
+提示：我们提供了 Gmail 和 Yahoo 的 app 专用密码设置指南。其余邮箱请咨询邮件供应商。']
+# 邮箱设置页下的【发件服务器是什么】的帮助内容和定位xpath
+common_email_smtp_help: ''
+common_smtp_help_texts: ['帮助', '发件服务器是什么？', '为保证邮件内容的信息安全性和隐私性，邮件内容通过你设置的邮箱发送，因此需要配置 SMTP 服务器。
+若你输入的邮箱是 Gmail、Outlook 邮箱、Hotmail、Yahoo 邮箱、iCloud 邮箱、Zoho 邮箱，我们已自动为你填写服务器信息，一般情况下无需更改；
+若你输入的是其他邮箱，请咨询邮件供应商获取发件服务器信息。']
+
+# 邮箱设置>清空配置弹窗内容
+common_email_clear_texts: ['清空配置', '清空配置后设备将不再给邮箱发送邮件。确定要清空吗？', '取消', '清空']
+
+# 邮件设置页内容列表
+email_setting_list: ['取消', '邮件设置', '保存', '发/收件人邮箱（推荐使用Gmail邮箱）', '输入邮箱', '输入密码', '发件服务器设置', 'SMTP服务', '端口', 'SSL or TLS']
+# 邮件通知主页>计划单元格的内容
+email_plan_cell_texts: ['计划', '可筛选报警类型或进行时间规划。']
+# 邮件通知>计划>定时 解释文案
+email_plan_time_tips: ['配置定时发送邮件的时间计划，启用的时间段内会按照一定的邮件间隔定时发送邮件。']
+# 邮件通知>计划>报警 解释文案
+email_plan_alarm_tips: ['配置报警邮件（检测到报警事件时发送邮件通知）的触发类型和时间计划。']
+# 邮件内容主页通用文案
+common_email_content_texts: ['邮件内容','文字', '图片', '图片和文字', '视频和文字']
+# 邮件内容主页选项
+common_email_content_reotitle: ['文字', '图片', '图片和文字', '视频和文字']
+# 土耳其B194特殊版本(分辨率设置)
+turkey_b194_resolution: 'B194'
+# 土耳其B194特殊版本(分辨率选项)
+turkey_b194_resolution_options: ['清晰', '流畅']

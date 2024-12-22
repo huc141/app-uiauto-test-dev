@@ -3,17 +3,26 @@ import time
 from typing import Literal
 import pytest
 from common_tools.logger import logger
+from common_tools.read_yaml import read_yaml
 from pages.base_page import BasePage
 from pages.rn_device_setting_page.remote_setting import RemoteSetting
+
+g_config = read_yaml.read_global_data(source="global_data")  # 读取全局配置
+_ReoIcon_Draw = g_config.get('ReoIcon_Draw')  # 计划主页底部涂画按钮
+_ReoIcon_Erase = g_config.get('ReoIcon_Erase')  # 计划主页底部擦除按钮
+draw_text = g_config.get('draw_text')  # 选择涂抹按钮后显示的文案
+erase_text = g_config.get('erase_text')  # 选择擦除按钮后显示的文案
+alarm_type_selector = g_config.get('alarm_type_selector')  # 计划>报警类型 选项
 
 
 class RemotePush(BasePage):
     def __init__(self):
         super().__init__()
         if self.platform == 'android':
-            self.alarm_type__selector = 'ReoTitle'  # 计划>报警类型 选项
-            self.ReoIcon_Draw = '//*[@resource-id="ReoIcon-Draw"]'  # 计划主页底部涂画按钮
-            self.ReoIcon_Erase = '//*[@resource-id="ReoIcon-Erase"]'  # 计划主页底部擦除按钮
+            pass
+            # self.alarm_type_selector = 'ReoTitle'  # 计划>报警类型 选项
+            # self.ReoIcon_Draw = '//*[@resource-id="ReoIcon-Draw"]'  # 计划主页底部涂画按钮
+            # self.ReoIcon_Erase = '//*[@resource-id="ReoIcon-Erase"]'  # 计划主页底部擦除按钮
 
         elif self.platform == 'ios':
             pass
@@ -155,19 +164,6 @@ class RemotePush(BasePage):
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
-    def click_and_test_visitor_phone_remind(self, texts):
-        """
-        点击并测试访客电话提醒
-        :return:
-        """
-        try:
-            visitor_phone_remind_text_status = RemoteSetting().scroll_check_funcs2(texts=texts)
-            self.scroll_click_right_btn(text_to_find='访客电话提醒')
-            self.scroll_click_right_btn(text_to_find='访客电话提醒')
-            return visitor_phone_remind_text_status
-        except Exception as e:
-            pytest.fail(f"函数执行出错: {str(e)}")
-
     def verify_device_notify_ringtone(self, text, options):
         """
         点击并测试设备通知铃声
@@ -189,19 +185,6 @@ class RemotePush(BasePage):
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
-    def check_plan_items_text(self, texts):
-        """
-        验证【计划】在【手机推送】主页的文案
-        :return:
-        """
-        try:
-            self.turn_on_push()
-            if self.loop_detect_element_exist(element_value='计划', scroll_or_not=False):
-                push_text_res = RemoteSetting().scroll_check_funcs2(texts=texts)
-                return push_text_res
-        except Exception as e:
-            pytest.fail(f"函数执行出错: {str(e)}")
-
     def verify_push_plan(self, texts_list, supported_alarm_type, options_text):
         """
         点击并测试 计划 验证文案内容
@@ -218,7 +201,7 @@ class RemotePush(BasePage):
             self.click_checkbox_by_text(option_text_list=detect_options, menu_text='报警类型')
             self.scroll_and_click_by_text(text_to_find=detect_options[0])  # 保底选项，防止下一步无法点击保存
             RemoteSetting().scroll_check_funcs2(texts=detect_text)  # 验证报警类型全局文案
-            RemoteSetting().scroll_check_funcs2(texts=detect_options, selector=self.alarm_type__selector)  # 验证报警类型选项文案
+            RemoteSetting().scroll_check_funcs2(texts=detect_options, selector=alarm_type_selector)  # 验证报警类型选项文案
             self.scroll_and_click_by_text('保存')
 
         try:
@@ -228,38 +211,18 @@ class RemotePush(BasePage):
             # 验证计划文案
             RemoteSetting().scroll_check_funcs2(texts=texts_list)
             # 验证底部涂抹按钮文案：涂画
-            self.click_by_xpath(xpath_expression=self.ReoIcon_Draw)
-            RemoteSetting().scroll_check_funcs2(texts='涂抹以选择时间')
+            # draw_text = ['涂抹以选择时间', '全选']
+            self.click_by_xpath(xpath_expression=_ReoIcon_Draw)
+            RemoteSetting().scroll_check_funcs2(texts=draw_text, scroll_or_not=False, back2top=False)
             # 验证底部涂抹按钮文案：擦除
-            self.click_by_xpath(xpath_expression=self.ReoIcon_Erase)
-            RemoteSetting().scroll_check_funcs2(texts='涂抹以取消选择时间')
+            # erase_text = ['涂抹以取消选择时间', '全部擦除']
+            self.click_by_xpath(xpath_expression=_ReoIcon_Erase)
+            RemoteSetting().scroll_check_funcs2(texts=erase_text, scroll_or_not=False, back2top=False)
 
             # 如果支持选择报警类型：
             if supported_alarm_type:
                 handle_alarm_type()
 
-        except Exception as e:
-            pytest.fail(f"函数执行出错: {str(e)}")
-
-    def click_test_push_alarm_type(self, texts_list, supported_alarm_type, option_text_list):
-        """
-        点击手机推送的报警类型，验证文案内容
-        :param texts_list: 需要验证的文案列表
-        :param supported_alarm_type: 是否支持报警类型筛选，bool
-        :param option_text_list: 报警类型操作文案
-        :return:
-        """
-        try:
-            alarm_type_text_res = True
-            if supported_alarm_type:
-                self.scroll_and_click_by_text(text_to_find='报警类型')
-                alarm_type_text_res = RemoteSetting().scroll_check_funcs2(texts=texts_list)
-                self.click_checkbox_by_text(option_text_list=option_text_list, menu_text='报警类型')
-                time.sleep(1.5)
-                self.scroll_and_click_by_text(text_to_find='保存')  # 点击保存
-                time.sleep(1.5)
-                self.back_previous_page()  # 返回到推送主页
-            return alarm_type_text_res
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
@@ -283,7 +246,7 @@ class RemotePush(BasePage):
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
-    def click_and_test_delay_notifications(self, text, options):
+    def verify_delay_notifications(self, text, options):
         """
         点击并测试延时通知
         :param text: 延时通知主页全局文案
