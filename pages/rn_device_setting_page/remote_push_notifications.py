@@ -13,6 +13,8 @@ _ReoIcon_Erase = g_config.get('ReoIcon_Erase')  # 计划主页底部擦除按钮
 draw_text = g_config.get('draw_text')  # 选择涂抹按钮后显示的文案
 erase_text = g_config.get('erase_text')  # 选择擦除按钮后显示的文案
 alarm_type_selector = g_config.get('alarm_type_selector')  # 计划>报警类型 选项
+push_checkbox_agree_icon = g_config.get('push_checkbox_agree_icon')  # 首次打开推送隐私条款弹窗勾选框勾选图标
+push_popup_content = g_config.get('push_popup_content')  # 推送隐私条款弹窗内容
 
 
 class RemotePush(BasePage):
@@ -64,7 +66,17 @@ class RemotePush(BasePage):
                 self.scroll_click_right_btn(text_to_find='手机推送',
                                             resourceId_1='ReoTitle',
                                             className_2='android.view.ViewGroup')
-                time.sleep(5)
+                # 如果检测到声明与条款弹窗则勾选并点击同意
+                if self.loop_detect_element_exist(element_value='声明与条款', time_interval=2, scroll_or_not=False):
+                    logger.info('检测到声明与条款弹窗，正在尝试勾选并点击同意')
+                    # 验证弹窗内容
+                    RemoteSetting().scroll_check_funcs2(texts=push_popup_content,
+                                                        scroll_or_not=False,
+                                                        back2top=False)
+                    self.click_by_xpath(xpath_expression=push_checkbox_agree_icon)
+                    self.click_by_text('同意')
+
+            time.sleep(5)
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 

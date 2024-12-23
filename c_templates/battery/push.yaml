@@ -1,5 +1,5 @@
-device_list_name: "yulong-test-sd7"
-uid: '952700Y006ZP1IJ5'
+device_list_name: ""
+uid: ''
 
 ipc:
   push:
@@ -39,7 +39,7 @@ ipc:
     items:
       visitor_phone_remind:
         name: '访客电话提醒'
-        desc: '设置>手机推送>访客电话提醒'
+        desc: '设置>手机推送>访客电话提醒(无需配置)'
         type: 'switch'
         text:
           - ''
@@ -48,7 +48,7 @@ ipc:
 
       device_notify_ringtone:
         name: '设备通知铃声'
-        desc: '设置>手机推送>设备通知铃声'
+        desc: '设置>手机推送>设备通知铃声(无需配置)'
         type: 'switch'
         text:
           - '设备通知铃声'

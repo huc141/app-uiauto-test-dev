@@ -1,5 +1,5 @@
-device_list_name: ""
-uid: ''
+device_list_name: "Reolink Video Doorbell-137Z"
+uid: '952700Y0061K137Z'
 
 ipc:
   email_alerts:
@@ -26,15 +26,10 @@ ipc:
           desc: '设置>邮件通知>计划主页>报警>报警类型(只需要配置options)'
           options:
             - '响铃'
-            - '画面变动'
             - '人'
             - '车'
-            - '动物'
             - '包裹'
             - '其他'
-        timed:
-          name: '定时'
-          desc: '设置>邮件通知>计划主页>定时（无需配置，有则保留，无则删除）'
 
       email_config:
         name: '邮件设置'

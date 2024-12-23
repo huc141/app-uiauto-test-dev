@@ -32,6 +32,5 @@ class TestRemotePreRecording:
         RemotePreRecord().check_precording_main_text(main_text=remote_items['pre_recording']['text'])
         # illegal_funcs_res = BasePage().detect_illegal_functions(legal_funcs_ids=remote_items['pre_recording']['text'])
 
-        # TODO: 设置停止预录电量
         RemotePreRecord().set_stop_pre_recording_power()
 

@@ -138,16 +138,16 @@ class RemoteDisplay(BasePage):
         """
         self.scroll_and_click_by_text(text_to_find=option_text)
 
-    def click_frame_rate(self, option_text='帧率(fps)'):
+    def click_frame_rate(self, option_text='帧率(FPS)'):
         """
-        :param option_text: 菜单功能项，该方法默认点击【帧率(fps)】
+        :param option_text: 菜单功能项，该方法默认点击【帧率(FPS)】
         :return:
         """
         self.scroll_and_click_by_text(text_to_find=option_text)
 
-    def click_max_bit_rate(self, option_text='最大码率(kbps)'):
+    def click_max_bit_rate(self, option_text='最大码率(Kbps)'):
         """
-        :param option_text: 菜单功能项，该方法默认点击【最大码率(kbps)】
+        :param option_text: 菜单功能项，该方法默认点击【最大码率(Kbps)】
         :return:
         """
         self.scroll_and_click_by_text(text_to_find=option_text)
@@ -159,9 +159,9 @@ class RemoteDisplay(BasePage):
         """
         self.scroll_and_click_by_text(text_to_find=option_text)
 
-    def click_i_frame_interval(self, option_text='i帧间隔'):
+    def click_i_frame_interval(self, option_text='I 帧间隔'):
         """
-        :param option_text: 菜单功能项，该方法默认点击【i帧间隔】
+        :param option_text: 菜单功能项，该方法默认点击【I 帧间隔】
         :return:
         """
         self.scroll_and_click_by_text(text_to_find=option_text)
@@ -194,7 +194,7 @@ class RemoteDisplay(BasePage):
         """
         self.scroll_and_click_by_text(text_to_find=option_text)
 
-    def verify_hdr(self, text1, text2):
+    def verify_hdr(self):
         """
         验证HDR
         :param text1: 全局文案列表
@@ -202,18 +202,20 @@ class RemoteDisplay(BasePage):
         :return:
         """
         try:
+            hdr_texts = ['HDR', '自动', '开', '关']
+            hdr_options = ['自动', '开', '关']
             # 找到HDR
             self.scroll_and_click_by_text(text_to_find='HDR')
 
             # 验证HDR文案
-            RemoteSetting().scroll_check_funcs2(texts=text1, scroll_or_not=False, back2top=False)
-            RemoteSetting().scroll_check_funcs2(texts=text2, selector='ReoTitle', scroll_or_not=False, back2top=False)
+            RemoteSetting().scroll_check_funcs2(texts=hdr_texts, scroll_or_not=False, back2top=False)
+            RemoteSetting().scroll_check_funcs2(texts=hdr_options, selector='ReoTitle', scroll_or_not=False, back2top=False)
 
             # 返回上一级
             self.back_previous_page_by_xpath()
 
-            # 开始遍历验证除了置灰选项外的日期选项
-            self.iterate_and_click_popup_text(option_text_list=text2, menu_text='HDR')
+            # 开始遍历验证选项
+            self.iterate_and_click_popup_text(option_text_list=hdr_options, menu_text='HDR')
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
@@ -235,13 +237,13 @@ class RemoteDisplay(BasePage):
             self.slider_seek_bar(slider_mode=slider_mode,
                                  id_or_xpath=element_obj,
                                  direction='right',
-                                 iteration=15)
+                                 iteration=5)
 
             # 往左拖动25次
             self.slider_seek_bar(slider_mode=slider_mode,
                                  id_or_xpath=element_obj,
                                  direction='left',
-                                 iteration=25)
+                                 iteration=10)
 
             # 往右拖动5次
             self.slider_seek_bar(slider_mode=slider_mode,
@@ -257,23 +259,22 @@ class RemoteDisplay(BasePage):
         :param slider_mode: slider的定位方式，支持id、xpath定位，或者直接使用元素对象obj
         :param id_or_xpath: id或者xpath的定位参数
         """
-        # TODO: start_xpath_prefix待提取
         try:
             element_obj = BasePage().find_element_by_xpath_recursively(
-                start_xpath_prefix='//*[@resource-id="对比度条的xpath"]',
+                start_xpath_prefix='//*[@resource-id="Contrast"]',
                 target_id="RNE__Slider_Thumb")
 
             # 往右拖动15次
             self.slider_seek_bar(slider_mode=slider_mode,
                                  id_or_xpath=element_obj,
                                  direction='right',
-                                 iteration=15)
+                                 iteration=5)
 
             # 往左拖动25次
             self.slider_seek_bar(slider_mode=slider_mode,
                                  id_or_xpath=element_obj,
                                  direction='left',
-                                 iteration=25)
+                                 iteration=10)
 
             # 往右拖动5次
             self.slider_seek_bar(slider_mode=slider_mode,
@@ -289,23 +290,22 @@ class RemoteDisplay(BasePage):
         :param slider_mode: slider的定位方式，支持id、xpath定位，或者直接使用元素对象obj
         :param id_or_xpath: id或者xpath的定位参数
         """
-        # TODO: start_xpath_prefix待提取
         try:
             element_obj = BasePage().find_element_by_xpath_recursively(
-                start_xpath_prefix='//*[@resource-id="饱和度条"]',
+                start_xpath_prefix='//*[@resource-id="Saturation"]',
                 target_id="RNE__Slider_Thumb")
 
             # 往右拖动15次
             self.slider_seek_bar(slider_mode=slider_mode,
                                  id_or_xpath=element_obj,
                                  direction='right',
-                                 iteration=15)
+                                 iteration=5)
 
             # 往左拖动25次
             self.slider_seek_bar(slider_mode=slider_mode,
                                  id_or_xpath=element_obj,
                                  direction='left',
-                                 iteration=25)
+                                 iteration=10)
 
             # 往右拖动5次
             self.slider_seek_bar(slider_mode=slider_mode,
@@ -321,23 +321,22 @@ class RemoteDisplay(BasePage):
         :param slider_mode: slider的定位方式，支持id、xpath定位，或者直接使用元素对象obj
         :param id_or_xpath: id或者xpath的定位参数
         """
-        # TODO: start_xpath_prefix待提取
         try:
             element_obj = BasePage().find_element_by_xpath_recursively(
-                start_xpath_prefix='//*[@resource-id="锐度条"]',
+                start_xpath_prefix='//*[@resource-id="Sharpen"]',
                 target_id="RNE__Slider_Thumb")
 
             # 往右拖动15次
             self.slider_seek_bar(slider_mode=slider_mode,
                                  id_or_xpath=element_obj,
                                  direction='right',
-                                 iteration=15)
+                                 iteration=5)
 
             # 往左拖动25次
             self.slider_seek_bar(slider_mode=slider_mode,
                                  id_or_xpath=element_obj,
                                  direction='left',
-                                 iteration=25)
+                                 iteration=10)
 
             # 往右拖动5次
             self.slider_seek_bar(slider_mode=slider_mode,
@@ -362,13 +361,13 @@ class RemoteDisplay(BasePage):
             self.slider_seek_bar(slider_mode=slider_mode,
                                  id_or_xpath=element_obj,
                                  direction='right',
-                                 iteration=15)
+                                 iteration=5)
 
             # 往左拖动25次
             self.slider_seek_bar(slider_mode=slider_mode,
                                  id_or_xpath=element_obj,
                                  direction='left',
-                                 iteration=25)
+                                 iteration=10)
 
             # 点击恢复默认值
             self.scroll_and_click_by_text(text_to_find='恢复默认值')
@@ -431,13 +430,13 @@ class RemoteDisplay(BasePage):
                 self.slider_seek_bar(slider_mode=slider_mode,
                                      id_or_xpath=i,
                                      direction='right',
-                                     iteration=15)
+                                     iteration=5)
 
                 # 往左拖动
                 self.slider_seek_bar(slider_mode=slider_mode,
                                      id_or_xpath=i,
                                      direction='left',
-                                     iteration=20)
+                                     iteration=10)
 
                 # 点击恢复默认值
                 self.scroll_and_click_by_text(text_to_find=f'(//*[@text="恢复默认值"]){[num]}', el_type='xpath')
@@ -919,17 +918,17 @@ class RemoteDisplay(BasePage):
             self.slider_seek_bar(slider_mode='xpath',
                                  id_or_xpath='//*[@resource-id="RNE__Slider_Thumb"]',
                                  direction='right',
-                                 iteration=15)
+                                 iteration=5)
             # 旋转画面: 向左
             self.slider_seek_bar(slider_mode='xpath',
                                  id_or_xpath='//*[@resource-id="RNE__Slider_Thumb"]',
                                  direction='left',
-                                 iteration=25)
+                                 iteration=10)
             # 旋转画面: 向右
             self.slider_seek_bar(slider_mode='xpath',
                                  id_or_xpath='//*[@resource-id="RNE__Slider_Thumb"]',
                                  direction='right',
-                                 iteration=15)
+                                 iteration=5)
 
         except Exception as err:
             pytest.fail(f"函数执行出错: {err}")
@@ -1007,13 +1006,16 @@ class RemoteDisplay(BasePage):
         :return:
         """
         try:
-            self.scroll_click_right_btn(text_to_find='夜视通透模式',
-                                        resourceId_1='ReoTitle',
-                                        className_2='android.view.ViewGroup')
-            time.sleep(3)
-            self.scroll_click_right_btn(text_to_find='夜视通透模式',
-                                        resourceId_1='ReoTitle',
-                                        className_2='android.view.ViewGroup')
+            if self.is_element_exists(element_value='夜视通透模式', max_scrolls=3):
+                self.scroll_click_right_btn(text_to_find='夜视通透模式',
+                                            resourceId_1='ReoTitle',
+                                            className_2='android.view.ViewGroup')
+                time.sleep(3)
+                self.scroll_click_right_btn(text_to_find='夜视通透模式',
+                                            resourceId_1='ReoTitle',
+                                            className_2='android.view.ViewGroup')
+            else:
+                pytest.fail('当前设备未找到夜视通透功能！')
         except Exception as err:
             pytest.fail(f"函数执行出错: {err}")
 

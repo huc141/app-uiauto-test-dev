@@ -2,16 +2,20 @@
 import time
 import pytest
 from typing import Literal
+from common_tools.read_yaml import read_yaml
 from common_tools.logger import logger
 from pages.base_page import BasePage
 from pages.rn_device_setting_page.remote_setting import RemoteSetting
+
+g_config = read_yaml.read_global_data(source="global_data")  # 读取全局配置
+pre_record_checkbox_agree_content = g_config.get('pre_record_checkbox_agree_content')  # 预录模式弹窗内容
 
 
 class RemotePreRecord(BasePage):
     def __init__(self):
         super().__init__()
         if self.platform == 'android':
-            self.slider_stop_pre_record_battery = ''
+            self.slider_stop_pre_record_battery = '//*[@resource-id="RNE__Slider_Thumb"]'
             self.time_selector_hour = '//*[@resource-id="com.mcu.reolink:id/options1"]'  # 编辑分段灵敏度，开始时间设置：小时
             self.time_selector_min = '//*[@resource-id="com.mcu.reolink:id/options2"]'  # 编辑分段灵敏度，开始时间设置：分钟
 
@@ -52,6 +56,16 @@ class RemotePreRecord(BasePage):
                                             resourceId_1='com.mcu.reolink:id/tv_title',
                                             className_2='android.view.View')  # 点击预录模式
                 time.sleep(1)
+                # 可能存在首次开启的情况，检测首次开启的弹窗
+                if self.loop_detect_element_exist(element_value='开启预录模式',
+                                                  time_interval=2,
+                                                  scroll_or_not=False):
+                    logger.info('检测到开启预录模式弹窗，正在尝试点击确认')
+                    # 验证弹窗内容
+                    RemoteSetting().scroll_check_funcs2(texts=pre_record_checkbox_agree_content,
+                                                        scroll_or_not=False,
+                                                        back2top=False)
+                    self.click_by_text('确认')
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
@@ -80,13 +94,13 @@ class RemotePreRecord(BasePage):
             self.slider_seek_bar(slider_mode='xpath',
                                  id_or_xpath=self.slider_stop_pre_record_battery,
                                  direction='right',
-                                 iteration=20)
+                                 iteration=10)
 
             # 向左拖动
             self.slider_seek_bar(slider_mode='xpath',
                                  id_or_xpath=self.slider_stop_pre_record_battery,
                                  direction='left',
-                                 iteration=20)
+                                 iteration=13)
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 

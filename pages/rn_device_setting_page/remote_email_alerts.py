@@ -123,12 +123,12 @@ class RemoteEmailAlerts(BasePage):
                                                 back2top=False)
             self.back_previous_page_by_xpath()
 
-            # 检查【发件服务器是什么】 TODO:缺定位id
-            self.click_by_xpath(xpath_expression=common_email_smtp_help)
-            RemoteSetting().scroll_check_funcs2(texts=common_smtp_help_texts,
-                                                scroll_or_not=False,
-                                                back2top=False)
-            self.back_previous_page_by_xpath()
+            # 检查【发件服务器是什么】 TODO:缺定位id改成了了解更多，没有定位id，暂时注释
+            # self.click_by_xpath(xpath_expression=common_email_smtp_help)
+            # RemoteSetting().scroll_check_funcs2(texts=common_smtp_help_texts,
+            #                                     scroll_or_not=False,
+            #                                     back2top=False)
+            # self.back_previous_page_by_xpath()
 
             # 点击保存
             self.scroll_and_click_by_text(text_to_find='保存')

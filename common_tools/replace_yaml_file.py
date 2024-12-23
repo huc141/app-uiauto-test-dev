@@ -83,8 +83,8 @@ def replace_in_yaml(data, search_str, replace_str):
 
 # 示例调用
 folder_path = 'D:/app-uiauto-test-dev/config/apower'  # 替换为实际文件夹路径
-search_str = '配置持续录像的时间计划，启用的时间段会持续不间断录像。'  # 需要查找的字符串
-replace_str = '配置持续录像的时间计划，启用的时间段会持续不间断地录像。'  # 需要替换的字符串
+search_str = '帧率(fps)'  # 需要查找的字符串
+replace_str = '帧率(FPS)'  # 需要替换的字符串
 replace = True  # 设置为True进行替换，False则仅查找
 
 search_and_replace_yaml(folder_path, search_str, replace_str, replace)
