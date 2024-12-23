@@ -9,7 +9,9 @@ from pages.base_page import BasePage
 from pages.rn_device_setting_page.remote_setting import RemoteSetting
 from pages.rn_device_setting_page.remote_display import RemoteDisplay
 
-devices_config = read_yaml.load_device_config(device_dir='apower/AReolink_TrackMix_WiFi',
+g_config = read_yaml.read_global_data(source="global_data")  # 读取全局配置
+device_dir = g_config.get("device_dir")  # 读取设备配置文件目录
+devices_config = read_yaml.load_device_config(device_dir=device_dir,
                                               yaml_file_name='display.yaml')  # 读取参数化文件
 
 
@@ -33,5 +35,5 @@ class TestRemoteDisplay:
         RemoteSetting().access_in_display(device_list_name=device_config['device_list_name'])
 
         # 点击进入并验证图像布局
-        RemoteDisplay().verify_image_layout(texts=remote_items['image_layout']['text'])
+        RemoteDisplay().verify_image_layout()
 

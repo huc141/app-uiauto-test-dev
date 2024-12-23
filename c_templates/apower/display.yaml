@@ -1,5 +1,5 @@
-device_list_name: "yulong-test-sd7"
-uid: '952700Y006ZP1IJ5'
+device_list_name: ""
+uid: ''
 
 ipc:
   display:
@@ -37,349 +37,185 @@ ipc:
           - '遮盖区域'
 
         vertical_flip:
-          name: '垂直翻转'
-          desc: '设置>显示>垂直翻转'
-          type: 'switch'
-          options:
-            - 'switch_on'
-            - 'switch_off'
-
+          name: '垂直翻转(无需配置，有则保留无则删除)'
         horizontal_flip:
-          name: '水平翻转'
-          desc: '设置>显示>水平翻转'
-          type: 'switch'
-          options:
-            - 'switch_on'
-            - 'switch_off'
+          name: '水平翻转(无需配置，有则保留无则删除)'
+
+        motion_mark:
+          name: '移动标记(无需配置，有则保留无则删除)'
+
+        device_name:
+          name: '设备名称(无需配置，有则保留无则删除)'
+        date:
+          name: '日期(无需配置，有则保留无则删除)'
+
+        watermark:
+          name: '水印(无需配置，有则保留无则删除)'
+
+        image_layout:
+          name: '图像布局(无需配置，有则保留无则删除)'
 
         stream:
           name: '码流'
           desc: '设置>显示>码流'
           type: 'navigation'
-          subpage:
-            name: '码流'
-            desc: '设置>显示>码流>码流'
+          text:
+            - '编码格式'
+            - 'I 帧间隔'
+          options:
+            - '帧率控制'
+            - '码率控制'
+
+          clear:
+            name: '清晰'
+            desc: '设置>显示>码流>码流>清晰(此处的text也等于options)'
             type: 'navigation'
             text:
-              - '码流'
-              - '清晰'
-              - '分辨率'
-              - '帧率(FPS)'
-              - '最大码率(kbps)'
-              - '流畅'
               - '编码格式'
               - 'I 帧间隔'
+
+            resolution:
+              name: '分辨率'
+              desc: '设置>显示>码流>码流>清晰>分辨率'
+              type: 'popup'
+              options:
+                - '3840*2160'
+
+            frame_rate:
+              name: '帧率(FPS)'
+              desc: '设置>显示>码流>码流>清晰>帧率(FPS)'
+              type: 'popup'
+              options:
+                - '25'
+                - '22'
+                - '20'
+                - '18'
+                - '16'
+                - '15(默认)'
+                - '12'
+                - '10'
+                - '8'
+                - '6'
+                - '4'
+                - '2'
+
+            max_bit_rate:
+              name: '最大码率(kbps)'
+              desc: '设置>显示>码流>码流>清晰>最大码率(Kbps)'
+              type: 'popup'
+              options:
+                - '4096(默认)'
+                - '5120'
+                - '6144'
+                - '7168'
+                - '8192'
+
+            encoding_format:
+              name: '编码格式'
+              desc: '设置>显示>码流>码流>清晰>编码格式'
+              type: 'popup'
+              options:
+                - 'H264'
+                - 'H265'
+
+            i_frame_interval:
+              name: 'I 帧间隔'
+              desc: '设置>显示>码流>码流>清晰>I 帧间隔'
+              type: 'popup'
+              options:
+                - '1x'
+                - '2x'
+
+          fluent:
+            name: '流畅'
+            desc: '设置>显示>码流>码流>流畅'
+            type: 'navigation'
+            text:
+              - '编码格式'
+              - 'I 帧间隔'
+
+            resolution:
+              name: '分辨率'
+              desc: '设置>显示>码流>码流>流畅>分辨率'
+              type: 'popup'
+              options:
+                - '896*512'
+
+            frame_rate:
+              name: '帧率(FPS)'
+              desc: '设置>显示>码流>码流>流畅>帧率(FPS)'
+              type: 'popup'
+              options:
+                - '20'
+                - '18'
+                - '16'
+                - '15(默认)'
+                - '12'
+                - '8'
+                - '6'
+                - '4'
+
+            max_bit_rate:
+              desc: '设置>显示>码流>码流>流畅>最大码率(kbps)'
+              type: 'popup'
+              options:
+                - '128'
+                - '256'
+                - '384'
+                - '512'
+                - '672'
+                - '768(默认)'
+                - '1024'
+                - '1228'
+
+            encoding_format:
+              name: '编码格式'
+              desc: '设置>显示>码流>码流>流畅>编码格式'
+              type: 'popup'
+              options:
+                - 'H.264'
+                - 'H.265'
+
+            interval_frame:
+              name: 'I 帧间隔'
+              desc: '设置>显示>码流>码流>流畅>I 帧间隔'
+              type: 'popup'
+              options:
+                - '1x'
+                - '2x'
+                - '3x'
+                - '4x'
+
+          frame_rate_mode:
+            name: '帧率控制'
+            desc: '设置>显示>码流>码流>帧率控制'
+            type: 'popup'
+            text:
               - '帧率控制'
+              - '自动'
+              - '可变帧率，自动调节帧率来保持画质（不适用有快速运动的物体）。'
+              - '恒定'
+              - '恒定帧率，流畅优先。'
+              - '逐步'
+              - '可变帧率，逐步调节帧率来保持画质（适用有快速运动的物体）。'
+            options:
+              - '自动'
+              - '恒定'
+              - '逐步'
+
+          rate_mode:
+            name: '码率控制'
+            desc: '设置>显示>码流>码流>码率模式'
+            type: 'popup'
+            text:
               - '码率控制'
-
-            clear:
-              name: '清晰'
-              desc: '设置>显示>码流>码流>清晰'
-              type: 'navigation'
-              subpage:
-                name: '清晰'
-                desc: '设置>显示>码流>码流>清晰'
-                type: 'page'
-                text:
-                  - '取消'
-                  - '清晰'
-                  - '保存'
-                  - '分辨率'
-                  - '帧率(fps)'
-                  - '最大码率(kbps)'
-                  - '编码格式'
-                  - 'I 帧间隔'
-
-                resolution:
-                  name: '分辨率'
-                  desc: '设置>显示>码流>码流>清晰>分辨率'
-                  type: 'popup'
-                  text:
-                    - '分辨率'
-                    - '越高视频越清晰'
-                    - '3840*2160'
-                  options:
-                    - '3840*2160'
-
-                frame_rate:
-                  name: '帧率(FPS)'
-                  desc: '设置>显示>码流>码流>清晰>帧率(FPS)'
-                  type: 'popup'
-                  text:
-                    - '帧率(FPS)'
-                    - '每秒钟的帧数，越高画面越流畅'
-                    - '25'
-                    - '22'
-                    - '20'
-                    - '18'
-                    - '16'
-                    - '15(默认)'
-                    - '12'
-                    - '10'
-                    - '8'
-                    - '6'
-                    - '4'
-                    - '2'
-                  options:
-                    - '25'
-                    - '22'
-                    - '20'
-                    - '18'
-                    - '16'
-                    - '15(默认)'
-                    - '12'
-                    - '10'
-                    - '8'
-                    - '6'
-                    - '4'
-                    - '2'
-
-                max_bit_rate:
-                  name: '最大码率(kbps)'
-                  desc: '设置>显示>码流>码流>清晰>最大码率(Kbps)'
-                  type: 'popup'
-                  text:
-                    - '最大码率(Kbps)'
-                    - '相同的分辨率、帧率下，码率越大画质越好，网络要求也越高'
-                    - '4096(默认)'
-                    - '5120'
-                    - '6144'
-                    - '7168'
-                    - '8192'
-                  options:
-                    - '4096(默认)'
-                    - '5120'
-                    - '6144'
-                    - '7168'
-                    - '8192'
-
-                encoding_format:
-                  name: '编码格式'
-                  desc: '设置>显示>码流>码流>清晰>编码格式'
-                  type: 'popup'
-                  text:
-                    - '编码格式'
-                    - 'H.265相较于H.264具有更高的编码效率，可以提供更高质量的视频，但相应地需要更高的计算能力和更先进的设备支持。'
-                    - 'H264'
-                    - 'H.265'
-                  options:
-                    - 'H264'
-                    - 'H265'
-
-                i_frame_interval:
-                  name: 'I 帧间隔'
-                  desc: '设置>显示>码流>码流>清晰>I 帧间隔'
-                  type: 'popup'
-                  text:
-                    - 'I 帧间隔'
-                    - 'I 帧间隔小，视频质量高，但文件大。I 帧间隔大，文件小，但质量低。'
-                    - '1x'
-                    - '2x'
-                  options:
-                    - '1x'
-                    - '2x'
-
-            fluent:
-              name: '流畅'
-              desc: '设置>显示>码流>码流>流畅'
-              type: 'navigation'
-              subpage:
-                name: '流畅'
-                desc: '设置>显示>码流>码流>流畅'
-                type: 'page'
-                text:
-                  - '取消'
-                  - '流畅'
-                  - '保存'
-                  - '分辨率'
-                  - '帧率(fps)'
-                  - '最大码率(kbps)'
-                  - '编码格式'
-                  - 'I 帧间隔'
-
-                resolution:
-                  name: '分辨率'
-                  desc: '设置>显示>码流>码流>流畅>分辨率'
-                  type: 'popup'
-                  text:
-                    - '分辨率'
-                    - '越高视频越清晰'
-                    - '896*512'
-                  options:
-                    - '896*512'
-
-                frame_rate:
-                  name: '帧率(FPS)'
-                  desc: '设置>显示>码流>码流>流畅>帧率(FPS)'
-                  type: 'popup'
-                  text:
-                    - '帧率(FPS)'
-                    - '每秒钟的帧数，越高画面越流畅'
-                    - '20'
-                    - '18'
-                    - '16'
-                    - '15(默认)'
-                    - '12'
-                    - '8'
-                    - '6'
-                    - '4'
-                  options:
-                    - '20'
-                    - '18'
-                    - '16'
-                    - '15(默认)'
-                    - '12'
-                    - '8'
-                    - '6'
-                    - '4'
-
-                max_bit_rate:
-                  desc: '设置>显示>码流>码流>流畅>最大码率(kbps)'
-                  type: 'popup'
-                  text:
-                    - '最大码率(kbps)'
-                    - '相同的分辨率、帧率下，码率越大画质越好，网络要求也越高'
-                    - '128'
-                    - '256'
-                    - '384'
-                    - '512'
-                    - '672'
-                    - '768(默认)'
-                    - '1024'
-                    - '1228'
-                  options:
-                    - '128'
-                    - '256'
-                    - '384'
-                    - '512'
-                    - '672'
-                    - '768(默认)'
-                    - '1024'
-                    - '1228'
-
-                encoding_format:
-                  name: '编码格式'
-                  desc: '设置>显示>码流>码流>流畅>编码格式'
-                  type: 'popup'
-                  text:
-                    - '编码格式'
-                    - 'H.265相较于H.264具有更高的编码效率，可以提供更高质量的视频，但相应地需要更高的计算能力和更先进的设备支持。'
-                    - 'H.264'
-                    - 'H.265'
-                  options:
-                    - 'H.264'
-                    - 'H.265'
-
-                interval_frame:
-                  name: 'I 帧间隔'
-                  desc: '设置>显示>码流>码流>流畅>I 帧间隔'
-                  type: 'popup'
-                  text:
-                    - 'I 帧间隔'
-                    - 'I 帧间隔小，视频质量高，但文件大。I 帧间隔大，文件小，但质量低。'
-                    - '1x'
-                    - '2x'
-                    - '3x'
-                    - '4x'
-                  options:
-                    - '1x'
-                    - '2x'
-                    - '3x'
-                    - '4x'
-
-            frame_rate_mode:
-              name: '帧率控制'
-              desc: '设置>显示>码流>码流>帧率控制'
-              type: 'popup'
-              text:
-                - '帧率控制'
-                - '自动'
-                - '可变帧率，自动调节帧率来保持画质（不适用有快速运动的物体）。'
-                - '恒定'
-                - '恒定帧率，流畅优先。'
-                - '逐步'
-                - '可变帧率，逐步调节帧率来保持画质（适用有快速运动的物体）。'
-              options:
-                - '自动'
-                - '恒定'
-                - '逐步'
-
-            rate_mode:
-              name: '码率控制'
-              desc: '设置>显示>码流>码流>码率模式'
-              type: 'popup'
-              text:
-                - '码率控制'
-                - '固定码率'
-                - '不同的码率控制模式会影响画质和文件存储大小。'
-                - '动态码率'
-                - '自动根据视频内容的复杂度进行码率控制。码率不足时，视频可能会变得模糊。'
-              options:
-                - '固定码率'
-                - '动态码率'
-
-        motion_mark:
-          name: '移动标记'
-          desc: '设置>显示>移动标记'
-          type: 'switch'
-          text:
-            - '移动标记'
-            - '画面为清晰时，智能检测到移动事物将进行标记。'
-          options:
-            - 'switch-on'
-            - 'switch-off'
-
-        device_name:
-          name: '设备名称'
-          desc: '设置>显示>设备名称'
-          type: 'popup'
-          text:
-            - '设备名称'
-            - '左上'
-            - '中上'
-            - '右上'
-            - '左下'
-            - '中下'
-            - '右下'
-            - '隐藏'
-          options:
-            - '左上'
-            - '中上'
-            - '右上'
-            - '左下'
-            - '中下'
-            - '右下'
-            - '隐藏'
-
-        date:
-          name: '日期'
-          desc: '设置>显示>日期'
-          type: 'popup'
-          text:
-            - '日期'
-            - '左上'
-            - '中上'
-            - '右上'
-            - '左下'
-            - '中下'
-            - '右下'
-            - '隐藏'
-          options:
-            - '隐藏'
-            - '左上'
-            - '中上'
-            - '右上'
-            - '左下'
-            - '中下'
-            - '右下'
-
-        watermark:
-          name: '水印'
-          desc: '设置>显示>水印'
-          type: 'switch'
-          options:
-            - 'switch_on'
-            - 'switch_off'
+              - '固定码率'
+              - '不同的码率控制模式会影响画质和文件存储大小。'
+              - '动态码率'
+              - '自动根据视频内容的复杂度进行码率控制。码率不足时，视频可能会变得模糊。'
+            options:
+              - '固定码率'
+              - '动态码率'
 
         image_setting:
           name: '图像设置'
@@ -534,48 +370,12 @@ ipc:
               - '暗部'
 
         splice_region:
-          name: '拼接区域'
-          desc: '设置>显示>拼接区域'
-          type: 'navigation'
-          text:
-            - '拼接设置'
-            - '拼接距离'
-            - '距离（米）'
-            - '在你设置的距离附近，拼接画面会达到最佳观看效果'
-            - '拼接位置'
-            - '水平'
-            - '垂直'
-            - '调整左右两个画面之间的水平或垂直距离差，以达到最佳观看效果'
-            - '恢复默认设置'
-          options:
-            - '距离（米）'
-            - '水平'
-            - '垂直'
+          name: '拼接区域(无需配置，有则保留无则删除)'
 
         private_mark:
           name: '遮盖区域'
           desc: '设置>显示>遮盖区域'
           type: 'navigation'
-          text:
-            - '取消'
-            - '遮盖区域'
-            - '保存'
-            - '广角画面'
-            - '长焦画面'
-            - '清空所有'
-          user_tips:
-            - '在画面中通过手指滑动添加黑色遮挡区域，监控视频中的遮挡区域将不可见，最多可遮挡4个区域。'
-            - '我知道了'
-          wide_angle: True
-          telephoto: True
+          camera_type: 'GC代表双目的广角与长焦；ZY代表左右摄像机；DM代表单目'
+          mask_num: 3/4/8
 
-        image_layout:
-          name: '图像布局'
-          desc: '设置>显示>图像布局'
-          type: 'page'
-          text:
-            - '取消'
-            - '图像布局'
-            - '保存'
-            - '鱼眼'
-            - '展开'

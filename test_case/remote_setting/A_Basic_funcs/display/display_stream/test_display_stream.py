@@ -30,165 +30,70 @@ class TestRemoteDisplay:
         # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击‘显示’菜单项进入显示页
         RemoteSetting().access_in_display(device_list_name=device_config['device_list_name'])
 
-        # 点击进入码流页
+        # 点击进入码流主页
         RemoteDisplay().access_in_stream()
 
         # 验证码流主页文本
-        RemoteSetting().scroll_check_funcs2(remote_items['stream']['subpage']['text'],
-                                            back2top=False)
+        RemoteDisplay().verify_stream_main_texts(custom_texts=remote_items['stream']['text'],
+                                                 custom_options=remote_items['stream']['options'])
 
         # ====================↓ 清晰配置 ↓====================
 
         # 进入码流>清晰页面，验证清晰页面文本和操作
         RemoteDisplay().access_in_clear()
-        RemoteSetting().scroll_check_funcs2(
-            remote_items['stream']['subpage']['clear']['subpage']['text'],
-            back2top=False)
+        RemoteDisplay().verify_stream_clear_main_texts(custom_options=remote_items['stream']['clear']['text'])
 
         # 点击清晰>分辨率选项，验证文本、执行操作
         RemoteDisplay().click_resolution()
-        RemoteSetting().scroll_check_funcs2(
-            remote_items['stream']['subpage']['clear']['subpage']['resolution']['text'],
-            back2top=False)
-        RemoteSetting().scroll_check_funcs2(
-            remote_items['stream']['subpage']['clear']['subpage']['resolution']['options'],
-            selector='ReoTitle',
-            back2top=False)
-        BasePage().iterate_and_click_popup_text(
-            option_text_list=remote_items['stream']['subpage']['clear']['subpage']['resolution']['options'],
-            menu_text='分辨率')
+        RemoteDisplay().verify_stream_clear_resolution(remote_items['stream']['clear']['resolution']['options'])
 
-        # # 点击清晰>帧率选项，验证文本
+        # 点击清晰>帧率选项，验证文本
         RemoteDisplay().click_frame_rate()
-        RemoteSetting().scroll_check_funcs2(
-            remote_items['stream']['subpage']['clear']['subpage']['frame_rate']['text'],
-            back2top=False)
-        RemoteSetting().scroll_check_funcs2(
-            remote_items['stream']['subpage']['clear']['subpage']['frame_rate']['options'],
-            selector='ReoTitle',
-            back2top=False)
-        BasePage().iterate_and_click_popup_text(
-            option_text_list=remote_items['stream']['subpage']['clear']['subpage']['frame_rate']['options'],
-            menu_text='帧率(FPS)')
+        RemoteDisplay().verify_stream_clear_frame_rate(remote_items['stream']['clear']['frame_rate']['options'])
 
-        # # 点击清晰>最大码率选项，验证文本
+        # 点击清晰>最大码率选项，验证文本
         RemoteDisplay().click_max_bit_rate()
-        RemoteSetting().scroll_check_funcs2(
-            remote_items['stream']['subpage']['clear']['subpage']['max_bit_rate']['text'],
-            back2top=False
-        )
-        RemoteSetting().scroll_check_funcs2(
-            remote_items['stream']['subpage']['clear']['subpage']['max_bit_rate']['options'],
-            back2top=False,
-            selector='ReoTitle')
-        BasePage().iterate_and_click_popup_text(
-            option_text_list=remote_items['stream']['subpage']['clear']['subpage']['max_bit_rate']['options'],
-            menu_text='最大码率(Kbps)')
+        RemoteDisplay().verify_stream_clear_max_bit_rate(remote_items['stream']['clear']['max_bit_rate']['options'])
 
-        # 点击清晰>编码格式选项，验证文本、执行操作 TODO: keyError
+        # 点击清晰>编码格式选项，验证文本、执行操作
         RemoteDisplay().click_encoding_format()
-        RemoteSetting().scroll_check_funcs2(
-            remote_items['stream']['subpage']['clear']['subpage']['encoding_format']['text'],
-            back2top=False)
-        RemoteSetting().scroll_check_funcs2(
-            remote_items['stream']['subpage']['clear']['subpage']['encoding_format']['options'],
-            selector='ReoTitle',
-            back2top=False)
-        BasePage().iterate_and_click_popup_text(
-            option_text_list=remote_items['stream']['subpage']['clear']['subpage']['encoding_format']['options'],
-            menu_text='编码格式')
+        RemoteDisplay().verify_stream_clear_encoding_format(remote_items['stream']['clear']['encoding_format']['options'])
 
         # 点击清晰>I 帧间隔选项，验证文本
         RemoteDisplay().click_i_frame_interval()
-        RemoteSetting().scroll_check_funcs2(
-            remote_items['stream']['subpage']['clear']['subpage']['i_frame_interval']['text'],
-            back2top=False)
-        RemoteSetting().scroll_check_funcs2(
-            remote_items['stream']['subpage']['clear']['subpage']['i_frame_interval']['options'],
-            selector='ReoTitle',
-            back2top=False)
-        BasePage().iterate_and_click_popup_text(
-            option_text_list=remote_items['stream']['subpage']['clear']['subpage']['i_frame_interval']['options'],
-            menu_text='I 帧间隔')
+        RemoteDisplay().verify_stream_clear_i_frame_interval(remote_items['stream']['clear']['i_frame_interval']['options'])
 
-        # 保存清晰页的配置, 返回码流主页
-        BasePage().scroll_and_click_by_text("保存")
+        # 点击取消，返回到码流主页
+        BasePage().click_by_text('取消')
 
         # ====================↓ 流畅配置 ↓====================
 
         # 进入码流>流畅页面，验证流畅页面文本和操作
         RemoteDisplay().access_in_fluent()
-        RemoteSetting().scroll_check_funcs2(
-            remote_items['stream']['subpage']['fluent']['subpage']['text'],
-            back2top=False)
+        RemoteDisplay().verify_stream_fluent_main_texts(custom_options=remote_items['stream']['fluent']['text'])
 
         # 点击流畅>分辨率选项，验证文本、执行操作
         RemoteDisplay().click_resolution()
-        RemoteSetting().scroll_check_funcs2(
-            remote_items['stream']['subpage']['fluent']['subpage']['resolution']['text'],
-            back2top=False)
-        RemoteSetting().scroll_check_funcs2(
-            remote_items['stream']['subpage']['fluent']['subpage']['resolution']['options'],
-            selector='ReoTitle',
-            back2top=False)
-        BasePage().iterate_and_click_popup_text(
-            option_text_list=remote_items['stream']['subpage']['fluent']['subpage']['resolution']['options'],
-            menu_text='分辨率')
+        RemoteDisplay().verify_stream_clear_resolution(remote_items['stream']['fluent']['resolution']['options'])
 
         # 点击流畅>帧率选项，验证文本、执行操作
         RemoteDisplay().click_frame_rate()
-        RemoteSetting().scroll_check_funcs2(
-            remote_items['stream']['subpage']['fluent']['subpage']['frame_rate']['text'],
-            back2top=False)
-        RemoteSetting().scroll_check_funcs2(
-            remote_items['stream']['subpage']['fluent']['subpage']['frame_rate']['options'],
-            selector='ReoTitle',
-            back2top=False)
-        BasePage().iterate_and_click_popup_text(
-            option_text_list=remote_items['stream']['subpage']['fluent']['subpage']['frame_rate']['options'],
-            menu_text='帧率(FPS)')
+        RemoteDisplay().verify_stream_clear_frame_rate(remote_items['stream']['fluent']['frame_rate']['options'])
 
         # 点击流畅>最大码率选项，验证文本、返回码流主页
         RemoteDisplay().click_max_bit_rate()
-        RemoteSetting().scroll_check_funcs2(
-            remote_items['stream']['subpage']['fluent']['subpage']['max_bit_rate']['text'],
-            back2top=False)
-        RemoteSetting().scroll_check_funcs2(
-            remote_items['stream']['subpage']['fluent']['subpage']['max_bit_rate']['options'],
-            selector='ReoTitle',
-            back2top=False)
-        BasePage().iterate_and_click_popup_text(
-            option_text_list=remote_items['stream']['subpage']['fluent']['subpage']['max_bit_rate']['options'],
-            menu_text='最大码率(Kbps)')
+        RemoteDisplay().verify_stream_clear_max_bit_rate(remote_items['stream']['fluent']['max_bit_rate']['options'])
 
         # 点击流畅>编码格式选项，验证文本、执行操作
         RemoteDisplay().click_encoding_format()
-        RemoteSetting().scroll_check_funcs2(
-            remote_items['stream']['subpage']['fluent']['subpage']['encoding_format']['text'],
-            back2top=False)
-        RemoteSetting().scroll_check_funcs2(
-            remote_items['stream']['subpage']['fluent']['subpage']['encoding_format']['options'],
-            selector='ReoTitle',
-            back2top=False)
-        BasePage().iterate_and_click_popup_text(
-            option_text_list=remote_items['stream']['subpage']['fluent']['subpage']['encoding_format']['options'],
-            menu_text='编码格式')
+        RemoteDisplay().verify_stream_clear_encoding_format(remote_items['stream']['fluent']['encoding_format']['options'])
 
         # 点击流畅>I 帧间隔选项，验证文本
         RemoteDisplay().click_i_frame_interval()
-        RemoteSetting().scroll_check_funcs2(
-            remote_items['stream']['subpage']['fluent']['subpage']['i_frame_interval']['text'],
-            back2top=False)
-        RemoteSetting().scroll_check_funcs2(
-            remote_items['stream']['subpage']['fluent']['subpage']['i_frame_interval']['options'],
-            selector='ReoTitle',
-            back2top=False)
-        BasePage().iterate_and_click_popup_text(
-            option_text_list=remote_items['stream']['subpage']['fluent']['subpage']['i_frame_interval']['options'],
-            menu_text='I 帧间隔')
+        RemoteDisplay().verify_stream_clear_i_frame_interval(remote_items['stream']['fluent']['i_frame_interval']['options'])
 
-        # 保存流畅页的配置, 返回码流主页
-        BasePage().scroll_and_click_by_text("保存")
+        # 点击取消，返回到码流主页
+        BasePage().click_by_text('取消')
 
     # ====================↓ 帧率控制 ↓====================
 
@@ -198,7 +103,7 @@ class TestRemoteDisplay:
     @allure.title("测试进入帧率控制页面，遍历帧率控制配置")
     def test_remote_frame_rate_control(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
-        remote_items = device_config['ipc']['display']['items']['display']['stream']['subpage']
+        remote_items = device_config['ipc']['display']['items']['display']
         BasePage().check_key_in_yaml(remote_items, 'frame_rate_mode')
 
         # 启动app，并开启录屏

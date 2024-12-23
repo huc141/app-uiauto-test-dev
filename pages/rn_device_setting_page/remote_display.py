@@ -7,14 +7,19 @@ from common_tools.logger import logger
 from pages.base_page import BasePage
 from pages.rn_device_setting_page.remote_setting import RemoteSetting
 
-g_config_back = read_yaml.get_data(key="back", source="global_data")  # 读取全局配置
+g_config_back = read_yaml.get_data(key="back", source="global_data")
+g_config = read_yaml.read_global_data(source="global_data")  # 读取全局配置
+display_device_name_texts = g_config.get("display_device_name_texts")  # 显示>设备名称配置页的所有文案
+display_device_name_reotitle = g_config.get("display_device_name_reotitle")  # 设备名称配置页的【设备名称】选项
+display_date_texts = g_config.get("display_date_texts")  # 显示>日期配置页的所有文案
+display_date_reotitle = g_config.get("display_date_reotitle")  # 日期配置页的【日期】选项
 
 
 class RemoteDisplay(BasePage):
     def __init__(self):
         super().__init__()
         if self.platform == 'android':
-            self.shelter_player = 'PrivacyMask_Operation_Area'  # 隐私遮盖可画框区域
+            self.shelter_player = '//*[@resource-id="DragMaskOperationArea"]'  # 隐私遮盖可画框区域
             self.user_tips_button = '//*[@resource-id="ReoIcon-Question"]'  # 用户提示按钮
             self.delete_button = '//*[@resource-id="ReoIcon-Delet"]'  # 删除按钮
             self.clear_all_button = '//*[@resource-id="ReoIcon-Retry1x"]'  # 清空所有按钮
@@ -68,11 +73,10 @@ class RemoteDisplay(BasePage):
         :return:
         """
         try:
-            BasePage().scroll_click_right_btn(text_to_find='垂直翻转',
-                                              resourceId_1='ReoTitle',
-                                              className_2='android.view.ViewGroup'
-                                              )
-            return True
+            self.scroll_click_right_btn(text_to_find='垂直翻转',
+                                        resourceId_1='ReoTitle',
+                                        className_2='android.view.ViewGroup'
+                                        )
         except Exception as err:
             logger.info(f"可能发生了错误: {err}")
             return False
@@ -83,11 +87,10 @@ class RemoteDisplay(BasePage):
         :return:
         """
         try:
-            BasePage().scroll_click_right_btn(text_to_find='水平翻转',
-                                              resourceId_1='ReoTitle',
-                                              className_2='android.view.ViewGroup'
-                                              )
-            return True
+            self.scroll_click_right_btn(text_to_find='水平翻转',
+                                        resourceId_1='ReoTitle',
+                                        className_2='android.view.ViewGroup'
+                                        )
         except Exception as err:
             logger.info(f"可能发生了错误: {err}")
             return False
@@ -101,12 +104,12 @@ class RemoteDisplay(BasePage):
         # 进入码流页面
         self.scroll_and_click_by_text(text_to_find=option_text)
 
-    def click_motion_mark(self, option_text='移动标记'):
+    def click_motion_mark(self):
         """点击移动标记"""
         try:
             # 点击两次
             for i in range(2):
-                self.scroll_click_right_btn(text_to_find=option_text,
+                self.scroll_click_right_btn(text_to_find='移动标记',
                                             resourceId_1='ReoTitle',
                                             className_2='android.view.ViewGroup'
                                             )
@@ -209,7 +212,8 @@ class RemoteDisplay(BasePage):
 
             # 验证HDR文案
             RemoteSetting().scroll_check_funcs2(texts=hdr_texts, scroll_or_not=False, back2top=False)
-            RemoteSetting().scroll_check_funcs2(texts=hdr_options, selector='ReoTitle', scroll_or_not=False, back2top=False)
+            RemoteSetting().scroll_check_funcs2(texts=hdr_options, selector='ReoTitle', scroll_or_not=False,
+                                                back2top=False)
 
             # 返回上一级
             self.back_previous_page_by_xpath()
@@ -525,7 +529,7 @@ class RemoteDisplay(BasePage):
         """
         self.scroll_and_click_by_text(text_to_find=option_text)
 
-    def verify_device_name(self, device_name_list_text, device_name_options):
+    def verify_device_name(self):
         """
         验证设备名称
         :param device_name_list_text: 设备名称配置页的所有文案
@@ -547,9 +551,9 @@ class RemoteDisplay(BasePage):
             self.scroll_and_click_by_text(text_to_find='设备名称')
 
             # 验证设备名称配置页文案
-            RemoteSetting().scroll_check_funcs2(texts=device_name_list_text, back2top=False)
+            RemoteSetting().scroll_check_funcs2(texts=display_device_name_texts, back2top=False)
             # 验证设备名称配置页的选项文案
-            RemoteSetting().scroll_check_funcs2(texts=device_name_options, selector='ReoTitle', back2top=False)
+            RemoteSetting().scroll_check_funcs2(texts=display_device_name_reotitle, selector='ReoTitle', back2top=False)
 
             # 点击已经被选中的选项，验证点击无效，停留在当前设备名称配置页,若为隐藏，则无需验证置灰，且不点击【隐藏】选项
             if target_date_value != '隐藏':
@@ -569,17 +573,17 @@ class RemoteDisplay(BasePage):
             self.back_previous_page_by_xpath()
             # 将上述的【target_device_name_value】从date_options列表中剔除
             if target_date_value != '隐藏':
-                device_name_options.remove(target_date_value)
-            logger.info(f'新的设备名称操作列表为：{device_name_options}')
+                display_device_name_reotitle.remove(target_date_value)
+            logger.info(f'新的设备名称操作列表为：{display_device_name_reotitle}')
 
             # 开始遍历验证除了置灰选项外的日期选项
-            self.iterate_and_click_popup_text(option_text_list=device_name_options,
+            self.iterate_and_click_popup_text(option_text_list=display_device_name_reotitle,
                                               menu_text='设备名称')
 
         except Exception as err:
             pytest.fail(f"函数执行出错: {err}")
 
-    def verify_date(self, date_list_text, date_options):
+    def verify_date(self):
         """
         验证日期
         :param date_list_text: 日期配置页的所有文案
@@ -601,9 +605,9 @@ class RemoteDisplay(BasePage):
             self.scroll_and_click_by_text(text_to_find='日期')
 
             # 验证日期配置页文案
-            RemoteSetting().scroll_check_funcs2(texts=date_list_text, back2top=False)
+            RemoteSetting().scroll_check_funcs2(texts=display_date_texts, back2top=False)
             # 验证日期配置页的选项文案
-            RemoteSetting().scroll_check_funcs2(texts=date_options, selector='ReoTitle', back2top=False)
+            RemoteSetting().scroll_check_funcs2(texts=display_date_reotitle, selector='ReoTitle', back2top=False)
 
             # 点击已经被选中的选项，验证点击无效，停留在当前日期配置页,若为隐藏，则无需验证置灰，且不点击【隐藏】选项
             if target_device_name_value != '隐藏':
@@ -623,22 +627,22 @@ class RemoteDisplay(BasePage):
             self.back_previous_page_by_xpath()
             # 将上述的【target_device_name_value】从date_options列表中剔除
             if target_device_name_value != '隐藏':
-                date_options.remove(target_device_name_value)
-            logger.info(f'新的日期操作列表为：{date_options}')
+                display_date_reotitle.remove(target_device_name_value)
+            logger.info(f'新的日期操作列表为：{display_date_reotitle}')
 
             # 开始遍历验证除了置灰选项外的日期选项
-            self.iterate_and_click_popup_text(option_text_list=date_options,
+            self.iterate_and_click_popup_text(option_text_list=display_date_reotitle,
                                               menu_text='日期')
 
         except Exception as err:
             pytest.fail(f"函数执行出错: {err}")
 
-    def click_water_mark(self, option_text='水印'):
+    def click_water_mark(self):
         """验证水印"""
         try:
             # 点击两次
             for i in range(2):
-                self.scroll_click_right_btn(text_to_find=option_text,
+                self.scroll_click_right_btn(text_to_find='水印',
                                             resourceId_1='ReoTitle',
                                             className_2='android.view.ViewGroup'
                                             )
@@ -685,9 +689,9 @@ class RemoteDisplay(BasePage):
                     if text == '取消':
                         logger.info('点击了【取消】，准备再次点击【遮盖区域】.')
                         self.scroll_and_click_by_text(text_to_find=option_text)
-                self.click_by_text(text='保存')
+
             else:
-                logger.info('该设备没有设置任何遮盖区域')
+                logger.info('该设备没有设置任何遮盖区域，未弹出清空弹窗')
 
         except Exception as err:
             pytest.fail(f"函数执行出错: {err}")
@@ -760,13 +764,102 @@ class RemoteDisplay(BasePage):
         except Exception as err:
             pytest.fail(f"函数执行出错: {err}")
 
-    def verify_image_layout(self, texts):
+    def draw_privacy_mask(self, camera_type, mask_num, mode='xpath', draw_area='左上'):
         """
-        点击进入并验证图像布局
-        :param texts: 预期显示的文案列表
+        画隐私遮盖区域。一般来说：电源最多4个，电池最多8个或者3个。如果是双目，则每个通道独立计数。
+        :param camera_type: 摄像头类型，支持DM、GC、ZY三种类型。
+        :param mask_num: 某个画面/通道最多可绘制的遮罩数量。
+        :param mode: 预览区域的定位方式，支持id或者xpath。当前默认xpath
+        :param id_or_xpath: 可遮盖区域的id或者xpath的定位参数。
+        :param draw_area: 需要遮盖的区域，支持[左上]、[左下]、[右上]、[右下]的1/4屏，以及[全屏]遮盖，默认左上。
         :return:
         """
         try:
+            # 初始化遮罩数量
+            mask_nums = mask_num + 1
+
+            # 定义不同摄像头类型对应的操作序列
+            camera_actions = {
+                'DM': [],  # DM摄像头不需要额外操作
+                'GC': ['广角画面', '长焦画面'],  # GC摄像头需要先点击广角，再点击长焦
+                'ZY': ['左摄像机', '右摄像机']  # ZY摄像头需要先点击左摄像机，再点击右摄像机
+            }
+
+            # 获取指定摄像头类型的操作列表
+            actions = camera_actions.get(camera_type, [])
+
+            # 遍历操作列表，执行点击和绘制操作
+            for action in actions:
+                # 如果操作不为空，执行点击操作
+                if action:
+                    self.click_by_text(action)
+                # 执行绘制隐私遮罩的操作
+                self.get_coordinates_and_draw(mode=mode,
+                                              id_or_xpath=self.shelter_player,
+                                              draw_area=draw_area,
+                                              num=mask_nums)
+
+        except Exception as err:
+            # 记录错误信息
+            pytest.fail(f"绘制隐私遮盖函数执行出错: {err}")
+
+    def verify_privacy_mask(self, camera_type, mask_num):
+        """
+        验证隐私遮盖
+        :param camera_type: 传入摄像头画面类型，GC代表双目的广角与长焦；ZY代表左右摄像机；DM代表单目
+        :param mask_num: 传入可遮盖区域的数量，整数
+        """
+        try:
+            # 单目通用全局文案
+            DM_texts = ['取消', '遮盖区域', '保存', '清空所有']
+            # 广角与长焦通用全局文案
+            GC_texts = ['取消', '遮盖区域', '保存', '清空所有', '广角画面', '长焦画面']
+            # 左右摄像机通用全局文案
+            ZY_texts = ['取消', '遮盖区域', '保存', '清空所有', '左摄像机', '右摄像机']
+            # 左下角用户提示
+            user_tips = [
+                f'在画面中通过手指滑动添加黑色遮挡区域，监控视频中的遮挡区域将不可见，最多可遮挡{mask_num}个区域。',
+                '我知道了']
+
+            if camera_type == 'DM':
+                # 验证隐私遮盖主页通用文本
+                RemoteSetting().scroll_check_funcs2(DM_texts, back2top=False)
+            elif camera_type == 'GC':
+                # 验证隐私遮盖主页通用文本
+                RemoteSetting().scroll_check_funcs2(GC_texts, back2top=False)
+            elif camera_type == 'ZY':
+                # 验证隐私遮盖主页通用文本
+                RemoteSetting().scroll_check_funcs2(ZY_texts, back2top=False)
+
+            # 验证左下角用户提示
+            self.verify_user_tips(user_tips_text=user_tips)
+
+            # 验证删除按钮
+            self.verify_delete_button()
+
+            # 验证清空所有按钮
+            self.verify_clear_all_button()
+
+            # 验证横屏按钮
+            self.verify_landscape_button()
+
+            # 验证返回竖屏按钮
+            self.verify_return_vertical_screen_button()
+
+            # 绘制隐私遮罩
+            self.draw_privacy_mask(camera_type=camera_type, mask_num=mask_num)
+
+        except Exception as err:
+            pytest.fail(f"函数执行出错: {err}")
+
+    def verify_image_layout(self):
+        """
+        点击进入并验证图像布局
+        :return:
+        """
+        try:
+            # 图像布局主页文案
+            image_layout_texts = ['取消', '图像布局', '保存', '鱼眼', '展开']
             choose_button = ['取消', '保存']
             choose_button_tips = ['注意：', '取消',
                                   '切换后，摄像机将会重启，并且会清除隐私区域、报警区域、目标尺寸等配置，确定要切换吗？',
@@ -775,10 +868,9 @@ class RemoteDisplay(BasePage):
             def check_choose_button_tips():
                 for c in choose_button:
                     self.scroll_and_click_by_text(text_to_find='保存')
-                    RemoteSetting().scroll_check_funcs2(
-                        texts=choose_button_tips,
-                        scroll_or_not=False,
-                        back2top=False)
+                    RemoteSetting().scroll_check_funcs2(texts=choose_button_tips,
+                                                        scroll_or_not=False,
+                                                        back2top=False)
                     self.click_by_text(text=c)
 
                     if c == '保存':
@@ -788,12 +880,11 @@ class RemoteDisplay(BasePage):
                                                             back2top=False)
                         time.sleep(30)
 
-                        # 验证重启后的页面
+                        # 验证点击保存重启后的页面返回到设备列表
                         if not self.is_element_exists(element_value='摄像机', scroll_or_not=False):
                             pytest.fail('未能成功返回设备列表页！')
 
             # 先将预览视图往上拉至最小,以便于滚动查找图像布局按钮
-            # self.drag_element(element_xpath='//com.horcrux.svg.SvgView', direction='up', distance=700, duration=1)
             self.need_pull_down()
 
             # 先找到图像布局菜单项
@@ -801,12 +892,12 @@ class RemoteDisplay(BasePage):
             # 再查出当前的图像布局类型是否为鱼眼
             current_layout = self.is_element_exists(element_value='鱼眼')
             if current_layout:
+                logger.info(f'当前布局为【鱼眼】，切换【展开】布局类型')
                 # 滚动查找图像布局按钮
                 self.scroll_and_click_by_text(text_to_find='图像布局')
                 time.sleep(1)
                 # 验证图像布局主页文案
-                RemoteSetting().scroll_check_funcs2(texts=texts, back2top=False)
-                logger.info(f'当前布局为【鱼眼】，切换【展开】布局类型')
+                RemoteSetting().scroll_check_funcs2(texts=image_layout_texts, back2top=False)
                 # 点击【展开】模式
                 self.click_by_xpath(xpath_expression=self.layout_expand_button)
 
@@ -814,11 +905,11 @@ class RemoteDisplay(BasePage):
                 # 滚动查找图像布局按钮
                 self.scroll_and_click_by_text(text_to_find='图像布局')
                 time.sleep(1)
+                logger.info(f'当前布局为【展开】，切换【鱼眼】布局类型')
                 # 验证图像布局主页文案
-                RemoteSetting().scroll_check_funcs2(texts=texts, back2top=False)
+                RemoteSetting().scroll_check_funcs2(texts=image_layout_texts, back2top=False)
                 # 点击【鱼眼】模式
                 self.click_by_xpath(xpath_expression=self.layout_fisheye_button)
-                logger.info(f'当前布局为【展开】，切换【鱼眼】布局类型')
 
             # 验证弹窗提示内容和按钮选项
             check_choose_button_tips()
@@ -933,42 +1024,6 @@ class RemoteDisplay(BasePage):
         except Exception as err:
             pytest.fail(f"函数执行出错: {err}")
 
-    def draw_privacy_mask(self, mode=id, draw_area='左上'):
-        """
-        画隐私遮盖区域。一般来说：电源最多4个，电池最多8个或者3个。如果是双目，则每个通道独立计数。
-        :param mode: 预览区域的定位方式，支持id或者xpath。当前默认id
-        :param id_or_xpath: 可遮盖区域的id或者xpath的定位参数。
-        :param draw_area: 需要遮盖的区域，支持[左上]、[左下]、[右上]、[右下]的1/4屏，以及[全屏]遮盖，默认左上。
-        :param num: 画框数量，默认为0，为0时需要指定遮盖区域draw_area，若不指定，则默认左上遮盖。
-        :return:
-        """
-        # TODO:适配RN
-        try:
-            # 暂时没法直接区分电源电池，所以，干脆画满
-            if not self.is_element_exists(element_value='广角画面') and not self.is_element_exists(
-                    element_value='左摄像机'):
-                self.get_coordinates_and_draw(mode=mode, id_or_xpath=self.shelter_player, draw_area=draw_area, num=9)
-
-            if self.is_element_exists(element_value='广角画面'):
-                self.click_by_text('广角画面')
-                self.get_coordinates_and_draw(mode=mode, id_or_xpath=self.shelter_player, draw_area=draw_area, num=5)
-
-            if self.is_element_exists(element_value='长焦画面'):
-                self.click_by_text('长焦画面')
-                self.get_coordinates_and_draw(mode=mode, id_or_xpath=self.shelter_player, draw_area=draw_area, num=5)
-
-            if self.is_element_exists(element_value='左摄像机'):
-                self.click_by_text('左摄像机')
-                self.get_coordinates_and_draw(mode=mode, id_or_xpath=self.shelter_player, draw_area=draw_area, num=5)
-
-            if self.is_element_exists(element_value='右摄像机'):
-                self.click_by_text('右摄像机')
-                self.get_coordinates_and_draw(mode=mode, id_or_xpath=self.shelter_player, draw_area=draw_area, num=5)
-
-        except Exception as err:
-            logger.info(f"可能发生了错误: {err}")
-            return False
-
     def verify_scenes(self, scenes_list, options):
         """
         遍历切换室内外场景
@@ -1019,20 +1074,238 @@ class RemoteDisplay(BasePage):
         except Exception as err:
             pytest.fail(f"函数执行出错: {err}")
 
-    def verify_splice_region(self, text1, text2):
+    def verify_splice_region(self):
         """
         验证拼接区域
         :return:
         """
+        # 拼接区域的全局文案
+        splice_region_texts = ['拼接距离', '距离（米）', '在你设置的距离附近，拼接画面会达到最佳观看效果', '拼接位置',
+                               '水平', '垂直', '调整左右两个画面之间的水平或垂直距离差，以达到最佳观看效果', '恢复默认设置']
+
+        def verify_texts(scroll_or_not=False, back2top=False):
+            """封装验证文案的函数"""
+            RemoteSetting().scroll_check_funcs2(texts=splice_region_texts,
+                                                scroll_or_not=scroll_or_not,
+                                                back2top=back2top)
+
         try:
+
             self.scroll_and_click_by_text('拼接区域')
             time.sleep(3)
-            RemoteSetting().scroll_check_funcs2(texts=text1,
-                                                scroll_or_not=False,
-                                                back2top=False)
+            verify_texts()
 
-            RemoteSetting().scroll_check_funcs2(texts=text2,
-                                                scroll_or_not=False,
-                                                back2top=False)
+            # 点击横屏按钮
+            self.click_by_xpath('//*[@text=""]')
+            # 再次验证横屏后文案
+            verify_texts()
+
+            # 返回上一页
+            self.back_previous_page_by_xpath()
+
         except Exception as err:
             pytest.fail(f"函数执行出错: {err}")
+
+    def verify_stream_main_texts(self, custom_texts, custom_options):
+        """
+        验证码流主页面文案
+        :param custom_texts: 需要验证的码流主页全局文案
+        :param custom_options: 需要验证的码流主页ReoTitle文案
+        :return:
+        """
+        try:
+            # 定义码流主页通用文案
+            common_stream_main_texts = ['码流', '清晰', '分辨率', '帧率(FPS)', '最大码率(Kbps)', '流畅']
+            new_stream_main_texts = common_stream_main_texts + custom_texts + custom_options
+            new_stream_main_options = ['清晰', '流畅'] + custom_options
+            # 检查码流主页全局文案
+            RemoteSetting().scroll_check_funcs2(texts=new_stream_main_texts, scroll_or_not=False, back2top=False)
+            # 检查码流主页ReoTitle文案
+            RemoteSetting().scroll_check_funcs2(texts=new_stream_main_options, selector='ReoTitle',
+                                                scroll_or_not=False, back2top=False)
+
+        except Exception as err:
+            pytest.fail(f"函数执行出错: {err}")
+
+    def verify_stream_clear_main_texts(self, custom_options):
+        """
+        码流>清晰页面，验证清晰页面文本和操作
+        :param custom_options: 需要验证的码流清晰页面ReoTitle文案
+        :return:
+        """
+        try:
+            # 定义清晰主页通用文案
+            common_stream_clear_options = ['分辨率', '帧率(FPS)', '最大码率(Kbps)']
+            common_stream_clear_texts = ['取消', '清晰', '保存', '分辨率', '帧率(FPS)', '最大码率(Kbps)']
+            new_stream_clear_texts = common_stream_clear_texts + custom_options  # 拼接清晰页面全局文案
+            new_stream_clear_options = common_stream_clear_options + custom_options  # 拼接清晰页面ReoTitle文案
+            # 检查清晰主页全局文案
+            RemoteSetting().scroll_check_funcs2(texts=new_stream_clear_texts, scroll_or_not=False, back2top=False)
+            # 检查清晰主页ReoTitle文案
+            RemoteSetting().scroll_check_funcs2(texts=new_stream_clear_options, selector='ReoTitle',
+                                                scroll_or_not=False, back2top=False)
+        except Exception as err:
+            pytest.fail(f"函数执行出错: {err}")
+
+    def verify_stream_fluent_main_texts(self, custom_options):
+        """
+        码流>流畅页面，验证流畅页面文本和操作
+        :param custom_options:
+        :return:
+        """
+        try:
+            # 定义流畅主页通用文案
+            common_stream_fluent_options = ['分辨率', '帧率(FPS)', '最大码率(Kbps)']
+            common_stream_fluent_texts = ['取消', '流畅', '保存', '分辨率', '帧率(FPS)', '最大码率(Kbps)']
+            new_stream_fluent_texts = common_stream_fluent_texts + custom_options  # 拼接流畅页面全局文案
+            new_stream_fluent_options = common_stream_fluent_options + custom_options  # 拼接流畅页面ReoTitle文案
+            # 检查流畅主页全局文案
+            RemoteSetting().scroll_check_funcs2(texts=new_stream_fluent_texts, scroll_or_not=False, back2top=False)
+            # 检查流畅主页ReoTitle文案
+            RemoteSetting().scroll_check_funcs2(texts=new_stream_fluent_options, selector='ReoTitle',
+                                                scroll_or_not=False, back2top=False)
+        except Exception as err:
+            pytest.fail(f"函数执行出错: {err}")
+
+    def verify_stream_clear_resolution(self, custom_options):
+        """
+        码流>清晰页面，验证分辨率操作
+        :param custom_options: 需要验证的码流清晰页面ReoTitle文案
+        :return:
+        """
+        try:
+            # 定义清晰页面分辨率通用文案
+            common_stream_clear_resolution_texts = ['分辨率', '越高视频越清晰']
+            new_stream_clear_resolution_texts = common_stream_clear_resolution_texts + custom_options
+            # 检查清晰页面分辨率文案
+            RemoteSetting().scroll_check_funcs2(texts=new_stream_clear_resolution_texts, scroll_or_not=False, back2top=False)
+            # 检查清晰页面分辨率ReoTitle文案
+            RemoteSetting().scroll_check_funcs2(texts=custom_options, selector='ReoTitle',
+                                                scroll_or_not=False, back2top=False)
+            # 返回上一页
+            self.back_previous_page_by_xpath()
+            # 开始遍历清晰>分辨率选项
+            self.iterate_and_click_popup_text(option_text_list=custom_options, menu_text='分辨率')
+        except Exception as err:
+            pytest.fail(f"函数执行出错: {err}")
+
+    def verify_stream_clear_frame_rate(self, custom_options):
+        """
+        码流>清晰页面，验证帧率操作
+        :param custom_options:
+        :return:
+        """
+        try:
+            # 定义清晰页面帧率通用文案
+            common_stream_clear_frame_rate_texts = ['帧率(FPS)', '每秒钟的帧数，越高画面越流畅']
+            new_stream_clear_frame_rate_texts = common_stream_clear_frame_rate_texts + custom_options
+            # 检查清晰页面帧率文案
+            RemoteSetting().scroll_check_funcs2(texts=new_stream_clear_frame_rate_texts, scroll_or_not=False, back2top=False)
+            # 检查清晰页面帧率ReoTitle文案
+            RemoteSetting().scroll_check_funcs2(texts=custom_options, selector='ReoTitle', scroll_or_not=False, back2top=False)
+            # 返回上一页
+            self.back_previous_page_by_xpath()
+            # 开始遍历清晰>帧率选项
+            self.iterate_and_click_popup_text(option_text_list=custom_options, menu_text='帧率(FPS)')
+        except Exception as err:
+            pytest.fail(f"函数执行出错: {err}")
+
+    def verify_stream_clear_max_bit_rate(self, custom_options):
+        """
+        码流>清晰页面，验证最大码率操作
+        :param custom_options:
+        :return:
+        """
+        try:
+            # 定义清晰页面最大码率通用文案
+            common_stream_clear_max_bit_rate_texts = ['最大码率(Kbps)', '相同的分辨率、帧率下，码率越大画质越好，网络要求也越高']
+            new_stream_clear_max_bit_rate_texts = common_stream_clear_max_bit_rate_texts + custom_options
+            # 检查清晰页面最大码率文案
+            RemoteSetting().scroll_check_funcs2(texts=new_stream_clear_max_bit_rate_texts, scroll_or_not=False, back2top=False)
+            # 检查清晰页面最大码率ReoTitle文案
+            RemoteSetting().scroll_check_funcs2(texts=custom_options, selector='ReoTitle', scroll_or_not=False, back2top=False)
+            # 返回上一页
+            self.back_previous_page_by_xpath()
+            # 开始遍历清晰>最大码率选项
+            self.iterate_and_click_popup_text(option_text_list=custom_options, menu_text='最大码率(Kbps)')
+        except Exception as err:
+            pytest.fail(f"函数执行出错: {err}")
+
+    def verify_stream_clear_encoding_format(self, custom_options):
+        """
+        码流>清晰页面，验证编码格式操作
+        :param custom_options: 需要验证的码流清晰页面编码格式文案
+        :return:
+        """
+        try:
+            # 定义清晰页面编码格式通用文案
+            common_stream_clear_encoding_format_texts = ['编码格式', 'H.265相较于H.264具有更高的编码效率，可以提供更高质量的视频，但相应地需要更高的计算能力和更先进的设备支持。']
+            new_stream_clear_encoding_format_texts = common_stream_clear_encoding_format_texts + custom_options
+            # 检查清晰页面编码格式文案
+            RemoteSetting().scroll_check_funcs2(texts=new_stream_clear_encoding_format_texts, scroll_or_not=False, back2top=False)
+            # 检查清晰页面编码格式ReoTitle文案
+            RemoteSetting().scroll_check_funcs2(texts=custom_options, selector='ReoTitle', scroll_or_not=False, back2top=False)
+            # 返回上一页
+            self.back_previous_page_by_xpath()
+            # 开始遍历清晰>编码格式选项
+            self.iterate_and_click_popup_text(option_text_list=custom_options, menu_text='编码格式')
+        except Exception as err:
+            pytest.fail(f"函数执行出错: {err}")
+
+    def verify_stream_clear_i_frame_interval(self, custom_options):
+        """
+        码流>清晰页面，验证I帧间隔操作
+        :param custom_options:
+        :return:
+        """
+        try:
+            # 定义清晰页面I帧间隔通用文案
+            common_stream_clear_i_frame_interval_texts = ['I 帧间隔', 'I 帧间隔小，视频质量高，但文件大。I 帧间隔大，文件小，但质量低。']
+            new_stream_clear_i_frame_interval_texts = common_stream_clear_i_frame_interval_texts + custom_options
+            # 检查清晰页面I帧间隔文案
+            RemoteSetting().scroll_check_funcs2(texts=new_stream_clear_i_frame_interval_texts, scroll_or_not=False, back2top=False)
+            # 检查清晰页面I帧间隔ReoTitle文案
+            RemoteSetting().scroll_check_funcs2(texts=custom_options, selector='ReoTitle', scroll_or_not=False, back2top=False)
+            # 返回上一页
+            self.back_previous_page_by_xpath()
+            # 开始遍历清晰>I帧间隔选项
+            self.iterate_and_click_popup_text(option_text_list=custom_options, menu_text='I 帧间隔')
+        except Exception as err:
+            pytest.fail(f"函数执行出错: {err}")
+
+    def verify_stream_frame_rate_control(self, frame_rate_mode):
+        """
+        码流主页，验证帧率控制
+        :param frame_rate_mode: 帧率控制模式,A代表自动，B代表恒定，C代表逐步
+        :return:
+        """
+        try:
+            # TODO:
+            pass
+        except Exception as err:
+            pytest.fail(f"函数执行出错: {err}")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

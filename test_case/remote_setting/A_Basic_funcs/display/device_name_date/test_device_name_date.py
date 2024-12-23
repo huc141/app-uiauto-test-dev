@@ -33,8 +33,7 @@ class TestRemoteDisplay:
         RemoteSetting().access_in_display(device_list_name=device_config['device_list_name'])
 
         # 点击设备名称，验证popup文本
-        RemoteDisplay().verify_device_name(remote_items['device_name']['text'],
-                                           remote_items['device_name']['options'])
+        RemoteDisplay().verify_device_name()
 
     # 测日期
     @pytest.mark.parametrize("device_config", devices_config)
@@ -53,9 +52,7 @@ class TestRemoteDisplay:
         RemoteSetting().access_in_display(device_list_name=device_config['device_list_name'])
 
         # 进入日期页面，遍历日期配置
-        RemoteDisplay().verify_date(remote_items['date']['text'],
-                                    remote_items['date']['options']
-                                    )
+        RemoteDisplay().verify_date()
 
 
 
