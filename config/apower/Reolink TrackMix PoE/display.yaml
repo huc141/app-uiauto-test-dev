@@ -323,7 +323,7 @@ ipc:
                   - '6'
                   - '4'
                   type: popup
-                interval_frame:
+                i_frame_interval:
                   desc: 设置>显示>码流>码流>流畅>I 帧间隔
                   name: I 帧间隔
                   options:

@@ -16,13 +16,19 @@ devices_config = read_yaml.load_device_config(device_dir=device_dir,
 @allure.epic("远程配置>常规设置>显示")
 class TestRemoteDisplay:
     @pytest.mark.parametrize("device_config", devices_config)
-    @allure.feature("图像设置>亮度")
+    @allure.feature("图像设置>主页文案")
     @allure.story("需人工核查日志和录屏")
-    @allure.title("测试 进入显示>图像设置页面，拖动亮度条")
-    def test_remote_brightness(self, device_config):
+    @allure.title("测试 主页文案/亮度/亮度同步/对比度/饱和度/锐度的 拖动条")
+    def test_remote_image_setting_main_texts(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
-        remote_items = device_config['ipc']['display']['items']['display']['image_setting']
-        BasePage().check_key_in_yaml(remote_items, 'brightness')
+        remote_items = device_config['ipc']['display']['items']['display']
+        BasePage().check_key_in_yaml(remote_items, 'image_setting')
+
+        remote_items1 = device_config['ipc']['display']['items']['display']['image_setting']
+        anti_flicker = BasePage().extract_value_from_yaml(remote_items1, 'anti_flicker', skip_if_false=False)
+        night_tt_vision = BasePage().extract_value_from_yaml(remote_items1, 'night_transparent_vision', skip_if_false=False)
+        hdr = BasePage().extract_value_from_yaml(remote_items1, 'hdr', skip_if_false=False)
+        brightness_sync = BasePage().extract_value_from_yaml(remote_items1, 'brightness_sync', skip_if_false=False)
 
         # 启动app，并开启录屏
         driver.start_app(True)
@@ -33,71 +39,11 @@ class TestRemoteDisplay:
         # 进入图像设置
         RemoteDisplay().click_image_setting()
 
-        # 拖动亮度条
-        RemoteDisplay().drag_slider_brightness()
-
-    @pytest.mark.parametrize("device_config", devices_config)
-    @allure.feature("图像设置>对比度")
-    @allure.story("需人工核查日志和录屏")
-    @allure.title("测试 进入显示>图像设置页面，拖动对比度条")
-    def test_remote_contrast(self, device_config):
-        # 检查键是否存在，存在则执行当前用例，否则跳过
-        remote_items = device_config['ipc']['display']['items']['display']['image_setting']
-        BasePage().check_key_in_yaml(remote_items, 'contrast')
-
-        # 启动app，并开启录屏
-        driver.start_app(True)
-
-        # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击‘显示’菜单项进入显示页
-        RemoteSetting().access_in_display(device_list_name=device_config['device_list_name'])
-
-        # 进入图像设置
-        RemoteDisplay().click_image_setting()
-
-        # 拖动对比度条
-        RemoteDisplay().drag_slider_contrast()
-
-    @pytest.mark.parametrize("device_config", devices_config)
-    @allure.feature("图像设置>饱和度")
-    @allure.story("需人工核查日志和录屏")
-    @allure.title("测试 进入显示>图像设置页面，拖动饱和度条")
-    def test_remote_saturation(self, device_config):
-        # 检查键是否存在，存在则执行当前用例，否则跳过
-        remote_items = device_config['ipc']['display']['items']['display']['image_setting']
-        BasePage().check_key_in_yaml(remote_items, 'saturation')
-
-        # 启动app，并开启录屏
-        driver.start_app(True)
-
-        # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击‘显示’菜单项进入显示页
-        RemoteSetting().access_in_display(device_list_name=device_config['device_list_name'])
-
-        # 进入图像设置
-        RemoteDisplay().click_image_setting()
-
-        # 拖动饱和度条
-        RemoteDisplay().drag_slider_saturation()
-
-    @pytest.mark.parametrize("device_config", devices_config)
-    @allure.feature("图像设置>锐度")
-    @allure.story("需人工核查日志和录屏")
-    @allure.title("测试 进入显示>图像设置页面，拖动锐度条")
-    def test_remote_sharpness(self, device_config):
-        # 检查键是否存在，存在则执行当前用例，否则跳过
-        remote_items = device_config['ipc']['display']['items']['display']['image_setting']
-        BasePage().check_key_in_yaml(remote_items, 'saturation')
-
-        # 启动app，并开启录屏
-        driver.start_app(True)
-
-        # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击‘显示’菜单项进入显示页
-        RemoteSetting().access_in_display(device_list_name=device_config['device_list_name'])
-
-        # 进入图像设置
-        RemoteDisplay().click_image_setting()
-
-        # 拖动锐度条
-        RemoteDisplay().drag_slider_sharpness()
+        # 拖动亮度/对比度/饱和度/锐度滑动条
+        RemoteDisplay().verify_image_setting_slider(anti_flicker=anti_flicker,
+                                                    night_tt_vision=night_tt_vision,
+                                                    hdr=hdr,
+                                                    brightness_sync=brightness_sync)
 
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("图像设置>抗闪烁")
@@ -106,7 +52,7 @@ class TestRemoteDisplay:
     def test_remote_anti_flicker(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['display']['items']['display']['image_setting']
-        BasePage().check_key_in_yaml(remote_items, 'anti_flicker')
+        BasePage().extract_value_from_yaml(remote_items, 'anti_flicker', skip_if_false=True)
 
         # 启动app，并开启录屏
         driver.start_app(True)
@@ -116,27 +62,19 @@ class TestRemoteDisplay:
 
         # 进入图像设置
         RemoteDisplay().click_image_setting()
-
-        # 点击抗闪烁，验证popup文本
+        # 点击抗闪烁
         RemoteDisplay().click_anti_flicker()
-        RemoteSetting().scroll_check_funcs2(remote_items['anti_flicker']['text'])
-        RemoteSetting().scroll_check_funcs2(remote_items['anti_flicker']['options'], selector='ReoTitle')
-
-        # 返回上一级(文本校验未通过的情况下，直接标记失败，不会执行到后续步骤)
-        BasePage().back_previous_page()
-
-        # 遍历popup操作项
-        BasePage().iterate_and_click_popup_text(
-            option_text_list=remote_items['anti_flicker']['options'], menu_text='抗闪烁')
+        # 变量抗闪烁选项
+        RemoteDisplay().verify_anti_flicker()
 
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("图像设置>夜视通透模式")
     @allure.story("需人工核查日志和录屏")
-    @allure.title("测试 进入显示>图像设置页面，点击夜视通透模式")
+    @allure.title("测试 显示>图像设置页面，夜视通透模式")
     def test_remote_night_transparent_vision(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['display']['items']['display']['image_setting']
-        BasePage().check_key_in_yaml(remote_items, 'night_transparent_vision')
+        BasePage().extract_value_from_yaml(remote_items, 'night_transparent_vision', skip_if_false=True)
 
         # 启动app，并开启录屏
         driver.start_app(True)
@@ -157,7 +95,7 @@ class TestRemoteDisplay:
     def test_remote_hdr(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['display']['items']['display']['image_setting']
-        BasePage().check_key_in_yaml(remote_items, 'hdr')
+        BasePage().extract_value_from_yaml(remote_items, 'hdr', skip_if_false=True)
 
         # 启动app，并开启录屏
         driver.start_app(True)

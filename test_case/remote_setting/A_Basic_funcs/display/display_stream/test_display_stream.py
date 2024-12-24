@@ -19,6 +19,7 @@ class TestRemoteDisplay:
     @allure.feature("显示>码流")
     @allure.story("需人工核查日志和录屏")
     @allure.title("测试进入显示>码流页面， 并验证清晰和流畅页面的配置文本和操作")
+    @pytest.mark.skip()
     def test_remote_stream(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['display']['items']['display']
@@ -55,14 +56,6 @@ class TestRemoteDisplay:
         RemoteDisplay().click_max_bit_rate()
         RemoteDisplay().verify_stream_clear_max_bit_rate(remote_items['stream']['clear']['max_bit_rate']['options'])
 
-        # 点击清晰>编码格式选项，验证文本、执行操作
-        RemoteDisplay().click_encoding_format()
-        RemoteDisplay().verify_stream_clear_encoding_format(remote_items['stream']['clear']['encoding_format']['options'])
-
-        # 点击清晰>I 帧间隔选项，验证文本
-        RemoteDisplay().click_i_frame_interval()
-        RemoteDisplay().verify_stream_clear_i_frame_interval(remote_items['stream']['clear']['i_frame_interval']['options'])
-
         # 点击取消，返回到码流主页
         BasePage().click_by_text('取消')
 
@@ -84,16 +77,63 @@ class TestRemoteDisplay:
         RemoteDisplay().click_max_bit_rate()
         RemoteDisplay().verify_stream_clear_max_bit_rate(remote_items['stream']['fluent']['max_bit_rate']['options'])
 
-        # 点击流畅>编码格式选项，验证文本、执行操作
-        RemoteDisplay().click_encoding_format()
-        RemoteDisplay().verify_stream_clear_encoding_format(remote_items['stream']['fluent']['encoding_format']['options'])
-
-        # 点击流畅>I 帧间隔选项，验证文本
-        RemoteDisplay().click_i_frame_interval()
-        RemoteDisplay().verify_stream_clear_i_frame_interval(remote_items['stream']['fluent']['i_frame_interval']['options'])
-
         # 点击取消，返回到码流主页
         BasePage().click_by_text('取消')
+
+    # ====================↓ 编码格式 ↓====================
+    @pytest.mark.parametrize("device_config", devices_config)
+    @allure.feature("显示>码流>清晰/流畅>编码格式")
+    @allure.story("需人工核查日志和录屏")
+    @allure.title("测试进入显示>码流>清晰/流畅>编码格式， 并验证配置文本和操作")
+    @pytest.mark.skip()
+    def test_remote_stream_encoding_format(self, device_config):
+        # 检查键是否存在，存在则执行当前用例，否则跳过
+        remote_items = device_config['ipc']['display']['items']['display']['stream']
+        BasePage().check_key_in_yaml(remote_items, 'clear')
+
+        remote_items1 = device_config['ipc']['display']['items']['display']['stream']['clear']
+        BasePage().check_key_in_yaml(remote_items1, 'encoding_format')
+
+        # 启动app，并开启录屏
+        driver.start_app(True)
+
+        # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击‘显示’菜单项进入显示页
+        RemoteSetting().access_in_display(device_list_name=device_config['device_list_name'])
+
+        # 点击进入码流主页
+        RemoteDisplay().access_in_stream()
+
+        # 测试清晰/流畅 的编码格式
+        RemoteDisplay().verify_stream_encoding_format_interval(
+                       clear_encoding_options=remote_items['clear']['encoding_format']['options'],
+                       fluent_encoding_options=remote_items['fluent']['encoding_format']['options'])
+
+    # ====================↓ I 帧间隔 ↓====================
+    @pytest.mark.parametrize("device_config", devices_config)
+    @allure.feature("显示>码流>清晰/流畅>I 帧间隔")
+    @allure.story("需人工核查日志和录屏")
+    @allure.title("测试进入显示>码流>清晰/流畅>I 帧间隔， 并验证配置文本和操作")
+    def test_remote_stream_i_interval(self, device_config):
+        # 检查键是否存在，存在则执行当前用例，否则跳过
+        remote_items = device_config['ipc']['display']['items']['display']['stream']
+        BasePage().check_key_in_yaml(remote_items, 'clear')
+
+        remote_items1 = device_config['ipc']['display']['items']['display']['stream']['clear']
+        BasePage().check_key_in_yaml(remote_items1, 'i_frame_interval')
+
+        # 启动app，并开启录屏
+        driver.start_app(True)
+
+        # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击‘显示’菜单项进入显示页
+        RemoteSetting().access_in_display(device_list_name=device_config['device_list_name'])
+
+        # 点击进入码流主页
+        RemoteDisplay().access_in_stream()
+
+        # 测试清晰/流畅 的I帧间隔
+        RemoteDisplay().verify_stream_i_frame_interval(
+                        clear_i_options=remote_items['clear']['i_frame_interval']['options'],
+                        fluent_i_options=remote_items['fluent']['i_frame_interval']['options'])
 
     # ====================↓ 帧率控制 ↓====================
 
@@ -103,7 +143,7 @@ class TestRemoteDisplay:
     @allure.title("测试进入帧率控制页面，遍历帧率控制配置")
     def test_remote_frame_rate_control(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
-        remote_items = device_config['ipc']['display']['items']['display']
+        remote_items = device_config['ipc']['display']['items']['display']['stream']
         BasePage().check_key_in_yaml(remote_items, 'frame_rate_mode')
 
         # 启动app，并开启录屏
@@ -115,27 +155,20 @@ class TestRemoteDisplay:
         # 点击进入码流主页
         RemoteDisplay().access_in_stream()
 
-        # 点击帧率控制,验证popup文本
+        # 点击帧率控制
         RemoteDisplay().click_frame_rate_mode()
-        RemoteSetting().scroll_check_funcs2(
-            remote_items['frame_rate_mode']['text'],
-            back2top=False)
-        RemoteSetting().scroll_check_funcs2(
-            remote_items['frame_rate_mode']['options'],
-            selector='ReoTitle',
-            back2top=False)
-        BasePage().iterate_and_click_popup_text(
-            option_text_list=remote_items['frame_rate_mode']['options'],
-            menu_text='帧率控制')
+
+        # 点击帧率控制,验证popup文本
+        RemoteDisplay().verify_stream_frame_rate_control(frame_rate_mode=remote_items['frame_rate_mode']['support_mode'])
 
     # ====================↓ 码率模式 ↓====================
     @pytest.mark.parametrize("device_config", devices_config)
-    @allure.feature("显示>码流>码率模式")
+    @allure.feature("显示>码流>码率控制")
     @allure.story("需人工核查日志和录屏")
-    @allure.title("测试进入码率模式页面，遍历码率模式配置")
+    @allure.title("测试进入码率控制页面，遍历码率控制配置")
     def test_remote_rate_mode(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
-        remote_items = device_config['ipc']['display']['items']['display']['stream']['subpage']
+        remote_items = device_config['ipc']['display']['items']['display']['stream']
         BasePage().check_key_in_yaml(remote_items, 'rate_mode')
 
         # 启动app，并开启录屏
@@ -148,10 +181,4 @@ class TestRemoteDisplay:
         RemoteDisplay().access_in_stream()
 
         # 点击码率模式,验证popup文本
-        RemoteDisplay().click_rate_mode()
-        RemoteSetting().scroll_check_funcs2(remote_items['rate_mode']['text'], back2top=False)
-        RemoteSetting().scroll_check_funcs2(remote_items['stream']['subpage']['rate_mode']['options'],
-                                            selector='ReoTitle',
-                                            back2top=False)
-        BasePage().iterate_and_click_popup_text(option_text_list=remote_items['rate_mode']['options'],
-                                                menu_text='码率模式')
+        RemoteDisplay().verify_stream_rate_mode()

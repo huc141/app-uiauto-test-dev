@@ -200,8 +200,6 @@ class RemoteDisplay(BasePage):
     def verify_hdr(self):
         """
         验证HDR
-        :param text1: 全局文案列表
-        :param text2: ReoTitle的功能项文案列表
         :return:
         """
         try:
@@ -347,6 +345,103 @@ class RemoteDisplay(BasePage):
                                  id_or_xpath=element_obj,
                                  direction='right',
                                  iteration=5)
+        except Exception as e:
+            pytest.fail(f"函数执行出错: {str(e)}")
+
+    def verify_image_setting_slider(self, anti_flicker, night_tt_vision, hdr, brightness_sync):
+        """
+        验证图像设置
+        :param custom_texts: 图像设置全局文案
+        :param custom_options: 图像设置ReoTitle功能项
+        :param anti_flicker: 是否支持抗闪烁
+        :param night_tt_vision: 是否支持夜视通透模式
+        :param hdr: 是否支持HDR
+        :param brightness_sync: 是否支持亮度同步
+        :return:
+        """
+        try:
+            # 定义图像设置通用文案
+            common_image_setting_texts = ['亮度', '对比度', '饱和度', '锐度', '0', '255']
+            common_options = ['亮度', '对比度', '饱和度', '锐度']
+            # 抗闪烁通用文案
+            common_anti_flicker_texts = ['调整摄像机的拍摄帧率，以减少受到画面中光源闪烁的影响。']
+            common_anti_flicker_options = ['抗闪烁']
+            # 夜视通透模式通用文案
+            common_night_tt_vision_texts = ['优化夜视模式下的画面亮度。']
+            common_night_tt_vision_options = ['夜视通透模式']
+            # HDR通用文案
+            common_hdr_texts = ['合成多张不同曝光的图像，展现更多细节，使画面效果更接近真实环境']
+            common_hdr_options = ['HDR']
+            # 亮度同步通用文案
+            common_brightness_sync_texts = ['同步调节左右摄像机，避免画面亮度相差过大']
+            common_brightness_sync_options = ['亮度同步']
+
+            if anti_flicker:
+                # 图像设置通用文案拼接抗闪烁文案
+                new_image_setting_texts = common_image_setting_texts + common_anti_flicker_texts
+                new_image_setting_options = common_options + common_anti_flicker_options
+
+            if night_tt_vision:
+                # 图像设置通用文案拼接夜视通透模式文案
+                new_image_setting_texts = new_image_setting_texts + common_night_tt_vision_texts
+                new_image_setting_options = new_image_setting_options + common_night_tt_vision_options
+
+            if hdr:
+                # 图像设置通用文案拼接HDR文案
+                new_image_setting_texts = new_image_setting_texts + common_hdr_texts
+                new_image_setting_options = new_image_setting_options + common_hdr_options
+
+            if brightness_sync:
+                # 图像设置通用文案拼接亮度同步文案
+                new_image_setting_texts = new_image_setting_texts + common_brightness_sync_texts
+                new_image_setting_options = new_image_setting_options + common_brightness_sync_options
+
+            # 验证全局文案
+            RemoteSetting().scroll_check_funcs2(texts=new_image_setting_texts)
+            # 验证ReoTitle文案
+            RemoteSetting().scroll_check_funcs2(texts=new_image_setting_options, selector='ReoTitle')
+
+            # 验证亮度拖动条
+            self.drag_slider_brightness()
+            # 验证对比度拖动条
+            self.drag_slider_contrast()
+            # 验证饱和度拖动条
+            self.drag_slider_saturation()
+            # 验证锐度拖动条
+            self.drag_slider_sharpness()
+
+        except Exception as e:
+            pytest.fail(f"函数执行出错: {str(e)}")
+
+    def verify_anti_flicker(self):
+        """
+        验证抗闪烁
+        :return:
+        """
+        try:
+            # 定义抗闪烁全局文案
+            common_anti_flicker_texts = ['抗闪烁']
+            # 定义抗闪烁ReoTitle功能项
+            common_anti_flicker_options = ['50HZ', '60HZ', '其他', '关闭']
+            # 拼接全局文案
+            new_custom_texts = common_anti_flicker_texts + common_anti_flicker_options
+
+            # 验证全局文案
+            RemoteSetting().scroll_check_funcs2(texts=new_custom_texts,
+                                                scroll_or_not=False,
+                                                back2top=False)
+            # 验证ReoTitle功能项
+            RemoteSetting().scroll_check_funcs2(texts=common_anti_flicker_options,
+                                                selector='ReoTitle',
+                                                scroll_or_not=False,
+                                                back2top=False)
+            # 返回上一级
+            self.back_previous_page_by_xpath()
+
+            # 遍历popup操作项
+            self.iterate_and_click_popup_text(option_text_list=common_anti_flicker_options,
+                                              menu_text='抗闪烁')
+
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
@@ -1081,7 +1176,8 @@ class RemoteDisplay(BasePage):
         """
         # 拼接区域的全局文案
         splice_region_texts = ['拼接距离', '距离（米）', '在你设置的距离附近，拼接画面会达到最佳观看效果', '拼接位置',
-                               '水平', '垂直', '调整左右两个画面之间的水平或垂直距离差，以达到最佳观看效果', '恢复默认设置']
+                               '水平', '垂直', '调整左右两个画面之间的水平或垂直距离差，以达到最佳观看效果',
+                               '恢复默认设置']
 
         def verify_texts(scroll_or_not=False, back2top=False):
             """封装验证文案的函数"""
@@ -1178,7 +1274,8 @@ class RemoteDisplay(BasePage):
             common_stream_clear_resolution_texts = ['分辨率', '越高视频越清晰']
             new_stream_clear_resolution_texts = common_stream_clear_resolution_texts + custom_options
             # 检查清晰页面分辨率文案
-            RemoteSetting().scroll_check_funcs2(texts=new_stream_clear_resolution_texts, scroll_or_not=False, back2top=False)
+            RemoteSetting().scroll_check_funcs2(texts=new_stream_clear_resolution_texts, scroll_or_not=False,
+                                                back2top=False)
             # 检查清晰页面分辨率ReoTitle文案
             RemoteSetting().scroll_check_funcs2(texts=custom_options, selector='ReoTitle',
                                                 scroll_or_not=False, back2top=False)
@@ -1200,9 +1297,11 @@ class RemoteDisplay(BasePage):
             common_stream_clear_frame_rate_texts = ['帧率(FPS)', '每秒钟的帧数，越高画面越流畅']
             new_stream_clear_frame_rate_texts = common_stream_clear_frame_rate_texts + custom_options
             # 检查清晰页面帧率文案
-            RemoteSetting().scroll_check_funcs2(texts=new_stream_clear_frame_rate_texts, scroll_or_not=False, back2top=False)
+            RemoteSetting().scroll_check_funcs2(texts=new_stream_clear_frame_rate_texts, scroll_or_not=False,
+                                                back2top=False)
             # 检查清晰页面帧率ReoTitle文案
-            RemoteSetting().scroll_check_funcs2(texts=custom_options, selector='ReoTitle', scroll_or_not=False, back2top=False)
+            RemoteSetting().scroll_check_funcs2(texts=custom_options, selector='ReoTitle', scroll_or_not=False,
+                                                back2top=False)
             # 返回上一页
             self.back_previous_page_by_xpath()
             # 开始遍历清晰>帧率选项
@@ -1218,12 +1317,15 @@ class RemoteDisplay(BasePage):
         """
         try:
             # 定义清晰页面最大码率通用文案
-            common_stream_clear_max_bit_rate_texts = ['最大码率(Kbps)', '相同的分辨率、帧率下，码率越大画质越好，网络要求也越高']
+            common_stream_clear_max_bit_rate_texts = ['最大码率(Kbps)',
+                                                      '相同的分辨率、帧率下，码率越大画质越好，网络要求也越高']
             new_stream_clear_max_bit_rate_texts = common_stream_clear_max_bit_rate_texts + custom_options
             # 检查清晰页面最大码率文案
-            RemoteSetting().scroll_check_funcs2(texts=new_stream_clear_max_bit_rate_texts, scroll_or_not=False, back2top=False)
+            RemoteSetting().scroll_check_funcs2(texts=new_stream_clear_max_bit_rate_texts, scroll_or_not=False,
+                                                back2top=False)
             # 检查清晰页面最大码率ReoTitle文案
-            RemoteSetting().scroll_check_funcs2(texts=custom_options, selector='ReoTitle', scroll_or_not=False, back2top=False)
+            RemoteSetting().scroll_check_funcs2(texts=custom_options, selector='ReoTitle', scroll_or_not=False,
+                                                back2top=False)
             # 返回上一页
             self.back_previous_page_by_xpath()
             # 开始遍历清晰>最大码率选项
@@ -1239,12 +1341,15 @@ class RemoteDisplay(BasePage):
         """
         try:
             # 定义清晰页面编码格式通用文案
-            common_stream_clear_encoding_format_texts = ['编码格式', 'H.265相较于H.264具有更高的编码效率，可以提供更高质量的视频，但相应地需要更高的计算能力和更先进的设备支持。']
+            common_stream_clear_encoding_format_texts = ['编码格式',
+                                                         'H.265相较于H.264具有更高的编码效率，可以提供更高质量的视频，但相应地需要更高的计算能力和更先进的设备支持。']
             new_stream_clear_encoding_format_texts = common_stream_clear_encoding_format_texts + custom_options
             # 检查清晰页面编码格式文案
-            RemoteSetting().scroll_check_funcs2(texts=new_stream_clear_encoding_format_texts, scroll_or_not=False, back2top=False)
+            RemoteSetting().scroll_check_funcs2(texts=new_stream_clear_encoding_format_texts, scroll_or_not=False,
+                                                back2top=False)
             # 检查清晰页面编码格式ReoTitle文案
-            RemoteSetting().scroll_check_funcs2(texts=custom_options, selector='ReoTitle', scroll_or_not=False, back2top=False)
+            RemoteSetting().scroll_check_funcs2(texts=custom_options, selector='ReoTitle', scroll_or_not=False,
+                                                back2top=False)
             # 返回上一页
             self.back_previous_page_by_xpath()
             # 开始遍历清晰>编码格式选项
@@ -1260,12 +1365,15 @@ class RemoteDisplay(BasePage):
         """
         try:
             # 定义清晰页面I帧间隔通用文案
-            common_stream_clear_i_frame_interval_texts = ['I 帧间隔', 'I 帧间隔小，视频质量高，但文件大。I 帧间隔大，文件小，但质量低。']
+            common_stream_clear_i_frame_interval_texts = ['I 帧间隔',
+                                                          'I帧间隔小，视频质量高，但文件大。I帧间隔大，文件小，但质量低。']
             new_stream_clear_i_frame_interval_texts = common_stream_clear_i_frame_interval_texts + custom_options
             # 检查清晰页面I帧间隔文案
-            RemoteSetting().scroll_check_funcs2(texts=new_stream_clear_i_frame_interval_texts, scroll_or_not=False, back2top=False)
+            RemoteSetting().scroll_check_funcs2(texts=new_stream_clear_i_frame_interval_texts, scroll_or_not=False,
+                                                back2top=False)
             # 检查清晰页面I帧间隔ReoTitle文案
-            RemoteSetting().scroll_check_funcs2(texts=custom_options, selector='ReoTitle', scroll_or_not=False, back2top=False)
+            RemoteSetting().scroll_check_funcs2(texts=custom_options, selector='ReoTitle', scroll_or_not=False,
+                                                back2top=False)
             # 返回上一页
             self.back_previous_page_by_xpath()
             # 开始遍历清晰>I帧间隔选项
@@ -1276,28 +1384,115 @@ class RemoteDisplay(BasePage):
     def verify_stream_frame_rate_control(self, frame_rate_mode):
         """
         码流主页，验证帧率控制
-        :param frame_rate_mode: 帧率控制模式,A代表自动，B代表恒定，C代表逐步
+        :param frame_rate_mode: 帧率控制模式,A代表自动，B代表恒定，C代表逐步，
+                                入参AB则代表支持自动和恒定，入参ABC则代表支持自动、恒定、逐步
         :return:
         """
         try:
-            # TODO:
-            pass
+            # 定义帧率控制页面通用文案
+            common_auto_texts = ['帧率控制', '自动', '可变帧率，自动调节帧率来保持画质（不适用有快速运动的物体）。']
+            common_steady_texts = ['帧率控制', '恒定', '恒定帧率，流畅优先。']
+            common_step_texts = ['帧率控制', '逐步', '可变帧率，逐步调节帧率来保持画质（适用有快速运动的物体）。']
+            # 定义帧率控制页面ReoTitle文案
+            common_auto_options = ['自动']
+            common_steady_options = ['恒定']
+            common_step_options = ['逐步']
+
+            if frame_rate_mode == 'AB':
+                ab_all_texts = common_auto_texts + common_steady_texts
+                ab_all_options = common_auto_options + common_steady_options
+                # 检查全局文案
+                RemoteSetting().scroll_check_funcs2(texts=ab_all_texts, scroll_or_not=False, back2top=False)
+                # 检查ReoTitle文案
+                RemoteSetting().scroll_check_funcs2(texts=ab_all_options, selector='ReoTitle', scroll_or_not=False,
+                                                    back2top=False)
+            elif frame_rate_mode == 'ABC':
+                abc_all_texts = common_auto_texts + common_steady_texts + common_step_texts
+                abc_all_options = common_auto_options + common_steady_options + common_step_options
+                # 检查全局文案
+                RemoteSetting().scroll_check_funcs2(texts=abc_all_texts, scroll_or_not=False, back2top=False)
+                # 检查ReoTitle文案
+                RemoteSetting().scroll_check_funcs2(texts=abc_all_options, selector='ReoTitle', scroll_or_not=False,
+                                                    back2top=False)
+
         except Exception as err:
             pytest.fail(f"函数执行出错: {err}")
 
+    def verify_stream_encoding_format_interval(self, clear_encoding_options, fluent_encoding_options):
+        """
+        码流主页>清晰/流畅，验证各自的编码格式
+        :param clear_encoding_options: 清晰>编码格式文案
+        :param fluent_encoding_options: 流畅>编码格式文案
+        :return:
+        """
+        try:
+            # 点击清晰，
+            self.click_by_text(text='清晰')
+            # 点击清晰>编码格式
+            self.click_encoding_format()
+            self.verify_stream_clear_encoding_format(clear_encoding_options)
 
+            # 点击取消，返回到码流主页
+            self.click_by_text('取消')
 
+            # 点击流畅
+            self.click_by_text(text='流畅')
+            # 点击流畅>编码格式
+            self.click_encoding_format()
+            self.verify_stream_clear_encoding_format(fluent_encoding_options)
 
+        except Exception as err:
+            pytest.fail(f"函数执行出错: {err}")
 
+    def verify_stream_i_frame_interval(self, clear_i_options, fluent_i_options):
+        """
+        码流主页，清晰/流畅，验证各自的I帧间隔
+        :param clear_i_options: 清晰>I帧间隔文案
+        :param fluent_i_options: 流畅>I帧间隔文案
+        :return:
+        """
+        try:
+            time.sleep(3)
+            # 点击清晰，
+            self.click_by_text(text='清晰')
+            # 点击清晰>I 帧间隔选项，验证文本
+            self.click_i_frame_interval()
+            self.verify_stream_clear_i_frame_interval(clear_i_options)
 
+            # 点击取消，返回到码流主页
+            self.click_by_text('取消')
 
+            # 点击流畅
+            self.click_by_text(text='流畅')
+            # 点击流畅>I 帧间隔选项，验证文本
+            self.click_i_frame_interval()
+            self.verify_stream_clear_i_frame_interval(fluent_i_options)
 
+        except Exception as err:
+            pytest.fail(f"函数执行出错: {err}")
 
+    def verify_stream_rate_mode(self):
+        """
+        码流主页，验证码率控制
+        :return:
+        """
+        try:
+            # 定义码率模式页面通用文案
+            common_auto_texts = ['码率控制', '固定码率',
+                                 '不同的码率控制模式会影响画质和文件存储大小。',
+                                 '使用固定的码率来压缩视频。在复杂度差异较大的场景下，可能会导致一些画质损失。',
+                                 '动态码率', '自动根据视频内容的复杂度进行码率控制。码率不足时，视频可能会变得模糊。'
+                                 ]
+            # 定义码率模式页面ReoTitle文案
+            common_auto_options = ['固定码率', '动态码率']
 
-
-
-
-
+            # 验证全局文案
+            RemoteSetting().scroll_check_funcs2(texts=common_auto_texts, scroll_or_not=False, back2top=False)
+            # 验证ReoTitle文案
+            RemoteSetting().scroll_check_funcs2(texts=common_auto_options, selector='ReoTitle', scroll_or_not=False,
+                                                back2top=False)
+        except Exception as err:
+            pytest.fail(f"函数执行出错: {err}")
 
 
 

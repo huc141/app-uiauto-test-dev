@@ -2,6 +2,8 @@ import os
 import subprocess
 import time
 from datetime import datetime
+
+import yaml
 from uiautomator2.exceptions import XPathElementNotFoundError
 from common_tools.app_driver import driver
 from common_tools.logger import logger
@@ -1408,6 +1410,30 @@ class BasePage:
         except Exception as err:
             # logger.info(f"可能发生了错误: {err}")
             pytest.fail(f"【check_key_in_yaml】方法检查yaml文件中的key出错: {str(err)}")
+
+    @staticmethod
+    def extract_value_from_yaml(items, key, skip_if_false):
+        """
+        从给定的YAML字符串中提取指定键的值。
+        参数:
+        items (str): YAML格式的字符串。
+        key (str): 要提取的键。
+        返回:
+        键对应的值。如果键不存在，返回None。
+        """
+        try:
+            # 获取指定key的值
+            value = items.get(key)
+
+            # 如果key的值为False且skip_if_false为True，则跳过测试
+            if not value and skip_if_false:
+                logger.info(f"该设备不支持 {key} ！")
+                pytest.skip(f"该设备不支持 {key} ！")
+            else:
+                return value
+        except yaml.YAMLError as e:
+            logger.error(f"解析YAML文件出错: {e}")
+            pytest.fail(f"解析YAML文件出错: {e}")
 
     def back_previous_page(self):
         """

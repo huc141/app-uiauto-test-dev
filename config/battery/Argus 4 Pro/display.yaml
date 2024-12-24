@@ -199,7 +199,7 @@ ipc:
                     - '512(默认)'
                     - '1024'
 
-                interval_frame:
+                i_frame_interval:
                   name: 'i帧间隔'
                   desc: '设置>显示>码流>码流>流畅>i帧间隔'
                   type: 'popup'
