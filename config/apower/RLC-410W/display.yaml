@@ -2,8 +2,10 @@ device_list_name: RLC-410W
 ipc:
   display:
     desc: 设置>显示
+
     items:
       display:
+
         date:
           desc: 设置>显示>日期
           name: 日期
@@ -15,16 +17,7 @@ ipc:
           - 左下
           - 中下
           - 右下
-          text:
-          - 日期
-          - 左上
-          - 中上
-          - 右上
-          - 左下
-          - 中下
-          - 右下
-          - 隐藏
-          type: popup
+
         day_and_night:
           black_and_white:
             desc: 白天和黑夜>黑白
@@ -95,7 +88,8 @@ ipc:
           - 黑白
           - 白天彩色
           type: popup
-        desc: 设置>显示
+
+
         device_name:
           desc: 设置>显示>设备名称
           name: 设备名称
@@ -107,59 +101,22 @@ ipc:
           - 中下
           - 右下
           - 隐藏
-          text:
-          - 设备名称
-          - 左上
-          - 中上
-          - 右上
-          - 左下
-          - 中下
-          - 右下
-          - 隐藏
-          type: popup
-        horizontal_flip:
-          desc: 设置>显示>水平翻转
-          name: 水平翻转
-          options:
-          - switch_on
-          - switch_off
-          type: switch
+
+        horizontal_flip: 水平翻转
+
+
         image_setting:
-          anti_flicker:
-            desc: 设置>显示>抗闪烁
-            name: 抗闪烁
-            options:
-            - 50HZ
-            - 60HZ
-            - 其他
-            - 关闭
-            text:
-            - 抗闪烁
-            - 50HZ
-            - 60HZ
-            - 其他
-            - 关闭
-            type: popup
-          brightness:
-            name: 亮度
-          contrast:
-            name: 对比度
-          desc: 设置>显示>图像设置
-          name: 图像设置
-          saturation:
-            name: 饱和度
-          sharpness:
-            name: 锐度
-          text:
-          - 亮度
-          - 对比度
-          - 饱和度
-          - 锐度
-          - 抗闪烁
-          - 调整摄像机的拍摄帧率，以减少受到画面中光源闪烁的影响。
-          - '0'
-          - '255'
-          type: page
+          name: '图像设置(只需要确认亮度同步/hdr/夜视通透模式/抗闪烁)'
+
+          brightness: '亮度'
+          contrast: '对比度'
+          saturation: '饱和度'
+          sharpness: '锐度'
+          brightness_sync: false
+          hdr: false
+          night_transparent_vision: false
+          anti_flicker: true
+
         motion_mark:
           desc: 设置>显示>移动标记
           name: 移动标记
@@ -170,7 +127,7 @@ ipc:
           - 移动标记
           - 画面为清晰时，智能检测到移动事物将进行标记。
           type: switch
-        name: 显示
+
         options:
         - 垂直翻转
         - 水平翻转
@@ -181,176 +138,88 @@ ipc:
         - 图像设置
         - 白天和黑夜
         - 遮盖区域
+
         private_mark:
-          desc: 设置>显示>遮盖区域
-          name: 遮盖区域
-          text:
-          - 取消
-          - 遮盖区域
-          - 保存
-          - 清空所有
-          type: navigation
-          user_tips:
-          - 在画面中通过手指滑动添加黑色遮挡区域，监控视频中的遮挡区域将不可见，最多可遮挡4个区域。
-          - 我知道了
+          name: '遮盖区域'
+          desc: '设置>显示>遮盖区域'
+          type: 'navigation'
+          camera_type: 'DM'
+          mask_num: 4
+
         stream:
-          desc: 设置>显示>码流
-          name: 码流
-          subpage:
-            clear:
-              desc: 设置>显示>码流>码流>清晰
-              name: 清晰
-              subpage:
-                desc: 设置>显示>码流>码流>清晰
-                frame_rate:
-                  desc: 设置>显示>码流>码流>清晰>帧率(FPS)
-                  name: 帧率(FPS)
-                  options:
-                  - '30'
-                  - '25'
-                  - '22'
-                  - '20'
-                  - '18'
-                  - '16'
-                  - 15(默认)
-                  - '12'
-                  text:
-                  - 帧率(FPS)
-                  - 每秒钟的帧数，越高画面越流畅
-                  - '30'
-                  - '25'
-                  - '22'
-                  - '20'
-                  - '18'
-                  - '16'
-                  - 15(默认)
-                  - '12'
-                  type: popup
-                max_bit_rate:
-                  desc: 设置>显示>码流>码流>清晰>最大码率(Kbps)
-                  name: 最大码率(Kbps)
-                  options:
-                  - 4096(默认)
-                  - '1024'
-                  - '1536'
-                  - '2048'
-                  - 3072(默认)
-                  - '4096'
-                  - '5120'
-                  - '6144'
-                  - '7168'
-                  text:
-                  - 最大码率(Kbps)
-                  - 相同的分辨率、帧率下，码率越大画质越好，网络要求也越高
-                  - 4096(默认)
-                  - '1024'
-                  - '1536'
-                  - '2048'
-                  - 3072(默认)
-                  - '4096'
-                  - '5120'
-                  - '6144'
-                  - '7168'
-                  type: popup
-                name: 清晰
-                resolution:
-                  desc: 设置>显示>码流>码流>清晰>分辨率
-                  name: 分辨率
-                  options:
-                  - 2560*1440
-                  - 2304*1296
-                  - 1920*1080
-                  - 1280*720
-                  text:
-                  - 分辨率
-                  - 越高视频越清晰
-                  - 2560*1440
-                  - 2304*1296
-                  - 1920*1080
-                  - 1280*720
-                  type: popup
-                text:
-                - 取消
-                - 清晰
-                - 保存
-                - 分辨率
-                - 帧率(FPS)
-                - 最大码率(Kbps)
-                type: page
-              type: navigation
-            desc: 设置>显示>码流>码流
-            fluent:
-              desc: 设置>显示>码流>码流>流畅
-              name: 流畅
-              subpage:
-                desc: 设置>显示>码流>码流>流畅
-                frame_rate:
-                  desc: 设置>显示>码流>码流>流畅>帧率(FPS)
-                  name: 帧率(FPS)
-                  options:
-                  - '15'
-                  - '10'
-                  - 7(默认)
-                  - '4'
-                  text:
-                  - 帧率(FPS)
-                  - 每秒钟的帧数，越高画面越流畅
-                  - '15'
-                  - '10'
-                  - 7(默认)
-                  - '4'
-                  type: popup
-                max_bit_rate:
-                  desc: 设置>显示>码流>码流>流畅>最大码率(Kbps)
-                  options:
-                  - '64'
-                  - '128'
-                  - 160(默认)
-                  - '192'
-                  - '256'
-                  - '384'
-                  - '512'
-                  text:
-                  - 最大码率(Kbps)
-                  - 相同的分辨率、帧率下，码率越大画质越好，网络要求也越高
-                  - '64'
-                  - '128'
-                  - 160(默认)
-                  - '192'
-                  - '256'
-                  - '384'
-                  - '512'
-                  type: popup
-                name: 流畅
-                resolution:
-                  desc: 设置>显示>码流>码流>流畅>分辨率
-                  name: 分辨率
-                  options:
-                  - 640*360
-                  text:
-                  - 分辨率
-                  - 越高视频越清晰
-                  - 640*360
-                  type: popup
-                text:
-                - 取消
-                - 流畅
-                - 保存
-                - 分辨率
-                - 帧率(FPS)
-                - 最大码率(Kbps)
-                type: page
-              type: navigation
-            name: 码流
+          clear:
+            frame_rate:
+              desc: 设置>显示>码流>码流>清晰>帧率(FPS)
+              name: 帧率(FPS)
+              options:
+              - '30'
+              - '25'
+              - '22'
+              - '20'
+              - '18'
+              - '16'
+              - 15(默认)
+              - '12'
+            max_bit_rate:
+              desc: 设置>显示>码流>码流>清晰>最大码率(Kbps)
+              name: 最大码率(Kbps)
+              options:
+              - 4096(默认)
+              - '1024'
+              - '1536'
+              - '2048'
+              - 3072(默认)
+              - '4096'
+              - '5120'
+              - '6144'
+              - '7168'
+
+            resolution:
+              desc: 设置>显示>码流>码流>清晰>分辨率
+              name: 分辨率
+              options:
+              - 2560*1440
+              - 2304*1296
+              - 1920*1080
+              - 1280*720
+
             text:
-            - 码流
-            - 清晰
-            - 分辨率
-            - 帧率(FPS)
-            - 最大码率(Kbps)
-            - 流畅
-            type: navigation
-          type: navigation
+              - 最大码率(Kbps)
+
+          fluent:
+            frame_rate:
+              desc: 设置>显示>码流>码流>流畅>帧率(FPS)
+              name: 帧率(FPS)
+              options:
+              - '15'
+              - '10'
+              - 7(默认)
+              - '4'
+
+            max_bit_rate:
+              desc: 设置>显示>码流>码流>流畅>最大码率(Kbps)
+              options:
+              - '64'
+              - '128'
+              - 160(默认)
+              - '192'
+              - '256'
+              - '384'
+              - '512'
+
+            resolution:
+              desc: 设置>显示>码流>码流>流畅>分辨率
+              name: 分辨率
+              options:
+              - 640*360
+            text:
+              - 最大码率(Kbps)
+
+          text:
+            - ''
+          options:
+            - ''
+
         text:
         - 垂直翻转
         - 水平翻转
@@ -361,21 +230,9 @@ ipc:
         - 图像设置
         - 白天和黑夜
         - 遮盖区域
-        type: navigation
-        vertical_flip:
-          desc: 设置>显示>垂直翻转
-          name: 垂直翻转
-          options:
-          - switch_on
-          - switch_off
-          type: switch
-        watermark:
-          desc: 设置>显示>水印
-          name: 水印
-          options:
-          - switch_on
-          - switch_off
-          type: switch
-    name: 显示
-    type: navigation
+
+        vertical_flip: 垂直翻转
+
+        watermark: 水印
+
 uid: 952700Y000HFF75J

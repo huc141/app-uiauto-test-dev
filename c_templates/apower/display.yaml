@@ -193,15 +193,13 @@ ipc:
             desc: '设置>显示>码流>码流>码率模式(无需配置，有则保留无则删除)'
 
         image_setting:
-          name: '图像设置'
-          desc: '设置>显示>图像设置'
-          type: 'page'
+          name: '图像设置(只需要确认亮度同步/hdr/夜视通透模式/抗闪烁)'
 
           brightness: '亮度'
-          brightness_sync: true
           contrast: '对比度'
           saturation: '饱和度'
           sharpness: '锐度'
+          brightness_sync: true
           hdr: true
           night_transparent_vision: true
           anti_flicker: true

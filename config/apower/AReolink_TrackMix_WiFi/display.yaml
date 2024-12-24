@@ -4,9 +4,8 @@ ipc:
     desc: 设置>显示
     items:
       display:
+
         date:
-          desc: 设置>显示>日期
-          name: 日期
           options:
           - 隐藏
           - 左上
@@ -15,16 +14,7 @@ ipc:
           - 左下
           - 中下
           - 右下
-          text:
-          - 日期
-          - 左上
-          - 中上
-          - 右上
-          - 左下
-          - 中下
-          - 右下
-          - 隐藏
-          type: popup
+
         day_and_night:
           black_and_white:
             desc: 白天和黑夜>黑白
@@ -127,60 +117,22 @@ ipc:
           - 中下
           - 右下
           - 隐藏
-          text:
-          - 设备名称
-          - 左上
-          - 中上
-          - 右上
-          - 左下
-          - 中下
-          - 右下
-          - 隐藏
-          type: popup
-        horizontal_flip:
-          desc: 设置>显示>水平翻转
-          name: 水平翻转
-          options:
-          - switch_on
-          - switch_off
-          type: switch
+
+        horizontal_flip: 水平翻转
+
         image_setting:
-          anti_flicker:
-            desc: 设置>显示>抗闪烁
-            name: 抗闪烁
-            options:
-            - 50HZ
-            - 60HZ
-            - 其他
-            - 关闭
-            text:
-            - 抗闪烁
-            - 50HZ
-            - 60HZ
-            - 其他
-            - 关闭
-            type: popup
-          brightness:
-            name: 亮度
-          desc: 设置>显示>图像设置
-          name: 图像设置
-          text:
-          - 亮度
-          - 抗闪烁
-          - 调整摄像机的拍摄帧率，以减少受到画面中光源闪烁的影响。
-          - '0'
-          - '255'
-          type: page
-        motion_mark:
-          desc: 设置>显示>移动标记
-          name: 移动标记
-          options:
-          - switch-on
-          - switch-off
-          text:
-          - 移动标记
-          - 画面为清晰时，智能检测到移动事物将进行标记。
-          type: switch
+          name: '图像设置(只需要确认亮度同步/hdr/夜视通透模式/抗闪烁)'
+
+          brightness: '亮度'
+          contrast: '对比度'
+          saturation: '饱和度'
+          sharpness: '锐度'
+          brightness_sync: false
+          hdr: false
+          night_transparent_vision: false
+          anti_flicker: true
+
+        motion_mark: 移动标记
 
         options:
         - 垂直翻转
@@ -205,12 +157,14 @@ ipc:
           - 图像设置
           - 白天和黑夜
           - 遮盖区域
+
         private_mark:
           name: '遮盖区域'
           desc: '设置>显示>遮盖区域'
           type: 'navigation'
           camera_type: 'GC'
           mask_num: 4
+
         stream:
           clear:
             i_frame_interval:
@@ -219,6 +173,7 @@ ipc:
               options:
               - 1x
               - 2x
+
             max_bit_rate:
               desc: 设置>显示>码流>码流>清晰>最大码率(Kbps)
               name: 最大码率(Kbps)
@@ -228,11 +183,13 @@ ipc:
               - '6144'
               - '7168'
               - '8192'
+
             resolution:
               options:
               - 3840*2160
+
             text:
-            - I 帧间隔
+              - I 帧间隔
 
           fluent:
             frame_rate:
@@ -246,6 +203,7 @@ ipc:
               - '8'
               - '6'
               - '4'
+
             i_frame_interval:
               desc: 设置>显示>码流>码流>流畅>I 帧间隔
               name: I 帧间隔
@@ -254,6 +212,7 @@ ipc:
               - 2x
               - 3x
               - 4x
+
             max_bit_rate:
               desc: 设置>显示>码流>码流>流畅>最大码率(Kbps)
               options:
@@ -265,13 +224,15 @@ ipc:
               - 768(默认)
               - '1024'
               - '1228'
+
             resolution:
               desc: 设置>显示>码流>码流>流畅>分辨率
               name: 分辨率
               options:
               - 896*512
+
             text:
-            - I 帧间隔
+              - I 帧间隔
 
           frame_rate_mode:
             desc: 设置>显示>码流>码流>帧率控制
@@ -279,10 +240,10 @@ ipc:
             support_mode: 'AB'
 
           text:
-          - I 帧间隔
-          - 帧率控制
+            - I 帧间隔
+            - 帧率控制
           options:
-          - 帧率控制
+            - 帧率控制
 
         vertical_flip: '垂直翻转(无需配置，有则保留无则删除)'
         watermark: '水印(无需配置，有则保留无则删除)'

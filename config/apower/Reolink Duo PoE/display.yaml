@@ -25,6 +25,7 @@ ipc:
           - 右下
           - 隐藏
           type: popup
+
         day_and_night:
           black_and_white:
             desc: 白天和黑夜>黑白
@@ -115,7 +116,7 @@ ipc:
           - 白天彩色
           - 夜视彩色
           type: popup
-        desc: 设置>显示
+
         device_name:
           desc: 设置>显示>设备名称
           name: 设备名称
@@ -137,47 +138,19 @@ ipc:
           - 右下
           - 隐藏
           type: popup
+
         image_setting:
-          anti_flicker:
-            desc: 设置>显示>抗闪烁
-            name: 抗闪烁
-            options:
-            - 50HZ
-            - 60HZ
-            - 其他
-            - 关闭
-            text:
-            - 抗闪烁
-            - 50HZ
-            - 60HZ
-            - 其他
-            - 关闭
-            type: popup
-          brightness:
-            name: 亮度
-          brightness_sync:
-            desc: 设置>显示>图像设置>亮度同步
-            name: 亮度同步
-            type: switch
-          contrast:
-            name: 对比度
-          desc: 设置>显示>图像设置
-          name: 图像设置
-          saturation:
-            name: 饱和度
-          sharpness:
-            name: 锐度
-          text:
-          - 亮度
-          - 亮度同步
-          - 对比度
-          - 饱和度
-          - 锐度
-          - 抗闪烁
-          - 调整摄像机的拍摄帧率，以减少受到画面中光源闪烁的影响。
-          - '0'
-          - '255'
-          type: page
+          name: '图像设置(只需要确认亮度同步/hdr/夜视通透模式/抗闪烁)'
+
+          brightness: '亮度'
+          contrast: '对比度'
+          saturation: '饱和度'
+          sharpness: '锐度'
+          brightness_sync: true
+          hdr: false
+          night_transparent_vision: false
+          anti_flicker: true
+
         motion_mark:
           desc: 设置>显示>移动标记
           name: 移动标记
@@ -188,7 +161,7 @@ ipc:
           - 移动标记
           - 画面为清晰时，智能检测到移动事物将进行标记。
           type: switch
-        name: 显示
+
         options:
         - 码流
         - 移动标记
@@ -198,218 +171,100 @@ ipc:
         - 图像设置
         - 白天和黑夜
         - 遮盖区域
+
         private_mark:
-          desc: 设置>显示>遮盖区域
-          name: 遮盖区域
-          text:
-          - 取消
-          - 遮盖区域
-          - 左摄像机
-          - 右摄像机
-          - 保存
-          - 清空所有
-          type: navigation
-          user_tips:
-          - 在画面中通过手指滑动添加黑色遮挡区域，监控视频中的遮挡区域将不可见，最多可遮挡4个区域。
-          - 我知道了
+          name: '遮盖区域'
+          desc: '设置>显示>遮盖区域'
+          type: 'navigation'
+          camera_type: 'DM'
+          mask_num: 4
+
         stream:
-          desc: 设置>显示>码流
-          name: 码流
-          subpage:
-            clear:
-              desc: 设置>显示>码流>码流>清晰
-              name: 清晰
-              subpage:
-                desc: 设置>显示>码流>码流>清晰
-                frame_rate:
-                  desc: 设置>显示>码流>码流>清晰>帧率(FPS)
-                  name: 帧率(FPS)
-                  options:
-                  - '25'
-                  - 22(默认)
-                  - '20'
-                  - '18'
-                  - '16'
-                  - '15'
-                  - '12'
-                  - '10'
-                  text:
-                  - 帧率(FPS)
-                  - 每秒钟的帧数，越高画面越流畅
-                  - '25'
-                  - 22(默认)
-                  - '20'
-                  - '18'
-                  - '16'
-                  - '15'
-                  - '12'
-                  - '10'
-                  type: popup
-                i_frame_interval:
-                  desc: 设置>显示>码流>码流>清晰>I 帧间隔
-                  name: I 帧间隔
-                  options:
-                  - 1x
-                  - 2x
-                  text:
-                  - I 帧间隔
-                  - I帧间隔小，视频质量高，但文件大。I帧间隔大，文件小，但质量低。
-                  - 1x
-                  - 2x
-                  type: popup
-                max_bit_rate:
-                  desc: 设置>显示>码流>码流>清晰>最大码率(Kbps)
-                  name: 最大码率(Kbps)
-                  options:
-                  - '1024'
-                  - '1536'
-                  - '2048'
-                  - '3072'
-                  - 4096(默认)
-                  - '5120'
-                  text:
-                  - 最大码率(Kbps)
-                  - 相同的分辨率、帧率下，码率越大画质越好，网络要求也越高
-                  - '1024'
-                  - '1536'
-                  - '2048'
-                  - '3072'
-                  - 4096(默认)
-                  - '5120'
-                  type: popup
-                name: 清晰
-                resolution:
-                  desc: 设置>显示>码流>码流>清晰>分辨率
-                  name: 分辨率
-                  options:
-                  - 2560*1440
-                  - 2304*1296
-                  - 1920*1080
-                  text:
-                  - 分辨率
-                  - 越高视频越清晰
-                  - 2560*1440
-                  - 2304*1296
-                  - 1920*1080
-                  type: popup
-                text:
-                - 取消
-                - 清晰
-                - 保存
-                - 分辨率
-                - 帧率(FPS)
-                - 最大码率(Kbps)
-                - I 帧间隔
-                type: page
-              type: navigation
-            desc: 设置>显示>码流>码流
-            fluent:
-              desc: 设置>显示>码流>码流>流畅
-              name: 流畅
-              subpage:
-                desc: 设置>显示>码流>码流>流畅
-                frame_rate:
-                  desc: 设置>显示>码流>码流>流畅>帧率(FPS)
-                  name: 帧率(FPS)
-                  options:
-                  - '15'
-                  - 10(默认)
-                  - '7'
-                  - '4'
-                  text:
-                  - 帧率(FPS)
-                  - 每秒钟的帧数，越高画面越流畅
-                  - '15'
-                  - 10(默认)
-                  - '7'
-                  - '4'
-                  type: popup
-                i_frame_interval:
-                  desc: 设置>显示>码流>码流>流畅>I 帧间隔
-                  name: I 帧间隔
-                  options:
-                  - 1x
-                  - 2x
-                  - 3x
-                  - 4x
-                  text:
-                  - I 帧间隔
-                  - I帧间隔小，视频质量高，但文件大。I帧间隔大，文件小，但质量低。
-                  - 1x
-                  - 2x
-                  - 3x
-                  - 4x
-                  type: popup
-                max_bit_rate:
-                  desc: 设置>显示>码流>码流>流畅>最大码率(Kbps)
-                  options:
-                  - '64'
-                  - '128'
-                  - '160'
-                  - '192'
-                  - 256(默认)
-                  - '384'
-                  - '512'
-                  text:
-                  - 最大码率(Kbps)
-                  - 相同的分辨率、帧率下，码率越大画质越好，网络要求也越高
-                  - '64'
-                  - '128'
-                  - '160'
-                  - '192'
-                  - 256(默认)
-                  - '384'
-                  - '512'
-                  type: popup
-                name: 流畅
-                resolution:
-                  desc: 设置>显示>码流>码流>流畅>分辨率
-                  name: 分辨率
-                  options:
-                  - 640*360
-                  text:
-                  - 分辨率
-                  - 越高视频越清晰
-                  - 640*360
-                  type: popup
-                text:
-                - 取消
-                - 流畅
-                - 保存
-                - 分辨率
-                - 帧率(FPS)
-                - 最大码率(Kbps)
-                - I 帧间隔
-                type: page
-              type: navigation
-            frame_rate_mode:
-              desc: 设置>显示>码流>码流>帧率控制
-              name: 帧率控制
+          clear:
+            frame_rate:
+              desc: 设置>显示>码流>码流>清晰>帧率(FPS)
+              name: 帧率(FPS)
               options:
-              - 自动
-              - 恒定
-              - 逐步
-              text:
-              - 帧率控制
-              - 自动
-              - 可变帧率，自动调节帧率来保持画质（不适用有快速运动的物体）。
-              - 恒定
-              - 恒定帧率，流畅优先。
-              - 逐步
-              - 可变帧率，逐步调节帧率来保持画质（适用有快速运动的物体）。
-              type: popup
-            name: 码流
+              - '25'
+              - 22(默认)
+              - '20'
+              - '18'
+              - '16'
+              - '15'
+              - '12'
+              - '10'
+            i_frame_interval:
+              desc: 设置>显示>码流>码流>清晰>I 帧间隔
+              name: I 帧间隔
+              options:
+              - 1x
+              - 2x
+            max_bit_rate:
+              desc: 设置>显示>码流>码流>清晰>最大码率(Kbps)
+              name: 最大码率(Kbps)
+              options:
+              - '1024'
+              - '1536'
+              - '2048'
+              - '3072'
+              - 4096(默认)
+              - '5120'
+            resolution:
+              desc: 设置>显示>码流>码流>清晰>分辨率
+              name: 分辨率
+              options:
+              - 2560*1440
+              - 2304*1296
+              - 1920*1080
             text:
-            - 码流
-            - 清晰
-            - 分辨率
-            - 帧率(FPS)
-            - 最大码率(Kbps)
-            - 流畅
+              - I 帧间隔
+
+          fluent:
+            frame_rate:
+              desc: 设置>显示>码流>码流>流畅>帧率(FPS)
+              name: 帧率(FPS)
+              options:
+              - '15'
+              - 10(默认)
+              - '7'
+              - '4'
+            i_frame_interval:
+              desc: 设置>显示>码流>码流>流畅>I 帧间隔
+              name: I 帧间隔
+              options:
+              - 1x
+              - 2x
+              - 3x
+              - 4x
+            max_bit_rate:
+              desc: 设置>显示>码流>码流>流畅>最大码率(Kbps)
+              options:
+              - '64'
+              - '128'
+              - '160'
+              - '192'
+              - 256(默认)
+              - '384'
+              - '512'
+            resolution:
+              desc: 设置>显示>码流>码流>流畅>分辨率
+              name: 分辨率
+              options:
+              - 640*360
+            text:
             - I 帧间隔
-            - 帧率控制
-            type: navigation
-          type: navigation
+
+          frame_rate_mode:
+            name: '帧率控制(A代表自动，B代表恒定，C代表逐步)'
+            desc: '设置>显示>码流>码流>帧率控制'
+            support_mode: 'ABC'
+
+          text:
+            - I 帧间隔
+          options:
+            - '帧率控制'
+
+
         text:
         - 码流
         - 移动标记
@@ -420,14 +275,8 @@ ipc:
         - 图像设置
         - 白天和黑夜
         - 遮盖区域
-        type: navigation
-        watermark:
-          desc: 设置>显示>水印
-          name: 水印
-          options:
-          - switch_on
-          - switch_off
-          type: switch
-    name: 显示
-    type: navigation
+
+        watermark: 水印
+
+
 uid: 952700Y0050OXE4O
