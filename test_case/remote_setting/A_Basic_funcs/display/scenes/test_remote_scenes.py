@@ -29,8 +29,7 @@ class TestRemoteDisplay:
         RemoteSetting().access_in_display(device_list_name=device_config['device_list_name'])
 
         # 在显示页点击‘场景’按钮进入场景页，点击不同的场景模式，并验证回显
-        RemoteDisplay().verify_scenes(scenes_list=remote_items['scenes']['text'],
-                                      options=remote_items['scenes']['options'])
+        RemoteDisplay().verify_scenes()
 
 
 

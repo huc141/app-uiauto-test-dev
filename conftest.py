@@ -46,7 +46,7 @@ def pytest_runtest_makereport(item, call):
             allure.attach(img_byte_arr, '自动截图', allure.attachment_type.PNG)  # 将指定内容作为附件添加到测试报告。这里将截图的二进制数据作为附件，标题为“自动截图”，类型为PNG。
             logger.info("用例执行成功/失败，已自动截图")
 
-            base_path = os.path.join(os.getcwd(), 'screen_record')  # 获取录屏文件的保存路径
+            base_path = os.path.join(os.getcwd(), 'a_screen_record')  # 获取录屏文件的保存路径
             time.sleep(2)
             screenrecord_name = scr.take_screenrecord(False)  # 停止录屏
             if screenrecord_name:

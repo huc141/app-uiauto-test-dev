@@ -109,3 +109,24 @@ class TestRemoteDisplay:
         # 遍历HDR
         RemoteDisplay().verify_hdr()
 
+    @pytest.mark.parametrize("device_config", devices_config)
+    @allure.feature("图像设置>夜视对焦增强")
+    @allure.story("需人工核查日志和录屏")
+    @allure.title("测试 进入显示>图像设置，测试夜视对焦增强")
+    def night_vision_zoom_enhance(self, device_config):
+        # 检查键是否存在，存在则执行当前用例，否则跳过
+        remote_items = device_config['ipc']['display']['items']['display']['image_setting']
+        BasePage().extract_value_from_yaml(remote_items, 'night_vision_zoom_enhance',
+                                           skip_if_false=True)
+
+        # 启动app，并开启录屏
+        driver.start_app(True)
+
+        # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击‘显示’菜单项进入显示页
+        RemoteSetting().access_in_display(device_list_name=device_config['device_list_name'])
+
+        # 进入图像设置
+        RemoteDisplay().click_image_setting()
+
+        # 测试也是对焦增强
+        RemoteDisplay().verify_night_vision_zoom_enhance()

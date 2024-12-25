@@ -221,6 +221,26 @@ class RemoteDisplay(BasePage):
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
+    def verify_night_vision_zoom_enhance(self):
+        """
+        验证夜视增强
+        :return:
+        """
+        try:
+            # 找到夜视增强
+            self.scroll_and_click_by_text(text_to_find='夜视对焦增强')
+
+            # 点击Switch按钮
+            self.scroll_click_right_btn(text_to_find='夜视对焦增强',
+                                        resourceId_1='ReoTitle',
+                                        className_2='android.view.ViewGroup')
+            time.sleep(3)
+            self.scroll_click_right_btn(text_to_find='夜视对焦增强',
+                                        resourceId_1='ReoTitle',
+                                        className_2='android.view.ViewGroup')
+        except Exception as e:
+            pytest.fail(f"函数执行出错: {str(e)}")
+
     def drag_slider_brightness(self, slider_mode='obj'):
         """
         对拖动条执行操作，支持上、下、左、右方向拖动
@@ -747,6 +767,7 @@ class RemoteDisplay(BasePage):
     def verify_auto_zoom(self):
         """验证自动对焦"""
         try:
+            # 定义自动对焦全局文案
             # 点击两次
             for i in range(2):
                 self.scroll_click_right_btn(text_to_find='自动对焦',
@@ -1119,7 +1140,7 @@ class RemoteDisplay(BasePage):
         except Exception as err:
             pytest.fail(f"函数执行出错: {err}")
 
-    def verify_scenes(self, scenes_list, options):
+    def verify_scenes(self):
         """
         遍历切换室内外场景
         :param scenes_list: 需要遍历的场景配置页文案列表
@@ -1127,24 +1148,28 @@ class RemoteDisplay(BasePage):
         :return:
         """
         try:
+            # 定义场景配置页全局文案列表
+            common_scenes_texts = ['场景', '室内', '室外']
+            # 定义场景配置ReoTitle选项列表
+            common_scenes_options = ['室内', '室外']
+
             # 先将预览视图往上拉至最小,以便于滚动查找显示模式按钮
-            # self.drag_element(element_xpath='//com.horcrux.svg.SvgView', direction='up', distance=700, duration=1)
             self.need_pull_down()
 
             # 先点击场景菜单进入配置页，验证配置页文案和选项
             self.scroll_and_click_by_text('场景')
-            RemoteSetting().scroll_check_funcs2(texts=scenes_list,
+            RemoteSetting().scroll_check_funcs2(texts=common_scenes_texts,
                                                 scroll_or_not=False,
                                                 back2top=False)
 
-            RemoteSetting().scroll_check_funcs2(texts=options,
+            RemoteSetting().scroll_check_funcs2(texts=common_scenes_options,
                                                 selector='ReoTitle',
                                                 scroll_or_not=False,
                                                 back2top=False)
             # 返回上一页
             self.back_previous_page_by_xpath()
             # 遍历切换场景
-            self.iterate_and_click_popup_text(option_text_list=options,
+            self.iterate_and_click_popup_text(option_text_list=common_scenes_options,
                                               menu_text='场景')
 
         except Exception as err:

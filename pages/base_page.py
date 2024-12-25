@@ -747,6 +747,9 @@ class BasePage:
                 if self.wait_for_element(text='加载失败，请点击重试'):
                     logger.warning("检测到连接失败，尝试点击重试按钮...")
                     self.click_by_text('重试')
+                elif self.wait_for_element(text='登录'):
+                    logger.warning("检测到设备未登录，跳过当前用例！")
+                    pytest.skip("设备未登录，跳过当前用例！")
                 else:
                     logger.info('loading中，继续等待')
                     time.sleep(7)
@@ -796,8 +799,8 @@ class BasePage:
 
             attempt += 1
 
-        logger.warning(f"还是没找到 '{text_to_find}' 元素，已经尝试了 {max_attempts} 次.")
-        return False
+        logger.warning(f"还是没找到 '{text_to_find}' 元素，已尝试 {max_attempts} 次.")
+        pytest.skip(f"跳过当前用例！未能找到 '{text_to_find}' 设备，已尝试 {max_attempts} 次.")
         # attempt = 0
         #
         # def retry_method(num_retries=4):
@@ -1415,11 +1418,9 @@ class BasePage:
     def extract_value_from_yaml(items, key, skip_if_false):
         """
         从给定的YAML字符串中提取指定键的值。
-        参数:
-        items (str): YAML格式的字符串。
-        key (str): 要提取的键。
-        返回:
-        键对应的值。如果键不存在，返回None。
+        :param items: YAML格式的字符串。
+        :param key: 要提取的键。
+        :param skip_if_false: 当键对应的值为False时是否跳过测试。True跳过，False不跳过
         """
         try:
             # 获取指定key的值

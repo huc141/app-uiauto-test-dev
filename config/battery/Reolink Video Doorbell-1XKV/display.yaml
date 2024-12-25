@@ -53,172 +53,105 @@ ipc:
             - 'switch_off'
 
         stream:
-          name: '码流'
-          desc: '设置>显示>码流'
-          type: 'navigation'
-          subpage:
-            name: '码流'
-            desc: '设置>显示>码流>码流'
-            type: 'navigation'
+          text:
+            - ''
+          options:
+            - ''
+
+          clear:
             text:
-              - '码流'
-              - '清晰'
-              - '分辨率'
-              - '帧率(FPS)'
-              - '最大码率(kbps)'
-              - '流畅'
-              - 'i帧间隔'
+              - ''
 
-            clear:
-              name: '清晰'
-              desc: '设置>显示>码流>码流>清晰'
-              type: 'navigation'
-              subpage:
-                name: '清晰'
-                desc: '设置>显示>码流>码流>清晰'
-                type: 'page'
-                text:
-                  - '取消'
-                  - '清晰'
-                  - '保存'
-                  - '分辨率'
-                  - '帧率(fps)'
-                  - '最大码率(kbps)'
-                  - 'i帧间隔'
+            resolution:
+              name: '分辨率'
+              desc: '设置>显示>码流>码流>清晰>分辨率'
+              type: 'popup'
+              text:
+                - '分辨率'
+                - '越高视频越清晰'
+                - '2048*2048'
+              options:
+                - '2048*2048'
 
-                resolution:
-                  name: '分辨率'
-                  desc: '设置>显示>码流>码流>清晰>分辨率'
-                  type: 'popup'
-                  text:
-                    - '分辨率'
-                    - '越高视频越清晰'
-                    - '2048*2048'
-                  options:
-                    - '2048*2048'
+            frame_rate:
+              name: '帧率(FPS)'
+              desc: '设置>显示>码流>码流>清晰>帧率(FPS)'
+              type: 'popup'
+              text:
+                - '帧率(FPS)'
+                - '每秒钟的帧数，越高画面越流畅'
+                - '15(默认)'
+                - '12'
+                - '10'
+              options:
+                - '15(默认)'
+                - '12'
+                - '10'
 
-                frame_rate:
-                  name: '帧率(FPS)'
-                  desc: '设置>显示>码流>码流>清晰>帧率(FPS)'
-                  type: 'popup'
-                  text:
-                    - '帧率(FPS)'
-                    - '每秒钟的帧数，越高画面越流畅'
-                    - '15(默认)'
-                    - '12'
-                    - '10'
-                  options:
-                    - '15(默认)'
-                    - '12'
-                    - '10'
+            max_bit_rate:
+              name: '最大码率(kbps)'
+              desc: '设置>显示>码流>码流>清晰>最大码率(Kbps)'
+              type: 'popup'
+              text:
+                - '最大码率(Kbps)'
+                - '相同的分辨率、帧率下，码率越大画质越好，网络要求也越高'
+                - '1024'
+                - '1536'
+                - '2048(默认)'
+                - '3072'
+                - '4096'
+              options:
+                - '1024'
+                - '1536'
+                - '2048(默认)'
+                - '3072'
+                - '4096'
 
-                max_bit_rate:
-                  name: '最大码率(kbps)'
-                  desc: '设置>显示>码流>码流>清晰>最大码率(Kbps)'
-                  type: 'popup'
-                  text:
-                    - '最大码率(Kbps)'
-                    - '相同的分辨率、帧率下，码率越大画质越好，网络要求也越高'
-                    - '1024'
-                    - '1536'
-                    - '2048(默认)'
-                    - '3072'
-                    - '4096'
-                  options:
-                    - '1024'
-                    - '1536'
-                    - '2048(默认)'
-                    - '3072'
-                    - '4096'
+          fluent:
+            text:
+              - ''
 
-                i_frame_interval:
-                  name: 'i帧间隔'
-                  desc: '设置>显示>码流>码流>清晰>i帧间隔'
-                  type: 'popup'
-                  text:
-                    - 'i帧间隔'
-                    - 'I帧间隔小，视频质量高，但文件大。I帧间隔大，文件小，但质量低。'
-                    - '1x'
-                    - '2x'
-                  options:
-                    - '1x'
-                    - '2x'
+            resolution:
+              name: '分辨率'
+              desc: '设置>显示>码流>码流>流畅>分辨率'
+              type: 'popup'
+              text:
+                - '分辨率'
+                - '越高视频越清晰'
+                - '1024*1024'
+              options:
+                - '1024*1024'
 
-            fluent:
-              name: '流畅'
-              desc: '设置>显示>码流>码流>流畅'
-              type: 'navigation'
-              subpage:
-                name: '流畅'
-                desc: '设置>显示>码流>码流>流畅'
-                type: 'page'
-                text:
-                  - '取消'
-                  - '流畅'
-                  - '保存'
-                  - '分辨率'
-                  - '帧率(fps)'
-                  - '最大码率(kbps)'
-                  - 'i帧间隔'
+            frame_rate:
+              name: '帧率(FPS)'
+              desc: '设置>显示>码流>码流>流畅>帧率(FPS)'
+              type: 'popup'
+              text:
+                - '帧率(FPS)'
+                - '每秒钟的帧数，越高画面越流畅'
+                - '15(默认)'
+                - '10'
+              options:
+                - '15(默认)'
+                - '10'
 
-                resolution:
-                  name: '分辨率'
-                  desc: '设置>显示>码流>码流>流畅>分辨率'
-                  type: 'popup'
-                  text:
-                    - '分辨率'
-                    - '越高视频越清晰'
-                    - '1024*1024'
-                  options:
-                    - '1024*1024'
-
-                frame_rate:
-                  name: '帧率(FPS)'
-                  desc: '设置>显示>码流>码流>流畅>帧率(FPS)'
-                  type: 'popup'
-                  text:
-                    - '帧率(FPS)'
-                    - '每秒钟的帧数，越高画面越流畅'
-                    - '15(默认)'
-                    - '10'
-                  options:
-                    - '15(默认)'
-                    - '10'
-
-                max_bit_rate:
-                  desc: '设置>显示>码流>码流>流畅>最大码率(kbps)'
-                  type: 'popup'
-                  text:
-                    - '最大码率(kbps)'
-                    - '相同的分辨率、帧率下，码率越大画质越好，网络要求也越高'
-                    - '64'
-                    - '128'
-                    - '256'
-                    - '512'
-                    - '672(默认)'
-                  options:
-                    - '64'
-                    - '128'
-                    - '256'
-                    - '512'
-                    - '672(默认)'
-
-                i_frame_interval:
-                  name: 'i帧间隔'
-                  desc: '设置>显示>码流>码流>流畅>i帧间隔'
-                  type: 'popup'
-                  text:
-                    - 'i帧间隔'
-                    - 'I帧间隔小，视频质量高，但文件大。I帧间隔大，文件小，但质量低。'
-                    - '1x'
-                    - '2x'
-                    - '3x'
-                    - '4x'
-                  options:
-                    - '1x'
-                    - '2x'
-                    - '3x'
-                    - '4x'
+            max_bit_rate:
+              desc: '设置>显示>码流>码流>流畅>最大码率(kbps)'
+              type: 'popup'
+              text:
+                - '最大码率(kbps)'
+                - '相同的分辨率、帧率下，码率越大画质越好，网络要求也越高'
+                - '64'
+                - '128'
+                - '256'
+                - '512'
+                - '672(默认)'
+              options:
+                - '64'
+                - '128'
+                - '256'
+                - '512'
+                - '672(默认)'
 
         motion_mark:
           name: '移动标记'
@@ -284,57 +217,16 @@ ipc:
             - 'switch_off'
 
         image_setting:
-          name: '图像设置'
-          desc: '设置>显示>图像设置'
-          type: 'page'
-          text:
-            - '亮度'
-            - '对比度'
-            - '饱和度'
-            - '锐度'
-            - 'HDR'
-            - '抗闪烁'
-            - '调整摄像机的拍摄帧率，以减少受到画面中光源闪烁的影响。'
-            - '0'
-            - '255'
+          name: '图像设置(只需要确认亮度同步/hdr/夜视通透模式/抗闪烁)'
 
-          brightness:
-            name: '亮度'
-          contrast:
-            name: '对比度'
-          saturation:
-            name: '饱和度'
-          sharpness:
-            name: '锐度'
-          hdr:
-            name: 'HDR'
-            desc: '设置>显示>HDR'
-            type: 'popup'
-            text:
-              - 'HDR'
-              - '自动'
-              - '开'
-              - '关'
-            options:
-              - '自动'
-              - '开'
-              - '关'
-
-          anti_flicker:
-            name: '抗闪烁'
-            desc: '设置>显示>抗闪烁'
-            type: 'popup'
-            text:
-              - '抗闪烁'
-              - '50HZ'
-              - '60HZ'
-              - '其他'
-              - '关闭'
-            options:
-              - '50HZ'
-              - '60HZ'
-              - '其他'
-              - '关闭'
+          brightness: '亮度'
+          contrast: '对比度'
+          saturation: '饱和度'
+          sharpness: '锐度'
+          brightness_sync: false
+          hdr: true
+          night_transparent_vision: false
+          anti_flicker: true
 
         day_and_night:
           name: '白天和黑夜'
@@ -412,11 +304,5 @@ ipc:
           name: '遮盖区域'
           desc: '设置>显示>遮盖区域'
           type: 'navigation'
-          text:
-            - '取消'
-            - '遮盖区域'
-            - '保存'
-            - '清空所有'
-          user_tips:
-            - '在画面中通过手指滑动添加黑色遮挡区域，监控视频中的遮挡区域将不可见，最多可遮挡8个区域。'
-            - '我知道了'
+          camera_type: 'DM'
+          mask_num: 8

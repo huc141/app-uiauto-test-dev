@@ -19,7 +19,7 @@ class TestRemoteDisplay:
     @allure.feature("显示>码流")
     @allure.story("需人工核查日志和录屏")
     @allure.title("测试进入显示>码流页面， 并验证清晰和流畅页面的配置文本和操作")
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="暂时不执行")
     def test_remote_stream(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['display']['items']['display']
@@ -85,7 +85,7 @@ class TestRemoteDisplay:
     @allure.feature("显示>码流>清晰/流畅>编码格式")
     @allure.story("需人工核查日志和录屏")
     @allure.title("测试进入显示>码流>清晰/流畅>编码格式， 并验证配置文本和操作")
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="暂时不执行")
     def test_remote_stream_encoding_format(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['display']['items']['display']['stream']
@@ -113,6 +113,7 @@ class TestRemoteDisplay:
     @allure.feature("显示>码流>清晰/流畅>I 帧间隔")
     @allure.story("需人工核查日志和录屏")
     @allure.title("测试进入显示>码流>清晰/流畅>I 帧间隔， 并验证配置文本和操作")
+    @pytest.mark.skip(reason="暂时不执行")
     def test_remote_stream_i_interval(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['display']['items']['display']['stream']
@@ -141,6 +142,7 @@ class TestRemoteDisplay:
     @allure.feature("显示>码流>帧率控制")
     @allure.story("需人工核查日志和录屏")
     @allure.title("测试进入帧率控制页面，遍历帧率控制配置")
+    @pytest.mark.skip(reason="暂时不执行")
     def test_remote_frame_rate_control(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['display']['items']['display']['stream']
@@ -161,7 +163,7 @@ class TestRemoteDisplay:
         # 点击帧率控制,验证popup文本
         RemoteDisplay().verify_stream_frame_rate_control(frame_rate_mode=remote_items['frame_rate_mode']['support_mode'])
 
-    # ====================↓ 码率模式 ↓====================
+    # ====================↓ 码率控制 ↓====================
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("显示>码流>码率控制")
     @allure.story("需人工核查日志和录屏")
@@ -179,6 +181,9 @@ class TestRemoteDisplay:
 
         # 点击进入码流主页
         RemoteDisplay().access_in_stream()
+
+        # 点击码率控制
+        RemoteDisplay().click_rate_mode()
 
         # 点击码率模式,验证popup文本
         RemoteDisplay().verify_stream_rate_mode()

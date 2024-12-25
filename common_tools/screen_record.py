@@ -32,7 +32,7 @@ class ScreenRecord:
         if is_record:
             timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
             self.v_name = f"{timestamp}.mp4"
-            screen_record_path = os.path.join(os.getcwd(), 'screen_record')  # 录像的保存路径
+            screen_record_path = os.path.join(os.getcwd(), 'a_screen_record')  # 录像的保存路径
             cmd_start_record = f'scrcpy -m 1024 -r --no-audio --record {screen_record_path}\\{self.v_name}'
             cmd_start_ios_record = f't3 screenrecord {screen_record_path}\\{self.v_name}'
             logger.info("这是输出的录像保存路径：" + screen_record_path)

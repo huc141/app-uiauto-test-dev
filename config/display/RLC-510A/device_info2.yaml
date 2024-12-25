@@ -1,0 +1,158 @@
+advanced_setting: &advanced_setting_anchor
+  name: '高级设置'
+  desc: '设置>设备信息>网络信息>网络状态>高级设置>高级设置'
+  type: 'page'
+  items:
+    rtmp:
+      name: 'RTMP'
+      desc: '设置>设备信息>网络信息>网络状态>高级设置>高级设置>RTMP'
+      type: 'switch'
+    http:
+      name: 'HTTP'
+      desc: '设置>设备信息>网络信息>网络状态>高级设置>高级设置>HTTP'
+      type: 'switch'
+    https:
+      name: 'HTTPS'
+      desc: '设置>设备信息>网络信息>网络状态>高级设置>高级设置>HTTPS'
+      type: 'switch'
+    rtsp:
+      name: 'RTSP'
+      desc: '设置>设备信息>网络信息>网络状态>高级设置>高级设置>RTSP'
+      type: 'switch'
+    onvif:
+      name: 'ONVIF'
+      desc: '设置>设备信息>网络信息>网络状态>高级设置>高级设置>ONVIF'
+      type: 'switch'
+
+
+network_status: &network_status_anchor
+  name: '网络状态'
+  desc: '设置>设备信息>网络信息>网络状态'
+  type: 'page'
+  item:
+    ip_address:
+      name: 'IP 地址'
+      desc: '设置>设备信息>网络信息>网络状态>IP 地址'
+      type: 'text'
+    subnet_mask:
+      name: '子网掩码'
+      desc: '设置>设备信息>网络信息>网络状态>子网掩码'
+      type: 'text'
+    gateway:
+      name: '网关'
+      desc: '设置>设备信息>网络信息>网络状态>网关'
+      type: 'text'
+    mac_address:
+      name: 'Mac 地址'
+      desc: '设置>设备信息>网络信息>网络状态>Mac 地址'
+      type: 'text'
+    preferred_dns:
+      name: '首选DNS'
+      desc: '设置>设备信息>网络信息>网络状态>首选DNS'
+      type: 'text'
+    spare_dns:
+      name: '备用DNS'
+      desc: '设置>设备信息>网络信息>网络状态>备用DNS'
+      type: 'text'
+    advanced_setting:
+      name: '高级设置'
+      desc: '设置>设备信息>网络信息>网络状态>高级设置'
+      type: 'navigation'
+      subpage: *advanced_setting_anchor
+
+
+device_update_page: &device_update_page_anchor
+  name: '升级'
+  desc: '设置>设备信息>设备升级>升级'
+  type: 'page'
+  items:
+    auto_upgrade:
+      name: '自动升级'
+      desc: '设置>设备信息>设备升级>升级>自动升级'
+      type: 'switch'
+    manual_upgrade:
+      name: '手动升级'
+      desc: '设置>设备信息>设备升级>升级>手动升级'
+      type: 'navigation'
+      subpage:
+        name: '升级'
+        desc: '设置>设备信息>设备升级>升级>手动升级>升级'
+        type: 'page'
+
+device_info_page:
+  name: '设备信息'
+  desc: '设置>设备信息'
+  type: 'page'
+  items:
+    device_name:
+      name: '设备名称'
+      desc: '设置>设备信息>设备名称'
+      type: 'navigation'
+      subpage:
+        name: '修改名称'
+        desc: '设置>设备信息>设备名称>修改名称'
+        type: 'page'
+    model:
+      name: '机型'
+      desc: '设置>设备信息>机型'
+      type: 'text'
+    item_No:
+      name: '型号'
+      desc: '设置>设备信息>型号'
+      type: 'text'
+    uid:
+      name: 'UID'
+      desc: '设置>设备信息>UID'
+      type: 'text'
+    storage:
+      name: '存储'
+      desc: '设置>设备信息>storage'
+      type: 'navigation'
+      subpage:
+        name: '存储'
+        desc: '设置>设备信息>存储'
+        type: 'page'
+    network_info:
+      name: '网络信息'
+      desc: '设置>设备信息>网络信息'
+      type: 'navigation'
+      subpage: *network_status_anchor
+    mobile_info:
+      name: '移动信息'
+      desc: '设置>设备信息>移动信息'
+      type: 'navigation'
+      subpage:
+        name: '移动信息'
+        desc: '设置>设备信息>移动信息>移动信息'
+        type: 'page'
+    device_update:
+      name: '设备升级'
+      desc: '设置>设备信息>设备升级'
+      type: 'navigation'
+      subpage: *device_update_page_anchor
+    build_version:
+      name: '编译版本'
+      desc: '设置>设备信息>编译版本'
+      type: 'text'
+    hardware_version:
+      name: '硬件版本'
+      desc: '设置>设备信息>硬件版本'
+      type: 'text'
+    config_version:
+      name: '配置版本'
+      desc: '设置>设备信息>配置版本'
+      type: 'text'
+    firmware_version:
+      name: '固件版本'
+      desc: '设置>设备信息>固件版本'
+      type: 'text'
+    detail:
+      name: '细节'
+      desc: '设置>设备信息>细节'
+      type: 'text'
+
+
+
+
+
+

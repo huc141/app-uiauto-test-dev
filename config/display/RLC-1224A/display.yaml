@@ -1,7 +1,7 @@
-device_list_name: yulong-test-sd7
+device_list_name: RLC-1224A
 ipc:
   display:
-    desc: 设置>显示
+
     items:
       display:
         date:
@@ -15,16 +15,7 @@ ipc:
           - 左下
           - 中下
           - 右下
-          text:
-          - 日期
-          - 左上
-          - 中上
-          - 右上
-          - 左下
-          - 中下
-          - 右下
-          - 隐藏
-          type: popup
+
         day_and_night:
           black_and_white:
             desc: 白天和黑夜>黑白
@@ -127,50 +118,21 @@ ipc:
           - 中下
           - 右下
           - 隐藏
-          text:
-          - 设备名称
-          - 左上
-          - 中上
-          - 右上
-          - 左下
-          - 中下
-          - 右下
-          - 隐藏
-          type: popup
-        horizontal_flip:
-          desc: 设置>显示>水平翻转
-          name: 水平翻转
-          options:
-          - switch_on
-          - switch_off
-          type: switch
+
+        horizontal_flip: 水平翻转
+
         image_setting:
-          anti_flicker:
-            desc: 设置>显示>抗闪烁
-            name: 抗闪烁
-            options:
-            - 50HZ
-            - 60HZ
-            - 其他
-            - 关闭
-            text:
-            - 抗闪烁
-            - 50HZ
-            - 60HZ
-            - 其他
-            - 关闭
-            type: popup
-          brightness:
-            name: 亮度
-          desc: 设置>显示>图像设置
-          name: 图像设置
-          text:
-          - 亮度
-          - 抗闪烁
-          - 调整摄像机的拍摄帧率，以减少受到画面中光源闪烁的影响。
-          - '0'
-          - '255'
-          type: page
+          name: '图像设置(只需要确认亮度同步/hdr/夜视通透模式/抗闪烁)'
+
+          brightness: '亮度'
+          contrast: '对比度'
+          saturation: '饱和度'
+          sharpness: '锐度'
+          brightness_sync: false
+          hdr: false
+          night_transparent_vision: true
+          anti_flicker: true
+
         motion_mark:
           desc: 设置>显示>移动标记
           name: 移动标记
@@ -193,59 +155,72 @@ ipc:
         - 图像设置
         - 白天和黑夜
         - 遮盖区域
-        text:
-          - 垂直翻转
-          - 水平翻转
-          - 码流
-          - 移动标记
-          - 画面为清晰时，智能检测到移动事物将进行标记。
-          - 设备名称
-          - 日期
-          - 水印
-          - 图像设置
-          - 白天和黑夜
-          - 遮盖区域
+
         private_mark:
           name: '遮盖区域'
           desc: '设置>显示>遮盖区域'
           type: 'navigation'
-          camera_type: 'GC'
+          camera_type: 'DM'
           mask_num: 4
+
         stream:
           clear:
+            frame_rate:
+              desc: 设置>显示>码流>码流>清晰>帧率(FPS)
+              name: 帧率(FPS)
+              options:
+              - 20(默认)
+              - '18'
+              - '16'
+              - '15'
+              - '12'
+              - '10'
+              - '8'
+              - '6'
+
             i_frame_interval:
               desc: 设置>显示>码流>码流>清晰>I 帧间隔
               name: I 帧间隔
               options:
               - 1x
               - 2x
+
             max_bit_rate:
               desc: 设置>显示>码流>码流>清晰>最大码率(Kbps)
               name: 最大码率(Kbps)
               options:
-              - 4096(默认)
+              - '3072'
+              - '4096'
               - '5120'
               - '6144'
               - '7168'
-              - '8192'
+              - 8192(默认)
+              - '9126'
+              - '10240'
+
             resolution:
+              desc: 设置>显示>码流>码流>清晰>分辨率
+              name: 分辨率
               options:
+              - 4512*2512
               - 3840*2160
+              - 2560*1440
+              - 2304*1296
+
             text:
-            - I 帧间隔
+              - I 帧间隔
 
           fluent:
             frame_rate:
+              desc: 设置>显示>码流>码流>流畅>帧率(FPS)
               name: 帧率(FPS)
               options:
               - '20'
-              - '18'
-              - '16'
-              - 15(默认)
-              - '12'
-              - '8'
-              - '6'
+              - '15'
+              - 10(默认)
+              - '7'
               - '4'
+
             i_frame_interval:
               desc: 设置>显示>码流>码流>流畅>I 帧间隔
               name: I 帧间隔
@@ -254,6 +229,7 @@ ipc:
               - 2x
               - 3x
               - 4x
+
             max_bit_rate:
               desc: 设置>显示>码流>码流>流畅>最大码率(Kbps)
               options:
@@ -262,28 +238,70 @@ ipc:
               - '384'
               - '512'
               - '672'
-              - 768(默认)
-              - '1024'
+              - '768'
+              - 1024(默认)
               - '1228'
+
             resolution:
               desc: 设置>显示>码流>码流>流畅>分辨率
               name: 分辨率
               options:
               - 896*512
+
             text:
-            - I 帧间隔
+              - 编码格式
+              - I 帧间隔
+            options:
+              - '帧率控制'
+
 
           frame_rate_mode:
-            desc: 设置>显示>码流>码流>帧率控制
-            name: 帧率控制
+            name: '帧率控制(A代表自动，B代表恒定，C代表逐步)'
+            desc: '设置>显示>码流>码流>帧率控制'
             support_mode: 'AB'
 
+          rate_mode:
+            desc: 设置>显示>码流>码流>码率模式
+            name: 码率控制
+            options:
+            - 固定码率
+            - 动态码率
+            text:
+            - 码率控制
+            - 固定码率
+            - 不同的码率控制模式会影响画质和文件存储大小。
+            - 动态码率
+            - 自动根据视频内容的复杂度进行码率控制。码率不足时，视频可能会变得模糊。
+            type: popup
+
           text:
+          - 码流
+          - 清晰
+          - 分辨率
+          - 帧率(FPS)
+          - 最大码率(Kbps)
+          - 流畅
           - I 帧间隔
           - 帧率控制
-          options:
-          - 帧率控制
 
-        vertical_flip: '垂直翻转(无需配置，有则保留无则删除)'
-        watermark: '水印(无需配置，有则保留无则删除)'
-uid: 952700Y006ZP1IJ5
+
+        text:
+        - 垂直翻转
+        - 水平翻转
+        - 码流
+        - 移动标记
+        - 画面为清晰时，智能检测到移动事物将进行标记。
+        - 设备名称
+        - 日期
+        - 水印
+        - 图像设置
+        - 白天和黑夜
+        - 遮盖区域
+
+        vertical_flip: 垂直翻转
+
+
+        watermark: 水印
+
+
+uid: 952700Y004OY1G4W

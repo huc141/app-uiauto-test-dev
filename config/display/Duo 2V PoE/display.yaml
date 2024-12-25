@@ -1,0 +1,247 @@
+device_list_name: Duo 2V PoE
+uid: 952700Y006V71KIP
+
+ipc:
+  display:
+    items:
+      display:
+        text:
+          - 码流
+          - 设备名称
+          - 日期
+          - 水印
+          - 图像设置
+          - 白天和黑夜
+          - 遮盖区域
+          - 拼接设置
+        options:
+          - 码流
+          - 设备名称
+          - 日期
+          - 水印
+          - 图像设置
+          - 白天和黑夜
+          - 遮盖区域
+          - 拼接设置
+
+        date: '日期(无需配置，有则保留无则删除)'
+        watermark: 水印
+        device_name: '设备名称(无需配置，有则保留无则删除)'
+        splice_region: 拼接设置
+
+        day_and_night:
+          black_and_white:
+            desc: 白天和黑夜>黑白
+            name: 黑白
+            options:
+            - 自动
+            - 手动
+            - 亮度
+            - 暗部
+            text:
+            - 黑白
+            - 自动
+            - 手动
+            - 亮度
+            - 恢复默认值
+            - 暗部
+            - '0'
+            - '255'
+            
+          day_color:
+            desc: 白天和黑夜>白天彩色
+            name: 白天彩色
+            options:
+            - 自动
+            - 手动
+            - 亮度
+            - 暗部
+            text:
+            - 白天彩色
+            - 自动
+            - 手动
+            - 亮度
+            - 恢复默认值
+            - 暗部
+            - '0'
+            - '255'
+            
+          desc: 白天和黑夜
+          mode_switching:
+            desc: 白天和黑夜>模式切换
+            name: 模式切换
+            options:
+            - 黑白
+            - 彩色
+            - 自动
+            - 日夜切换阈值
+            text:
+            - 模式切换
+            - 黑白
+            - 彩色
+            - 自动
+            - 光线较亮时自动显示彩色，较暗时自动显示黑白。
+            - 日夜切换阈值
+            - 白天和黑夜自动模式下，黑白彩色切换的环境亮度阈值：
+            - 恢复默认值
+            - '0'
+            - '100'
+            
+          name: 白天和黑夜
+          night_vision_color:
+            desc: 白天和黑夜>夜视彩色
+            name: 夜视彩色
+            options:
+            - 自动
+            - 手动
+            - 亮度
+            - 暗部
+            text:
+            - 夜视彩色
+            - 自动
+            - 手动
+            - 亮度
+            - 恢复默认值
+            - 暗部
+            - '0'
+            - '255'
+            
+          options:
+          - 模式切换
+          - 黑白
+          - 白天彩色
+          - 夜视彩色
+          text:
+          - 白天和黑夜
+          - 模式切换
+          - 高光/阴影调节
+          - 黑白
+          - 白天彩色
+          - 夜视彩色
+
+        image_setting:
+          name: '图像设置(只需要确认亮度同步/hdr/夜视通透模式/抗闪烁)'
+
+          brightness: '亮度'
+          contrast: '对比度'
+          saturation: '饱和度'
+          sharpness: '锐度'
+          brightness_sync: false
+          hdr: false
+          night_transparent_vision: false
+          anti_flicker: true
+
+        private_mark:
+          name: '遮盖区域'
+          desc: '设置>显示>遮盖区域'
+          type: 'navigation'
+          camera_type: 'DM'
+          mask_num: 4
+
+        stream:
+          text:
+            - I 帧间隔
+            - 编码格式
+          options:
+            - '帧率控制'
+            - '码率控制'
+
+          clear:
+            text:
+              - 编码格式
+              - I 帧间隔
+
+            frame_rate:
+              desc: 设置>显示>码流>码流>清晰>帧率(FPS)
+              name: 帧率(FPS)
+              options:
+              - 20(默认)
+              - '18'
+              - '16'
+              - '15'
+              - '12'
+              - '10'
+              - '8'
+              - '6'
+              
+            i_frame_interval:
+              desc: 设置>显示>码流>码流>清晰>I 帧间隔
+              name: I 帧间隔
+              options:
+              - 1x
+              - 2x
+              
+            max_bit_rate:
+              desc: 设置>显示>码流>码流>清晰>最大码率(Kbps)
+              name: 最大码率(Kbps)
+              options:
+              - '3072'
+              - '4096'
+              - '5120'
+              - '6144'
+              - 7168(默认)
+              - '8192'
+              - '9216'
+              
+            resolution:
+              desc: 设置>显示>码流>码流>清晰>分辨率
+              name: 分辨率
+              options:
+              - 5120*1552
+              - 4096*1248
+              
+            
+
+          fluent:
+            text:
+              - 编码格式
+              - I 帧间隔
+
+            frame_rate:
+              desc: 设置>显示>码流>码流>流畅>帧率(FPS)
+              name: 帧率(FPS)
+              options:
+              - 20(默认)
+              - '15'
+              - '10'
+              - '7'
+              - '4'
+              
+            i_frame_interval:
+              desc: 设置>显示>码流>码流>流畅>I 帧间隔
+              name: I 帧间隔
+              options:
+              - 1x
+              - 2x
+              - 3x
+              - 4x
+              
+            max_bit_rate:
+              desc: 设置>显示>码流>码流>流畅>最大码率(Kbps)
+              options:
+              - '256'
+              - '512'
+              - 1024(默认)
+              - '1536'
+              - '2048'
+            resolution:
+              desc: 设置>显示>码流>码流>流畅>分辨率
+              name: 分辨率
+              options:
+              - 1920*576
+
+
+          frame_rate_mode:
+            desc: 设置>显示>码流>码流>帧率控制
+            name: 帧率控制
+            options:
+            - 自动
+            - 恒定
+
+          rate_mode:
+            desc: 设置>显示>码流>码流>码率模式
+            name: 码率控制
+
+
+
+

@@ -45,6 +45,9 @@ ipc:
         image_layout: '图像布局(无需配置，有则保留无则删除)'
         splice_region: '拼接区域(无需配置，有则保留无则删除)'
 
+        auto_zoom:
+          name: '自动对焦'
+
         private_mark:
           name: '遮盖区域'
           desc: '设置>显示>遮盖区域'
@@ -199,10 +202,11 @@ ipc:
           contrast: '对比度'
           saturation: '饱和度'
           sharpness: '锐度'
-          brightness_sync: true
-          hdr: true
-          night_transparent_vision: true
+          brightness_sync: false
+          hdr: false
+          night_transparent_vision: false
           anti_flicker: true
+          night_vision_zoom_enhance: false
 
         day_and_night:
           name: '白天和黑夜'

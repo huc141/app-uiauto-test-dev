@@ -19,7 +19,7 @@ class TestRemoteDisplay:
     def test_remote_watermark(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['display']['items']['display']
-        BasePage().check_key_in_yaml(remote_items, 'watermark')
+        BasePage().check_key_in_yaml(remote_items, 'auto_zoom')
 
         # 启动app，并开启录屏
         driver.start_app(True)

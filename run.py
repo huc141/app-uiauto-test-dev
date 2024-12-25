@@ -6,8 +6,8 @@ import pytest
 from common_tools.logger import logger
 
 
-path = os.path.join(os.getcwd(), 'report_allure_temps')  # 定义allure的json临时文件目录路径
-reports_path = os.path.join(os.getcwd(), 'reports')  # 定义allure测试报告的保存路径
+path = os.path.join(os.getcwd(), 'a_report_allure_temps')  # 定义allure的json临时文件目录路径
+reports_path = os.path.join(os.getcwd(), 'a_reports')  # 定义allure测试报告的保存路径
 
 
 class GenerateReports:
@@ -16,9 +16,9 @@ class GenerateReports:
     def make_dir():
         if not exists(path):
             os.mkdir(path)
-            logger.info("成功创建report_allure_temps文件夹！")
+            logger.info("成功创建a_report_allure_temps文件夹！")
         else:
-            logger.info("无需创建report_allure_temps文件夹！")
+            logger.info("无需创建a_report_allure_temps文件夹！")
 
     @staticmethod
     def generate_report():

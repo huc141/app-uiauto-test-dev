@@ -1,0 +1,54 @@
+schedule_page: &schedule_page_anchor
+  name: '计划'
+  desc: '设置>摄像机录像>计划>计划'
+  type: 'page'
+  items:
+    alarm_type:
+      name: '报警类型'
+      desc: '设置>摄像机录像>计划>计划>报警类型'
+      type: 'checkbox'
+      options:
+        - '画面变动'
+        - '车'
+        - '动物'
+        - '包裹'
+
+
+camera_record_page:
+  name: '摄像机录像'
+  desc: '设置>摄像机录像页面'
+  type: 'page'
+  items:
+    camera_record:
+      name: '摄像机录像'
+      desc: '设置>摄像机录像>摄像机录像'
+      type: 'switch'
+    schedule:
+      name: '计划'
+      key: 'schedule'
+      desc: '设置>摄像机录像>计划'
+      type: 'navigation'
+      subpage: *schedule_page_anchor
+    record_delay_duration:
+      name: '录像延时时长'
+      desc: '设置>摄像机录像>录像延时时长'
+      type: 'popup'
+      options:
+        - '15秒'
+        - '30秒'
+        - '1分'
+    overwrite_record:
+      name: '覆盖录像'
+      key: ''
+      desc: '设置>摄像机录像>覆盖录像'
+      type: 'popup'
+      options:
+        - '1 天'
+        - '2.json 天'
+        - '3 天'
+        - '7 天'
+        - '14 天'
+        - '30 天'
+        - '循环覆盖最早的录像'
+        - '无'
+

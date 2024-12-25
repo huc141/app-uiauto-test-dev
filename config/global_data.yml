@@ -1,5 +1,5 @@
 # 设备配置加载目录
-device_dir: 'display'
+device_dir: 'apower/Duo 2V PoE'
 # 远程配置主页能力集提取id：
 remote_setting: 'ReoTitle'
 # 计划>报警类型 选项提取id

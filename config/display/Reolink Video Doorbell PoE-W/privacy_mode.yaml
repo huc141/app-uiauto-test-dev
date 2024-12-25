@@ -1,0 +1,20 @@
+device_list_name: &device_name "Doorbell PoE-Wlanglanglanglang"
+uid: '952700Y100HMB29E'
+sub_name: ""
+
+ipc:
+  privacy_mode:
+    name: '隐私模式'
+    desc: '设置>隐私模式'
+    type: 'navigation'
+    text:
+      - ''
+
+    items:
+      privacy_mode:
+        name: '隐私模式'
+        desc: '设置>隐私模式>隐私模式主页'
+        type: 'page'
+        text:
+          - '隐私模式'
+          - '开启后，摄像机部分功能将停止使用'
