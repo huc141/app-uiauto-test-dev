@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import copy
 import time
 import pytest
 from typing import Literal
@@ -667,6 +668,10 @@ class RemoteDisplay(BasePage):
 
             # 验证设备名称配置页文案
             RemoteSetting().scroll_check_funcs2(texts=display_device_name_texts, back2top=False)
+
+            # 将列表display_device_name_reotitle赋值给新的列表
+            display_device_name_reotitle02 = copy.deepcopy(display_device_name_reotitle)
+
             # 验证设备名称配置页的选项文案
             RemoteSetting().scroll_check_funcs2(texts=display_device_name_reotitle, selector='ReoTitle', back2top=False)
 
@@ -688,11 +693,11 @@ class RemoteDisplay(BasePage):
             self.back_previous_page_by_xpath()
             # 将上述的【target_device_name_value】从date_options列表中剔除
             if target_date_value != '隐藏':
-                display_device_name_reotitle.remove(target_date_value)
+                display_device_name_reotitle02.remove(target_date_value)
             logger.info(f'新的设备名称操作列表为：{display_device_name_reotitle}')
 
             # 开始遍历验证除了置灰选项外的日期选项
-            self.iterate_and_click_popup_text(option_text_list=display_device_name_reotitle,
+            self.iterate_and_click_popup_text(option_text_list=display_device_name_reotitle02,
                                               menu_text='设备名称')
 
         except Exception as err:
@@ -721,6 +726,10 @@ class RemoteDisplay(BasePage):
 
             # 验证日期配置页文案
             RemoteSetting().scroll_check_funcs2(texts=display_date_texts, back2top=False)
+
+            # 将列表display_date_reotitle赋值给新的列表
+            display_date_reotitle02 = copy.deepcopy(display_date_reotitle)
+
             # 验证日期配置页的选项文案
             RemoteSetting().scroll_check_funcs2(texts=display_date_reotitle, selector='ReoTitle', back2top=False)
 
@@ -742,11 +751,11 @@ class RemoteDisplay(BasePage):
             self.back_previous_page_by_xpath()
             # 将上述的【target_device_name_value】从date_options列表中剔除
             if target_device_name_value != '隐藏':
-                display_date_reotitle.remove(target_device_name_value)
+                display_date_reotitle02.remove(target_device_name_value)
             logger.info(f'新的日期操作列表为：{display_date_reotitle}')
 
             # 开始遍历验证除了置灰选项外的日期选项
-            self.iterate_and_click_popup_text(option_text_list=display_date_reotitle,
+            self.iterate_and_click_popup_text(option_text_list=display_date_reotitle02,
                                               menu_text='日期')
 
         except Exception as err:
@@ -1518,14 +1527,3 @@ class RemoteDisplay(BasePage):
                                                 back2top=False)
         except Exception as err:
             pytest.fail(f"函数执行出错: {err}")
-
-
-
-
-
-
-
-
-
-
-
