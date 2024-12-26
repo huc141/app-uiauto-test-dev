@@ -687,7 +687,7 @@ class BasePage:
                 time.sleep(1)
                 logger.info('点击 ' + i)
                 self.click_by_text(i)
-                time.sleep(2)
+                time.sleep(3)
                 page_options = scroll_check_function(i)  # 断言
                 if i != '取消':
                     assert page_options is True

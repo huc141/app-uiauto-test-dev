@@ -1,0 +1,240 @@
+device_list_name: RLC-410W-TJ9Q
+ipc:
+  display:
+    desc: 设置>显示
+
+    items:
+      display:
+
+        date:
+          desc: 设置>显示>日期
+          name: 日期
+          options:
+          - 隐藏
+          - 左上
+          - 中上
+          - 右上
+          - 左下
+          - 中下
+          - 右下
+
+        day_and_night:
+          black_and_white:
+            desc: 白天和黑夜>黑白
+            name: 黑白
+            options:
+            - 自动
+            - 手动
+            - 亮度
+            - 暗部
+            text:
+            - 黑白
+            - 自动
+            - 手动
+            - 亮度
+            - 恢复默认值
+            - 暗部
+            - '0'
+            - '255'
+            type: popup
+          day_color:
+            desc: 白天和黑夜>白天彩色
+            name: 白天彩色
+            options:
+            - 自动
+            - 手动
+            - 亮度
+            - 暗部
+            text:
+            - 白天彩色
+            - 自动
+            - 手动
+            - 亮度
+            - 恢复默认值
+            - 暗部
+            - '0'
+            - '255'
+            type: popup
+          desc: 白天和黑夜
+          mode_switching:
+            desc: 白天和黑夜>模式切换
+            name: 模式切换
+            options:
+            - 黑白
+            - 彩色
+            - 自动
+            - 日夜切换阈值
+            text:
+            - 模式切换
+            - 黑白
+            - 彩色
+            - 自动
+            - 光线较亮时自动显示彩色，较暗时自动显示黑白。
+            - 日夜切换阈值
+            - 白天和黑夜自动模式下，黑白彩色切换的环境亮度阈值：
+            - 恢复默认值
+            - '0'
+            - '100'
+            type: popup
+          name: 白天和黑夜
+          options:
+          - 模式切换
+          - 黑白
+          - 白天彩色
+          text:
+          - 白天和黑夜
+          - 模式切换
+          - 高光/阴影调节
+          - 黑白
+          - 白天彩色
+          type: popup
+
+
+        device_name:
+          desc: 设置>显示>设备名称
+          name: 设备名称
+          options:
+          - 左上
+          - 中上
+          - 右上
+          - 左下
+          - 中下
+          - 右下
+          - 隐藏
+
+        horizontal_flip: 水平翻转
+
+
+        image_setting:
+          name: '图像设置(只需要确认亮度同步/hdr/夜视通透模式/抗闪烁)'
+
+          brightness: '亮度'
+          contrast: '对比度'
+          saturation: '饱和度'
+          sharpness: '锐度'
+          brightness_sync: false
+          hdr: false
+          night_transparent_vision: false
+          anti_flicker: true
+
+        motion_mark:
+          desc: 设置>显示>移动标记
+          name: 移动标记
+          options:
+          - switch-on
+          - switch-off
+          text:
+          - 移动标记
+          - 画面为清晰时，智能检测到移动事物将进行标记。
+          type: switch
+
+        options:
+        - 垂直翻转
+        - 水平翻转
+        - 码流
+        - 设备名称
+        - 日期
+        - 水印
+        - 图像设置
+        - 移动标记
+        - 白天和黑夜
+        - 遮盖区域
+
+        private_mark:
+          name: '遮盖区域'
+          desc: '设置>显示>遮盖区域'
+          type: 'navigation'
+          camera_type: 'DM'
+          mask_num: 4
+
+        stream:
+          clear:
+            frame_rate:
+              desc: 设置>显示>码流>码流>清晰>帧率(FPS)
+              name: 帧率(FPS)
+              options:
+              - '30'
+              - '25'
+              - '22'
+              - '20'
+              - '18'
+              - '16'
+              - 15(默认)
+              - '12'
+            max_bit_rate:
+              desc: 设置>显示>码流>码流>清晰>最大码率(Kbps)
+              name: 最大码率(Kbps)
+              options:
+              - 4096(默认)
+              - '1024'
+              - '1536'
+              - '2048'
+              - 3072(默认)
+              - '4096'
+              - '5120'
+              - '6144'
+              - '7168'
+
+            resolution:
+              desc: 设置>显示>码流>码流>清晰>分辨率
+              name: 分辨率
+              options:
+              - 2560*1440
+              - 2304*1296
+              - 1920*1080
+              - 1280*720
+
+            text:
+              - 最大码率(Kbps)
+
+          fluent:
+            frame_rate:
+              desc: 设置>显示>码流>码流>流畅>帧率(FPS)
+              name: 帧率(FPS)
+              options:
+              - '15'
+              - '10'
+              - 7(默认)
+              - '4'
+
+            max_bit_rate:
+              desc: 设置>显示>码流>码流>流畅>最大码率(Kbps)
+              options:
+              - '64'
+              - '128'
+              - 160(默认)
+              - '192'
+              - '256'
+              - '384'
+              - '512'
+
+            resolution:
+              desc: 设置>显示>码流>码流>流畅>分辨率
+              name: 分辨率
+              options:
+              - 640*360
+            text:
+              - 最大码率(Kbps)
+
+          text:
+            - ''
+          options:
+            - ''
+
+        text:
+        - 垂直翻转
+        - 水平翻转
+        - 码流
+        - 设备名称
+        - 日期
+        - 水印
+        - 图像设置
+        - 移动标记
+        - 白天和黑夜
+        - 遮盖区域
+
+        vertical_flip: 垂直翻转
+
+        watermark: 水印
+
+uid: 952700Y0021STJ9Q

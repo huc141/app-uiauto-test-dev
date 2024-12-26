@@ -43,6 +43,7 @@ class RemoteDisplay(BasePage):
         :return:
         """
         try:
+            time.sleep(2)
             if RemoteSetting().is_element_exists(element_value=self.pull_down_element, selector_type='xpath',
                                                  scroll_or_not=False) and pull_down:
                 self.drag_element(element_xpath=self.pull_down_element,
@@ -694,7 +695,7 @@ class RemoteDisplay(BasePage):
             # 将上述的【target_device_name_value】从date_options列表中剔除
             if target_date_value != '隐藏':
                 display_device_name_reotitle02.remove(target_date_value)
-            logger.info(f'新的设备名称操作列表为：{display_device_name_reotitle}')
+            logger.info(f'新的设备名称操作列表为：{display_device_name_reotitle02}')
 
             # 开始遍历验证除了置灰选项外的日期选项
             self.iterate_and_click_popup_text(option_text_list=display_device_name_reotitle02,
@@ -752,7 +753,7 @@ class RemoteDisplay(BasePage):
             # 将上述的【target_device_name_value】从date_options列表中剔除
             if target_device_name_value != '隐藏':
                 display_date_reotitle02.remove(target_device_name_value)
-            logger.info(f'新的日期操作列表为：{display_date_reotitle}')
+            logger.info(f'新的日期操作列表为：{display_date_reotitle02}')
 
             # 开始遍历验证除了置灰选项外的日期选项
             self.iterate_and_click_popup_text(option_text_list=display_date_reotitle02,

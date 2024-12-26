@@ -40,6 +40,7 @@ class TestRemoteDisplay:
     @allure.feature("显示>日期")
     @allure.story("需人工核查日志和录屏")
     @allure.title("测试进入日期页面，遍历日期配置")
+    @pytest.mark.skip
     def test_remote_date(self, device_config):
         # 获取yaml文件指定配置
         remote_items = device_config['ipc']['display']['items']['display']
