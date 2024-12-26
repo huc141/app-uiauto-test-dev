@@ -1,0 +1,241 @@
+device_list_name: E1 Outdoor SE PoE
+uid: 952700Y100VIGA07
+
+
+ipc:
+  display:
+    items:
+      display:
+        text:
+          - 垂直翻转
+          - 水平翻转
+          - 码流
+          - 移动标记
+          - 画面为清晰时，智能检测到移动事物将进行标记。
+          - 设备名称
+          - 日期
+          - 水印
+          - 图像设置
+          - 白天和黑夜
+          - 遮盖区域
+        options:
+          - 垂直翻转
+          - 水平翻转
+          - 码流
+          - 移动标记
+          - 设备名称
+          - 日期
+          - 水印
+          - 图像设置
+          - 白天和黑夜
+          - 遮盖区域
+
+        day_and_night:
+          text:
+            - 白天和黑夜
+            - 模式切换
+            - 高光/阴影调节
+            - 黑白
+            - 白天彩色
+            - 夜视彩色
+          options:
+            - 模式切换
+            - 黑白
+            - 白天彩色
+            - 夜视彩色
+
+          mode_switching:
+            options:
+              - 黑白
+              - 彩色
+              - 自动
+              - 日夜切换阈值
+            text:
+              - 模式切换
+              - 黑白
+              - 彩色
+              - 自动
+              - 光线较亮时自动显示彩色，较暗时自动显示黑白。
+              - 日夜切换阈值
+              - 白天和黑夜自动模式下，黑白彩色切换的环境亮度阈值：
+              - 恢复默认值
+              - '0'
+              - '100'
+
+          black_and_white:
+            options:
+              - 自动
+              - 手动
+              - 亮度
+              - 暗部
+            text:
+              - 黑白
+              - 自动
+              - 手动
+              - 亮度
+              - 恢复默认值
+              - 暗部
+              - '0'
+              - '255'
+
+          day_color:
+            desc: 白天和黑夜>白天彩色
+            name: 白天彩色
+            options:
+            - 自动
+            - 手动
+            - 亮度
+            - 暗部
+            text:
+            - 白天彩色
+            - 自动
+            - 手动
+            - 亮度
+            - 恢复默认值
+            - 暗部
+            - '0'
+            - '255'
+
+          night_vision_color:
+            name: '夜视彩色'
+            desc: '白天和黑夜>夜视彩色'
+            type: 'popup'
+            text:
+              - '夜视彩色'
+              - '自动'
+              - '手动'
+              - '亮度'
+              - '恢复默认值'
+              - '暗部'
+              - '0'
+              - '255'
+            options:
+              - '自动'
+              - '手动'
+              - '亮度'
+              - '暗部'
+
+        date: 日期
+        motion_mark: 移动标记
+        device_name: 设备名称
+        horizontal_flip: 水平翻转
+        vertical_flip: 垂直翻转
+        watermark: 水印
+
+        image_setting:
+          name: '图像设置(只需要确认亮度同步/hdr/夜视通透模式/抗闪烁)'
+
+          brightness: '亮度'
+          contrast: '对比度'
+          saturation: '饱和度'
+          sharpness: '锐度'
+          brightness_sync: false
+          hdr: false
+          night_transparent_vision: false
+          anti_flicker: true
+
+        private_mark:
+          name: '遮盖区域'
+          desc: '设置>显示>遮盖区域'
+          type: 'navigation'
+          camera_type: 'DM'
+          mask_num: 4
+
+        stream:
+          text:
+            - 'I 帧间隔'
+            - '帧率控制'
+          options:
+            - '帧率控制'
+
+          clear:
+            text:
+              - 'I 帧间隔'
+
+            resolution:
+              options:
+                - '3840*2160'
+                - '2560*1440'
+                - '2304*1296'
+
+            frame_rate:
+              options:
+                - '25(默认)'
+                - '22'
+                - '20'
+                - '18'
+                - '16'
+                - '15'
+                - '12'
+                - '10'
+                - '8'
+                - '6'
+                - '4'
+                - '2'
+
+            max_bit_rate:
+              options:
+                - '2048'
+                - '3072'
+                - '4096'
+                - '5120'
+                - '6144(默认)'
+                - '7168'
+                - '8192'
+
+            i_frame_interval:
+              desc: 设置>显示>码流>码流>清晰>I 帧间隔
+              name: I 帧间隔
+              options:
+                - 1x
+                - 2x
+
+          fluent:
+            text:
+              - 'I 帧间隔'
+
+            resolution:
+              desc: 设置>显示>码流>码流>流畅>分辨率
+              name: 分辨率
+              options:
+                - 640*360
+
+            frame_rate:
+              options:
+                - '15'
+                - '10(默认)'
+                - '7'
+                - '4'
+
+            max_bit_rate:
+              desc: 设置>显示>码流>码流>流畅>最大码率(Kbps)
+              options:
+                - '64'
+                - '128'
+                - '160'
+                - '192'
+                - '256(默认)'
+                - '384'
+                - '512'
+
+            i_frame_interval:
+              desc: 设置>显示>码流>码流>流畅>I 帧间隔
+              name: I 帧间隔
+              options:
+                - 1x
+                - 2x
+                - 3x
+                - 4x
+
+
+          frame_rate_mode:
+            name: '帧率控制(A代表自动，B代表恒定，C代表逐步)'
+            desc: '设置>显示>码流>码流>帧率控制'
+            support_mode: 'AB'
+
+
+
+
+
+
+
