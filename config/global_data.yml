@@ -1,3 +1,17 @@
+# api接口配置
+api_config:
+  api_server: https://apifoxmock.com/m2
+  is_default: true
+  username: admin
+  password: reolink123
+  device_uid: 952700Y006U21XKV
+  ip: 192.168.1.1
+  api_path: /light/getLightCfg
+  api_params:
+    cmd: getLightCfg
+    channel: 0
+
+
 # 设备配置加载目录
 device_dir: 'apower'
 # 远程配置主页能力集提取id：
