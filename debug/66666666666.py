@@ -8,10 +8,10 @@ config = {
     "is_default": True,
     "username": "admin",
     "password": "reolink123",
-    "device_uid": "952700Y005K15KA1",
+    "device_uid": "952700Y006U21XKV",
     "ip": "192.168.1.1",
-    "api_params": {"cmd": "getAbility", "channel": 0, "token": 0},
-    "api_path": "/ability/getAbility"
+    "api_path": "/light/getLightCfg",
+    "api_params": {"cmd": "getLightCfg", "channel": 0}
 }
 
 
@@ -36,23 +36,24 @@ def t_rest_api_1():
         config["api_token"] = result["token"]
         assert result["code"] == 1
         print(f"API Result: {result}")
+        print(f'config: {config}')
         print(f"Token: {config['api_token']}")
     else:
         print(f"Failed to get token: {response.status_code}")
-
-
-t_rest_api_1()
 
 
 def t_rest_api_2():
     json_data = config["api_params"]
     json_data["token"] = config["api_token"]
     url = f"{config['api_server']}{config['api_path']}"
+    print(f"URL: {url}")
 
     headers = {
         "Content-Type": "application/json",
         "SonicToken": "xxxxxxx"
     }
+    # 打印出请求参数
+    print(f"Request Data: {json_data}")
 
     response = requests.post(url, data=json.dumps(json_data), headers=headers)
     if response.status_code == 200:
@@ -62,5 +63,13 @@ def t_rest_api_2():
         print(f"Failed to get API data: {response.status_code}")
 
 
+t_rest_api_1()
 t_rest_api_2()
 
+# 请求数据：
+API Result: {'code': 1, 'msg': '登录成功', 'token': 2}
+config: {'api_server': 'http://192.168.100.159:8002', 'is_default': True, 'username': 'admin', 'password': 'reolink123', 'device_uid': '952700Y006U21XKV', 'ip': '192.168.1.1', 'api_path': '/light/getLightCfg', 'api_params': {'cmd': 'getLightCfg', 'channel': 0}, 'api_token': 2}
+Token: 2
+URL: http://192.168.100.159:8002/light/getLightCfg
+Request Data: {'cmd': 'getLightCfg', 'channel': 0, 'token': 2}
+REST API Result: {'cmd': 'getLightCfg', 'cmdIdx': 0, 'channel': 0, 'channelType': 0, 'device': 1000002, 'statusInfo': {'code': 0, 'message': 'OK'}, 'value': {'irLight': {'state': 'auto'}, 'powerLight': {'state': 'open'}, 'doorbellLight': {'state': 'close'}}, 'range': {'irLight': {'state': ['auto', 'close']}, 'powerLight': {'state': ['close', 'open']}, 'doorbellLight': {'state': ['close', 'open', 'keepOff']}}}
