@@ -1,14 +1,14 @@
 import requests
 import json
 
-# 假设LogUtil和StepType在Python中不需要，因为我们可以直接打印日志
-# 假设我们有一个配置字典来代替androidStepHandler.globalParams
+# LogUtil和StepType在Python中不需要，可以直接打印日志
+# 一个配置字典来代替androidStepHandler.globalParams
 config = {
-    "api_server": "http",
+    "api_server": "http://192.168.100.159:8002",
     "is_default": True,
     "username": "admin",
     "password": "reolink123",
-    "device_uid": "952700Y006ZP1IJ5",
+    "device_uid": "952700Y005K15KA1",
     "ip": "192.168.1.1",
     "api_params": {"cmd": "getAbility", "channel": 0, "token": 0},
     "api_path": "/ability/getAbility"

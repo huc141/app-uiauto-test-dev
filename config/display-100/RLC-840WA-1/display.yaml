@@ -1,5 +1,5 @@
-device_list_name: ""
-uid: ''
+device_list_name: "RLC-840WA-1"
+uid: '952700086AQBL86I'
 
 ipc:
   display:
@@ -42,36 +42,28 @@ ipc:
         device_name: '设备名称(无需配置，有则保留无则删除)'
         date: '日期(无需配置，有则保留无则删除)'
         watermark: '水印(无需配置，有则保留无则删除)'
-        image_layout: '图像布局(无需配置，有则保留无则删除)'
-        splice_region: '拼接区域(无需配置，有则保留无则删除)'
-
-        auto_zoom:
-          name: '自动对焦'
 
         private_mark:
           name: '遮盖区域'
           desc: '设置>显示>遮盖区域'
           type: 'navigation'
-          camera_type: 'GC代表双目的广角与长焦；ZY代表左右摄像机；DM代表单目'
-          mask_num: 3/4/8
+          camera_type: 'DM'
+          mask_num: 4
 
         stream:
           name: '码流'
           desc: '设置>显示>码流（只需确认编码格式/I帧间隔/帧率控制/码率控制是否存在）'
           type: 'navigation'
           text:
-            - '编码格式'
             - 'I 帧间隔'
           options:
             - '帧率控制'
-            - '码率模式'
 
           clear:
             name: '清晰'
             desc: '设置>显示>码流>码流>清晰(此处的text也等于options)'
             type: '（只需确认编码格式/I帧间隔是否存在）'
             text:
-              - '编码格式'
               - 'I 帧间隔'
 
             resolution:
@@ -80,18 +72,18 @@ ipc:
               type: 'popup'
               options:
                 - '3840*2160'
+                - '2560*1440'
+                - '2304*1296'
 
             frame_rate:
               name: '帧率(FPS)'
               desc: '设置>显示>码流>码流>清晰>帧率(FPS)'
               type: 'popup'
               options:
-                - '25'
-                - '22'
-                - '20'
+                - '20(默认)'
                 - '18'
                 - '16'
-                - '15(默认)'
+                - '15'
                 - '12'
                 - '10'
                 - '8'
@@ -104,19 +96,10 @@ ipc:
               desc: '设置>显示>码流>码流>清晰>最大码率(Kbps)'
               type: 'popup'
               options:
+                - '2048'
+                - '3072'
                 - '4096(默认)'
                 - '5120'
-                - '6144'
-                - '7168'
-                - '8192'
-
-            encoding_format:
-              name: '编码格式'
-              desc: '设置>显示>码流>码流>清晰>编码格式'
-              type: 'popup'
-              options:
-                - 'H264'
-                - 'H265'
 
             i_frame_interval:
               name: 'I 帧间隔'
@@ -131,7 +114,6 @@ ipc:
             desc: '设置>显示>码流>码流>流畅'
             type: '（只需确认编码格式/I帧间隔是否存在）'
             text:
-              - '编码格式'
               - 'I 帧间隔'
 
             resolution:
@@ -139,42 +121,29 @@ ipc:
               desc: '设置>显示>码流>码流>流畅>分辨率'
               type: 'popup'
               options:
-                - '896*512'
+                - '640*360'
 
             frame_rate:
               name: '帧率(FPS)'
               desc: '设置>显示>码流>码流>流畅>帧率(FPS)'
               type: 'popup'
               options:
-                - '20'
-                - '18'
-                - '16'
-                - '15(默认)'
-                - '12'
-                - '8'
-                - '6'
+                - '15'
+                - '10(默认)'
+                - '7'
                 - '4'
 
             max_bit_rate:
               desc: '设置>显示>码流>码流>流畅>最大码率(kbps)'
               type: 'popup'
               options:
+                - '64'
                 - '128'
-                - '256'
+                - '160'
+                - '192'
+                - '256(默认)'
                 - '384'
                 - '512'
-                - '672'
-                - '768(默认)'
-                - '1024'
-                - '1228'
-
-            encoding_format:
-              name: '编码格式'
-              desc: '设置>显示>码流>码流>流畅>编码格式'
-              type: 'popup'
-              options:
-                - 'H.264'
-                - 'H.265'
 
             i_frame_interval:
               name: 'I 帧间隔'
@@ -191,9 +160,7 @@ ipc:
             desc: '设置>显示>码流>码流>帧率控制'
             support_mode: 'ABC'
 
-          rate_mode:
-            name: '码率模式'
-            desc: '设置>显示>码流>码流>码率模式(无需配置，有则保留无则删除)'
+          rate_mode: '码率模式'
 
         image_setting:
           name: '图像设置(只需要确认亮度同步/hdr/夜视通透模式/抗闪烁)'
