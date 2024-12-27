@@ -59,6 +59,7 @@ def t_rest_api_2():
     if response.status_code == 200:
         config["api_response"] = response.json()
         print(f"REST API Result: {config['api_response']}")
+        print(config["api_response"]['value'])
     else:
         print(f"Failed to get API data: {response.status_code}")
 
@@ -67,9 +68,11 @@ t_rest_api_1()
 t_rest_api_2()
 
 # 请求数据：
-API Result: {'code': 1, 'msg': '登录成功', 'token': 2}
-config: {'api_server': 'http://192.168.100.159:8002', 'is_default': True, 'username': 'admin', 'password': 'reolink123', 'device_uid': '952700Y006U21XKV', 'ip': '192.168.1.1', 'api_path': '/light/getLightCfg', 'api_params': {'cmd': 'getLightCfg', 'channel': 0}, 'api_token': 2}
-Token: 2
-URL: http://192.168.100.159:8002/light/getLightCfg
-Request Data: {'cmd': 'getLightCfg', 'channel': 0, 'token': 2}
-REST API Result: {'cmd': 'getLightCfg', 'cmdIdx': 0, 'channel': 0, 'channelType': 0, 'device': 1000002, 'statusInfo': {'code': 0, 'message': 'OK'}, 'value': {'irLight': {'state': 'auto'}, 'powerLight': {'state': 'open'}, 'doorbellLight': {'state': 'close'}}, 'range': {'irLight': {'state': ['auto', 'close']}, 'powerLight': {'state': ['close', 'open']}, 'doorbellLight': {'state': ['close', 'open', 'keepOff']}}}
+# API Result: {'code': 1, 'msg': '登录成功', 'token': 2}
+# config: {'api_server': 'http://192.168.100.159:8002', 'is_default': True, 'username': 'admin', 'password': 'reolink123', 'device_uid': '952700Y006U21XKV', 'ip': '192.168.1.1', 'api_path': '/light/getLightCfg', 'api_params': {'cmd': 'getLightCfg', 'channel': 0}, 'api_token': 2}
+# Token: 2
+# URL: http://192.168.100.159:8002/light/getLightCfg
+# Request Data: {'cmd': 'getLightCfg', 'channel': 0, 'token': 2}
+# REST API Result: {'cmd': 'getLightCfg', 'cmdIdx': 0, 'channel': 0, 'channelType': 0, 'device': 1000002, 'statusInfo': {'code': 0, 'message': 'OK'}, 'value': {'irLight': {'state': 'auto'}, 'powerLight': {'state': 'open'}, 'doorbellLight': {'state': 'close'}}, 'range': {'irLight': {'state': ['auto', 'close']}, 'powerLight': {'state': ['close', 'open']}, 'doorbellLight': {'state': ['close', 'open', 'keepOff']}}}
+
+
