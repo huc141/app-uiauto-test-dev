@@ -11,14 +11,14 @@ def get_device_token(uid):
     is_use_uid = api_config["is_default"]
     username = api_config["username"]
     password = api_config["password"]
-    url = f"{server}/5688389-5369357-default/249356636?username={username}&password={password}&name=dev"
+    url = f"{server}/user_uid/login_uid?username={username}&password={password}&name=dev"
 
     if is_use_uid:
         device_uid = uid
         url += f"&uid={device_uid}"
     else:
         ip = api_config["ip"]
-        url = f"{server}/5688389-5369357-default/249356636?username={username}&password={password}&host={ip}&name=dev"
+        url = f"{server}/user_uid/login_uid?username={username}&password={password}&host={ip}&name=dev"
 
     response = requests.get(url)
     print(f"Request URL: {url}")

@@ -1,6 +1,6 @@
 # api接口配置
 api_config:
-  api_server: https://apifoxmock.com/m2
+  api_server: http://192.168.100.159:8002
   is_default: true
   username: admin
   password: reolink123
