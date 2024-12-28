@@ -3,8 +3,17 @@ import time
 import pytest
 from typing import Literal
 from common_tools.logger import logger
+from common_tools.read_yaml import read_yaml
 from pages.base_page import BasePage
 from pages.rn_device_setting_page.remote_setting import RemoteSetting
+
+g_config = read_yaml.read_global_data(source="global_data")  # 读取全局配置
+status_light_texts = g_config.get("status_light_texts")  # 状态灯>配置页状态灯的全局文案
+status_light_reotitle = g_config.get("status_light_reotitle")  # 状态灯>配置页状态灯的reotitle
+infrared_light_texts = g_config.get("infrared_light_texts")  # 红外灯>配置页红外灯的全局文案
+infrared_light_reotitle = g_config.get("infrared_light_reotitle")  # 红外灯>配置页红外灯的reotitle
+doorbell_button_light_texts = g_config.get("doorbell_button_light_texts")  # 门铃按钮灯>配置页门铃按钮灯的全局文案
+doorbell_button_light_reotitle = g_config.get("doorbell_button_light_reotitle")  # 门铃按钮灯>配置页门铃按钮灯的reotitle
 
 
 class RemoteLight(BasePage):
@@ -45,17 +54,41 @@ class RemoteLight(BasePage):
         :param texts: 待验证的文案列表
         :return:
         """
+        def check_lights_texts():
+            """验证灯主页的解释文案"""
+            status_light_text = ['位于镜头附近的一个表示摄像机连接状态的灯']
+            indicator_light_text = ['位于镜头附近的一个表示摄像机连接状态的灯']
+            flood_light_text = ['夜晚时开启照明灯画面呈现彩色模式，拍摄效果更佳。']
+            infrared_light_text = ['让你在夜晚或光线较暗时拍出更清晰的影像']
+            button_light_text = ['按钮周围一圈表示门铃状态的灯']
+
+            if '状态灯' or '指示灯' in texts:
+                RemoteSetting().scroll_check_funcs2(texts=status_light_text)
+
+            if '红外灯' in texts:
+                RemoteSetting().scroll_check_funcs2(texts=infrared_light_text)
+
+            if '白光灯' in texts:
+                RemoteSetting().scroll_check_funcs2(texts=flood_light_text)
+
+            if '按钮灯' in texts:
+                RemoteSetting().scroll_check_funcs2(texts=button_light_text)
+
         try:
             # 如果是多个灯
             if lights_num:
-                if not self.loop_detect_element_exist(element_value='//*[@text="灯"]', selector_type='xpath',
-                                                      loop_times=2, scroll_or_not=False):
+                if not self.loop_detect_element_exist(element_value='//*[@text="灯"]',
+                                                      selector_type='xpath',
+                                                      loop_times=2,
+                                                      scroll_or_not=False):
                     pytest.fail(f"灯页面缺失headerTitle ==> ‘灯’")
 
                 RemoteSetting().scroll_check_funcs2(texts=texts, selector='ReoTitle')
+                check_lights_texts()
 
             # 如果只有一个灯，则验证该灯的配置页文案
             else:
+                # TODO: 有bug，需要修改
                 RemoteSetting().scroll_check_funcs2(texts=texts)
 
         except Exception as e:
@@ -84,24 +117,26 @@ class RemoteLight(BasePage):
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
-    def check_button_light_main_text(self, lights_num, text1, text2):
+    def check_button_light_main_text(self, lights_num):
         """
         验证按钮灯主页文案
-        :param lights_num: 布尔值，灯的数量大于1:True,  等于1：False
-        :param text1: 全局待验证的文案列表
-        :param text2: 配置页操作项
+        :param lights_num: 布尔值，灯的数量大于1: True,  等于1：False
         """
         try:
             def validate_button_light_texts():
                 """验证按钮灯主页文案"""
-                RemoteSetting().scroll_check_funcs2(texts=text1)
-                RemoteSetting().scroll_check_funcs2(texts=text2, selector='ReoTitle')
+                RemoteSetting().scroll_check_funcs2(texts=doorbell_button_light_texts)
+                RemoteSetting().scroll_check_funcs2(texts=doorbell_button_light_reotitle,
+                                                    selector='ReoTitle',
+                                                    scroll_or_not=False,
+                                                    back2top=False)
 
             if lights_num:
                 self.scroll_and_click_by_text(text_to_find='按钮灯')
                 validate_button_light_texts()
             else:
                 validate_button_light_texts()
+
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
@@ -121,44 +156,55 @@ class RemoteLight(BasePage):
         except Exception as e:
             pytest.fail(f"判断灯的数量函数执行出错: {str(e)}")
 
-    def verify_and_test_infrared_light(self, lights_num, infrared_light_texts, options_text):
+    def verify_and_test_infrared_light(self, lights_num, options_text):
         """
         点击进入红外灯的配置页并测试红外灯的选项配置
         :param lights_num: 布尔值，灯的数量大于1:True,  等于1：False
-        :param infrared_light_texts: 红外灯 配置页文案
-        :param options_text: 红外灯 配置页操作项
+        :param options_text: 红外灯 配置页操作项, 仅亮度
         :return:
         """
         # TODO: 未处理亮度的拖动条
 
         # 定义一个函数来处理每个选项
-        def handle_option(option_text, is_back):
+        def handle_option(options, is_back):
             # 操作红外灯配置
-            self.scroll_and_click_by_text(text_to_find=option_text)
+            self.scroll_and_click_by_text(text_to_find=options)
             if is_back:
                 # 返回上一页
                 self.back_previous_page_by_xpath()
                 # 断言回显
-                if not self.scroll_and_click_by_text(text_to_find=option_text):
-                    pytest.fail(f"红外灯选择【{option_text}】后，未检查到回显！")
+                if not self.scroll_and_click_by_text(text_to_find=options):
+                    pytest.fail(f"红外灯选择【{options}】后，未检查到回显！")
+
+        def verify_texts():
+            # 验证红外灯主页文案
+            RemoteSetting().scroll_check_funcs2(texts=infrared_light_texts,
+                                                scroll_or_not=False,
+                                                back2top=False)
+            # 验证ReoTitle选项
+            RemoteSetting().scroll_check_funcs2(texts=new_options, selector='ReoTitle',
+                                                scroll_or_not=True, back2top=False)
 
         try:
+            # 拼接ReoTitle选项
+            new_options = infrared_light_texts + options_text
             # 如果是多个灯，则点击红外灯
             if lights_num:
                 self.scroll_and_click_by_text(text_to_find='红外灯')
 
-                # 验证红外灯主页文案
-                RemoteSetting().scroll_check_funcs2(texts=infrared_light_texts, scroll_or_not=False, back2top=False)
+                # 验证红外灯主页文案、ReoTitle选项
+                verify_texts()
 
                 # 遍历操作选项
-                for option in options_text:
+                for option in infrared_light_texts:
                     handle_option(option, True)
 
             else:
-                # 验证红外灯主页文案
-                RemoteSetting().scroll_check_funcs2(texts=infrared_light_texts, scroll_or_not=False, back2top=False)
+                # 验证红外灯主页文案、ReoTitle选项
+                verify_texts()
+
                 # 遍历操作选项
-                for option in options_text:
+                for option in infrared_light_texts:
                     handle_option(option, False)
 
         except Exception as e:
@@ -403,7 +449,7 @@ class RemoteLight(BasePage):
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
-    def click_test_status_lights_off(self, lights_num, status_lights_texts, options):
+    def click_test_status_lights_off(self, lights_num):
         """
         点击测试状态灯》关闭模式
         :param lights_num:
@@ -416,15 +462,16 @@ class RemoteLight(BasePage):
                 RemoteSetting().scroll_check_funcs2(texts=texts, scroll_or_not=False, back2top=False)
 
             # 根据灯的数量选择不同的点击路径
-            if lights_num > 1:
+            if lights_num:
                 self.loop_detect_element_and_click(element_value='状态灯')
                 self.loop_detect_element_and_click(element_value='关闭')
             else:
                 self.loop_detect_element_and_click(element_value='关闭')
 
-            # 验证状态灯主页文案
-            verify_texts(status_lights_texts)
-            verify_texts(options)
+            # 验证状态灯主页全局文案
+            verify_texts(status_light_texts)
+            # 验证状态灯主页选项文案
+            verify_texts(status_light_reotitle)
 
             # 返回灯聚合页，验证状态灯模式回显
             self.back_previous_page_by_xpath()
@@ -434,7 +481,7 @@ class RemoteLight(BasePage):
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
-    def click_test_status_lights_on(self, lights_num, status_lights_texts, options):
+    def click_test_status_lights_on(self, lights_num):
         """
         点击测试状态灯》开启模式
         :param lights_num:
@@ -454,8 +501,8 @@ class RemoteLight(BasePage):
                 self.loop_detect_element_and_click(element_value='开启')
 
             # 验证状态灯主页文案
-            verify_texts(status_lights_texts)
-            verify_texts(options)
+            verify_texts(status_light_texts)
+            verify_texts(status_light_reotitle)
 
             # 返回灯聚合页，验证状态灯模式回显
             self.back_previous_page_by_xpath()

@@ -208,3 +208,10 @@ class TestRemoteLight:
         lights_num = RemoteLight().verify_lights_list_length(texts=count_lights)  # 判断灯数量
         RemoteLight().verify_preview_opens_auto(lights_num=lights_num)
 
+    @pytest.mark.parametrize("device_config", devices_config)
+    @allure.feature("灯>照明灯(白光灯/泛光灯) > 亮度")
+    @allure.story("需人工核查日志和录屏")
+    @allure.title('验证白光灯 亮度调节')
+    def test_remote_floodlight_brightness(self, device_config):
+        # TODO
+        pass

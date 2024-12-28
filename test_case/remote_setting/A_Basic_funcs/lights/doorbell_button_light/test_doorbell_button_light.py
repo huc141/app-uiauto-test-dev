@@ -32,9 +32,7 @@ class TestRemoteLight:
         # 点击并测试按钮灯主页文案
         count_lights = remote_items['text']
         lights_num = RemoteLight().verify_lights_list_length(texts=count_lights)  # 判断灯数量
-        RemoteLight().check_button_light_main_text(lights_num=lights_num,
-                                                   text1=remote_items['button_light']['text'],
-                                                   text2=remote_items['button_light']['options'])
+        RemoteLight().check_button_light_main_text(lights_num=lights_num)
 
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("灯>门铃按钮灯 > 关闭 模式")

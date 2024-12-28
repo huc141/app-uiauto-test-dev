@@ -22,9 +22,6 @@ class TestRemoteLight:
         remote_items1 = device_config['ipc']['light']['items']['light']
         BasePage().check_key_in_yaml(remote_items1, 'status_lights')
 
-        remote_items = device_config['ipc']['light']['items']['light']['status_lights']
-        BasePage().check_key_in_yaml(remote_items, 'light_off_mode')
-
         # 启动app，并开启录屏
         driver.start_app(True)
 
@@ -34,9 +31,7 @@ class TestRemoteLight:
         # 点击并测试状态灯 > 关闭模式
         count_lights = remote_items1['text']
         lights_num = RemoteLight().verify_lights_list_length(texts=count_lights)  # 判断灯数量
-        RemoteLight().click_test_status_lights_off(lights_num=lights_num,
-                                                   status_lights_texts=remote_items['text'],
-                                                   options=remote_items['options'])
+        RemoteLight().click_test_status_lights_off(lights_num=lights_num)
 
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("灯>状态灯 > 开启 模式")
@@ -47,9 +42,6 @@ class TestRemoteLight:
         remote_items1 = device_config['ipc']['light']['items']['light']
         BasePage().check_key_in_yaml(remote_items1, 'status_lights')
 
-        remote_items = device_config['ipc']['light']['items']['light']['status_lights']
-        BasePage().check_key_in_yaml(remote_items, 'light_on_mode')
-
         # 启动app，并开启录屏
         driver.start_app(True)
 
@@ -59,8 +51,6 @@ class TestRemoteLight:
         # 点击并测试状态灯 > 开启模式
         count_lights = remote_items1['text']
         lights_num = RemoteLight().verify_lights_list_length(texts=count_lights)  # 判断灯数量
-        RemoteLight().click_test_status_lights_on(lights_num=lights_num,
-                                                  status_lights_texts=remote_items['text'],
-                                                  options=remote_items['options'])
+        RemoteLight().click_test_status_lights_on(lights_num=lights_num)
 
 

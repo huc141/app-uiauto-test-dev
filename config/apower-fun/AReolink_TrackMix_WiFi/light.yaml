@@ -1,4 +1,5 @@
 device_list_name: yulong-test-sd7
+
 ipc:
   light:
     desc: 设置>灯

@@ -16,6 +16,7 @@ class TestRemoteLight:
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("灯>红外灯")
     @allure.story("需人工核查日志和录屏")
+    @allure.title('测试红外灯配置页文案和操作选项')
     @pytest.mark.skip
     def test_remote_infrared_light(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
@@ -31,8 +32,5 @@ class TestRemoteLight:
         # 点击并测试红外灯和配置
         lights_num = RemoteLight().verify_lights_list_length(texts=remote_items['text'])  # 判断灯数量
         RemoteLight().verify_and_test_infrared_light(lights_num=lights_num,
-                                                     infrared_light_texts=remote_items['infrared_light']['text'],
                                                      options_text=remote_items['infrared_light']['options'])
-
-
 
