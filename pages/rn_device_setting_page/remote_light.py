@@ -14,6 +14,15 @@ infrared_light_texts = g_config.get("infrared_light_texts")  # 红外灯>配置�
 infrared_light_reotitle = g_config.get("infrared_light_reotitle")  # 红外灯>配置页红外灯的reotitle
 doorbell_button_light_texts = g_config.get("doorbell_button_light_texts")  # 门铃按钮灯>配置页门铃按钮灯的全局文案
 doorbell_button_light_reotitle = g_config.get("doorbell_button_light_reotitle")  # 门铃按钮灯>配置页门铃按钮灯的reotitle
+header_little_tips = g_config.get("header_little_tips")  # 白光灯>顶部导航栏解释文案
+close_tips = g_config.get("close_tips")  # 白光灯关闭模式>解释文案
+auto_tips = g_config.get("auto_tips")  # 白光灯自动模式>解释文案
+night_tips = g_config.get("night_tips")  # 白光灯夜视常亮模式>解释文案
+time_tips = g_config.get("time_tips")  # 白光灯定时模式>解释文案
+smart_tips = g_config.get("smart_tips")  # 白光灯智能模式>解释文案
+smart_night_tips = g_config.get("smart_night_tips")  # 白光灯夜间智能模式>解释文案
+preview_auto_tips = g_config.get("preview_auto_tips")  # 白光灯预览自动开启模式>解释文案
+common_detect_texts = g_config.get("common_detect_texts")  # 白光灯>侦测通用文案
 
 
 class RemoteLight(BasePage):
@@ -54,28 +63,23 @@ class RemoteLight(BasePage):
         :param texts: 待验证的文案列表
         :return:
         """
-        def check_lights_texts():
-            """验证灯主页的解释文案"""
-            status_light_text = ['位于镜头附近的一个表示摄像机连接状态的灯']
-            indicator_light_text = ['位于镜头附近的一个表示摄像机连接状态的灯']
-            flood_light_text = ['夜晚时开启照明灯画面呈现彩色模式，拍摄效果更佳。']
-            infrared_light_text = ['让你在夜晚或光线较暗时拍出更清晰的影像']
-            button_light_text = ['按钮周围一圈表示门铃状态的灯']
+        light_texts_mapping = {
+            '状态灯': ['位于镜头附近的一个表示摄像机连接状态的灯。'],
+            '指示灯': ['位于镜头附近的一个表示摄像机连接状态的灯。'],
+            '红外灯': ['红外补光灯，能让你在夜晚或光线较暗时拍出更清晰的影像。'],
+            '白光灯': ['夜晚时开启照明灯画面呈现彩色模式，拍摄效果更佳。'],
+            '按钮灯': ['按钮周围一圈表示门铃状态的灯']
+        }
 
-            if '状态灯' or '指示灯' in texts:
-                RemoteSetting().scroll_check_funcs2(texts=status_light_text)
-
-            if '红外灯' in texts:
-                RemoteSetting().scroll_check_funcs2(texts=infrared_light_text)
-
-            if '白光灯' in texts:
-                RemoteSetting().scroll_check_funcs2(texts=flood_light_text)
-
-            if '按钮灯' in texts:
-                RemoteSetting().scroll_check_funcs2(texts=button_light_text)
+        def check_light_text(light_type):
+            if light_type in light_texts_mapping:
+                RemoteSetting().scroll_check_funcs2(texts=light_texts_mapping[light_type],
+                                                    scroll_or_not=False,
+                                                    back2top=False)
+            else:
+                logger.error(f"未识别的灯类型 ==> {light_type}")
 
         try:
-            # 如果是多个灯
             if lights_num:
                 if not self.loop_detect_element_exist(element_value='//*[@text="灯"]',
                                                       selector_type='xpath',
@@ -84,34 +88,93 @@ class RemoteLight(BasePage):
                     pytest.fail(f"灯页面缺失headerTitle ==> ‘灯’")
 
                 RemoteSetting().scroll_check_funcs2(texts=texts, selector='ReoTitle')
-                check_lights_texts()
 
-            # 如果只有一个灯，则验证该灯的配置页文案
+                for text in texts:
+                    check_light_text(text)
+
             else:
-                # TODO: 有bug，需要修改
-                RemoteSetting().scroll_check_funcs2(texts=texts)
+                if len(texts) == 1:
+                    light_type = texts[0]
+                    if light_type == '白光灯':
+                        logger.info(f"该设备仅存在一个白光灯，相关内容验证由test_floodlight_light函数完成！")
+                    else:
+                        check_light_text(light_type)
+                else:
+                    logger.error(f"灯类型列表不符合预期，应为单个灯类型 ==> {texts}")
 
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
-    def check_floodlight_main_text(self, lights_num, text1, text2):
+    def check_floodlight_main_text(self, lights_num, floodlight_config):
         """
         验证白光灯主页文案
-        :param text1: 全局待验证的文案列表
-        :param text2: 配置页操作项
         :param lights_num: 布尔值，灯的数量大于1:True,  等于1：False
+        :param floodlight_config: yaml配置文件中的白光灯模式配置
         :return:
         """
-        try:
-            def validate_floodlight_texts():
-                """验证白光灯主页或配置页文案"""
-                RemoteSetting().scroll_check_funcs2(texts=text1)
-                RemoteSetting().scroll_check_funcs2(texts=text2, selector='ReoTitle')
+        supported_modes = []
+        supported_cn_name = []
+        # 模式名称映射
+        mode_name_mapping = {
+            'night_vision_steady_light': '夜视常亮模式',
+            'preview_opens_auto': '预览自动开启',
+            'brightness': '亮度',
+            'light_off_mode': '关闭',
+            'timer_mode': '定时模式',
+            'auto_mode': '自动模式',
+            'smart_mode': '智能模式',
+            'night_smart_mode': '夜间智能模式'
+        }
+        # 模式解释文案
+        mode_texts_mapping = {
+            'light_off_mode': close_tips,
+            'auto_mode': auto_tips,
+            'night_vision_steady_light': night_tips,
+            'timer_mode': time_tips,
+            'smart_mode': smart_tips,
+            'night_smart_mode': smart_night_tips,
+            'preview_opens_auto': preview_auto_tips,
+            'brightness': '亮度'
 
+        }
+
+        def check_light_text(mode_type):
+            if mode_type in mode_texts_mapping:
+                RemoteSetting().scroll_check_funcs2(texts=mode_texts_mapping[mode_type],
+                                                    back2top=False)
+            else:
+                logger.error(f"未识别的白光灯模式 ==> {mode_type}")
+
+        def check_floodlight_modes():
+            # 检查floodlight内容中的每个模式
+            for mode in floodlight_config:
+                if floodlight_config[mode]:
+                    # 构建支持的模式列表
+                    supported_modes.append(mode)
+
+                    # 转换键名为对应的模式名称，构建名称列表
+                    mode_name = mode_name_mapping.get(mode, mode)
+                    supported_cn_name.append(mode_name)
+
+        def validate_floodlight_texts():
+            """验证白光灯主页ReoTitle选项"""
+            RemoteSetting().scroll_check_funcs2(texts=supported_cn_name, selector='ReoTitle')
+
+        try:
             if lights_num:
+                # 先点击进入白光灯主页
                 self.scroll_and_click_by_text(text_to_find='白光灯')
+                # 检查设备的白光灯所支持的模式
+                check_floodlight_modes()
+                # 根据白光灯所支持的模式supported_modes列表，检查对应模式的解释文案
+                for i in supported_modes:
+                    check_light_text(mode_type=i)
+                # 验证白光灯主页的ReoTitle选项
                 validate_floodlight_texts()
             else:
+                # 根据白光灯所支持的模式supported_modes列表，检查对应模式的解释文案
+                for i in supported_modes:
+                    check_light_text(mode_type=i)
                 validate_floodlight_texts()
 
         except Exception as e:
@@ -163,7 +226,26 @@ class RemoteLight(BasePage):
         :param options_text: 红外灯 配置页操作项, 仅亮度
         :return:
         """
-        # TODO: 未处理亮度的拖动条
+        def drag_brightness_slider(slider_mode='id'):  # 拖动亮度条
+            element_obj = 'RNE__Slider_Thumb'
+            time.sleep(2)
+            # 往右拖动15次
+            self.slider_seek_bar(slider_mode=slider_mode,
+                                 id_or_xpath=element_obj,
+                                 direction='right',
+                                 iteration=5)
+
+            # 往左拖动25次
+            self.slider_seek_bar(slider_mode=slider_mode,
+                                 id_or_xpath=element_obj,
+                                 direction='left',
+                                 iteration=10)
+
+            # 往右拖动5次
+            self.slider_seek_bar(slider_mode=slider_mode,
+                                 id_or_xpath=element_obj,
+                                 direction='right',
+                                 iteration=8)
 
         # 定义一个函数来处理每个选项
         def handle_option(options, is_back):
@@ -184,6 +266,10 @@ class RemoteLight(BasePage):
             # 验证ReoTitle选项
             RemoteSetting().scroll_check_funcs2(texts=new_options, selector='ReoTitle',
                                                 scroll_or_not=True, back2top=False)
+
+            # 如果亮度条存在，则拖动亮度条
+            if '亮度' in options_text:
+                drag_brightness_slider()
 
         try:
             # 拼接ReoTitle选项
@@ -222,8 +308,8 @@ class RemoteLight(BasePage):
         # TODO: 验证侦测类型选项文案需要写id
         def handle_detect_type():
             """处理侦测类型页面的遍历和保存操作"""
-            detect_text = options_text['detect_type']['text']  # 侦测类型全局文案
             detect_options = options_text['detect_type']['option_text']  # 侦测类型选项文案
+            detect_text = detect_options + common_detect_texts  # 侦测类型全局文案
             self.click_checkbox_by_text(option_text_list=detect_options, menu_text='侦测')
             self.scroll_and_click_by_text(text_to_find=detect_options[0])  # 保底选项，防止下一步无法点击保存
             RemoteSetting().scroll_check_funcs2(texts=detect_text)  # 验证侦测类型全局文案
@@ -264,8 +350,8 @@ class RemoteLight(BasePage):
 
         def handle_detect_type():
             """处理侦测类型页面的遍历和保存操作"""
-            detect_text = options_text['detect_type']['text']  # 侦测类型全局文案
             detect_options = options_text['detect_type']['option_text']  # 侦测类型选项文案
+            detect_text = detect_options + common_detect_texts  # 侦测类型全局文案
             self.click_checkbox_by_text(option_text_list=detect_options, menu_text='侦测')
             self.scroll_and_click_by_text(text_to_find=detect_options[0])  # 保底选项，防止下一步无法点击保存
             RemoteSetting().scroll_check_funcs2(texts=detect_text)  # 验证侦测类型全局文案
@@ -600,6 +686,39 @@ class RemoteLight(BasePage):
 
             else:
                 self.scroll_and_click_by_text(text_to_find='常亮')
+
+        except Exception as e:
+            pytest.fail(f"函数执行出错: {str(e)}")
+
+    def floodlight_drag_brightness_slider(self, lights_num, slider_mode='id'):  # 拖动亮度条
+        try:
+            element_obj = 'RNE__Slider_Thumb'
+            # 多个灯
+            if lights_num:
+                self.scroll_and_click_by_text(text_to_find='白光灯')
+
+                time.sleep(2)
+
+                # 往右拖动15次
+                self.slider_seek_bar(slider_mode=slider_mode,
+                                     id_or_xpath=element_obj,
+                                     direction='right',
+                                     iteration=5)
+
+                # 往左拖动25次
+                self.slider_seek_bar(slider_mode=slider_mode,
+                                     id_or_xpath=element_obj,
+                                     direction='left',
+                                     iteration=10)
+
+                # 往右拖动5次
+                self.slider_seek_bar(slider_mode=slider_mode,
+                                     id_or_xpath=element_obj,
+                                     direction='right',
+                                     iteration=8)
+
+            else:
+                logger.info(f'单个灯，正在拖动亮度条')
 
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")

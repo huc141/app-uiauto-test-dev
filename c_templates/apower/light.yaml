@@ -13,7 +13,7 @@ ipc:
           - '红外灯'
           - '白光灯'
 
-        status_lights: '状态灯'
+        status_lights: '状态灯(有则保留无则删除)'
 
         infrared_light:
           options:
@@ -27,48 +27,20 @@ ipc:
           light_always_on_mode: '常亮(有则保留无则删除)'
 
         floodlight:
-          text:
-            - '关闭'
-            - '白光灯将保持关闭'
-            - '夜间智能模式'
-            - '当相机在夜间检测到事件时自动打开。'
-            - '定时模式'
-            - '在预定的时间段内保持开启。'
-          options:
-            - '关闭'
-            - '夜间智能模式'
-            - '定时模式'
-
-          night_vision_steady_light: '夜视常亮模式'
-          preview_opens_auto: '预览自动开启'
-          brightness: '亮度'
-          light_off_mode: '关闭'
-          timer_mode: '定时模式'
-          auto_mode: '自动模式'
+          night_vision_steady_light: '夜视常亮模式(有则保留无则删除)'
+          preview_opens_auto: '预览自动开启(有则保留无则删除)'
+          brightness: '亮度(有则保留无则删除)'
+          light_off_mode: '关闭(有则保留无则删除)'
+          timer_mode: '定时模式(有则保留无则删除)'
+          auto_mode: '自动模式(有则保留无则删除)'
           smart_mode:
             detect_type:
-              text:
-                - '取消'
-                - '侦测'
-                - '保存'
-                - '画面变动'
-                - '人'
-                - '车'
-                - '动物'
               option_text:
                 - '人'
                 - '车'
                 - '动物'
           night_smart_mode:
             detect_type:
-              text:
-                - '取消'
-                - '侦测'
-                - '保存'
-                - '画面变动'
-                - '人'
-                - '车'
-                - '动物'
               option_text:
                 - '人'
                 - '车'

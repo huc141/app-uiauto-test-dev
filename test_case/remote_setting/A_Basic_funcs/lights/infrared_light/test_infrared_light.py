@@ -7,7 +7,10 @@ from pages.base_page import BasePage
 from pages.rn_device_setting_page.remote_setting import RemoteSetting
 from pages.rn_device_setting_page.remote_light import RemoteLight
 
-devices_config = read_yaml.load_device_config(yaml_file_name='light.yaml')  # 读取参数化文件
+g_config = read_yaml.read_global_data(source="global_data")  # 读取全局配置
+device_dir = g_config.get("device_dir")  # 读取设备配置文件目录
+devices_config = read_yaml.load_device_config(device_dir=device_dir,
+                                              yaml_file_name='light.yaml')  # 读取参数化文件
 
 
 @allure.epic("远程配置>常规设置>灯")
@@ -17,7 +20,6 @@ class TestRemoteLight:
     @allure.feature("灯>红外灯")
     @allure.story("需人工核查日志和录屏")
     @allure.title('测试红外灯配置页文案和操作选项')
-    @pytest.mark.skip
     def test_remote_infrared_light(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['light']['items']['light']

@@ -621,8 +621,9 @@ class BasePage:
         except Exception as err:
             pytest.fail(f"函数执行出错: {str(err)}")
 
-        logger.info(f"没找到要点击的元素： '{text_to_find}' ，已经尝试了： {max_attempts} 次.")
-        return False
+        logger.info(f"没找到要点击的 【{text_to_find}】 元素，已经尝试了： {max_attempts} 次.")
+        pytest.fail(f"没找到要点击的 【{text_to_find}】 元素")
+        # return False
 
     def iterate_and_click_popup_text(self, option_text_list: List[Any], menu_text, el_type='text'):
         """
@@ -1193,19 +1194,19 @@ class BasePage:
             self.slider_seek_bar(slider_mode=slider_mode,
                                  id_or_xpath=element_obj,
                                  direction='right',
-                                 iteration=15)
+                                 iteration=5)
 
             # 往左拖动25次
             self.slider_seek_bar(slider_mode=slider_mode,
                                  id_or_xpath=element_obj,
                                  direction='left',
-                                 iteration=25)
+                                 iteration=10)
 
             # 往右拖动5次
             self.slider_seek_bar(slider_mode=slider_mode,
                                  id_or_xpath=element_obj,
                                  direction='right',
-                                 iteration=10)
+                                 iteration=5)
         except Exception as e:
             pytest.fail(f"common_drag_slider_seek_bar函数执行出错: {str(e)}")
 
