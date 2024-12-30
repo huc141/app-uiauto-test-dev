@@ -1,4 +1,5 @@
 device_list_name: RLC-410W-TJ9Q
+uid: 952700Y0021STJ9Q
 ipc:
   display:
     desc: 设置>显示
@@ -236,5 +237,3 @@ ipc:
         vertical_flip: 垂直翻转
 
         watermark: 水印
-
-uid: 952700Y0021STJ9Q

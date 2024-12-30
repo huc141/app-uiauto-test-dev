@@ -1,0 +1,17 @@
+device_list_name: "TD2-566"
+uid: '952700Y100WS1O1J'
+
+ipc:
+  light:
+    text:
+      - ''
+
+    items:
+      light:
+        text:
+          - '红外灯'
+
+        infrared_light:
+          options:
+            - ''
+

@@ -1,0 +1,28 @@
+device_list_name: "Reolink Duo 3V PoE"
+uid: '95270008YNQK13OI'
+
+ipc:
+  light:
+    text:
+      - ''
+
+    items:
+      light:
+        text:
+          - '红外灯'
+          - '白光灯'
+
+        infrared_light:
+          options:
+            - ''
+
+        floodlight:
+          light_off_mode: '关闭(有则保留无则删除)'
+          brightness: '亮度(有则保留无则删除)'
+          night_smart_mode:
+            detect_type:
+              option_text:
+                - '人'
+                - '车'
+                - '动物'
+

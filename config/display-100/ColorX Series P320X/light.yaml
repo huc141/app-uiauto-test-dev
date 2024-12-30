@@ -1,0 +1,24 @@
+device_list_name: ColorX Series P320X
+uid: 952700Y005K21IK4
+
+ipc:
+  light:
+    text:
+      - ''
+
+    items:
+      light:
+        text:
+          - '白光灯'
+
+        floodlight:
+          light_off_mode: '关闭(有则保留无则删除)'
+          brightness: '亮度(有则保留无则删除)'
+          timer_mode: '定时模式(有则保留无则删除)'
+          auto_mode: '自动模式(有则保留无则删除)'
+          smart_mode:
+            detect_type:
+              option_text:
+                - '人'
+                - '车'
+                - '动物'

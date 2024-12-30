@@ -1,0 +1,17 @@
+device_list_name: "RLC-510A"
+uid: '95270001SRAR1P1M'
+
+ipc:
+  light:
+    text:
+      - ''
+
+    items:
+      light:
+        text:
+          - '红外灯'
+
+        infrared_light:
+          options:
+            - ''
+

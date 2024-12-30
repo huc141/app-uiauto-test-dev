@@ -1,81 +1,25 @@
-device_list_name: "CX410"
+device_list_name: "CX410-5KA1"
 uid: '952700Y005K15KA1'
 
 ipc:
   light:
-    name: '灯'
-    desc: '设置>灯'
-    type: 'navigation'
     text:
       - ''
 
     items:
       light:
-        name: '灯'
-        desc: '设置>灯'
-        type: 'page'
         text:
           - '照明灯'
 
         floodlight:
-          name: '照明灯'
-          desc: '设置>灯>照明灯'
-          type: 'navigation'
-          text:
-            - '白光灯'
-            - '夜晚时开启照明灯画面呈彩色状态，拍摄效果更佳。'
-            - '关闭'
-            - '白光灯将保持关闭'
-            - '定时模式'
-            - '在预定的时间段内保持开启。'
-            - '自动模式'
-            - '根据环境光照条件自动调整亮度以获得最佳夜视效果。'
-            - '智能模式'
-            - '自动调整亮度以在弱光条件下进行准确检测，并在预定时间段内摄像机检测到事件时开启。'
-          options:
-            - '关闭'
-            - '定时模式'
-            - '自动模式'
-            - '智能模式'
+          light_off_mode: '关闭'
 
-          light_off_mode:
-            name: '关闭'
-            desc: '设置>灯>照明灯>关闭'
-            type: 'menu'
-            text:
-              - ''
+          timer_mode: '定时模式'
 
-          timer_mode:
-            name: '定时模式'
-            desc: '设置>灯>照明灯>定时模式'
-            type: 'menu'
-            text:
-              - ''
-
-          auto_mode:
-            name: '自动模式'
-            desc: '设置>灯>照明灯>自动模式'
-            type: 'menu'
-            text:
-              - ''
+          auto_mode: '自动模式'
 
           smart_mode:
-            name: '智能模式'
-            desc: '设置>灯>照明灯>智能模式'
-            type: 'menu'
-            text:
-              - ''
             detect_type:
-              desc: '设置>灯>照明灯>夜间智能模式>侦测'
-              type: 'navigation'
-              text:
-                - '报警类型'
-                - '保存'
-                - '全选'
-                - '画面变动'
-                - '人'
-                - '车'
-                - '动物'
               option_text:
                 - '人'
                 - '车'

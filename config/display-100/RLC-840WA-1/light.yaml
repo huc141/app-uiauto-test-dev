@@ -1,0 +1,29 @@
+device_list_name: "RLC-840WA-1"
+uid: '952700086AQBL86I'
+
+ipc:
+  light:
+    text:
+      - ''
+
+    items:
+      light:
+        text:
+          - '红外灯'
+          - '白光灯'
+
+        infrared_light:
+          options:
+            - ''
+
+        floodlight:
+          light_off_mode: '关闭(有则保留无则删除)'
+          brightness: '亮度(有则保留无则删除)'
+          timer_mode: '定时模式(有则保留无则删除)'
+          night_smart_mode:
+            detect_type:
+              option_text:
+                - '人'
+                - '车'
+                - '动物'
+

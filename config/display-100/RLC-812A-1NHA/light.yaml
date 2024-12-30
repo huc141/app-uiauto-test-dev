@@ -1,0 +1,25 @@
+device_list_name: "RLC-812A-1NHA"
+uid: '95270008YNRJ1NHA'
+
+ipc:
+  light:
+    text:
+      - ''
+
+    items:
+      light:
+        text:
+          - '白光灯'
+
+        floodlight:
+          light_off_mode: '关闭(有则保留无则删除)'
+          brightness: '亮度(有则保留无则删除)'
+          timer_mode: '定时模式(有则保留无则删除)'
+          night_vision_steady_light: '夜视常亮模式(有则保留无则删除)'
+          night_smart_mode:
+            detect_type:
+              option_text:
+                - '人'
+                - '车'
+                - '动物'
+

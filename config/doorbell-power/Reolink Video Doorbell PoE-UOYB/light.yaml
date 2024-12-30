@@ -1,0 +1,24 @@
+device_list_name: Reolink Video Doorbell PoE v1
+uid: 952700Y10103UOYB
+
+ipc:
+  light:
+    text:
+      - ''
+
+    items:
+      light:
+        text:
+          - '红外灯'
+          - '按钮灯'
+
+        infrared_light:
+          options:
+            - '亮度(此处只需要确认切换自动时亮度是否存在，否则留空)'
+
+        button_light:
+          light_auto_mode: '自动(有则保留无则删除)'
+          light_off_mode: '关闭(有则保留无则删除)'
+          light_auto_on_night_mode: '自动且夜间常亮(有则保留无则删除)'
+
+

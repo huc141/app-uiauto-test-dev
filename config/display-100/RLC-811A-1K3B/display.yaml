@@ -44,7 +44,7 @@ ipc:
         device_name: '设备名称(无需配置，有则保留无则删除)'
         date: '日期(无需配置，有则保留无则删除)'
         watermark: '水印(无需配置，有则保留无则删除)'
-        auto_zoom: 自动对焦
+        auto_zoom: '自动对焦'
 
         private_mark:
           name: '遮盖区域'

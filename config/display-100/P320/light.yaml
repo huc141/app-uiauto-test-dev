@@ -1,0 +1,17 @@
+device_list_name: "P320"
+uid: '952700Y100WVK3UW'
+
+ipc:
+  light:
+    text:
+      - ''
+
+    items:
+      light:
+        text:
+          - '红外灯'
+
+        infrared_light:
+          options:
+            - ''
+

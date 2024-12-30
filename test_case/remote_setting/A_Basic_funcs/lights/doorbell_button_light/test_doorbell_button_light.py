@@ -7,7 +7,10 @@ from pages.base_page import BasePage
 from pages.rn_device_setting_page.remote_setting import RemoteSetting
 from pages.rn_device_setting_page.remote_light import RemoteLight
 
-devices_config = read_yaml.load_device_config(yaml_file_name='light.yaml')  # 读取参数化文件
+g_config = read_yaml.read_global_data(source="global_data")  # 读取全局配置
+device_dir = g_config.get("device_dir")  # 读取设备配置文件目录
+devices_config = read_yaml.load_device_config(device_dir=device_dir,
+                                              yaml_file_name='light.yaml')  # 读取参数化文件
 
 
 # 按钮灯仅门铃才有
@@ -32,7 +35,8 @@ class TestRemoteLight:
         # 点击并测试按钮灯主页文案
         count_lights = remote_items['text']
         lights_num = RemoteLight().verify_lights_list_length(texts=count_lights)  # 判断灯数量
-        RemoteLight().check_button_light_main_text(lights_num=lights_num)
+        RemoteLight().check_button_light_main_text(lights_num=lights_num,
+                                                   button_light_config=remote_items['button_light'])
 
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("灯>门铃按钮灯 > 关闭 模式")

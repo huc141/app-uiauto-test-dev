@@ -1,0 +1,17 @@
+device_list_name: "RLC-1220A"
+uid: '952700Y007BLLRYG'
+
+ipc:
+  light:
+    text:
+      - ''
+
+    items:
+      light:
+        text:
+          - '红外灯'
+
+        infrared_light:
+          options:
+            - ''
+

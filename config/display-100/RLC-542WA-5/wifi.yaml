@@ -1,0 +1,12 @@
+device_list_name: "RLC-542WA-5"
+uid: '952700Y100U51Q5X'
+
+ipc:
+  Wi_Fi:
+    text:
+      - ''
+
+    items:
+      wifi:
+        wifi_speed_test: 'Wi-Fi测速'
+        add_other_network: '添加其他网络'

@@ -7,7 +7,9 @@ from common_tools.read_yaml import read_yaml
 from pages.rn_device_setting_page.remote_wifi import RemoteWiFi
 from pages.rn_device_setting_page.remote_setting import RemoteSetting
 
-devices_config = read_yaml.load_device_config(device_dir='apower/AReolink_TrackMix_WiFi',
+g_config = read_yaml.read_global_data(source="global_data")  # 读取全局配置
+device_dir = g_config.get("device_dir")  # 读取设备配置文件目录
+devices_config = read_yaml.load_device_config(device_dir=device_dir,
                                               yaml_file_name='wifi.yaml')  # 读取参数化文件
 
 
@@ -29,6 +31,5 @@ class TestRemoteWifi:
         RemoteSetting().access_in_remote_wifi(device_list_name=device_config['device_list_name'])
 
         # 测试WiFi频段偏好
-        RemoteWiFi().access_in_wifi_band_preference(text1=remote_items['wifi_band_preference']['text'],
-                                                    text2=remote_items['wifi_band_preference']['options'])
+        RemoteWiFi().access_in_wifi_band_preference(options=remote_items['wifi_band_preference']['options'])
 

@@ -1,0 +1,20 @@
+device_list_name: E1 Zoom
+uid: 95270008YNRFQX2T
+
+ipc:
+  light:
+    text:
+      - ''
+
+    items:
+      light:
+        text:
+          - '状态灯'
+          - '红外灯'
+
+        status_lights: '状态灯(有则保留无则删除)'
+
+        infrared_light:
+          options:
+            - ''
+

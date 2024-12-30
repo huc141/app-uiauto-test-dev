@@ -1,0 +1,12 @@
+device_list_name: E1 Outdoor CX-2
+uid: 952700Y100YCX9H0
+
+ipc:
+  Wi_Fi:
+    text:
+      - ''
+
+    items:
+      wifi:
+        wifi_speed_test: 'Wi-Fi测速'
+        add_other_network: '添加其他网络'

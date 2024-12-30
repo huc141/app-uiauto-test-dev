@@ -1,0 +1,25 @@
+device_list_name: Reolink Video Doorbell PoE-W51
+uid: 952700Y005VF1S51
+
+ipc:
+  light:
+    text:
+      - ''
+
+    items:
+      light:
+        text:
+          - '红外灯'
+          - '按钮灯'
+
+        infrared_light:
+          options:
+            - ''
+
+        button_light:
+          light_auto_mode: '自动(有则保留无则删除)'
+          light_off_mode: '关闭(有则保留无则删除)'
+          light_auto_on_night_mode: '自动且夜间常亮(有则保留无则删除)'
+          light_always_on_mode: '常亮(有则保留无则删除)'
+
+

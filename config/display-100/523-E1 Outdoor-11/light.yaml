@@ -1,0 +1,29 @@
+device_list_name: "523-E1 Outdoor-11"
+uid: '95270000OURLGLD3'
+
+ipc:
+  light:
+    text:
+      - ''
+
+    items:
+      light:
+        text:
+          - '状态灯'
+          - '红外灯'
+          - '白光灯'
+
+        status_lights: '状态灯(有则保留无则删除)'
+
+        infrared_light:
+          options:
+            - ''
+
+        floodlight:
+          light_off_mode: '关闭(有则保留无则删除)'
+          night_smart_mode:
+            detect_type:
+              option_text:
+                - '人'
+                - '车'
+

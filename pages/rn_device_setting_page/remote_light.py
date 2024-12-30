@@ -13,7 +13,6 @@ status_light_reotitle = g_config.get("status_light_reotitle")  # 状态灯>配�
 infrared_light_texts = g_config.get("infrared_light_texts")  # 红外灯>配置页红外灯的全局文案
 infrared_light_reotitle = g_config.get("infrared_light_reotitle")  # 红外灯>配置页红外灯的reotitle
 doorbell_button_light_texts = g_config.get("doorbell_button_light_texts")  # 门铃按钮灯>配置页门铃按钮灯的全局文案
-doorbell_button_light_reotitle = g_config.get("doorbell_button_light_reotitle")  # 门铃按钮灯>配置页门铃按钮灯的reotitle
 header_little_tips = g_config.get("header_little_tips")  # 白光灯>顶部导航栏解释文案
 close_tips = g_config.get("close_tips")  # 白光灯关闭模式>解释文案
 auto_tips = g_config.get("auto_tips")  # 白光灯自动模式>解释文案
@@ -23,6 +22,7 @@ smart_tips = g_config.get("smart_tips")  # 白光灯智能模式>解释文案
 smart_night_tips = g_config.get("smart_night_tips")  # 白光灯夜间智能模式>解释文案
 preview_auto_tips = g_config.get("preview_auto_tips")  # 白光灯预览自动开启模式>解释文案
 common_detect_texts = g_config.get("common_detect_texts")  # 白光灯>侦测通用文案
+common_button_light_texts = g_config.get("common_button_light_texts")  # 门铃按钮灯>按钮灯通用文案
 
 
 class RemoteLight(BasePage):
@@ -180,24 +180,75 @@ class RemoteLight(BasePage):
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
-    def check_button_light_main_text(self, lights_num):
+    def check_button_light_main_text(self, lights_num, button_light_config):
         """
         验证按钮灯主页文案
         :param lights_num: 布尔值，灯的数量大于1: True,  等于1：False
+        :param button_light_config: 按钮灯yaml内容配置
         """
-        try:
-            def validate_button_light_texts():
-                """验证按钮灯主页文案"""
-                RemoteSetting().scroll_check_funcs2(texts=doorbell_button_light_texts)
-                RemoteSetting().scroll_check_funcs2(texts=doorbell_button_light_reotitle,
-                                                    selector='ReoTitle',
-                                                    scroll_or_not=False,
-                                                    back2top=False)
+        supported_modes = []
+        supported_cn_name = []
+        # 模式名称映射
+        mode_name_mapping = {
+            'light_off_mode': '关闭',
+            'light_auto_mode': '自动',
+            'light_auto_on_night_mode': '自动且夜间常亮',
+            'light_always_on_mode': '常亮'
 
+        }
+        # 模式解释文案
+        mode_texts_mapping = {
+            'light_off_mode': ['按钮灯将保持关闭'],
+            'light_auto_mode': ['按钮灯会自动在侦测到人、按压按钮和对讲时有灯光的反馈。'],
+            'light_auto_on_night_mode': ['按钮灯会自动在门铃侦测到人，或按压按钮和对讲时有灯光的反馈，同时在夜间保持常亮'],
+            'light_always_on_mode': ['按钮灯将始终亮起']
+
+        }
+
+        def check_light_text(mode_type):
+            if mode_type in mode_texts_mapping:
+                RemoteSetting().scroll_check_funcs2(texts=mode_texts_mapping[mode_type],
+                                                    back2top=False)
+            else:
+                logger.error(f"未识别的按钮灯模式 ==> {mode_type}")
+
+        def check_button_light_modes():
+            # 检查按钮灯内容中的每个模式
+            for mode in button_light_config:
+                if button_light_config[mode]:
+                    # 构建支持的模式列表
+                    supported_modes.append(mode)
+
+                    # 转换键名为对应的模式名称，构建名称列表
+                    mode_name = mode_name_mapping.get(mode, mode)
+                    supported_cn_name.append(mode_name)
+
+        def validate_button_light_texts():
+            """验证button_light主页ReoTitle选项"""
+            RemoteSetting().scroll_check_funcs2(texts=supported_cn_name, selector='ReoTitle')
+
+        try:
             if lights_num:
+                # 先点击进入button_light主页
                 self.scroll_and_click_by_text(text_to_find='按钮灯')
+                # 检查设备的button_light所支持的模式
+                check_button_light_modes()
+
+                # 根据button_light所支持的模式supported_modes列表，检查对应模式的解释文案
+                for i in supported_modes:
+                    check_light_text(mode_type=i)
+
+                # 验证门铃按钮灯>通用文案
+                RemoteSetting().scroll_check_funcs2(texts=common_button_light_texts, back2top=False)
+
+                # 验证button_light主页的ReoTitle选项
                 validate_button_light_texts()
             else:
+                # 根据button_light所支持的模式supported_modes列表，检查对应模式的解释文案
+                for i in supported_modes:
+                    check_light_text(mode_type=i)
+
+                # 验证button_light主页的ReoTitle选项
                 validate_button_light_texts()
 
         except Exception as e:

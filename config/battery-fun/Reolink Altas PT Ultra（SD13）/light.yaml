@@ -3,55 +3,18 @@ uid: '952700Y100BF19GB'
 
 ipc:
   light:
-    name: '灯'
-    desc: '设置>灯'
-    type: 'navigation'
     text:
       - ''
 
     items:
       light:
-        name: '灯'
-        desc: '设置>灯主页'
-        type: 'page'
         text:
           - '状态灯'
           - '白光灯'
 
-        status_lights:
-          name: '状态灯/指示灯'
-          desc: '设置>灯>状态灯'
-          type: 'navigation'
-          text:
-            - '状态灯'
-            - '位于镜头附近的一个表示摄像机连接状态的灯。'
-            - '了解更多'
-            - '关闭'
-            - '状态灯将保持关闭'
-            - '开启'
-            - '状态灯将始终亮起'
-          options:
-            - '开启'
-            - '关闭'
-
-          light_off_mode:
-            name: '关闭'
-          light_on_mode:
-            name: '开启'
+        status_lights: '状态灯/指示灯'
 
         floodlight:
-          name: '白光灯'
-          desc: '设置>灯>白光灯'
-          type: 'navigation'
-          text:
-            - '关闭'
-            - '白光灯将保持关闭'
-            - '自动模式'
-            - '根据环境光照条件自动调整亮度以获得最佳夜视效果。'
-          options:
-            - '关闭'
-            - '自动模式'
-
           light_off_mode:
             name: '关闭'
             desc: '设置>灯>白光灯>关闭'

@@ -1,0 +1,17 @@
+device_list_name: FE-P
+uid: 952700Y100YU3HEV
+
+ipc:
+  light:
+    text:
+      - ''
+
+    items:
+      light:
+        text:
+          - '红外灯'
+
+        infrared_light:
+          options:
+            - ''
+

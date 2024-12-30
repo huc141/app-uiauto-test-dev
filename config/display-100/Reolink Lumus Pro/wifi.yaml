@@ -1,0 +1,17 @@
+device_list_name: "Reolink Lumus Pro"
+uid: '952700Y100SX16MC'
+
+ipc:
+  Wi_Fi:
+    text:
+      - ''
+
+    items:
+      wifi:
+        wifi_band_preference:
+          options:
+            - '仅 2.4G'
+            - '仅 5G'
+            - '自动'
+        wifi_speed_test: 'Wi-Fi测速'
+        add_other_network: '添加其他网络'

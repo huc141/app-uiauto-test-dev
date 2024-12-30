@@ -1,0 +1,17 @@
+device_list_name: "RLC-822A-PJ6O"
+uid: '952700Y006NOPJ6O'
+
+ipc:
+  light:
+    text:
+      - ''
+
+    items:
+      light:
+        text:
+          - '红外灯'
+
+        infrared_light:
+          options:
+            - ''
+

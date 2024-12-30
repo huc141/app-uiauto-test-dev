@@ -1,0 +1,18 @@
+device_list_name: RLC-823A 16X-C7E4
+uid: 952700Y004Q1C7E4
+
+ipc:
+  light:
+    text:
+      - ''
+
+    items:
+      light:
+        text:
+          - '红外灯'
+
+
+        infrared_light:
+          options:
+            - ''
+

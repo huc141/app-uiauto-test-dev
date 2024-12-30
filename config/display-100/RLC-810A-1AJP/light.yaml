@@ -1,0 +1,17 @@
+device_list_name: "RLC-810A-1AJP"
+uid: '952700Y100VH1AJP'
+
+ipc:
+  light:
+    text:
+      - ''
+
+    items:
+      light:
+        text:
+          - '红外灯'
+
+        infrared_light:
+          options:
+            - ''
+

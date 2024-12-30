@@ -1,70 +1,17 @@
 device_list_name: yulong-test-sd7
+uid: 952700Y006ZP1IJ5
+
 ipc:
   Wi_Fi:
-    desc: 设置>Wi-Fi
+    text:
+      - ''
+
     items:
       wifi:
-        add_other_network:
-          desc: 设置>Wi-Fi>添加其他网络
-          key: add_other_network
-          name: 添加其他网络
-          options:
-            wifi_name: reolink-HMK_5G
-            wifi_passw: '11111111'
-          text:
-          - 取消
-          - 输入密码
-          - 保存
-          - Wi-Fi名称
-          - Wi-Fi密码
-          type: navigation
-        desc: 设置>Wi-Fi主页
-        disconnect:
-          desc: 设置>Wi-Fi>未连接
-          key: disconnect
-          name: 未连接
-          type: text
-        name: Wi-Fi
-        options:
-        - Wi-Fi 频段偏好
-        - Wi-Fi测速
-        - 添加其他网络
-        text:
-        - Wi-Fi
-        - Wi-Fi 频段偏好
-        - 连接同一Wi-Fi的哪种频段
-        - Wi-Fi测速
-        - 检测局域网设备当前的Wi-Fi信号强度
-        - 切换Wi-Fi
-        - 当前Wi-Fi
-        - 添加其他网络
-        type: page
         wifi_band_preference:
-          desc: 设置>Wi-Fi>Wi-Fi 频段偏好
-          name: Wi-Fi 频段偏好
           options:
-          - 仅 2.4G
-          - 仅 5G
-          - 自动
-          text:
-          - Wi-Fi 频段偏好
-          - 连接同一Wi-Fi的哪种频段
-          - 自动
-          - 仅 5G
-          - 仅 2.4G
-          type: popup
-        wifi_speed_test:
-          desc: 设置>Wi-Fi>Wi-Fi测速
-          name: Wi-Fi测速
-          options:
-          - 开始测速
-          text:
-          - 1. 关闭手机移动数据，将手机与设备连接至同一个网络。
-          - 2. 点击“开始测速”测试Wi-Fi信号强度，并将手机和设备尽量靠近路由器。
-          - 3. 查看Wi-Fi信号强度测试结果，正常情况下，需要保证Wi-Fi信号强度在10Mbps以上（总值100Mbps）。
-          type: navigation
-    name: Wi-Fi
-    text:
-    - ''
-    type: page
-uid: 952700Y006ZP1IJ5
+            - '仅 2.4G'
+            - '仅 5G'
+            - '自动'
+        wifi_speed_test: 'WiFi测速'
+        add_other_network: '添加其他网络'

@@ -1,0 +1,17 @@
+device_list_name: "RLC-1010AREOCYP"
+uid: '952700Y002CB1D64'
+
+ipc:
+  light:
+    text:
+      - ''
+
+    items:
+      light:
+        text:
+          - '红外灯'
+
+        infrared_light:
+          options:
+            - ''
+
