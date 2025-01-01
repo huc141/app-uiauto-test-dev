@@ -33,11 +33,7 @@ class TestRemotePush:
         RemoteSetting().access_in_push_notifications(device_list_name=device_config['device_list_name'])
 
         # 验证push主页文案列表
-        key_res = BasePage().is_key_in_yaml(remote_items['push'], 'supported_test')
-        RemotePush().check_push_main_text(main_text=remote_items['text'],
-                                          options=remote_items['push']['options'],
-                                          supported_test=key_res,
-                                          other_switch=remote_items)
+        RemotePush().check_push_main_text(other_switch=remote_items)
 
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("访客电话提醒")
@@ -109,10 +105,7 @@ class TestRemotePush:
     @pytest.mark.skip
     def test_push_interval(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
-        remote_items1 = device_config['ipc']['push']['items']
-        BasePage().check_key_in_yaml(remote_items1, 'schedule')
-
-        remote_items = device_config['ipc']['push']['items']['schedule']
+        remote_items = device_config['ipc']['push']['items']
         BasePage().check_key_in_yaml(remote_items, 'push_interval')
 
         # 启动app，并开启录屏
@@ -122,8 +115,7 @@ class TestRemotePush:
         RemoteSetting().access_in_push_notifications(device_list_name=device_config['device_list_name'])
 
         # 测试推送间隔和文案
-        RemotePush().verify_test_push_interval(texts_list=remote_items['push_interval']['text'],
-                                               option_text_list=remote_items['push_interval']['option'])
+        RemotePush().verify_test_push_interval(option_text_list=remote_items['push_interval']['options'])
 
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("延时通知")

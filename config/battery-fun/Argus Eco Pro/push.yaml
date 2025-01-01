@@ -3,70 +3,14 @@ uid: '952700Y004681G6Q'
 
 ipc:
   push:
-    name: '手机推送'
-    desc: '设置>手机推送'
-    type: 'switch'
-    text:
-      - '手机推送'
-      - '测试'
-      - '打开后，接受移动事件与低电量通知。'
-      - '设备通知铃声'
-      - '开启后，可为此设备单独设置通知铃声'
-      - '报警铃声'
-      - '计划'
-      - '可筛选报警类型或进行时间规划。'
-
-    options:
-      - '手机推送'
-      - '设备通知铃声'
-      - '报警铃声'
-      - '计划'
-
-    supported_test: '是否支持测试按钮，支持就保留该键，否则删除'
-
     items:
-      device_notify_ringtone:
-        name: '设备通知铃声'
-        desc: '设置>手机推送>设备通知铃声'
-        type: 'switch'
-        text:
-          - '设备通知铃声'
+      supported_test: '是否支持测试按钮，支持就保留该键，否则删除'
 
-        alarm_ring:
-          name: '报警铃声'
-          desc: '设置>手机推送>设备通知铃声>报警铃声'
-          type: 'popup'
-          text:
-            - '报警铃声'
-            - '强烈通知'
-            - '重要通知'
-            - '一般通知'
-          options:
-            - '强烈通知'
-            - '重要通知'
-            - '一般通知'
+      device_notify_ringtone:
+        alarm_ring: '报警铃声'
 
       schedule:
-        name: '计划'
-        desc: '设置>手机推送>计划'
-        type: 'navigation'
-        text:
-          - '取消'
-          - '计划'
-          - '保存'
-          - '配置推送的触发类型和时间计划。'
-          - '报警类型'
         alarm_type:
-          name: '报警类型'
-          desc: '设置>手机推送>计划>报警类型'
-          type: 'page'
-          text:
-            - '报警类型'
-            - '保存'
-            - '人'
-            - '车'
-            - '动物'
-            - '其他'
           options:
             - '响铃'
             - '画面变动'

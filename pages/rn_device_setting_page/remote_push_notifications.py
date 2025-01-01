@@ -80,71 +80,34 @@ class RemotePush(BasePage):
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
-    def check_push_main_text(self, main_text, options, supported_test, other_switch):
+    def check_push_main_text(self, other_switch):
         """
         验证摄像机录像主页文案
-        :param main_text: 待验证的push主页文案列表
-        :param options: ReoTitle需要验证的选项
-        :param supported_test: 是否支持点击测试按钮
         :param other_switch: 是否其他Switch开关，支持则开启
         :return:
         """
-        # 模式名称映射
-        mode_name_mapping = {
-            'alarm_recording_plan': '报警录像计划',
-            'auto_extended_recording': '自动延长录像',
-            'record_delay_duration': '录像延时时长',
-            'pre_record': '预录像',
-            'timed_recording_plan': '定时录像计划',
-            'smart_power_saving_mode': '智能省电模式',
-            'overwrite_record': '覆盖录像'
-        }
-        # 模式解释文案
-        mode_texts_mapping = {
-            'alarm_recording_plan': '配置报警录像（检测到报警事件时触发录像）的触发类型和时间计划。',
-            'auto_extended_recording': '通过AI辅助延长录像持续到事件结束，最长120秒。',
-            'record_delay_duration': '触发事件停止后延后录制的时长。延时越长，能耗越大。',
-            'pre_record': '在触发事件前开始录像',
-            'timed_recording_plan': '配置持续录像的时间计划，启用的时间段会持续不间断录像。',
-            'smart_power_saving_mode': '不同电量下摄像机会以不同的设置进行定时录像，以延长使用时间。',
-            'overwrite_record': '覆盖录像???????'
-        }
-
-        def check_text(mode_type):
-            if mode_type in mode_texts_mapping:
-                RemoteSetting().scroll_check_funcs2(texts=mode_texts_mapping[mode_type],
-                                                    back2top=False)
-            else:
-                logger.error(f"未识别的模式 ==> {mode_type}")
-
-        def check_modes():
-            # 检查每个模式
-            for mode in camera_record_config:
-                if camera_record_config[mode]:
-                    # 构建支持的模式列表
-                    supported_modes.append(mode)
-
-                    # 转换键名为对应的模式名称，构建名称列表
-                    mode_name = mode_name_mapping.get(mode, mode)
-                    supported_cn_name.append(mode_name)
-
         try:
             self.turn_on_push()  # 打开手机推送
-
-            if supported_test:
-                self.click_test_button()
 
             if BasePage().is_key_in_yaml(other_switch, 'visitor_phone_remind'):
                 self.turn_on_visitor_phone_remind()
 
+            if BasePage().is_key_in_yaml(other_switch, 'schedule'):
+                RemoteSetting().scroll_check_funcs2(texts='可筛选报警类型或时间进行规划。')  # 验证解释文案
+
+            if BasePage().is_key_in_yaml(other_switch, 'push_interval'):
+                RemoteSetting().scroll_check_funcs2(texts='推送间隔')  # 验证推送间隔功能是否存在
+
             if BasePage().is_key_in_yaml(other_switch, 'device_notify_ringtone'):
                 self.turn_on_device_notify_ringtone()
+                RemoteSetting().scroll_check_funcs2(texts='开启后，可为设备单独设置通知铃声。')  # 验证解释文案
 
             if BasePage().is_key_in_yaml(other_switch, 'delay_notifications'):
                 self.turn_on_delay_notifications()
+                RemoteSetting().scroll_check_funcs2(texts='延迟时间')  # 验证延迟时间功能是否存在
 
-            RemoteSetting().scroll_check_funcs2(texts=main_text)
-            RemoteSetting().scroll_check_funcs2(texts=options, selector='ReoTitle')
+            if BasePage().is_key_in_yaml(other_switch, 'supported_test'):
+                self.click_test_button()
 
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
@@ -247,11 +210,14 @@ class RemotePush(BasePage):
         :param options_text: 报警类型筛选页面的可勾选选项
         :return:
         """
+        # 计划主页通用内容
+        common_plan_texts = ['取消', '计划', '保存', '00', '02', '04', '06', '08', '10', '12', '14', '16', '18',
+                             '20', '22', '24', 'SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
 
         def handle_alarm_type():
             """处理报警型页面的遍历和保存操作"""
-            detect_text = options_text['text']  # 报警类型全局文案
             detect_options = options_text['options']  # 报警类型选项文案
+            detect_text = ['报警类型', '保存'] + detect_options  # 报警类型全局文案
             self.click_checkbox_by_text(option_text_list=detect_options, menu_text='报警类型')
             self.scroll_and_click_by_text(text_to_find=detect_options[0])  # 保底选项，防止下一步无法点击保存
             RemoteSetting().scroll_check_funcs2(texts=detect_text)  # 验证报警类型全局文案
@@ -263,30 +229,30 @@ class RemotePush(BasePage):
             self.scroll_and_click_by_text(text_to_find='计划')  # 点击计划
 
             # 验证计划文案
-            RemoteSetting().scroll_check_funcs2(texts=texts_list)
+            RemoteSetting().scroll_check_funcs2(texts=common_plan_texts)
             # 验证底部涂抹按钮文案：涂画
-            # draw_text = ['涂抹以选择时间', '全选']
             self.click_by_xpath(xpath_expression=_ReoIcon_Draw)
             RemoteSetting().scroll_check_funcs2(texts=draw_text, scroll_or_not=False, back2top=False)
             # 验证底部涂抹按钮文案：擦除
-            # erase_text = ['涂抹以取消选择时间', '全部擦除']
             self.click_by_xpath(xpath_expression=_ReoIcon_Erase)
             RemoteSetting().scroll_check_funcs2(texts=erase_text, scroll_or_not=False, back2top=False)
 
             # 如果支持选择报警类型：
             if supported_alarm_type:
+                RemoteSetting().scroll_check_funcs2(texts='配置推送的触发类型和时间计划。')  # 验证存在报警类型时上方的解释文案
                 handle_alarm_type()
 
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
-    def verify_test_push_interval(self, texts_list, option_text_list):
+    def verify_test_push_interval(self, option_text_list):
         """
         点击并遍历推送间隔
-        :param texts_list: 推送间隔主页文案
         :param option_text_list: 推送间隔选项
         :return:
         """
+        # 拼接全局文案列表
+        texts_list = ['推送间隔'] + option_text_list
         try:
             self.turn_on_push()
 
