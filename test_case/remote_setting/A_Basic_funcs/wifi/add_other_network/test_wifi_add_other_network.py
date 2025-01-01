@@ -33,6 +33,5 @@ class TestRemoteWifi:
 
         # 测试添加其他网络
         switch_wifi = remote_items['add_other_network']
-        RemoteWiFi().access_in_add_network(text_list=switch_wifi['text'],
-                                           wifi_name=switch_wifi['options']['wifi_name'],
+        RemoteWiFi().access_in_add_network(wifi_name=switch_wifi['options']['wifi_name'],
                                            wifi_passw=switch_wifi['options']['wifi_passw'])

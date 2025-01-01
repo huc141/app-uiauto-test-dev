@@ -89,6 +89,45 @@ class RemotePush(BasePage):
         :param other_switch: 是否其他Switch开关，支持则开启
         :return:
         """
+        # 模式名称映射
+        mode_name_mapping = {
+            'alarm_recording_plan': '报警录像计划',
+            'auto_extended_recording': '自动延长录像',
+            'record_delay_duration': '录像延时时长',
+            'pre_record': '预录像',
+            'timed_recording_plan': '定时录像计划',
+            'smart_power_saving_mode': '智能省电模式',
+            'overwrite_record': '覆盖录像'
+        }
+        # 模式解释文案
+        mode_texts_mapping = {
+            'alarm_recording_plan': '配置报警录像（检测到报警事件时触发录像）的触发类型和时间计划。',
+            'auto_extended_recording': '通过AI辅助延长录像持续到事件结束，最长120秒。',
+            'record_delay_duration': '触发事件停止后延后录制的时长。延时越长，能耗越大。',
+            'pre_record': '在触发事件前开始录像',
+            'timed_recording_plan': '配置持续录像的时间计划，启用的时间段会持续不间断录像。',
+            'smart_power_saving_mode': '不同电量下摄像机会以不同的设置进行定时录像，以延长使用时间。',
+            'overwrite_record': '覆盖录像???????'
+        }
+
+        def check_text(mode_type):
+            if mode_type in mode_texts_mapping:
+                RemoteSetting().scroll_check_funcs2(texts=mode_texts_mapping[mode_type],
+                                                    back2top=False)
+            else:
+                logger.error(f"未识别的模式 ==> {mode_type}")
+
+        def check_modes():
+            # 检查每个模式
+            for mode in camera_record_config:
+                if camera_record_config[mode]:
+                    # 构建支持的模式列表
+                    supported_modes.append(mode)
+
+                    # 转换键名为对应的模式名称，构建名称列表
+                    mode_name = mode_name_mapping.get(mode, mode)
+                    supported_cn_name.append(mode_name)
+
         try:
             self.turn_on_push()  # 打开手机推送
 
@@ -176,20 +215,23 @@ class RemotePush(BasePage):
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
-    def verify_device_notify_ringtone(self, text, options):
+    def verify_device_notify_ringtone(self):
         """
         点击并测试设备通知铃声
         :param text: 需要验证的全局文案
         :param options: 需要遍历的报警铃声列表
         :return:
         """
+        text = ['报警铃声', '强烈通知', '重要通知', '一般通知']
+        options = ['强烈通知', '重要通知', '一般通知']
         try:
             self.turn_on_device_notify_ringtone()
             time.sleep(1)
             self.click_by_text(text='设备通知铃声')
 
             RemoteSetting().scroll_check_funcs2(texts=text)
-            RemoteSetting().scroll_check_funcs2(texts=options, selector='ReoTitle')
+            RemoteSetting().scroll_check_funcs2(texts=options,
+                                                selector='ReoTitle')
 
             self.back_previous_page_by_xpath()
 
@@ -258,14 +300,15 @@ class RemotePush(BasePage):
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
-    def verify_delay_notifications(self, text, options):
+    def verify_delay_notifications(self, options):
         """
         点击并测试延时通知
         :param text: 延时通知主页全局文案
         :param options: 需要遍历的延迟时间列表
         :return:
         """
-
+        # 拼接全局文案
+        text = ['延迟时间'] + options
         try:
             self.turn_on_push()  # 打开手机推送开关
             self.turn_on_delay_notifications()  # 打开延时通知开关

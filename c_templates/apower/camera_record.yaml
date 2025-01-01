@@ -1,5 +1,5 @@
-device_list_name: "Reolink Video Doorbell WiFi-W"
-uid: '952700Y0058Y1MGY'
+device_list_name: ""
+uid: ''
 
 ipc:
   camera_record:

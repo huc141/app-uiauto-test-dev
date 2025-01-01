@@ -7,7 +7,9 @@ from pages.base_page import BasePage
 from pages.rn_device_setting_page.remote_setting import RemoteSetting
 from pages.rn_device_setting_page.remote_pir_setting import RemotePirSetting
 
-devices_config = read_yaml.load_device_config(device_dir='battery/Reolink Go Ranger PT',
+g_config = read_yaml.read_global_data(source="global_data")  # 读取全局配置
+device_dir = g_config.get("device_dir")  # 读取设备配置文件目录
+devices_config = read_yaml.load_device_config(device_dir=device_dir,
                                               yaml_file_name='pir.yaml')  # 读取参数化文件
 
 
@@ -23,11 +25,10 @@ class TestRemotePIRSetting:
         BasePage().check_key_in_yaml(remote_items, 'alarm_time_limit')
 
         # 启动app，并开启录屏
-        # driver.start_app(True)
+        driver.start_app(True)
 
         # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击‘显示’菜单项进入显示主页
         RemoteSetting().access_in_pir(device_list_name=device_config['device_list_name'])
 
         # 验证报警时限主页功能文案
-        RemotePirSetting().verify_pir_alarm_time_limit(text1=remote_items['alarm_time_limit']['text'],
-                                                       text2=remote_items['alarm_time_limit']['options'])
+        RemotePirSetting().verify_pir_alarm_time_limit(options=remote_items['alarm_time_limit']['options'])

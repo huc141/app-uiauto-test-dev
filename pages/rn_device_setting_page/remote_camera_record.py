@@ -47,21 +47,63 @@ class RemoteCameraRecord(BasePage):
         except Exception as e:
             pytest.fail(f'摄像机录像按钮开关状态判断函数执行失败，失败原因{e}')
 
-    def check_camera_record_main_text(self, text, options):
+    def check_camera_record_main_text(self, camera_record_config):
         """
         验证摄像机录像主页文案
-        :param text: 主页全局文案列表
-        :param options: ReoTitle选项列表
+        :param camera_record_config: 摄像机录像yaml配置
         :return:
         """
+        supported_modes = []
+        supported_cn_name = []
+        # 模式名称映射
+        mode_name_mapping = {
+            'alarm_recording_plan': '报警录像计划',
+            'auto_extended_recording': '自动延长录像',
+            'record_delay_duration': '录像延时时长',
+            'pre_record': '预录像',
+            'timed_recording_plan': '定时录像计划',
+            'smart_power_saving_mode': '智能省电模式',
+            'overwrite_record': '覆盖录像'
+        }
+        # 模式解释文案
+        mode_texts_mapping = {
+            'alarm_recording_plan': '配置报警录像（检测到报警事件时触发录像）的触发类型和时间计划。',
+            'auto_extended_recording': '通过AI辅助延长录像持续到事件结束，最长120秒。',
+            'record_delay_duration': '触发事件停止后延后录制的时长。延时越长，能耗越大。',
+            'pre_record': '在触发事件前开始录像',
+            'timed_recording_plan': '配置持续录像的时间计划，启用的时间段会持续不间断录像。',
+            'smart_power_saving_mode': '不同电量下摄像机会以不同的设置进行定时录像，以延长使用时间。',
+            'overwrite_record': '覆盖录像???????'
+        }
+
+        def check_text(mode_type):
+            if mode_type in mode_texts_mapping:
+                RemoteSetting().scroll_check_funcs2(texts=mode_texts_mapping[mode_type],
+                                                    back2top=False)
+            else:
+                logger.error(f"未识别的模式 ==> {mode_type}")
+
+        def check_modes():
+            # 检查每个模式
+            for mode in camera_record_config:
+                if camera_record_config[mode]:
+                    # 构建支持的模式列表
+                    supported_modes.append(mode)
+
+                    # 转换键名为对应的模式名称，构建名称列表
+                    mode_name = mode_name_mapping.get(mode, mode)
+                    supported_cn_name.append(mode_name)
+
         try:
             # 打开摄像机录像开关
             self.turn_on_camera_recording()
-
+            # 统计该设备的模式
+            check_modes()
             # 验证全局文案
-            RemoteSetting().scroll_check_funcs2(texts=text)
+            for i in supported_modes:
+                check_text(mode_type=i)
             # 验证选项文案
-            RemoteSetting().scroll_check_funcs2(texts=options, selector='ReoTitle')
+            RemoteSetting().scroll_check_funcs2(texts=supported_cn_name, selector='ReoTitle')
 
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
@@ -80,19 +122,20 @@ class RemoteCameraRecord(BasePage):
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
-    def verify_alarm_recording_plan(self, texts_list, supported_alarm_type, options_text):
+    def verify_alarm_recording_plan(self, supported_alarm_type, options_text):
         """
         点击并测试 报警录像>报警录像计划 并验证文案内容
-        :param texts_list: 需要验证的文案列表
         :param supported_alarm_type: 是否支持报警类型筛选，bool
         :param options_text: 报警类型筛选页面的可勾选选项
         :return:
         """
+        common_texts = ['取消', '报警录像计划', '保存',
+                        '配置报警录像（检测到报警事件时触发录像）的触发类型和时间计划。', ]
 
         def handle_alarm_type():
             """处理报警型页面的遍历和保存操作"""
-            detect_text = options_text['text']  # 报警类型全局文案
             detect_options = options_text['options']  # 报警类型选项文案
+            detect_text = ['保存', '全选', '报警类型'] + detect_options  # 拼接报警类型全局文案
             self.click_checkbox_by_text(option_text_list=detect_options, menu_text='报警类型')
             self.scroll_and_click_by_text(text_to_find=detect_options[0])  # 保底选项，防止下一步无法点击保存
             RemoteSetting().scroll_check_funcs2(texts=detect_text)  # 验证报警类型全局文案
@@ -104,7 +147,7 @@ class RemoteCameraRecord(BasePage):
             self.scroll_and_click_by_text(text_to_find='报警录像计划')  # 点击报警录像计划
 
             # 验证报警录像计划文案
-            RemoteSetting().scroll_check_funcs2(texts=texts_list)
+            RemoteSetting().scroll_check_funcs2(texts=common_texts)
             # 验证底部涂抹按钮文案：涂画
             self.click_by_xpath(xpath_expression=_ReoIcon_Draw)
             RemoteSetting().scroll_check_funcs2(texts=draw_text, scroll_or_not=False, back2top=False)
@@ -137,18 +180,19 @@ class RemoteCameraRecord(BasePage):
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
-    def verify_timed_recording_plan(self, texts_list, supported_alarm_type, options_text):
+    def verify_timed_recording_plan(self, supported_alarm_type, options_text):
         """
         点击并测试 定时录像>定时录像计划 并验证文案内容
-        :param texts_list: 需要验证的文案列表
         :param supported_alarm_type: 是否支持报警类型筛选，bool
         :param options_text: 报警类型筛选页面的可勾选选项
         """
+        common_texts = ['取消', '定时录像计划', '保存',
+                        '配置持续录像的时间计划，启用的时间段会持续不间断录像。']
 
         def handle_alarm_type():
             """处理报警型页面的遍历和保存操作"""
-            detect_text = options_text['text']  # 报警类型全局文案
             detect_options = options_text['options']  # 报警类型选项文案
+            detect_text = ['报警类型', '保存', '全选'] + detect_options  # 报警类型全局文案
             self.click_checkbox_by_text(option_text_list=detect_options, menu_text='报警类型')
             self.scroll_and_click_by_text(text_to_find=detect_options[0])  # 保底选项，防止下一步无法点击保存
             RemoteSetting().scroll_check_funcs2(texts=detect_text)  # 验证报警类型全局文案
@@ -159,8 +203,8 @@ class RemoteCameraRecord(BasePage):
             self.turn_on_camera_recording()  # 打开摄像机录像开关
             self.scroll_and_click_by_text(text_to_find='定时录像计划')  # 点击定时录像计划
 
-            # 验证报警录像计划文案
-            RemoteSetting().scroll_check_funcs2(texts=texts_list)
+            # 验证定时录像计划文案
+            RemoteSetting().scroll_check_funcs2(texts=common_texts)
             # 验证底部涂抹按钮文案：涂画
             self.click_by_xpath(xpath_expression=_ReoIcon_Draw)
             RemoteSetting().scroll_check_funcs2(texts=draw_text, scroll_or_not=False, back2top=False)
@@ -175,19 +219,18 @@ class RemoteCameraRecord(BasePage):
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
-    def verify_record_delay_duration(self, texts_list, options):
+    def verify_record_delay_duration(self, options):
         """
         验证录像延时时长文案内容,验证完毕后返回上一页。
-        :param texts_list: 需要验证的文案列表
         :param options: 遍历操作选项列表
         :return:
         """
         try:
             self.turn_on_camera_recording()  # 打开摄像机录像开关
             self.scroll_and_click_by_text(text_to_find='录像延时时长')  # 点击录像延时时长
+            # 验证标题
+            RemoteSetting().scroll_check_funcs2(texts='录像延时时长', back2top=False)
 
-            # 验证录像延时时长主页文案
-            RemoteSetting().scroll_check_funcs2(texts=texts_list)
             # 遍历操作选项
             self.iterate_and_click_popup_text(option_text_list=options, menu_text='录像延时时长')
 
@@ -242,15 +285,18 @@ class RemoteCameraRecord(BasePage):
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
-    def verify_smart_power_saving_mode(self, texts_list, support_frame_rate, options, fps_texts):
+    def verify_smart_power_saving_mode(self, support_frame_rate, options, fps_options):
         """
         点击并测试智能省电模式
-        :param texts_list: 需要验证的智能省电模式主页文案列表
         :param support_frame_rate: 是否支持帧率
         :param options: 智能省电模式主页ReoTitle选项列表
-        :param fps_texts: 帧率文案yaml
+        :param fps_options: 帧率ReoTitle选项列表
         :return:
         """
+        texts_list = ['智能省电模式', '不同电量下摄像机会以不同的设置进行定时录像，以延长使用时间。',
+                      '0%', '100%']
+        fps_texts_list = ['帧率(fps)', '低帧率续航更长，高帧率观看体验更佳']
+
         def turn_on_smart_power_saving_mode():
             """
             判断智能省电模式开关是否处于开启状态，未开启则点击开启
@@ -285,11 +331,11 @@ class RemoteCameraRecord(BasePage):
                 # 点击帧率
                 self.scroll_and_click_by_text(text_to_find='帧率(fps)')
                 # 验证帧率主页文案
-                RemoteSetting().scroll_check_funcs2(texts=fps_texts['text'])
+                RemoteSetting().scroll_check_funcs2(texts=fps_texts_list)
                 # 返回上一级
                 self.back_previous_page_by_xpath()
                 # 开始点击帧率并遍历选项
-                self.iterate_and_click_popup_text(option_text_list=fps_texts['options'],
+                self.iterate_and_click_popup_text(option_text_list=fps_options,
                                                   menu_text='帧率(fps)')
 
             # 关闭智能省电模式，验证关闭后的文案

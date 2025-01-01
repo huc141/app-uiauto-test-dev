@@ -3,66 +3,20 @@ uid: '952700Y004WOIYNY'
 
 ipc:
   pir:
-    name: 'pir'
-    desc: '设置>pir'
-    type: 'navigation'
-    text:
-      - ''
-
     items:
       pir:
-        name: 'pir'
-        desc: '设置>pir主页'
-        type: 'page'
-        text:
-          - 'PIR 传感器'
-          - '摄像机检测到画面内有物体移动时会触发报警，并通过手机推送、声音报警、邮件通知用户。'
-          - '探测精度'
-          - '报警时限'
-          - '触发间隔'
-        options:
-          - 'PIR 传感器'
-          - '探测精度'
-          - '报警时限'
-          - '触发间隔'
-
-        sensitivity:
-          name: '探测精度'
-          desc: '设置>pir>探测精度'
-          type: 'page'
-          text:
-            - '探测精度'
-            - '减少误报'
-            - '如果监控范围内不时有物体晃动（如树叶摆动），请打开此功能以减少误报'
-            - '灵敏度'
-            - '灵敏度高，检测到细微的物体移动就报警，不放过任何风吹草动，如细小的蚊虫、较远的人等。'
-            - '0'
-            - '100'
-          options:
-            - '减少误报'
-            - '灵敏度'
-            - '0'
-            - '100'
-
+        sensitivity: '探测精度'
         alarm_time_limit:
-          name: '报警时限'
-          desc: '设置>pir>报警时限'
-          type: 'page'
-          text:
-            - '报警时限'
+          options:
             - '不限制'
             - '15s'
             - '30s'
             - '1min'
             - '2min'
             - '5min'
-
         trigger_interval:
-          name: '触发间隔'
-          desc: '设置>pir>触发间隔'
-          type: 'page'
-          text:
-            - '触发间隔'
+          options:
+            - '不限制'
             - '30s'
             - '1min'
             - '3min'

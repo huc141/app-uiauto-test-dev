@@ -7,7 +7,10 @@ from pages.base_page import BasePage
 from pages.rn_device_setting_page.remote_push_notifications import RemotePush
 from pages.rn_device_setting_page.remote_setting import RemoteSetting
 
-devices_config = read_yaml.load_device_config(yaml_file_name='push.yaml')  # 读取参数化文件
+g_config = read_yaml.read_global_data(source="global_data")  # 读取全局配置
+device_dir = g_config.get("device_dir")  # 读取设备配置文件目录
+devices_config = read_yaml.load_device_config(device_dir=device_dir,
+                                              yaml_file_name='push.yaml')  # 读取参数化文件
 
 
 @allure.epic("远程配置>报警通知>手机推送")
@@ -31,7 +34,7 @@ class TestRemotePush:
 
         # 验证push主页文案列表
         key_res = BasePage().is_key_in_yaml(remote_items['push'], 'supported_test')
-        RemotePush().check_push_main_text(main_text=remote_items['push_text'],
+        RemotePush().check_push_main_text(main_text=remote_items['text'],
                                           options=remote_items['push']['options'],
                                           supported_test=key_res,
                                           other_switch=remote_items)
@@ -75,9 +78,7 @@ class TestRemotePush:
         RemotePush().turn_on_device_notify_ringtone()
 
         # 遍历报警铃声
-        RemotePush().verify_device_notify_ringtone(text=remote_items['device_notify_ringtone']['alarm_ring']['text'],
-                                                   options=remote_items['device_notify_ringtone']['alarm_ring'][
-                                                       'options'])
+        RemotePush().verify_device_notify_ringtone()
 
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("计划")
@@ -141,6 +142,5 @@ class TestRemotePush:
         RemoteSetting().access_in_push_notifications(device_list_name=device_config['device_list_name'])
 
         # 遍历延迟时间
-        RemotePush().verify_delay_notifications(text=remote_items['delay_notifications']['delay_time']['text'],
-                                                options=remote_items['delay_notifications']['delay_time']['option_text'])
+        RemotePush().verify_delay_notifications(options=remote_items['delay_notifications']['delay_time']['option_text'])
 

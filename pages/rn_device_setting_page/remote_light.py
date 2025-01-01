@@ -166,13 +166,13 @@ class RemoteLight(BasePage):
                 self.scroll_and_click_by_text(text_to_find='白光灯')
                 # 检查设备的白光灯所支持的模式
                 check_floodlight_modes()
-                # 根据白光灯所支持的模式supported_modes列表，检查对应模式的解释文案
+                # 根据白光灯所支持的模式supported_modes列表，验证ReoTitle选项
                 for i in supported_modes:
                     check_light_text(mode_type=i)
                 # 验证白光灯主页的ReoTitle选项
                 validate_floodlight_texts()
             else:
-                # 根据白光灯所支持的模式supported_modes列表，检查对应模式的解释文案
+                # 根据白光灯所支持的模式supported_modes列表，验证ReoTitle选项和对应模式的解释文案
                 for i in supported_modes:
                     check_light_text(mode_type=i)
                 validate_floodlight_texts()

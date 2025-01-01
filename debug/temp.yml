@@ -1,191 +1,101 @@
-pages:
-  - page_name: 设置
-    page_level: 1
-    elements:
-      - name: Wi-Fi
-        type: menu_item
-        locator:
-          method: "text"
-          value: "Wi-Fi"
-        actions:
-          - type: click
-            expected_result:
-              type: next_page
-              value: "Wi-Fi"
-      - name: 灯
-        type: menu_item
-        locator:
-          method: "text"
-          value: "灯"
-        actions:
-          - type: click
-            expected_result:
-              type: next_page
-              value: "灯"
+device_list_name: ""
+uid: ''
 
-  - page_name: Wi-Fi
-    page_level: 2
-    elements:
-      - name: Wi-Fi 频段偏好
-        type: menu_item
-        locator:
-          method: "text"
-          value: "Wi-Fi 频段偏好"
-        actions:
-          - type: click
-            expected_result:
-              type: popup_shown
-              value: "Wi-Fi 频段偏好"
+ipc:
+  push:
+    name: '手机推送'
+    desc: '设置>手机推送'
+    type: 'switch'
+    text:
+      - '手机推送'
+      - '测试'
+      - '打开后，接收移动事件通知。'
+      - '打开后，接受移动事件与低电量通知。'
+      - '此设备支持图文通知'
+      - '了解更多'
+      - '访客电话提醒'
+      - '访客铃声'
+      - '设备通知铃声'
+      - '开启后，可为此设备单独设置通知铃声'
+      - '报警铃声'
+      - '计划'
+      - '可筛选报警类型或进行时间规划。'
+      - '推送间隔'
+      - '延时通知'
+      - '延迟时间'
 
-      - name: Wi-Fi 测速
-        type: menu_item
-        locator:
-          method: "text"
-          value: "Wi-Fi 测速"
-        actions:
-          - type: click
-            expected_result:
-              type: next_page
-              value: "Wi-Fi 测速"
-
-      - name: 添加其他网络
-        type: menu_item
-        locator:
-          method: "id"
-          value: "add_other_network"
-        actions:
-          - type: click
-            expected_result:
-              type: next_page
-              value: "输入密码"
-
-  - page_name: Wi-Fi 频段偏好
-    page_level: 3
-    elements:
-      - name: 自动
-        type: radio_button
-        locator:
-          method: "text"
-          value: "自动"
-        actions:
-          - type: click
-            expected_result:
-              type: popup_hidden
-              value: "Wi-Fi"
-
-      - name: 仅 5G
-        type: radio_button
-        locator:
-          method: "text"
-          value: "仅 5G"
-        actions:
-          - type: click
-            expected_result:
-              type: popup_hidden
-              value: "Wi-Fi"
-
-      - name: 仅2.4G
-        type: radio_button
-        locator:
-          method: "text"
-          value: "仅2.4G"
-        actions:
-          - type: click
-            expected_result:
-              type: popup_hidden
-              value: "Wi-Fi"
-
-      - name: 取消
-        type: button
-        locator:
-          method: "text"
-          value: "取消"
-        actions:
-          - type: click
-            expected_result:
-              type: popup_hidden
-              value: "Wi-Fi"
-
-  - page_name: Wi-Fi 测速
-    page_level: 3
-    elements:
-      - name: 开始测速
-        type: button
-        locator:
-          method: "text"
-          value: "开始测速"
-        actions:
-          - type: click
-            expected_result:
-              type: back_to_page
-              value: "Wi-Fi"
-
-  - page_name: 输入密码
-    page_level: 3
-    elements:
-      - name: Wi-Fi 名称
-        type: input_field
-        locator:
-          method: "text"
-          value: "Wi-Fi 名称"
-        actions:
-          - type: input
-            input_value: "ExampleWiFi"
-            expected_result:
-              type: stay
-              value: "输入密码"
-
-      - name: Wi-Fi 密码
-        type: input_field
-        locator:
-          method: "text"
-          value: "Wi-Fi 密码"
-        actions:
-          - type: input
-            input_value: "ExamplePassword"
-            expected_result:
-              type: stay
-              value: "输入密码"
-
-      - name: 取消
-        type: button
-        locator:
-          method: "text"
-          value: "取消"
-        actions:
-          - type: click
-            expected_result:
-              type: next_page
-              value: "Wi-Fi"
-
-      - name: 保存
-        type: button
-        locator:
-          method: "text"
-          value: "保存"
-        actions:
-          - type: click
-            expected_result:
-              type: next_page
-              value: "Wi-Fi"
+    options:
+      - '手机推送'
+      - '访客电话提醒'
+      - '访客铃声'
+      - '设备通知铃声'
+      - '报警铃声'
+      - '计划'
+      - '推送间隔'
+      - '延时通知'
+      - '延迟时间'
 
 
-# 定位方法
-locator_methods:
-  - method: text
-  - method: xpath
+    items:
+      supported_test: '是否支持测试按钮，支持就保留该键，否则删除'
 
-# 操作类型
-action_types:
-  - type: click
-  - type: input
-  - type: select
+      visitor_phone_remind: '访客电话提醒'
 
-# 预期结果类型
-expected_result_types:
-  - type: next_page
-  - type: dialog_opened
-  - type: dialog_closed
-  - type: test_started
-  - type: network_saved
-  - type: text_entered
+      device_notify_ringtone:
+        alarm_ring: '报警铃声'
+
+      schedule:
+        name: '计划'
+        desc: '设置>手机推送>计划'
+        type: 'navigation'
+        text:
+          - '取消'
+          - '计划'
+          - '保存'
+          - '配置推送的触发类型和时间计划。'
+          - '报警类型'
+        alarm_type:
+          name: '报警类型'
+          desc: '设置>手机推送>计划>报警类型'
+          type: 'page'
+          text:
+            - '报警类型'
+            - '保存'
+            - '响铃'
+            - '画面变动'
+            - '人'
+            - '车'
+            - '动物'
+            - '包裹'
+            - '其他'
+          options:
+            - '响铃'
+            - '画面变动'
+            - '人'
+            - '车'
+            - '动物'
+            - '包裹'
+            - '其他'
+
+        push_interval:
+          name: '推送间隔'
+          desc: '设置>手机推送>推送间隔'
+          type: 'popup'
+          text:
+            - '20秒'
+            - '30秒'
+            - '60秒'
+            - '120秒'
+          options:
+            - '20秒'
+            - '30秒'
+            - '60秒'
+            - '120秒'
+
+      delay_notifications:
+        delay_time:
+          option_text:
+            - '20秒'
+            - '30秒'
+            - '60秒'
+            - '120秒'

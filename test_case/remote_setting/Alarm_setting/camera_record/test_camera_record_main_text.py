@@ -7,7 +7,9 @@ from pages.base_page import BasePage
 from pages.rn_device_setting_page.remote_setting import RemoteSetting
 from pages.rn_device_setting_page.remote_camera_record import RemoteCameraRecord
 
-devices_config = read_yaml.load_device_config(device_dir='battery/Reolink Video Doorbell-1AA1',
+g_config = read_yaml.read_global_data(source="global_data")  # 读取全局配置
+device_dir = g_config.get("device_dir")  # 读取设备配置文件目录
+devices_config = read_yaml.load_device_config(device_dir=device_dir,
                                               yaml_file_name='camera_record.yaml')  # 读取参数化文件
 
 
@@ -30,8 +32,7 @@ class TestRemoteCameraRecord:
         RemoteSetting().access_in_camera_record(device_list_name=device_config['device_list_name'])
 
         # 验证摄像机录像主页文案
-        RemoteCameraRecord().check_camera_record_main_text(text=remote_items['camera_record']['text'],
-                                                           options=remote_items['camera_record']['options'])
+        RemoteCameraRecord().check_camera_record_main_text(camera_record_config=remote_items)
 
 
 

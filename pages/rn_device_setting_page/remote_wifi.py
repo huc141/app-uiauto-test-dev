@@ -52,7 +52,7 @@ class RemoteWiFi(BasePage):
             # 检查wifi内容中的每个模式
             for mode in wifi_config:
                 if wifi_config[mode]:
-                    # 构建支持的模式列表
+                    # 构建支持的模式key列表
                     supported_modes.append(mode)
 
                     # 转换键名为对应的模式名称，构建名称列表
@@ -63,13 +63,12 @@ class RemoteWiFi(BasePage):
             # 检查设备的wifi所支持的模式
             check_wifi_modes()
 
-            # 根据wifi所支持的模式supported_modes列表，检查对应模式的解释文案
-            for i in supported_modes:
-                check_wifi_text(mode_type=i)
+            # 根据wifi所支持的模式supported_modes列表，检查ReoTitle模式
+            RemoteSetting().scroll_check_funcs2(texts=supported_cn_name, selector='ReoTitle')
 
             # 根据wifi所支持的模式supported_cn_name列表，检查对应模式的解释文案
-            for i in supported_cn_name:
-                RemoteSetting().scroll_check_funcs2(texts=i)
+            for i in supported_modes:
+                check_wifi_text(mode_type=i)
 
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")

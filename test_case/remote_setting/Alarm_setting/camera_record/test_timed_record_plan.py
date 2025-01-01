@@ -7,7 +7,10 @@ from pages.base_page import BasePage
 from pages.rn_device_setting_page.remote_setting import RemoteSetting
 from pages.rn_device_setting_page.remote_camera_record import RemoteCameraRecord
 
-devices_config = read_yaml.load_device_config(yaml_file_name='camera_record.yaml')  # 读取参数化文件
+g_config = read_yaml.read_global_data(source="global_data")  # 读取全局配置
+device_dir = g_config.get("device_dir")  # 读取设备配置文件目录
+devices_config = read_yaml.load_device_config(device_dir=device_dir,
+                                              yaml_file_name='camera_record.yaml')  # 读取参数化文件
 
 
 @allure.epic("远程配置>摄像机录像")
@@ -30,8 +33,7 @@ class TestRemoteCameraRecord:
 
         # 验证 摄像机主页>定时录像>定时录像计划 文案内容、报警类型筛选页的文案内容
         key_res = BasePage().is_key_in_yaml(remote_items['timed_recording_plan'], 'alarm_type')
-        RemoteCameraRecord().verify_timed_recording_plan(texts_list=remote_items['timed_recording_plan']['text'],
-                                                         supported_alarm_type=key_res,
+        RemoteCameraRecord().verify_timed_recording_plan(supported_alarm_type=key_res,
                                                          options_text=remote_items['timed_recording_plan']['alarm_type'])
 
 

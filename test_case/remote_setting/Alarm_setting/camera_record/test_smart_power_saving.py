@@ -7,7 +7,10 @@ from pages.base_page import BasePage
 from pages.rn_device_setting_page.remote_setting import RemoteSetting
 from pages.rn_device_setting_page.remote_camera_record import RemoteCameraRecord
 
-devices_config = read_yaml.load_device_config(yaml_file_name='camera_record.yaml')  # 读取参数化文件
+g_config = read_yaml.read_global_data(source="global_data")  # 读取全局配置
+device_dir = g_config.get("device_dir")  # 读取设备配置文件目录
+devices_config = read_yaml.load_device_config(device_dir=device_dir,
+                                              yaml_file_name='camera_record.yaml')  # 读取参数化文件
 
 
 @allure.epic("远程配置>摄像机录像")
@@ -30,9 +33,8 @@ class TestRemoteCameraRecord:
 
         # 点击测试智能省电模式开关按钮
         key_res = BasePage().is_key_in_yaml(remote_items['smart_power_saving_mode'], 'fps')  # 是否支持帧率
-        RemoteCameraRecord().verify_smart_power_saving_mode(texts_list=remote_items['smart_power_saving_mode']['text'],
-                                                            support_frame_rate=key_res,
+        RemoteCameraRecord().verify_smart_power_saving_mode(support_frame_rate=key_res,
                                                             options=remote_items['smart_power_saving_mode']['options'],
-                                                            fps_texts=remote_items['smart_power_saving_mode']['fps'])
+                                                            fps_options=remote_items['smart_power_saving_mode']['fps']['options'])
 
 

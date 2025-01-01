@@ -7,7 +7,10 @@ from pages.base_page import BasePage
 from pages.rn_device_setting_page.remote_setting import RemoteSetting
 from pages.rn_device_setting_page.remote_camera_record import RemoteCameraRecord
 
-devices_config = read_yaml.load_device_config(yaml_file_name='camera_record.yaml')  # 读取参数化文件
+g_config = read_yaml.read_global_data(source="global_data")  # 读取全局配置
+device_dir = g_config.get("device_dir")  # 读取设备配置文件目录
+devices_config = read_yaml.load_device_config(device_dir=device_dir,
+                                              yaml_file_name='camera_record.yaml')  # 读取参数化文件
 
 
 @allure.epic("远程配置>摄像机录像")
@@ -29,5 +32,4 @@ class TestRemoteCameraRecord:
         RemoteSetting().access_in_camera_record(device_list_name=device_config['device_list_name'])
 
         # 点击录像延时时长，验证文案、遍历延时选项
-        RemoteCameraRecord().verify_record_delay_duration(texts_list=remote_items['record_delay_duration']['text'],
-                                                          options=remote_items['record_delay_duration']['options'])
+        RemoteCameraRecord().verify_record_delay_duration(options=remote_items['record_delay_duration']['options'])
