@@ -1,0 +1,27 @@
+device_list_name: 523-E1 Outdoor-11
+uid: 95270000OURLGLD3
+
+ipc:
+  camera_record:
+    items:
+      alarm_recording_plan:
+        alarm_type:
+          options:
+            - '画面变动'
+            - '人'
+            - '车'
+
+      record_delay_duration:
+        options:
+          - '15秒'
+          - '30秒'
+          - '1分钟'
+
+      pre_record: '预录像（有则保留无则删除）'
+
+      timed_recording_plan:
+        alarm_type:
+          options:
+            - ''
+
+

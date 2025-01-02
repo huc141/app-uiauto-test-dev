@@ -484,13 +484,14 @@ class RemoteEmailAlerts(BasePage):
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
-    def verify_email_interval(self, texts, options):
+    def verify_email_interval(self, options):
         """
         点击并遍历邮箱间隔
-        :param texts: 需要验证的全局页面内容
         :param options: 需要遍历的邮箱间隔列表
         :return:
         """
+        # 拼接邮箱间隔全局文案
+        texts = options + ['邮箱间隔']
         try:
             # 先打开邮件通知开关
             self.turn_on_email_alert()
@@ -498,7 +499,7 @@ class RemoteEmailAlerts(BasePage):
             self.click_by_text('邮箱间隔')
             # 验证页面内容
             RemoteSetting().scroll_check_funcs2(texts=texts, scroll_or_not=False)
-            RemoteSetting().scroll_check_funcs2(texts=texts, selector=reo_title_id)
+            RemoteSetting().scroll_check_funcs2(texts=options, selector=reo_title_id)
 
             # 返回上一页
             self.back_previous_page_by_xpath()

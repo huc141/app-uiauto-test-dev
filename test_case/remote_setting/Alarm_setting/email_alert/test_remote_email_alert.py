@@ -7,7 +7,10 @@ from pages.base_page import BasePage
 from pages.rn_device_setting_page.remote_setting import RemoteSetting
 from pages.rn_device_setting_page.remote_email_alerts import RemoteEmailAlerts
 
-devices_config = read_yaml.load_device_config(yaml_file_name='email_alerts.yaml')  # 读取参数化文件
+g_config = read_yaml.read_global_data(source="global_data")  # 读取全局配置
+device_dir = g_config.get("device_dir")  # 读取设备配置文件目录
+devices_config = read_yaml.load_device_config(device_dir=device_dir,
+                                              yaml_file_name='email_alerts.yaml')  # 读取参数化文件
 
 
 @allure.epic("远程配置>报警通知>邮件通知")
@@ -117,8 +120,7 @@ class TestRemoteEmailAlerts:
         RemoteSetting().access_in_email_alerts(device_list_name=device_config['device_list_name'])
 
         # 点击并遍历邮件内容
-        RemoteEmailAlerts().verify_email_interval(texts=remote_items['email_interval']['text'],
-                                                  options=remote_items['email_interval']['options'])
+        RemoteEmailAlerts().verify_email_interval(options=remote_items['email_interval']['options'])
 
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("未收到邮件？")
