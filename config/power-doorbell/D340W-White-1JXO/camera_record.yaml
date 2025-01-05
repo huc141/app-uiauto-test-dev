@@ -1,0 +1,29 @@
+device_list_name: D340W-White
+uid: 95270008100J1JXO
+
+ipc:
+  camera_record:
+    items:
+      alarm_recording_plan:
+        alarm_type:
+          options:
+            - '响铃'
+            - '画面变动'
+            - '人'
+            - '车'
+            - '包裹'
+
+      record_delay_duration:
+        options:
+          - '15秒'
+          - '30秒'
+          - '1分钟'
+
+      pre_record: '预录像（有则保留无则删除）'
+
+      timed_recording_plan:
+        alarm_type:
+          options:
+            - ''
+
+

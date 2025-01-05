@@ -370,7 +370,7 @@ class RemoteDisplay(BasePage):
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
-    def verify_image_setting_slider(self, anti_flicker, night_tt_vision, hdr, brightness_sync):
+    def verify_image_setting_slider(self, anti_flicker, night_tt_vision, hdr, brightness_sync, image_config):
         """
         验证图像设置
         :param custom_texts: 图像设置全局文案
@@ -379,6 +379,7 @@ class RemoteDisplay(BasePage):
         :param night_tt_vision: 是否支持夜视通透模式
         :param hdr: 是否支持HDR
         :param brightness_sync: 是否支持亮度同步
+        :param image_config: 图像设置配置yaml文件内容
         :return:
         """
         try:
@@ -423,14 +424,21 @@ class RemoteDisplay(BasePage):
             # 验证ReoTitle文案
             RemoteSetting().scroll_check_funcs2(texts=new_image_setting_options, selector='ReoTitle')
 
-            # 验证亮度拖动条
-            self.drag_slider_brightness()
-            # 验证对比度拖动条
-            self.drag_slider_contrast()
-            # 验证饱和度拖动条
-            self.drag_slider_saturation()
-            # 验证锐度拖动条
-            self.drag_slider_sharpness()
+            if image_config['brightness']:
+                # 验证亮度拖动条
+                self.drag_slider_brightness()
+
+            if image_config['contrast']:
+                # 验证对比度拖动条
+                self.drag_slider_contrast()
+
+            if image_config['saturation']:
+                # 验证饱和度拖动条
+                self.drag_slider_saturation()
+
+            if image_config['sharpness']:
+                # 验证锐度拖动条
+                self.drag_slider_sharpness()
 
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")

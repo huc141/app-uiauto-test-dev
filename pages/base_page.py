@@ -728,7 +728,7 @@ class BasePage:
         except Exception as err:
             pytest.fail(f"函数执行出错: {str(err)}")
 
-    def access_in_remote_setting(self, text_to_find, el_type='text', max_attempts=30, scroll_pause=0.5):
+    def access_in_remote_setting(self, text_to_find, el_type='text', max_attempts=50, scroll_pause=1):
         """
         在设备列表中滚动查找指定设备名称(支持单机、nvr、hub),并点击远程设置按钮。
         :param el_type: 元素查找类型，支持 文本text(label).
@@ -802,96 +802,6 @@ class BasePage:
 
         logger.warning(f"还是没找到 '{text_to_find}' 元素，已尝试 {max_attempts} 次.")
         pytest.skip(f"跳过当前用例！未能找到 '{text_to_find}' 设备，已尝试 {max_attempts} 次.")
-        # attempt = 0
-        #
-        # def retry_method(num_retries=4):
-        #     for _ in range(num_retries):
-        #         if self.driver(text='连接失败，点击重试').exists:
-        #             self.click_by_text('连接失败，点击重试')
-        #             time.sleep(10)
-        #         else:
-        #             # 如果检测到入参参数【text_to_find】，则跳出循环
-        #             if self.driver(text=text_to_find).exists:
-        #                 break
-        #     else:
-        #         pytest.fail(f'已重试 {num_retries} 次，未能连接上该设备！')
-        #
-        # def find_and_click_android(text):
-        #     for i in range(3, 0, -1):  # 从3开始递减到1，先检查第三个兄弟元素
-        #         setting_xpath = f"//*[@text='{text}']/following-sibling::*[{i}][@clickable='true']"
-        #         if self.driver.xpath(setting_xpath).exists:
-        #             self.driver.xpath(setting_xpath).click()
-        #             return True
-        #         else:
-        #             logger.warning(f"未找到该设备的远程设置按钮！")
-        #             return False
-        #
-        # def find_and_click_ios(xpath_exp):
-        #     element = self.driver.xpath(xpath_exp)
-        #     if element.exists and element.label == 'list device set':
-        #         element.click()
-        #         logger.info(f"尝试点击这个 '{text_to_find}' 元素右边的远程设置按钮")
-        #         time.sleep(3)
-        #         return True
-        #     return False
-        #
-        # def find_and_click_android_xpath(text):
-        #     if find_and_click_android(text=text):
-        #         return True
-        #     else:
-        #         logger.info(f"没有找到目标元素右边的远程设置按钮: '{text}'")
-        #         # self.driver(text=text).click()
-        #         self.click_by_text(text)
-        #         return True
-        #
-        # def find_and_click_ios_xpath(text):
-        #     if find_and_click_ios(
-        #             f"//*[contains(@name, '{text}')]/following-sibling::*[1][@visible='true' and @enabled='true']"):
-        #         return True
-        #     if find_and_click_ios(
-        #             f"//*[contains(@name, '{text}')]/following-sibling::*[2][@visible='true' and @enabled='true']"):
-        #         return True
-        #     else:
-        #         logger.info(f"没有找到目标元素右边的远程设置按钮: '{text}'")
-        #         # self.driver(label=text).click()
-        #         self.click_by_text(text)
-        #         return True
-        #
-        # try:
-        #     while attempt < max_attempts:
-        #         # 根据el_type初始化查找设备列表里的指定设备名称
-        #         if el_type == "text":
-        #             element = self.driver(text=text_to_find) if self.platform == "android" else self.driver(label=text_to_find)
-        #         elif el_type == "xpath":
-        #             element = self.driver.xpath(text_to_find)
-        #         else:
-        #             raise ValueError("你输入了不支持的元素查找类型")
-        #
-        #         # 如果设备名称存在
-        #         if element.exists:
-        #             logger.info(f"元素已找到: '{text_to_find}'")
-        #             if self.platform == "android":
-        #                 if find_and_click_android_xpath(text_to_find):
-        #                     return True
-        #             elif self.platform == "ios":
-        #                 if find_and_click_ios_xpath(text_to_find):
-        #                     return True
-        #
-        #         # 滑动屏幕
-        #         logger.info(f"尝试滚动查找 '{text_to_find}'... 第{attempt + 1}次")
-        #         if self.platform == "android":
-        #             self.driver(scrollable=True).scroll(steps=150)
-        #         elif self.platform == "ios":
-        #             self.driver.swipe_up()
-        #         time.sleep(scroll_pause)  # 等待页面稳定
-        #
-        #         attempt += 1
-        #
-        # except Exception as err:
-        #     pytest.fail(f"函数执行出错: {str(err)}")
-        #
-        # logger.info(f"还是没找到 '{text_to_find}' 元素，已经尝试了 {max_attempts} 次.")
-        # return False
 
     # def parse_and_extract_text(self, xml_content, xml_parse_conditions, exclude_texts=None):
     #     """

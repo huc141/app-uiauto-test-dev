@@ -43,7 +43,8 @@ class TestRemoteDisplay:
         RemoteDisplay().verify_image_setting_slider(anti_flicker=anti_flicker,
                                                     night_tt_vision=night_tt_vision,
                                                     hdr=hdr,
-                                                    brightness_sync=brightness_sync)
+                                                    brightness_sync=brightness_sync,
+                                                    image_config=remote_items1)
 
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("图像设置>抗闪烁")

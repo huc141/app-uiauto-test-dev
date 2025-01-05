@@ -1,0 +1,169 @@
+device_list_name: "Reolink Go PT"
+uid: '95270002K5ZOF42H'
+
+ipc:
+  display:
+    name: '显示'
+    desc: '设置>显示'
+    type: 'navigation'
+
+    items:
+      display:
+        name: '显示'
+        desc: '设置>显示'
+        type: 'navigation'
+        text:
+          - '垂直翻转'
+          - '水平翻转'
+          - '码流'
+          - '设备名称'
+          - '日期'
+          - '水印'
+          - '图像设置'
+          - '白天和黑夜'
+          - '遮盖区域'
+        options:
+          - '垂直翻转'
+          - '水平翻转'
+          - '码流'
+          - '设备名称'
+          - '日期'
+          - '水印'
+          - '图像设置'
+          - '白天和黑夜'
+          - '遮盖区域'
+
+        vertical_flip: '垂直翻转(无需配置，有则保留无则删除)'
+        horizontal_flip: '水平翻转(无需配置，有则保留无则删除)'
+        motion_mark: '移动标记(无需配置，有则保留无则删除)'
+        device_name: '设备名称(无需配置，有则保留无则删除)'
+        date: '日期(无需配置，有则保留无则删除)'
+        watermark: '水印(无需配置，有则保留无则删除)'
+
+        private_mark:
+          name: '遮盖区域'
+          desc: '设置>显示>遮盖区域'
+          type: 'navigation'
+          camera_type: 'DM'
+          mask_num: 3
+
+        stream:
+          name: '码流'
+          desc: '设置>显示>码流（只需确认编码格式/I帧间隔/帧率控制/码率控制是否存在）'
+          type: 'navigation'
+          text:
+            - ''
+            - ''
+          options:
+            - ''
+            - ''
+
+          clear:
+            name: '清晰'
+            desc: '设置>显示>码流>码流>清晰(此处的text也等于options)'
+            type: '（只需确认编码格式/I帧间隔是否存在）'
+            text:
+              - ''
+              - ''
+
+            resolution:
+              name: '分辨率'
+              desc: '设置>显示>码流>码流>清晰>分辨率'
+              type: 'popup'
+              options:
+                - '1920*1080'
+
+            frame_rate:
+              name: '帧率(FPS)'
+              desc: '设置>显示>码流>码流>清晰>帧率(FPS)'
+              type: 'popup'
+              options:
+                - '15(默认)'
+                - '10'
+                - '5'
+                - '2'
+
+            max_bit_rate:
+              name: '最大码率(kbps)'
+              desc: '设置>显示>码流>码流>清晰>最大码率(Kbps)'
+              type: 'popup'
+              options:
+                - '256'
+                - '512'
+                - '768'
+                - '1024'
+                - '1536(默认)'
+
+          fluent:
+            name: '流畅'
+            desc: '设置>显示>码流>码流>流畅'
+            type: '（只需确认编码格式/I帧间隔是否存在）'
+            text:
+              - ''
+              - ''
+
+            resolution:
+              name: '分辨率'
+              desc: '设置>显示>码流>码流>流畅>分辨率'
+              type: 'popup'
+              options:
+                - '640*360'
+
+            frame_rate:
+              name: '帧率(FPS)'
+              desc: '设置>显示>码流>码流>流畅>帧率(FPS)'
+              type: 'popup'
+              options:
+                - '15'
+                - '10'
+                - '5(默认)'
+                - '2'
+
+            max_bit_rate:
+              desc: '设置>显示>码流>码流>流畅>最大码率(kbps)'
+              type: 'popup'
+              options:
+                - '64'
+                - '128'
+                - '160(默认)'
+                - '192'
+                - '256'
+                - '384'
+                - '512'
+
+        image_setting:
+          name: '图像设置(只需要确认亮度同步/hdr/夜视通透模式/抗闪烁)'
+
+          brightness_sync: false
+          hdr: false
+          night_transparent_vision: false
+          anti_flicker: true
+          night_vision_zoom_enhance: false
+
+        day_and_night:
+          name: '白天和黑夜'
+          desc: '白天和黑夜'
+          type: 'popup'
+          text:
+            - '白天和黑夜'
+            - '模式切换'
+          options:
+            - '模式切换'
+
+          mode_switching:
+            name: '模式切换'
+            desc: '白天和黑夜>模式切换'
+            type: 'popup'
+            text:
+              - '模式切换'
+              - '黑白'
+              - '彩色'
+              - '自动'
+              - '光线较亮时自动显示彩色，较暗时自动显示黑白。'
+            options:
+              - '黑白'
+              - '彩色'
+              - '自动'
+
+
+

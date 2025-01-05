@@ -13,6 +13,7 @@ _ReoIcon_Erase = g_config.get('ReoIcon_Erase')  # 计划主页底部擦除按钮
 draw_text = g_config.get('draw_text')  # 选择涂抹按钮后显示的文案
 erase_text = g_config.get('erase_text')  # 选择擦除按钮后显示的文案
 alarm_type_selector = g_config.get('alarm_type_selector')  # 计划>报警类型 选项
+device_dir = g_config.get('device_dir')  # 电源/电池机目录
 
 
 class RemoteCameraRecord(BasePage):
@@ -62,24 +63,48 @@ class RemoteCameraRecord(BasePage):
             'record_delay_duration': '录像延时时长',
             'pre_record': '预录像',
             'timed_recording_plan': '定时录像计划',
-            'smart_power_saving_mode': '智能省电模式',
-            'overwrite_record': '覆盖录像'
+            'smart_power_saving_mode': '智能省电模式'
         }
-        # 模式解释文案
+        # 电源机模式解释文案
         mode_texts_mapping = {
             'alarm_recording_plan': '配置报警录像（检测到报警事件时触发录像）的触发类型和时间计划。',
             'auto_extended_recording': '通过AI辅助延长录像持续到事件结束，最长120秒。',
-            'record_delay_duration': '触发事件停止后延后录制的时长。延时越长，能耗越大。',
-            'pre_record': '在触发事件前开始录像',
+            'record_delay_duration': '触发事件停止后延后录制的时长',
+            'pre_record': '触发报警前开始录像',
             'timed_recording_plan': '配置持续录像的时间计划，启用的时间段会持续不间断录像。',
-            'smart_power_saving_mode': '不同电量下摄像机会以不同的设置进行定时录像，以延长使用时间。',
-            'overwrite_record': '覆盖录像???????'
+            'smart_power_saving_mode': '不同电量下摄像机会以不同的设置进行定时录像，以延长使用时间。'
+        }
+        # 电池机模式解释文案
+        b_mode_texts_mapping = {
+            'alarm_recording_plan': '配置报警录像（检测到报警事件时触发录像）的触发类型和时间计划。',
+            'auto_extended_recording': '通过AI辅助延长录像持续到事件结束，最长120秒。',
+            'record_delay_duration': '触发事件停止后延后录制的时长。延时越长，能耗越大。',
+            'pre_record': '触发报警前开始录像',
+            'timed_recording_plan': '配置持续录像的时间计划，启用的时间段会持续不间断录像。',
+            'smart_power_saving_mode': '不同电量下摄像机会以不同的设置进行定时录像，以延长使用时间。'
         }
 
+        # def check_text(mode_type):
+        #     if device_dir.startswith('power'):
+        #         if mode_type in mode_texts_mapping:
+        #             RemoteSetting().scroll_check_funcs2(texts=mode_texts_mapping[mode_type],
+        #                                                 back2top=False)
+        #         else:
+        #             logger.error(f"未识别的模式 ==> {mode_type}")
+        #     else:
+        #         if mode_type in b_mode_texts_mapping:
+        #             RemoteSetting().scroll_check_funcs2(texts=b_mode_texts_mapping[mode_type],
+        #                                                 back2top=False)
+        #         else:
+        #             logger.error(f"未识别的模式 ==> {mode_type}")
+
         def check_text(mode_type):
-            if mode_type in mode_texts_mapping:
-                RemoteSetting().scroll_check_funcs2(texts=mode_texts_mapping[mode_type],
-                                                    back2top=False)
+            # 定义映射字典的获取方式
+            texts_mapping = b_mode_texts_mapping if not device_dir.startswith('power') else mode_texts_mapping
+
+            # 检查模式类型是否在映射字典中
+            if mode_type in texts_mapping:
+                RemoteSetting().scroll_check_funcs2(texts=texts_mapping[mode_type], back2top=False)
             else:
                 logger.error(f"未识别的模式 ==> {mode_type}")
 
@@ -129,7 +154,8 @@ class RemoteCameraRecord(BasePage):
         :param options_text: 报警类型筛选页面的可勾选选项
         :return:
         """
-        common_texts = ['取消', '报警录像计划', '保存',
+        # common_texts这里有个疑问，顶部标题到底是使用【报警录像计划】还是【计划】
+        common_texts = ['取消', '计划', '保存',
                         '配置报警录像（检测到报警事件时触发录像）的触发类型和时间计划。', ]
 
         def handle_alarm_type():
@@ -147,7 +173,7 @@ class RemoteCameraRecord(BasePage):
             self.scroll_and_click_by_text(text_to_find='报警录像计划')  # 点击报警录像计划
 
             # 验证报警录像计划文案
-            RemoteSetting().scroll_check_funcs2(texts=common_texts)
+            RemoteSetting().scroll_check_funcs2(texts=common_texts, back2top=False)
             # 验证底部涂抹按钮文案：涂画
             self.click_by_xpath(xpath_expression=_ReoIcon_Draw)
             RemoteSetting().scroll_check_funcs2(texts=draw_text, scroll_or_not=False, back2top=False)
@@ -187,7 +213,7 @@ class RemoteCameraRecord(BasePage):
         :param options_text: 报警类型筛选页面的可勾选选项
         """
         common_texts = ['取消', '定时录像计划', '保存',
-                        '配置持续录像的时间计划，启用的时间段会持续不间断录像。']
+                        '配置持续录像的时间计划，启用的时间段会持续不间断地录像。']
 
         def handle_alarm_type():
             """处理报警型页面的遍历和保存操作"""

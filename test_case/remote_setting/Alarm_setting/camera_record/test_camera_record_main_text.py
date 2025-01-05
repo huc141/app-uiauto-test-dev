@@ -23,7 +23,7 @@ class TestRemoteCameraRecord:
     def test_remote_alarm_record_main_text(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['camera_record']['items']
-        BasePage().check_key_in_yaml(remote_items, 'camera_record')
+        # BasePage().check_key_in_yaml(remote_items, 'items')
 
         # 启动app，并开启录屏
         driver.start_app(True)
