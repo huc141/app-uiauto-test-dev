@@ -1,0 +1,7 @@
+device_list_name: "SD95 3MP"
+uid: '952700Y003WBER6M'
+
+ipc:
+  battery:
+    items:
+      battery: '电池'

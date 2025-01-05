@@ -1,0 +1,7 @@
+device_list_name: "SD72 4mp"
+uid: '952700Y0027O1BRL'
+
+ipc:
+  battery:
+    items:
+      battery: '电池'

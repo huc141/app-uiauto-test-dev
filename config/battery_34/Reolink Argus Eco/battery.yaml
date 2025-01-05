@@ -1,0 +1,7 @@
+device_list_name: "Reolink Argus Eco"
+uid: '952700Y004PQ1300'
+
+ipc:
+  battery:
+    items:
+      battery: '电池'

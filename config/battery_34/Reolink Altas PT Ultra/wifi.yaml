@@ -1,0 +1,12 @@
+device_list_name: "Reolink Altas PT Ultra"
+uid: '95270000Y5RRXWYC'
+
+ipc:
+  Wi_Fi:
+    text:
+      - ''
+
+    items:
+      wifi:
+        wifi_speed_test: 'Wi-Fi测速'
+        add_other_network: '添加其他网络'

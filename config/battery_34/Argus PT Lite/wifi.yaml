@@ -1,0 +1,12 @@
+device_list_name: "SD95 3MP"
+uid: '952700Y003WBER6M'
+
+ipc:
+  Wi_Fi:
+    text:
+      - ''
+
+    items:
+      wifi:
+        wifi_speed_test: 'Wi-Fi测速'
+        add_other_network: '添加其他网络'

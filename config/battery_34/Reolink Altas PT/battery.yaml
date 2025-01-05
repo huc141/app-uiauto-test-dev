@@ -1,0 +1,7 @@
+device_list_name: "Reolink Altas PT"
+uid: '952700Y101XW1T41'
+
+ipc:
+  battery:
+    items:
+      battery: '电池'

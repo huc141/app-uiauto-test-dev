@@ -1,0 +1,12 @@
+device_list_name: "C94"
+uid: '952700Y000D8Y92K'
+
+ipc:
+  Wi_Fi:
+    text:
+      - ''
+
+    items:
+      wifi:
+        wifi_speed_test: 'Wi-Fi测速'
+        add_other_network: '添加其他网络'

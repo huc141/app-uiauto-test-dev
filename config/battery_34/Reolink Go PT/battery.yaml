@@ -1,0 +1,7 @@
+device_list_name: "Reolink Go PT"
+uid: '95270002K5ZOF42H'
+
+ipc:
+  battery:
+    items:
+      battery: '电池'

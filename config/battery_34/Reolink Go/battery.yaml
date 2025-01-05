@@ -1,0 +1,7 @@
+device_list_name: "B9B 1ERE"
+uid: '95270001H5VA1ERE'
+
+ipc:
+  battery:
+    items:
+      battery: '电池'

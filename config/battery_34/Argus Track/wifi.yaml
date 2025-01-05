@@ -1,0 +1,12 @@
+device_list_name: "19GL"
+uid: '952700Y1004B19GL'
+
+ipc:
+  Wi_Fi:
+    text:
+      - ''
+
+    items:
+      wifi:
+        wifi_speed_test: 'Wi-Fi测速'
+        add_other_network: '添加其他网络'

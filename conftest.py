@@ -47,7 +47,7 @@ def pytest_runtest_makereport(item, call):
             logger.info("用例执行成功/失败，已自动截图")
 
             base_path = os.path.join(os.getcwd(), 'a_screen_record')  # 获取录屏文件的保存路径
-            time.sleep(2)
+            # time.sleep(2)
             screenrecord_name = scr.take_screenrecord(False)  # 停止录屏
             if screenrecord_name:
                 screen_record_file_path = os.path.join(base_path, screenrecord_name)  # 拼接保存路径和录屏文件名

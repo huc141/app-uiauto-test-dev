@@ -1,0 +1,12 @@
+device_list_name: "C8"
+uid: '95270000WDY8Q0IA'
+
+ipc:
+  Wi_Fi:
+    text:
+      - ''
+
+    items:
+      wifi:
+        wifi_speed_test: 'Wi-Fi测速'
+        add_other_network: '添加其他网络'

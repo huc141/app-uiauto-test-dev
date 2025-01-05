@@ -1,0 +1,7 @@
+device_list_name: "sd7v5 D54C"
+uid: '95270000OPTED54C'
+
+ipc:
+  battery:
+    items:
+      battery: '电池'

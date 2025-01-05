@@ -1,0 +1,12 @@
+device_list_name: "PYL3"
+uid: '952700Y101GDPYL3'
+
+ipc:
+  Wi_Fi:
+    text:
+      - ''
+
+    items:
+      wifi:
+        wifi_speed_test: 'Wi-Fi测速'
+        add_other_network: '添加其他网络'

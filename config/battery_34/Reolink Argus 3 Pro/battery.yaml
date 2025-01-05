@@ -1,0 +1,7 @@
+device_list_name: "Reolink Argus 3 Pro-13x4"
+uid: '952700Y003VK13X4'
+
+ipc:
+  battery:
+    items:
+      battery: '电池'

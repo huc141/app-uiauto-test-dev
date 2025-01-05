@@ -1,0 +1,7 @@
+device_list_name: "Reolink Altas PT Ultra"
+uid: '95270000Y5RRXWYC'
+
+ipc:
+  battery:
+    items:
+      battery: '电池'

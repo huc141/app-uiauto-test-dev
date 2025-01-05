@@ -1,0 +1,7 @@
+device_list_name: "KEEN Ranger PT"
+uid: '952700Y001B610YD'
+
+ipc:
+  battery:
+    items:
+      battery: '电池'

@@ -1,0 +1,7 @@
+device_list_name: "Argus 3E"
+uid: '952700Y006ZR1IY2'
+
+ipc:
+  battery:
+    items:
+      battery: '电池'

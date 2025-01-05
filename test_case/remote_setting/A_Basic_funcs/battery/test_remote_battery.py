@@ -7,7 +7,9 @@ from pages.base_page import BasePage
 from pages.rn_device_setting_page.remote_setting import RemoteSetting
 from pages.rn_device_setting_page.remote_battery import RemoteBattery
 
-devices_config = read_yaml.load_device_config(device_dir='battery/Reolink Altas PT Ultra',
+g_config = read_yaml.read_global_data(source="global_data")  # 读取全局配置
+device_dir = g_config.get("device_dir")  # 读取设备配置文件目录
+devices_config = read_yaml.load_device_config(device_dir=device_dir,
                                               yaml_file_name='battery.yaml')  # 读取参数化文件
 
 
@@ -20,8 +22,8 @@ class TestRemoteBattery:
     @allure.title('测试远程设置的电池页功能')
     def test_remote_battery(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
-        remote_items = device_config['ipc']['battery']['items']['battery']
-        BasePage().check_key_in_yaml(remote_items, 'text')
+        remote_items = device_config['ipc']['battery']['items']
+        BasePage().check_key_in_yaml(remote_items, 'battery')
 
         # 启动app，并开启录屏
         driver.start_app(True)
@@ -30,5 +32,4 @@ class TestRemoteBattery:
         RemoteSetting().access_in_battery(device_list_name=device_config['device_list_name'])
 
         # 验证电池页的文案和功能
-        RemoteBattery().check_battery_page(text=remote_items['text'],
-                                           options=remote_items['options'])
+        RemoteBattery().check_battery_page()

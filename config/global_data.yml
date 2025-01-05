@@ -13,7 +13,7 @@ api_config:
 
 
 # 设备配置加载目录
-device_dir: 'power-63'
+device_dir: 'power-63-1'
 # 远程配置主页能力集提取id：
 remote_setting: 'ReoTitle'
 # 计划>报警类型 选项提取id

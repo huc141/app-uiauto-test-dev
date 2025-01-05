@@ -1,0 +1,7 @@
+device_list_name: "B193 8MP CUI2"
+uid: '952700Y003YECUI2'
+
+ipc:
+  battery:
+    items:
+      battery: '电池'
