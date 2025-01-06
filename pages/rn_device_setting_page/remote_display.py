@@ -93,6 +93,7 @@ class RemoteDisplay(BasePage):
                                         resourceId_1='ReoTitle',
                                         className_2='android.view.ViewGroup'
                                         )
+            time.sleep(3)
         except Exception as err:
             logger.info(f"可能发生了错误: {err}")
             return False

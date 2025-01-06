@@ -123,7 +123,7 @@ class Driver:
             if self._driver:
                 self.stop_app()  # 先停止reolink app，再重新启动
                 scr.take_screenrecord(is_record=False)
-                time.sleep(1.5)
+                time.sleep(2)
                 logger.info("开始启动app···")
 
                 scr.take_screenrecord(is_record)  # 启动安卓/iOS录屏, 是否启动则取决于is_record参数值
@@ -134,7 +134,7 @@ class Driver:
                 elif self._platform == "ios":
                     self._driver.session().app_activate(self._apk_name)
                     logger.info("iOS-app启动成功···")
-                time.sleep(6)
+                time.sleep(7)
 
         except Exception as err:
             logger.error(f"APP启动失败，原因为：{err}", )

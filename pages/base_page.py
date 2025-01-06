@@ -793,7 +793,7 @@ class BasePage:
             else:
                 logger.info(f"尝试滚动查找 '{text_to_find}'... 第{attempt + 1}次")
                 if self.platform == "android":
-                    self.driver(scrollable=True).scroll(steps=150)
+                    self.driver(scrollable=True).scroll(steps=200)
                 elif self.platform == "ios":
                     self.driver.swipe_up()
                 time.sleep(scroll_pause)
