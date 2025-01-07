@@ -1,0 +1,28 @@
+device_list_name: "1VPA"
+uid: '952700Y003VF1VPA'
+
+ipc:
+  light:
+    text:
+      - ''
+
+    items:
+      light:
+        text:
+          - '状态灯'
+          - '红外灯'
+          - '白光灯'
+
+        status_lights: '状态灯(有则保留无则删除)'
+
+        infrared_light:
+          options:
+            - '亮度'
+
+
+        floodlight:
+          light_off_mode: '关闭(有则保留无则删除)'
+          preview_opens_auto: '预览自动开启(有则保留无则删除)'
+          brightness: '亮度(有则保留无则删除)'
+          night_smart_mode: '夜间智能模式'
+

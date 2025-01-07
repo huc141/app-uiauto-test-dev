@@ -1,0 +1,47 @@
+device_list_name: "16WV"
+uid: '952700Y002Q016WV（需再核对）'
+
+ipc:
+  light:
+    text:
+      - ''
+
+    items:
+      light:
+        text:
+          - '状态灯'
+          - '红外灯'
+          - '白光灯'
+          - '按钮灯'
+
+        status_lights: '状态灯(有则保留无则删除)'
+
+        infrared_light:
+          options:
+            - '亮度(此处只需要确认切换自动时亮度是否存在，否则留空)'
+
+        button_light:
+          light_off_mode: '关闭(有则保留无则删除)'
+          light_auto_mode: '自动(有则保留无则删除)'
+          light_auto_on_night_mode: '自动且夜间常亮(有则保留无则删除)'
+          light_always_on_mode: '常亮(有则保留无则删除)'
+
+        floodlight:
+          light_off_mode: '关闭(有则保留无则删除)'
+          night_vision_steady_light: '夜视常亮模式(有则保留无则删除)'
+          preview_opens_auto: '预览自动开启(有则保留无则删除)'
+          brightness: '亮度(有则保留无则删除)'
+          timer_mode: '定时模式(有则保留无则删除)'
+          auto_mode: '自动模式(有则保留无则删除)'
+          smart_mode:
+            detect_type:
+              option_text:
+                - '人'
+                - '车'
+                - '动物'
+          night_smart_mode:
+            detect_type:
+              option_text:
+                - '人'
+                - '车'
+                - '动物'

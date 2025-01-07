@@ -1,7 +1,0 @@
-device_list_name: "LUOV"
-uid: '952700Y0043TLUOV'
-
-ipc:
-  battery:
-    items:
-      battery: '电池'

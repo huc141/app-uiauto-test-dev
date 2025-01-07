@@ -42,7 +42,6 @@ class TestRemoteLight:
     @allure.feature("灯>照明灯(白光灯/泛光灯) > 夜间智能模式")
     @allure.story("需人工核查日志和录屏")
     @allure.title('验证白光灯夜间智能模式')
-    @pytest.mark.skip
     def test_remote_floodlight_night_smart(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items1 = device_config['ipc']['light']['items']['light']
@@ -215,6 +214,8 @@ class TestRemoteLight:
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("灯>照明灯(白光灯/泛光灯) > 亮度")
     @allure.story("需人工核查日志和录屏")
+    @allure.title('验证白光灯 亮度')
+    @pytest.mark.skip
     def test_remote_floodlight_brightness(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items1 = device_config['ipc']['light']['items']['light']

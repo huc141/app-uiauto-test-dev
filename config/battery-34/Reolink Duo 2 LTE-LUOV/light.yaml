@@ -1,0 +1,24 @@
+device_list_name: "B17B6MP"
+uid: '952700Y0043TLUOV'
+
+ipc:
+  light:
+    text:
+      - ''
+
+    items:
+      light:
+        text:
+          - '红外灯'
+          - '白光灯'
+
+        infrared_light:
+          options:
+            - ''
+
+
+        floodlight:
+          light_off_mode: '关闭(有则保留无则删除)'
+          preview_opens_auto: '预览自动开启(有则保留无则删除)'
+          night_smart_mode: '夜间智能模式'
+

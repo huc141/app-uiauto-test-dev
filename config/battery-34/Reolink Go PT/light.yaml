@@ -1,0 +1,18 @@
+device_list_name: "Reolink Go PT"
+uid: '95270002K5ZOF42H'
+
+ipc:
+  light:
+    text:
+      - ''
+
+    items:
+      light:
+        text:
+          - '红外灯'
+
+        infrared_light:
+          options:
+            - ''
+
+

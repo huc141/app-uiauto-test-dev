@@ -378,7 +378,7 @@ class RemoteLight(BasePage):
                     handle_detect_type()
 
                 self.back_previous_page_by_xpath()  # 返回灯主页并验证模式回显
-                if not RemoteSetting().scroll_check_funcs2(texts='夜间智能模式'):
+                if not self.loop_detect_element_exist(element_value='夜间智能模式', loop_times=2, time_interval=2):
                     pytest.fail("白光灯选择【夜间智能模式】后，未检查到回显！")
 
             else:
@@ -436,7 +436,7 @@ class RemoteLight(BasePage):
 
                 # 返回灯主页，验证白光灯模式回显
                 self.back_previous_page_by_xpath()
-                if not RemoteSetting().scroll_check_funcs2(texts='智能模式'):
+                if not self.loop_detect_element_exist(element_value='智能模式', loop_times=2, time_interval=2):
                     pytest.fail(f"白光灯选择【智能模式】后，未检查到回显！")
 
             else:
@@ -480,7 +480,7 @@ class RemoteLight(BasePage):
 
                 # 返回灯聚合页，验证定时模式回显
                 self.back_previous_page_by_xpath()
-                if not RemoteSetting().scroll_check_funcs2(texts='定时模式'):
+                if not self.loop_detect_element_exist(element_value='定时模式', loop_times=2, time_interval=2):
                     pytest.fail("白光灯选择【定时模式】后，未检查到回显！")
             else:
                 # 单个灯直接进入定时模式并设置定时
@@ -503,7 +503,7 @@ class RemoteLight(BasePage):
 
                 # 返回灯聚合页，验证夜视常亮 模式回显
                 self.back_previous_page_by_xpath()
-                if not RemoteSetting().scroll_check_funcs2(texts='夜视常亮'):
+                if not self.loop_detect_element_exist(element_value='夜视常亮', loop_times=2, time_interval=2):
                     pytest.fail("白光灯选择【夜视常亮】后，未检查到回显！")
 
             else:
@@ -528,7 +528,7 @@ class RemoteLight(BasePage):
 
                 # 返回灯聚合页，验证预览自动开启回显
                 self.back_previous_page_by_xpath()
-                if not RemoteSetting().scroll_check_funcs2(texts='预览自动开启'):
+                if not self.loop_detect_element_exist(element_value='预览自动开启', loop_times=2, time_interval=2):
                     pytest.fail(f"白光灯选择【预览自动开启】后，未检查到回显！")
 
             else:
@@ -554,7 +554,7 @@ class RemoteLight(BasePage):
 
                 # 返回灯聚合页，验证白光灯模式回显
                 self.back_previous_page_by_xpath()
-                if not RemoteSetting().scroll_check_funcs2(texts='关闭'):
+                if not self.loop_detect_element_exist(element_value='关闭', loop_times=2, time_interval=2):
                     pytest.fail(f"白光灯选择【关闭模式】后，未检查到回显！")
 
             else:
@@ -577,8 +577,8 @@ class RemoteLight(BasePage):
 
                 # 返回灯聚合页，验证白光灯模式回显
                 self.back_previous_page_by_xpath()
-                if not RemoteSetting().scroll_check_funcs2(texts='自动模式'):
-                    pytest.fail(f"白光灯选择【关闭模式】后，未检查到回显！")
+                if not self.loop_detect_element_exist(element_value='自动模式', loop_times=2, time_interval=2):
+                    pytest.fail(f"白光灯选择【自动模式】后，未检查到回显！")
 
             else:
                 self.scroll_and_click_by_text(text_to_find='自动模式')
@@ -612,7 +612,7 @@ class RemoteLight(BasePage):
 
             # 返回灯聚合页，验证状态灯模式回显
             self.back_previous_page_by_xpath()
-            if not RemoteSetting().scroll_check_funcs2(texts='关闭'):
+            if not self.loop_detect_element_exist(element_value='关闭', loop_times=2, time_interval=2):
                 pytest.fail("状态灯选择【关闭】后，未检查到回显！")
 
         except Exception as e:
@@ -643,7 +643,7 @@ class RemoteLight(BasePage):
 
             # 返回灯聚合页，验证状态灯模式回显
             self.back_previous_page_by_xpath()
-            if not RemoteSetting().scroll_check_funcs2(texts='开启'):
+            if not self.loop_detect_element_exist(element_value='开启', loop_times=2, time_interval=2):
                 pytest.fail("状态灯选择【开启】后，未检查到回显！")
 
         except Exception as e:
@@ -663,7 +663,7 @@ class RemoteLight(BasePage):
 
                 # 返回灯聚合页，验证按钮灯模式回显
                 self.back_previous_page_by_xpath()
-                if not RemoteSetting().scroll_check_funcs2(texts='关闭'):
+                if not self.loop_detect_element_exist(element_value='关闭', loop_times=2, time_interval=2):
                     pytest.fail(f"状态灯选择【关闭】后，未检查到回显！")
 
             else:
@@ -686,7 +686,7 @@ class RemoteLight(BasePage):
 
                 # 返回灯聚合页，验证按钮灯模式回显
                 self.back_previous_page_by_xpath()
-                if not RemoteSetting().scroll_check_funcs2(texts='自动'):
+                if not self.loop_detect_element_exist(element_value='自动', loop_times=2, time_interval=2):
                     pytest.fail(f"状态灯选择【自动】后，未检查到回显！")
 
             else:
@@ -709,7 +709,7 @@ class RemoteLight(BasePage):
 
                 # 返回灯聚合页，验证按钮灯模式回显
                 self.back_previous_page_by_xpath()
-                if not RemoteSetting().scroll_check_funcs2(texts='自动且夜间常亮'):
+                if not self.loop_detect_element_exist(element_value='自动且夜间常亮', loop_times=2, time_interval=2):
                     pytest.fail(f"状态灯选择【自动且夜间常亮】后，未检查到回显！")
 
             else:
@@ -732,7 +732,7 @@ class RemoteLight(BasePage):
 
                 # 返回灯聚合页，验证按钮灯模式回显
                 self.back_previous_page_by_xpath()
-                if not RemoteSetting().scroll_check_funcs2(texts='常亮'):
+                if not self.loop_detect_element_exist(element_value='常亮', loop_times=2, time_interval=2):
                     pytest.fail(f"状态灯选择【常亮】后，未检查到回显！")
 
             else:

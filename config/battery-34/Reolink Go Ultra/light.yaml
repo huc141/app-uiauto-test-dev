@@ -1,0 +1,18 @@
+device_list_name: "B193 8MP CUI2"
+uid: '952700Y003YECUI2'
+
+ipc:
+  light:
+    text:
+      - ''
+
+    items:
+      light:
+        text:
+          - '红外灯'
+
+        infrared_light:
+          options:
+            - ''
+
+

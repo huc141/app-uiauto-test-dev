@@ -1,0 +1,25 @@
+device_list_name: "1LW1"
+uid: '952700Y101VR1LW1'
+
+ipc:
+  light:
+    text:
+      - ''
+
+    items:
+      light:
+        text:
+          - '红外灯'
+          - '白光灯'
+
+        infrared_light:
+          options:
+            - '亮度'
+
+
+        floodlight:
+          light_off_mode: '关闭(有则保留无则删除)'
+          preview_opens_auto: '预览自动开启(有则保留无则删除)'
+          brightness: '亮度(有则保留无则删除)'
+          night_smart_mode: '夜间智能模式'
+

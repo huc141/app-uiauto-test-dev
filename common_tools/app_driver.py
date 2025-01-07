@@ -108,6 +108,7 @@ class Driver:
                 return
 
             logger.info(f"已停止APP：{self._apk_name}")
+            time.sleep(3)
         except Exception as err:
             logger.error(f"停止app时发生错误：{err}")
 
@@ -134,7 +135,7 @@ class Driver:
                 elif self._platform == "ios":
                     self._driver.session().app_activate(self._apk_name)
                     logger.info("iOS-app启动成功···")
-                time.sleep(7)
+                time.sleep(6)
 
         except Exception as err:
             logger.error(f"APP启动失败，原因为：{err}", )

@@ -1,0 +1,21 @@
+device_list_name: "Reolink Argus Eco"
+uid: '952700Y004PQ1300'
+
+ipc:
+  light:
+    text:
+      - ''
+
+    items:
+      light:
+        text:
+          - '状态灯'
+          - '红外灯'
+
+        status_lights: '状态灯(有则保留无则删除)'
+
+        infrared_light:
+          options:
+            - ''
+
+

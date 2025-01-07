@@ -1,0 +1,18 @@
+device_list_name: "c11v3"
+uid: '952700Y101KO1QRQ'
+
+ipc:
+  light:
+    text:
+      - ''
+
+    items:
+      light:
+        text:
+          - '白光灯'
+
+        floodlight:
+          light_off_mode: '关闭(有则保留无则删除)'
+          brightness: '亮度(有则保留无则删除)'
+          auto_mode: '自动模式(有则保留无则删除)'
+

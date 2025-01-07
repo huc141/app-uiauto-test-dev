@@ -171,6 +171,7 @@ class BasePage:
                         self.click_by_text(text=element_value)
                     elif selector_type == 'xpath':
                         self.click_by_xpath(xpath_expression=element_value)
+                    time.sleep(2)
                     return True
             return False
         except Exception as err:
@@ -431,6 +432,9 @@ class BasePage:
 
                     attempt += 1
 
+                if attempt > max_attempts and not element.exists:
+                    pytest.fail(f"【{text_to_find}】元素未找到!查找元素失败!")
+
             if self.platform == "ios":
                 # 判断元素是否可见，不可见则滑动至可见后点击
                 e_is_visible = self.driver(text=text_to_find)
@@ -447,6 +451,9 @@ class BasePage:
                         time.sleep(scroll_pause)  # 等待页面稳定
 
                     attempt += 1
+
+                if attempt > max_attempts and not element.exists:
+                    pytest.fail(f"【{text_to_find}】元素未找到!查找元素失败!")
 
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
@@ -728,7 +735,7 @@ class BasePage:
         except Exception as err:
             pytest.fail(f"函数执行出错: {str(err)}")
 
-    def access_in_remote_setting(self, text_to_find, el_type='text', max_attempts=50, scroll_pause=1):
+    def access_in_remote_setting(self, text_to_find, el_type='text', max_attempts=50, scroll_pause=2):
         """
         在设备列表中滚动查找指定设备名称(支持单机、nvr、hub),并点击远程设置按钮。
         :param el_type: 元素查找类型，支持 文本text(label).
