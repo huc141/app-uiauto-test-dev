@@ -113,7 +113,6 @@ class TestRemoteDisplay:
     @allure.feature("显示>码流>清晰/流畅>I 帧间隔")
     @allure.story("需人工核查日志和录屏")
     @allure.title("测试进入显示>码流>清晰/流畅>I 帧间隔， 并验证配置文本和操作")
-    @pytest.mark.skip
     def test_remote_stream_i_interval(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['display']['items']['display']['stream']
@@ -142,6 +141,7 @@ class TestRemoteDisplay:
     @allure.feature("显示>码流>帧率控制")
     @allure.story("需人工核查日志和录屏")
     @allure.title("测试进入帧率控制页面，遍历帧率控制配置")
+    @pytest.mark.skip
     def test_remote_frame_rate_control(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['display']['items']['display']['stream']
@@ -167,7 +167,7 @@ class TestRemoteDisplay:
     @allure.feature("显示>码流>码率控制")
     @allure.story("需人工核查日志和录屏")
     @allure.title("测试进入码率控制页面，遍历码率控制配置")
-    @pytest.mark.skip(reason="暂时不执行")
+    @pytest.mark.skip()
     def test_remote_rate_mode(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['display']['items']['display']['stream']

@@ -1379,24 +1379,24 @@ class RemoteDisplay(BasePage):
 
     def verify_stream_clear_encoding_format(self, custom_options):
         """
-        码流>清晰页面，验证编码格式操作
+        码流>清晰/流畅页面，验证编码格式操作
         :param custom_options: 需要验证的码流清晰页面编码格式文案
         :return:
         """
         try:
-            # 定义清晰页面编码格式通用文案
+            # 定义清晰/流畅页面编码格式通用文案
             common_stream_clear_encoding_format_texts = ['编码格式',
                                                          'H.265相较于H.264具有更高的编码效率，可以提供更高质量的视频，但相应地需要更高的计算能力和更先进的设备支持。']
             new_stream_clear_encoding_format_texts = common_stream_clear_encoding_format_texts + custom_options
-            # 检查清晰页面编码格式文案
+            # 检查清晰/流畅页面编码格式文案
             RemoteSetting().scroll_check_funcs2(texts=new_stream_clear_encoding_format_texts, scroll_or_not=False,
                                                 back2top=False)
-            # 检查清晰页面编码格式ReoTitle文案
+            # 检查清晰/流畅页面编码格式ReoTitle文案
             RemoteSetting().scroll_check_funcs2(texts=custom_options, selector='ReoTitle', scroll_or_not=False,
                                                 back2top=False)
             # 返回上一页
             self.back_previous_page_by_xpath()
-            # 开始遍历清晰>编码格式选项
+            # 开始遍历清晰/流畅>编码格式选项
             self.iterate_and_click_popup_text(option_text_list=custom_options, menu_text='编码格式')
         except Exception as err:
             pytest.fail(f"函数执行出错: {err}")

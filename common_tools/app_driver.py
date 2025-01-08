@@ -108,7 +108,7 @@ class Driver:
                 return
 
             logger.info(f"已停止APP：{self._apk_name}")
-            time.sleep(3)
+            time.sleep(2)
         except Exception as err:
             logger.error(f"停止app时发生错误：{err}")
 

@@ -2,8 +2,8 @@ import os
 import subprocess
 import time
 from datetime import datetime
-
 import yaml
+from uiautomator2.exceptions import UiObjectNotFoundError
 from uiautomator2.exceptions import XPathElementNotFoundError
 from common_tools.app_driver import driver
 from common_tools.logger import logger
@@ -787,23 +787,27 @@ class BasePage:
 
         attempt = 0
         while attempt < max_attempts:
-            element = self.driver(text=text_to_find) if self.platform == "android" else self.driver(label=text_to_find)
+            try:
+                element = self.driver(text=text_to_find) if self.platform == "android" else self.driver(label=text_to_find)
 
-            if element.exists:
-                logger.info(f"元素已找到: '{text_to_find}'")
-                if self.platform == "android":
-                    if find_and_click_remote_setting(text_to_find):
-                        return True
-                elif self.platform == "ios":
-                    if find_and_click_remote_setting_ios(text_to_find):
-                        return True
-            else:
-                logger.info(f"尝试滚动查找 '{text_to_find}'... 第{attempt + 1}次")
-                if self.platform == "android":
-                    self.driver(scrollable=True).scroll(steps=200)
-                elif self.platform == "ios":
-                    self.driver.swipe_up()
-                time.sleep(scroll_pause)
+                if element.exists:
+                    logger.info(f"元素已找到: '{text_to_find}'")
+                    if self.platform == "android":
+                        if find_and_click_remote_setting(text_to_find):
+                            return True
+                    elif self.platform == "ios":
+                        if find_and_click_remote_setting_ios(text_to_find):
+                            return True
+                else:
+                    logger.info(f"尝试滚动查找 '{text_to_find}'... 第{attempt + 1}次")
+                    if self.platform == "android":
+                        self.driver(scrollable=True).scroll(steps=200)
+                    elif self.platform == "ios":
+                        self.driver.swipe_up()
+                    time.sleep(scroll_pause)
+            except Exception as err:
+                logger.warning(f"捕获到 {err}，等待2秒后重试... 第{attempt + 1}次")
+                time.sleep(2)
 
             attempt += 1
 
