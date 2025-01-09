@@ -152,7 +152,7 @@ class RemoteWiFi(BasePage):
             self.loop_detect_element_and_click(element_value='Wi-Fi密码')
             self.input_text(xpath_exp=self.edit_wifi_passw_text, text=wifi_passw)
 
-            # 点击保存
+            # 点击取消
             self.loop_detect_element_and_click(element_value='取消')
 
             # 点击跳过并保存
