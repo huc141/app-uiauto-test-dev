@@ -75,21 +75,26 @@ class BasePage:
             logger.error(f"元素未找到 {selector_type}: {element_value}. Error: {err}")
             return False
 
-    def wait_for_element(self, text, timeout=10):
+    def wait_for_element(self, text_or_xpath, d_type='text', timeout=10):
         """
         动态等待text文本元素出现
-        :param text: 需要等待的文本内容
+        :param text_or_xpath: 需要等待的文本内容
+        :param d_type: text、xpath
         :param timeout: 超时时间，默认10秒
         :return:
         """
-        try:
-            for _ in range(timeout):
-                if self.driver(text=text).exists:
+        end_time = time.time() + timeout
+        while time.time() < end_time:
+            try:
+                if d_type == 'text' and self.driver(text=text_or_xpath).exists:
                     return True
-                time.sleep(1)
-            return False
-        except Exception as err:
-            logger.error(f"动态等待函数执行出错: {str(err)}")
+                elif d_type == 'xpath' and self.driver.xpath(text_or_xpath).exists:
+                    return True
+            except Exception as err:
+                # 在这里记录错误，但不会退出循环
+                logger.error(f"检查元素时出错: {str(err)}")
+            time.sleep(1)
+        return False
 
     def retry_method(self, num_retries=5):
         """
@@ -103,14 +108,14 @@ class BasePage:
         for attempt in range(num_retries):
             try:
                 # 检测“重试”按钮是否存在
-                if self.wait_for_element(text=retry_button):
+                if self.wait_for_element(text_or_xpath=retry_button):
                     logger.warning(f"检测到【{retry_button}】按钮，尝试第{attempt + 1}次点击...")
                     self.click_by_text(retry_button)
                     logger.info(f"已点击【{retry_button}】按钮，等待页面更新...")
                     time.sleep(6)  # 短暂等待页面刷新
 
                 # 检测“加载中”状态
-                elif self.wait_for_element(text=loading_text):
+                elif self.wait_for_element(text_or_xpath=loading_text):
                     logger.warning("页面正在加载中，请等待...")
                     time.sleep(6)  # 短暂等待加载完成
 
@@ -748,14 +753,14 @@ class BasePage:
         def retry_connection(num_retries=4):
             for _ in range(num_retries):
                 # 优先检查是否已成功进入报警设置页面
-                if self.wait_for_element(text='报警通知'):
+                if self.wait_for_element(text_or_xpath='显示'):
                     logger.info('远程配置页面已成功加载！')
                     break
 
-                if self.wait_for_element(text='加载失败，请点击重试'):
+                if self.wait_for_element(text_or_xpath='加载失败，请点击重试'):
                     logger.warning("检测到连接失败，尝试点击重试按钮...")
                     self.click_by_text('重试')
-                elif self.wait_for_element(text='登录'):
+                elif self.wait_for_element(text_or_xpath='登录'):
                     logger.warning("检测到设备未登录，跳过当前用例！")
                     pytest.skip("设备未登录，跳过当前用例！")
                 else:

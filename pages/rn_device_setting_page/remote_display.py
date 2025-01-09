@@ -3,6 +3,7 @@ import copy
 import time
 import pytest
 from typing import Literal
+from functools import wraps
 from common_tools.read_yaml import read_yaml
 from common_tools.logger import logger
 from pages.base_page import BasePage
@@ -14,6 +15,17 @@ display_device_name_texts = g_config.get("display_device_name_texts")  # 显示>
 display_device_name_reotitle = g_config.get("display_device_name_reotitle")  # 设备名称配置页的【设备名称】选项
 display_date_texts = g_config.get("display_date_texts")  # 显示>日期配置页的所有文案
 display_date_reotitle = g_config.get("display_date_reotitle")  # 日期配置页的【日期】选项
+
+
+def page_loader_decorator(func):
+    """装饰器，用于等待页面加载完成。"""
+
+    @wraps(func)
+    def wrapper(self, *args, **kwargs):
+        self.wait_until_page_loaded()
+        return func(self, *args, **kwargs)
+
+    return wrapper
 
 
 class RemoteDisplay(BasePage):
@@ -36,6 +48,22 @@ class RemoteDisplay(BasePage):
         elif self.platform == 'ios':
             self.shelter_player = ''
 
+    def is_page_loading(self):
+        """检查页面是否还在加载"""
+        if not self.wait_for_element(text_or_xpath='???????????', d_type='xpath') and not self.wait_for_element(
+                text_or_xpath='加载失败，请点击重试'):
+            logger.info("页面加载完成")
+            return True
+
+    def wait_until_page_loaded(self):
+        """循环检测5次，每次检测后若页面已经成功加载则执行后续操作，若没有成功加载则等待6秒。"""
+        max_attempts = 5
+        for _ in range(max_attempts):
+            if not self.is_page_loading():
+                return  # 页面已加载完成
+            time.sleep(6)  # 等待6秒后再次检测
+        raise TimeoutError("页面加载超时")
+
     # 定义一个判断当前页面是否需要上拉的方法
     def need_pull_down(self, pull_down: bool = True):
         """
@@ -53,6 +81,7 @@ class RemoteDisplay(BasePage):
         except Exception as err:
             logger.error(f"上拉页面发生错误: {err}")
 
+    @page_loader_decorator
     def check_display_main_text(self, text1, text2):
         """
         验证显示主页文案
