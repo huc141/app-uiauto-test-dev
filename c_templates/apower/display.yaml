@@ -43,7 +43,7 @@ ipc:
         date: '日期(无需配置，有则保留无则删除)'
         watermark: '水印(无需配置，有则保留无则删除)'
         image_layout: '图像布局(无需配置，有则保留无则删除)'
-        splice_region: '拼接区域(无需配置，有则保留无则删除)'
+        splice_region: '拼接设置(无需配置，有则保留无则删除)'
 
         auto_zoom:
           name: '自动对焦'

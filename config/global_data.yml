@@ -11,9 +11,21 @@ api_config:
     cmd: getLightCfg
     channel: 0
 
-
+# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>自动化运行配置<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 # 设备配置加载目录
-device_dir: 'battery-34'
+device_dir: 'battery-34-2'
+# 选择用例执行时，测试单机或hub或nvr，并填写对应的nvr和hub名称：
+access_mode: 'ipc'
+nvr_name: 'Reolink home hub pro'
+hub_name: 'Reolink-NVR'
+
+# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>全局通用<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+# 左上角通用返回上一页按钮：
+back: '//*[@resource-id="ReoIcon-Left"]'
+
+# 页面加载loading菊花xpath
+loading_icon: '//*[@resource-id="ReoLoading-Circular"]'
+
 # 远程配置主页能力集提取id：
 remote_setting: 'ReoTitle'
 # 计划>报警类型 选项提取id
@@ -27,21 +39,7 @@ switch_on: 'ReoSwitch:1'
 # 开关关闭状态
 switch_off: 'ReoSwitch:0'
 
-# 远程配置>WiFi主页：
-WiFi_setting: ''
-
-# 远程配置>display主页：
-display_setting: ''
-
-# 左上角通用返回上一页按钮：
-back: '//*[@resource-id="ReoIcon-Left"]'
-
-# 选择用例执行时，测试单机或hub或nvr，并填写对应的nvr和hub名称：
-access_mode: 'ipc'
-nvr_name: 'Reolink home hub pro'
-hub_name: 'Reolink-NVR'
-
-# 通用模块的内容
+# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>远程配置>计划的通用配置<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 # 计划主页底部涂画按钮
 ReoIcon_Draw: '//*[@resource-id="ReoIcon-Draw"]'
 # 计划主页底部擦除按钮
@@ -54,10 +52,8 @@ draw_text: ['涂抹以选择时间', '全选']
 erase_text: ['涂抹以取消选择时间', '全部清除']
 # 计划表【全部清除】按钮二次确认弹窗内容
 erase_all_btn: ['删除提示', '确定要清除该计划表的内容？', '取消', '全部清除']
-
 # SSL or TLS 弹窗
 SSL_or_TLS: ['建议保持开启SSL/TLS，以保障数据的传输安全。确认关闭？', '取消', '确定']
-
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>远程配置>邮件通知的通用配置<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 # 邮件通知关闭状态下主页内容

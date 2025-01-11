@@ -19,7 +19,6 @@ class TestRemoteDisplay:
     @allure.feature("白天和黑夜>模式切换 主页文本")
     @allure.story("需人工核查日志和录屏")
     @allure.title("测试进入白天和黑夜主页，验证白天和黑夜主页功能项")
-    @pytest.mark.skip
     def test_remote_day_and_night_main_texts(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['display']['items']['display']
@@ -30,6 +29,9 @@ class TestRemoteDisplay:
 
         # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击‘显示’菜单项进入显示页
         RemoteSetting().access_in_display(device_list_name=device_config['device_list_name'])
+
+        # 点击进入【白天和黑夜】主页
+        RemoteDisplay().click_day_and_night()
 
         # 验证白天和黑夜主页文本
         RemoteSetting().scroll_check_funcs2(remote_items['day_and_night']['text'])
@@ -108,7 +110,8 @@ class TestRemoteDisplay:
     @allure.feature("白天和黑夜>夜视彩色")
     @allure.story("需人工核查日志和录屏")
     @allure.title("测试 夜视彩色 主页功能项，遍历夜视彩色下的选项")
-    def test_remote_ight_vision_color(self, device_config):
+    @pytest.mark.skip
+    def test_remote_night_vision_color(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['display']['items']['display']
         BasePage().check_key_in_yaml(remote_items, 'day_and_night')

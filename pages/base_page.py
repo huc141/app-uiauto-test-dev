@@ -17,6 +17,8 @@ from common_tools.read_yaml import read_yaml
 
 DEFAULT_SECONDS = 15
 g_config_back = read_yaml.get_data(key="back", source="global_data")  # 读取全局配置
+g_config = read_yaml.read_global_data(source="global_data")  # 读取全局配置
+loading_icon = g_config.get("loading_icon")  # 页面加载loading菊花xpath
 
 
 class BasePage:
@@ -750,11 +752,14 @@ class BasePage:
         """
         # TODO: 需要适配hub、nvr
 
-        def retry_connection(num_retries=4):
+        def retry_connection(num_retries=3):
             for _ in range(num_retries):
                 # 优先检查是否已成功进入报警设置页面
-                if self.wait_for_element(text_or_xpath='显示'):
-                    logger.info('远程配置页面已成功加载！')
+                # if self.wait_for_element(text_or_xpath='显示'):
+                #     logger.info('远程配置页面已成功加载！')
+                if not self.wait_for_element(text_or_xpath=loading_icon, d_type='xpath') and not self.wait_for_element(
+                        text_or_xpath='加载失败，请点击重试') and self.wait_for_element(text_or_xpath='显示'):
+                    logger.info("远程配置首页已加载！")
                     break
 
                 if self.wait_for_element(text_or_xpath='加载失败，请点击重试'):
@@ -765,7 +770,7 @@ class BasePage:
                     pytest.skip("设备未登录，跳过当前用例！")
                 else:
                     logger.info('loading中，继续等待')
-                    time.sleep(7)
+                    # time.sleep(5)
             else:
                 pytest.fail(f'已重试 {num_retries} 次，未能连接上该设备！')
 

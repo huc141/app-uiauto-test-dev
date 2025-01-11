@@ -332,8 +332,7 @@ class RemoteSetting(BasePage):
             if access_mode == 'ipc':
                 # 根据昵称在设备列表中滚动查找该设备并进入远程配置主页
                 self.access_in_remote_setting(device_list_name)
-                time.sleep(2)
-                # 进入PIR传感器主页
+                # 进入显示主页
                 self.loop_detect_element_and_click('显示')
 
             # 如果设备接入了nvr：
@@ -344,7 +343,7 @@ class RemoteSetting(BasePage):
                 self.loop_detect_element_and_click(self.ivSelectChannelButton, selector_type='xpath')
                 # 选择通道并点击
                 self.loop_detect_element_and_click(device_list_name)
-                # 进入PIR传感器主页
+                # 进入显示主页
                 self.loop_detect_element_and_click('显示')
 
             # 如果设备接入了hub：
@@ -354,7 +353,7 @@ class RemoteSetting(BasePage):
                 time.sleep(2)
                 # 根据名称查找hub下的设备卡片，点击并进入hub下的设备的远程配置主页
                 self.loop_detect_element_and_click(device_list_name)
-                # 进入PIR传感器主页
+                # 进入显示主页
                 self.loop_detect_element_and_click('显示')
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
