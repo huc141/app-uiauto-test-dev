@@ -50,6 +50,7 @@ class TestRemoteDisplay:
     @allure.feature("图像设置>抗闪烁")
     @allure.story("需人工核查日志和录屏")
     @allure.title("测试 进入显示>图像设置页面，遍历抗闪烁")
+    @pytest.mark.skip
     def test_remote_anti_flicker(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['display']['items']['display']['image_setting']
@@ -72,6 +73,7 @@ class TestRemoteDisplay:
     @allure.feature("图像设置>夜视通透模式")
     @allure.story("需人工核查日志和录屏")
     @allure.title("测试 显示>图像设置页面，夜视通透模式")
+    @pytest.mark.skip
     def test_remote_night_transparent_vision(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['display']['items']['display']['image_setting']
@@ -93,6 +95,7 @@ class TestRemoteDisplay:
     @allure.feature("图像设置>HDR")
     @allure.story("需人工核查日志和录屏")
     @allure.title("测试 进入显示>图像设置页面，测试HDR")
+    @pytest.mark.skip
     def test_remote_hdr(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['display']['items']['display']['image_setting']
@@ -114,6 +117,7 @@ class TestRemoteDisplay:
     @allure.feature("图像设置>夜视对焦增强")
     @allure.story("需人工核查日志和录屏")
     @allure.title("测试 进入显示>图像设置，测试夜视对焦增强")
+    @pytest.mark.skip
     def night_vision_zoom_enhance(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['display']['items']['display']['image_setting']

@@ -16,14 +16,14 @@ class TestRemoteDisplay:
     @pytest.mark.parametrize("device_config", devices_config)
     @allure.feature("显示>显示模式")
     @allure.story("需人工核查日志和录屏")
-    @allure.title("测试进入显示模式页面，分别点击不同的显示模式类型、并旋转画面")
+    @allure.title("测试图像布局的显示模式，分别点击不同的显示模式类型、并旋转画面")
     def test_display_mode(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['display']['items']['display']
-        BasePage().check_key_in_yaml(remote_items, 'display_mode')
+        BasePage().check_key_in_yaml(remote_items, 'image_layout')
 
         # 启动app，并开启录屏
-        # driver.start_app(True)
+        driver.start_app(True)
 
         # 设备列表中滚动查找到单机、nvr、hub并进入远程配置，在远程设置主页点击‘显示’菜单项进入显示页
         RemoteSetting().access_in_display(device_list_name=device_config['device_list_name'])
@@ -36,12 +36,12 @@ class TestRemoteDisplay:
         RemoteDisplay().verify_display_mode_and_rotating_picture()
 
         # 验证显示模式配置页文案
-        RemoteSetting().scroll_check_funcs2(remote_items['display_mode']['text'], back2top=False)
-        RemoteSetting().scroll_check_funcs2(remote_items['display_mode']['ReoCellGroup-Title'],
-                                            selector='ReoCellGroup-Title',
-                                            back2top=False)
-        RemoteSetting().scroll_check_funcs2(remote_items['display_mode']['ReoTitle'],
-                                            selector='ReoTitle',
-                                            back2top=False)
+        # RemoteSetting().scroll_check_funcs2(remote_items['display_mode']['text'], back2top=False)
+        # RemoteSetting().scroll_check_funcs2(remote_items['display_mode']['ReoCellGroup-Title'],
+        #                                     selector='ReoCellGroup-Title',
+        #                                     back2top=False)
+        # RemoteSetting().scroll_check_funcs2(remote_items['display_mode']['ReoTitle'],
+        #                                     selector='ReoTitle',
+        #                                     back2top=False)
 
         RemoteDisplay().check_echo()

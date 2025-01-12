@@ -86,6 +86,7 @@ def page_loader_decorator(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
         page_loader_instance = PageLoader()
+        logger.info("执行页面加载装饰器：page_loader_decorator")
         page_loader_instance.wait_until_page_loaded()  # 在调用原始函数之前执行的代码
         result = func(*args, **kwargs)
         # logger.info("装饰器执行完毕")  # 在调用原始函数之后执行的代码

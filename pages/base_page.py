@@ -855,22 +855,32 @@ class BasePage:
     #                 texts.add(text)
     #     return texts
 
+    def swipe_screen_rewrite(self, direction='up'):
+        """屏幕滚动方法，主要是为了解决在显示>图像设置中滚动屏幕时，第三方库的方法会刚好误触在滑动条的小圆点上，导致屏幕滑动失效"""
+        scroll_method = self.driver.swipe_ext
+        # 检查是否可以滚动
+        if not self.driver(scrollable=True).exists:
+            raise Exception("屏幕不可滚动")
+
+        # 获取屏幕size
+        win_x, win_y = self.driver.window_size()
+        # 计算出屏幕宽度的1/10
+        box = (0, 0, win_x // 10, win_y)
+        scroll_method(direction, box=box)
+        logger.info(f"滑动屏幕，方向：{direction}，滑动区域：{box}")
+
     def scroll_screen(self, max_scrolls=1, direction="up"):
         """
         滚动屏幕
-        :param direction: 屏幕的滚动方向：
-        :param max_scrolls: 最大滚动次数，默认1次
-        :return:
+        :param direction: 屏幕的滚动方向，可以是 "up" 或 "down"。
+        :param max_scrolls: 最大滚动次数，默认为1次。
+        :return: None
         """
         try:
+            # 根据平台设置滚动方法
             if self.platform == "android":
-                scroll_method = self.driver.swipe_ext
-                # 检查是否可以滚动
-                if not self.driver(scrollable=True).exists:
-                    return Exception("屏幕不可滚动")
-
+                scroll_method = self.swipe_screen_rewrite
             elif self.platform == "ios":
-                # iOS平台默认可以滚动，不需要额外检查
                 if direction == "up":
                     scroll_method = self.driver.swipe_up
                 else:
@@ -878,17 +888,13 @@ class BasePage:
             else:
                 raise ValueError("不支持当前平台")
 
+            # 执行滚动操作
             for _ in range(max_scrolls):
-                if self.platform == "android":
-                    scroll_method(direction)
-                else:
-                    time.sleep(1)
-                    scroll_method()
-                # 每次滚动后稍作等待
-                time.sleep(0.5)
+                scroll_method(direction=direction if self.platform == "android" else None)
+                time.sleep(0.5)  # 每次滚动后稍作等待
 
         except Exception as err:
-            pytest.fail(f"函数执行出错: {str(err)}")
+            pytest.fail(f"函数执行出错: {err}")
 
     def get_all_texts(self, selector_type, selector, max_scrolls=2):
         """
@@ -919,7 +925,7 @@ class BasePage:
             my_set.update(new_texts)
 
             self.scroll_screen()
-            time.sleep(0.5)
+            time.sleep(1)
 
             # 检查滑动后页面是否有变化
             new_texts = get_elements_texts()
@@ -1490,6 +1496,7 @@ class BasePage:
         try:
             logger.info('尝试返回页面顶部...')
             self.driver(scrollable=True).fling.vert.toBeginning(max_swipes=1000)
+            time.sleep(1)
         except Exception as err:
             logger.warning(f"返回页面顶部出错: {str(err)}")
 

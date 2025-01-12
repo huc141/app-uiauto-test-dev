@@ -13,7 +13,7 @@ api_config:
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>自动化运行配置<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 # 设备配置加载目录
-device_dir: 'battery-34-2'
+device_dir: 'battery-34-1/Reolink Argus Eco'
 # 选择用例执行时，测试单机或hub或nvr，并填写对应的nvr和hub名称：
 access_mode: 'ipc'
 nvr_name: 'Reolink home hub pro'
@@ -25,6 +25,9 @@ back: '//*[@resource-id="ReoIcon-Left"]'
 
 # 页面加载loading菊花xpath
 loading_icon: '//*[@resource-id="ReoLoading-Circular"]'
+
+# 拖动条定位
+slider_seek_icon: 'RNE__Slider_Thumb_One'
 
 # 远程配置主页能力集提取id：
 remote_setting: 'ReoTitle'

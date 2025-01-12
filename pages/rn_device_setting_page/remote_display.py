@@ -17,6 +17,7 @@ display_device_name_reotitle = g_config.get("display_device_name_reotitle")  # �
 display_date_texts = g_config.get("display_date_texts")  # 显示>日期配置页的所有文案
 display_date_reotitle = g_config.get("display_date_reotitle")  # 日期配置页的【日期】选项
 loading_icon = g_config.get("loading_icon")  # 页面加载loading菊花xpath
+slider_seek_icon = g_config.get("slider_seek_icon")  # 拖动条定位
 
 
 class RemoteDisplay(BasePage):
@@ -260,7 +261,7 @@ class RemoteDisplay(BasePage):
         try:
             element_obj = BasePage().find_element_by_xpath_recursively(
                 start_xpath_prefix='//*[@resource-id="Brightness"]',
-                target_id="RNE__Slider_Thumb")
+                target_id=slider_seek_icon)
 
             # 往右拖动15次
             self.slider_seek_bar(slider_mode=slider_mode,
@@ -291,7 +292,7 @@ class RemoteDisplay(BasePage):
         try:
             element_obj = BasePage().find_element_by_xpath_recursively(
                 start_xpath_prefix='//*[@resource-id="Contrast"]',
-                target_id="RNE__Slider_Thumb")
+                target_id=slider_seek_icon)
 
             # 往右拖动15次
             self.slider_seek_bar(slider_mode=slider_mode,
@@ -322,7 +323,7 @@ class RemoteDisplay(BasePage):
         try:
             element_obj = BasePage().find_element_by_xpath_recursively(
                 start_xpath_prefix='//*[@resource-id="Saturation"]',
-                target_id="RNE__Slider_Thumb")
+                target_id=slider_seek_icon)
 
             # 往右拖动15次
             self.slider_seek_bar(slider_mode=slider_mode,
@@ -353,7 +354,7 @@ class RemoteDisplay(BasePage):
         try:
             element_obj = BasePage().find_element_by_xpath_recursively(
                 start_xpath_prefix='//*[@resource-id="Sharpen"]',
-                target_id="RNE__Slider_Thumb")
+                target_id=slider_seek_icon)
 
             # 往右拖动15次
             self.slider_seek_bar(slider_mode=slider_mode,
@@ -423,6 +424,10 @@ class RemoteDisplay(BasePage):
                 # 图像设置通用文案拼接亮度同步文案
                 new_image_setting_texts = new_image_setting_texts + common_brightness_sync_texts
                 new_image_setting_options = new_image_setting_options + common_brightness_sync_options
+
+            if not anti_flicker and not night_tt_vision and not hdr and not brightness_sync:
+                new_image_setting_texts = common_image_setting_texts
+                new_image_setting_options = common_options
 
             # 验证全局文案
             RemoteSetting().scroll_check_funcs2(texts=new_image_setting_texts)
@@ -1123,7 +1128,6 @@ class RemoteDisplay(BasePage):
         """
         try:
             # 先将预览视图往上拉至最小,以便于滚动查找显示模式按钮
-            # self.drag_element(element_xpath='//com.horcrux.svg.SvgView', direction='up', distance=700, duration=1)
             self.need_pull_down()
 
             # 再找到并点击显示模式菜单项

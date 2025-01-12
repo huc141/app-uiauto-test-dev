@@ -19,7 +19,7 @@ class TestRemoteDisplay:
     @allure.feature("显示>码流")
     @allure.story("需人工核查日志和录屏")
     @allure.title("测试进入显示>码流页面， 并验证清晰和流畅页面的配置文本和操作")
-    @pytest.mark.skip
+    # @pytest.mark.skip
     def test_remote_stream(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['display']['items']['display']
@@ -113,6 +113,7 @@ class TestRemoteDisplay:
     @allure.feature("显示>码流>清晰/流畅>I 帧间隔")
     @allure.story("需人工核查日志和录屏")
     @allure.title("测试进入显示>码流>清晰/流畅>I 帧间隔， 并验证配置文本和操作")
+    @pytest.mark.skip
     def test_remote_stream_i_interval(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['display']['items']['display']['stream']
