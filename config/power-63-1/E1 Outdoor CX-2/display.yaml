@@ -59,6 +59,7 @@ ipc:
               - 恢复默认值
               - '0'
               - '100'
+            day_and_night_switch: '日夜切换阈值'
 
           day_color:
             desc: 白天和黑夜>白天彩色

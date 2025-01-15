@@ -64,6 +64,8 @@ ipc:
               - '0'
               - '100'
 
+            day_and_night_switch: '日夜切换阈值'
+
           black_and_white:
             options:
               - 自动

@@ -85,7 +85,7 @@ ipc:
             - 恢复默认值
             - '0'
             - '100'
-            type: popup
+            day_and_night_switch: '日夜切换阈值'
 
           night_vision_color:
             desc: 白天和黑夜>夜视彩色

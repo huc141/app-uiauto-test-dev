@@ -64,7 +64,8 @@ ipc:
             - 恢复默认值
             - '0'
             - '100'
-            type: popup
+            day_and_night_switch: '日夜切换阈值'
+
           name: 白天和黑夜
           options:
           - 模式切换

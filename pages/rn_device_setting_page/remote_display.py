@@ -494,7 +494,7 @@ class RemoteDisplay(BasePage):
         try:
             element_obj = BasePage().find_element_by_xpath_recursively(
                 start_xpath_prefix='//*[@resource-id="Brightness"]',
-                target_id="RNE__Slider_Thumb")
+                target_id=slider_seek_icon)
 
             # 往右拖动15次
             self.slider_seek_bar(slider_mode=slider_mode,
@@ -514,7 +514,7 @@ class RemoteDisplay(BasePage):
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")
 
-    def verify_mode_switch(self, texts1, texts2):
+    def verify_mode_switch(self, texts1, texts2, mode_switching_dic):
         """
         验证模式切换
         :return:
@@ -534,16 +534,28 @@ class RemoteDisplay(BasePage):
             RemoteSetting().scroll_check_funcs2(texts=texts1, back2top=False)
             RemoteSetting().scroll_check_funcs2(texts=texts2, selector='ReoTitle', back2top=False)
 
-            # 拖动日夜切换阈值的拖动条
-            self.day_night_switchover()
+            # 判断是否存在日夜切换阈值key
+            if self.is_key_in_yaml(mode_switching_dic, 'is_day_and_night_switch'):
+                # 拖动日夜切换阈值的拖动条
+                self.day_night_switchover()
 
             # 点击 黑白 模式
             self.scroll_and_click_by_text(text_to_find='黑白')
             time.sleep(3)
+            # 返回上一页验证回显
+            self.back_previous_page_by_xpath()
+            self.is_element_exists(element_value='黑白')
+            # 点击进入 模式切换
+            self.scroll_and_click_by_text(text_to_find='模式切换')
 
             # 点击 彩色 模式
             self.scroll_and_click_by_text(text_to_find='彩色')
             time.sleep(3)
+            # 返回上一页验证回显
+            self.back_previous_page_by_xpath()
+            self.is_element_exists(element_value='彩色')
+            # 点击进入 模式切换
+            self.scroll_and_click_by_text(text_to_find='模式切换')
 
         except Exception as e:
             pytest.fail(f"函数执行出错: {str(e)}")

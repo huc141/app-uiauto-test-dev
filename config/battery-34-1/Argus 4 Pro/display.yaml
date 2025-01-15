@@ -46,7 +46,7 @@ ipc:
           name: '遮盖区域'
           desc: '设置>显示>遮盖区域'
           type: 'navigation'
-          camera_type: 'GC代表双目的广角与长焦；ZY代表左右摄像机；DM代表单目'
+          camera_type: 'DM'
           mask_num: 8
 
         stream:

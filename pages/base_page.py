@@ -1349,7 +1349,6 @@ class BasePage:
             else:
                 return True
         except Exception as err:
-            # logger.info(f"可能发生了错误: {err}")
             pytest.fail(f"【check_key_in_yaml】方法检查yaml文件中的key出错: {str(err)}")
 
     @staticmethod

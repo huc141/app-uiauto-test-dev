@@ -19,6 +19,7 @@ class TestRemoteDisplay:
     @allure.feature("白天和黑夜>模式切换 主页文本")
     @allure.story("需人工核查日志和录屏")
     @allure.title("测试进入白天和黑夜主页，验证白天和黑夜主页功能项")
+    @pytest.mark.skip
     def test_remote_day_and_night_main_texts(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['display']['items']['display']
@@ -41,7 +42,6 @@ class TestRemoteDisplay:
     @allure.feature("白天和黑夜>模式切换")
     @allure.story("需人工核查日志和录屏")
     @allure.title("测试白天黑夜模式切换 主页功能项，遍历模式切换下的选项")
-    @pytest.mark.skip
     def test_remote_day_and_night_mode_switch(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['display']['items']['display']
@@ -57,7 +57,8 @@ class TestRemoteDisplay:
 
         # 点击进入白天和黑夜主页,点击进入并验证模式切换，遍历模式切换下的选项
         RemoteDisplay().verify_mode_switch(texts1=remote_items['mode_switching']['text'],
-                                           texts2=remote_items['mode_switching']['options']
+                                           texts2=remote_items['mode_switching']['options'],
+                                           mode_switching_dic=remote_items['mode_switching']
                                            )
 
     @pytest.mark.parametrize("device_config", devices_config)

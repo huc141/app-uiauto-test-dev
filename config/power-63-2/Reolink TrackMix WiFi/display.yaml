@@ -68,6 +68,8 @@ ipc:
               - 恢复默认值
               - '0'
               - '100'
+            day_and_night_switch: '日夜切换阈值'
+
           black_and_white:
             desc: 白天和黑夜>黑白
             name: 黑白

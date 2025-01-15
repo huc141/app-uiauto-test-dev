@@ -218,6 +218,7 @@ ipc:
               - '彩色'
               - '自动'
               - '日夜切换阈值'
+            day_and_night_switch: '日夜切换阈值'
 
           day_color:
             name: '白天彩色'

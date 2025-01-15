@@ -82,9 +82,9 @@ def replace_in_yaml(data, search_str, replace_str):
 
 
 # 示例调用
-folder_path = 'D:/app-uiauto-test-dev/config/apower'  # 替换为实际文件夹路径
-search_str = 'interval_frame'  # 需要查找的字符串
-replace_str = 'i_frame_interval'  # 需要替换的字符串
+folder_path = 'D:/app-uiauto-test-dev/config/power-63-2'  # 替换为实际文件夹路径
+search_str = '日夜切换阈值'  # 需要查找的字符串
+replace_str = '日夜切换阈值'  # 需要替换的字符串
 replace = False  # 设置为True进行替换，False则仅查找
 
 search_and_replace_yaml(folder_path, search_str, replace_str, replace)
