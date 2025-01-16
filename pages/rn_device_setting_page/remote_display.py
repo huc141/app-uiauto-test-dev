@@ -112,6 +112,7 @@ class RemoteDisplay(BasePage):
         # 进入码流页面
         self.scroll_and_click_by_text(text_to_find=option_text)
 
+    @page_loader_decorator
     def click_motion_mark(self):
         """点击移动标记"""
         try:
@@ -792,6 +793,7 @@ class RemoteDisplay(BasePage):
         except Exception as err:
             pytest.fail(f"函数执行出错: {err}")
 
+    @page_loader_decorator
     def click_water_mark(self):
         """验证水印"""
         try:
