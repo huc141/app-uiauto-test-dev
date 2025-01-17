@@ -24,7 +24,7 @@ class RemoteDisplay(BasePage):
     def __init__(self):
         super().__init__()
         if self.platform == 'android':
-            self.shelter_player = '//*[@resource-id="DragMaskOperationArea"]'  # 隐私遮盖可画框区域
+            self.shelter_player = 'DragMaskOperationArea'  # 隐私遮盖可画框区域
             self.user_tips_button = '//*[@resource-id="ReoIcon-Question"]'  # 用户提示按钮
             self.delete_button = '//*[@resource-id="ReoIcon-Delet"]'  # 删除按钮
             self.clear_all_button = '//*[@resource-id="ReoIcon-Retry1x"]'  # 清空所有按钮
@@ -819,12 +819,17 @@ class RemoteDisplay(BasePage):
         except Exception as err:
             pytest.fail(f"函数执行出错: {err}")
 
-    def access_in_privacy_mask(self, option_text='遮盖区域'):
+    def access_in_privacy_mask(self, mask_num, option_text='遮盖区域'):
         """
         :param option_text: 菜单功能项，该方法默认点击【遮盖区域】，并检测是否弹出了提示，弹出则分别点击【取消】、【清空并继续】，清空后最后点击【保存】
+        :param mask_num: 遮盖区域数量
         :return:
         """
         try:
+            user_tips = [
+                f'在画面中通过手指滑动添加黑色遮挡区域，监控视频中的遮挡区域将不可见，最多可遮挡{mask_num}个区域。',
+                '我知道了']
+
             texts = ['取消', '清空并继续']
             xpaths = [
                 '//*[@resource-id="CancelDialog-ReoButton-Title"]',
@@ -834,9 +839,12 @@ class RemoteDisplay(BasePage):
             time.sleep(2)
             self.scroll_and_click_by_text(text_to_find=option_text)
 
+            # 处理首次进入遮盖区域自动弹出的用户提示
+            self.handle_default_user_tips_of_mask(user_tips_text=user_tips)
+
             # 判断是否弹出特定提示
             is_confirmation_prompt_shown = self.is_element_exists(
-                element_value='编辑画面遮盖，将会清空之前所有的遮盖区域，是否继续？')
+                element_value='编辑画面遮盖，将会清空之前所有的遮盖区域，是否继续？', scroll_or_not=False)
 
             if is_confirmation_prompt_shown:
                 for index, text in enumerate(texts):  # 使用enumerate来同时获取索引和元素值
@@ -910,6 +918,7 @@ class RemoteDisplay(BasePage):
         """验证横屏按钮"""
         try:
             # 点击横屏按钮
+            logger.info('点击横屏按钮')
             self.click_by_xpath(xpath_expression=self.fullscreen_switch_button)
         except Exception as err:
             pytest.fail(f"函数执行出错: {err}")
@@ -918,11 +927,12 @@ class RemoteDisplay(BasePage):
         """验证横屏状态下返回竖屏按钮"""
         try:
             # 点击返回竖屏按钮
+            logger.info('点击返回竖屏按钮')
             self.click_by_xpath(xpath_expression=self.return_vertical_screen_button)
         except Exception as err:
             pytest.fail(f"函数执行出错: {err}")
 
-    def draw_privacy_mask(self, camera_type, mask_num, mode='xpath', draw_area='左上'):
+    def draw_privacy_mask(self, camera_type, mask_num, mode='id', draw_area='左上'):
         """
         画隐私遮盖区域。一般来说：电源最多4个，电池最多8个或者3个。如果是双目，则每个通道独立计数。
         :param camera_type: 摄像头类型，支持DM、GC、ZY三种类型。
@@ -943,15 +953,27 @@ class RemoteDisplay(BasePage):
                 'ZY': ['左摄像机', '右摄像机']  # ZY摄像头需要先点击左摄像机，再点击右摄像机
             }
 
-            # 获取指定摄像头类型的操作列表
-            actions = camera_actions.get(camera_type, [])
+            # 获取对应摄像头类型的操作列表，如果不存在则返回False
+            actions = camera_actions.get(camera_type)
+            logger.info(f"当前为 {camera_type} 摄像头，操作列表为 {actions}")
+
+            # 检查是否获取到了操作列表
+            if actions is False:
+                # 如果返回了False，则提示未识别的摄像头类型
+                pytest.fail("未识别的摄像头类型！请检查设备与配置文件！")
 
             # 遍历操作列表，执行点击和绘制操作
-            for action in actions:
-                # 如果操作不为空，执行点击操作
-                if action:
-                    self.click_by_text(action)
-                # 执行绘制隐私遮罩的操作
+            if actions:
+                for action in actions:
+                    # 执行操作，例如点击等
+                    self.driver.clickbytext(action)
+                    # 执行绘制隐私遮罩的操作
+                    self.get_coordinates_and_draw(mode=mode,
+                                                  id_or_xpath=self.shelter_player,
+                                                  draw_area=draw_area,
+                                                  num=mask_nums)
+            else:
+                # 如果操作列表为空，则直接执行绘制隐私遮罩的操作
                 self.get_coordinates_and_draw(mode=mode,
                                               id_or_xpath=self.shelter_player,
                                               draw_area=draw_area,
@@ -960,6 +982,27 @@ class RemoteDisplay(BasePage):
         except Exception as err:
             # 记录错误信息
             pytest.fail(f"绘制隐私遮盖函数执行出错: {err}")
+
+    def handle_default_user_tips_of_mask(self, user_tips_text):
+        """
+        处理首次进入遮盖区域自动弹出的用户提示
+        :param user_tips_text: 弹窗文本内容
+        :return:
+        """
+        try:
+            # 检测页面是否出现了“//*[@resource-id="ReoDialog"]”的弹窗
+            if self.is_element_exists(element_value='//*[@resource-id="ReoDialog"]', selector_type='xpath',
+                                      scroll_or_not=False):
+                # 若弹窗存在，则验证弹窗内容
+                # 验证用户提示文案
+                RemoteSetting().scroll_check_funcs2(texts=user_tips_text,
+                                                    scroll_or_not=False,
+                                                    back2top=False
+                                                    )
+                # 验证完毕之后点击我知道了，关闭用户提示
+                self.click_by_text(text='我知道了')
+        except Exception as err:
+            pytest.fail(f"处理首次进入遮盖区域自动弹出的用户提示函数执行出错: {err}")
 
     def verify_privacy_mask(self, camera_type, mask_num):
         """
@@ -981,12 +1024,15 @@ class RemoteDisplay(BasePage):
 
             if camera_type == 'DM':
                 # 验证隐私遮盖主页通用文本
+                logger.info('当前为单目摄像头')
                 RemoteSetting().scroll_check_funcs2(DM_texts, back2top=False)
             elif camera_type == 'GC':
                 # 验证隐私遮盖主页通用文本
+                logger.info('当前为双目摄像头： 广角与长焦')
                 RemoteSetting().scroll_check_funcs2(GC_texts, back2top=False)
             elif camera_type == 'ZY':
                 # 验证隐私遮盖主页通用文本
+                logger.info('当前为双目摄像头： 左/右摄像机')
                 RemoteSetting().scroll_check_funcs2(ZY_texts, back2top=False)
 
             # 验证左下角用户提示

@@ -566,13 +566,14 @@ class BasePage:
         except Exception as err:
             logger.error(f"内容 {err} 输入失败···")
 
-    def scroll_and_click_by_text(self, text_to_find, el_type='text', max_attempts=5, scroll_pause=0.5):
+    def scroll_and_click_by_text(self, text_to_find, el_type='text', max_attempts=5, scroll_pause=0.5, scroll_or_not=True):
         """
         在可滚动视图中查找并点击指定文本或xpath的元素。
         :param text_to_find: 要查找的文本/xpath
         :param el_type: 元素定位类型，支持文本text(label)和xpath
         :param max_attempts: 最大尝试次数
         :param scroll_pause: 滚动后的暂停时间，秒
+        :param scroll_or_not: 是否滚动查找，默认为True
         """
         is_find = None
         attempt = 0
@@ -599,10 +600,11 @@ class BasePage:
                         logger.info(f"点击 '{text_to_find}'")
                         return True
 
-                    # 滑动屏幕
-                    logger.info(f"正在尝试滚动查找 '{text_to_find}'... 第{attempt + 1}次")
-                    self.driver(scrollable=True).scroll(steps=150)
-                    time.sleep(scroll_pause)  # 等待页面稳定
+                    if scroll_or_not:
+                        # 滑动屏幕
+                        logger.info(f"正在尝试滚动查找 '{text_to_find}'... 第{attempt + 1}次")
+                        self.driver(scrollable=True).scroll(steps=150)
+                        time.sleep(scroll_pause)  # 等待页面稳定
 
                     attempt += 1
 
@@ -1236,6 +1238,7 @@ class BasePage:
                 elif num > 0:
                     i = 1
                     while i <= num:
+                        logger.info(f"当前正在尝试绘制第{i}个遮盖区域")
                         s_x = i * 130  # 每次开始画框的x坐标
                         e_x = s_x + 50  # 每次画框结束的x坐标
                         e_y = center_y + 50  # 每次画框结束的y坐标

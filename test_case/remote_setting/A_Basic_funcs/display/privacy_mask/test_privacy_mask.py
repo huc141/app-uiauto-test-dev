@@ -32,7 +32,7 @@ class TestRemoteDisplay:
         RemoteSetting().access_in_display(device_list_name=device_config['device_list_name'])
 
         # 点击进入遮盖区域主页
-        RemoteDisplay().access_in_privacy_mask()
+        RemoteDisplay().access_in_privacy_mask(mask_num=remote_items['private_mark']['mask_num'])
 
         # 测试隐私遮盖相关按钮和文案
         RemoteDisplay().verify_privacy_mask(camera_type=remote_items['private_mark']['camera_type'],
