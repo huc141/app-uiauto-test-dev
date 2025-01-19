@@ -13,7 +13,7 @@ api_config:
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>自动化运行配置<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 # 设备配置加载目录
-device_dir: 'battery-34-1'
+device_dir: 'battery-34-2'
 # 选择用例执行时，测试单机或hub或nvr，并填写对应的nvr和hub名称：
 access_mode: 'ipc'
 nvr_name: 'Reolink home hub pro'
