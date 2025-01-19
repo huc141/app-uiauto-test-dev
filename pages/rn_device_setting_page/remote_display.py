@@ -570,12 +570,12 @@ class RemoteDisplay(BasePage):
             # 亮度的拖动条对象
             brightness_element_obj = BasePage().find_element_by_xpath_recursively(
                 start_xpath_prefix='//*[@resource-id="Brightness"]',
-                target_id="RNE__Slider_Thumb")
+                target_id=slider_seek_icon)
 
             # 暗部调节的拖动条对象
             dark_element_obj = BasePage().find_element_by_xpath_recursively(
                 start_xpath_prefix='//*[@resource-id="Shadows"]',
-                target_id="RNE__Slider_Thumb")
+                target_id=slider_seek_icon)
             num = 1
             for i in (brightness_element_obj, dark_element_obj):
                 # 往右拖动
@@ -1209,18 +1209,18 @@ class RemoteDisplay(BasePage):
                 time.sleep(3)
 
             # 旋转画面: 向右
-            self.slider_seek_bar(slider_mode='xpath',
-                                 id_or_xpath='//*[@resource-id="RNE__Slider_Thumb"]',
+            self.slider_seek_bar(slider_mode='id',
+                                 id_or_xpath=slider_seek_icon,
                                  direction='right',
                                  iteration=5)
             # 旋转画面: 向左
-            self.slider_seek_bar(slider_mode='xpath',
-                                 id_or_xpath='//*[@resource-id="RNE__Slider_Thumb"]',
+            self.slider_seek_bar(slider_mode='id',
+                                 id_or_xpath=slider_seek_icon,
                                  direction='left',
                                  iteration=10)
             # 旋转画面: 向右
-            self.slider_seek_bar(slider_mode='xpath',
-                                 id_or_xpath='//*[@resource-id="RNE__Slider_Thumb"]',
+            self.slider_seek_bar(slider_mode='id',
+                                 id_or_xpath=slider_seek_icon,
                                  direction='right',
                                  iteration=5)
 
