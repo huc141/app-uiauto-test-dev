@@ -19,7 +19,6 @@ class TestRemoteDisplay:
     @allure.feature("白天和黑夜>模式切换 主页文本")
     @allure.story("需人工核查日志和录屏")
     @allure.title("测试进入白天和黑夜主页，验证白天和黑夜主页功能项")
-    @pytest.mark.skip
     def test_remote_day_and_night_main_texts(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['display']['items']['display']
@@ -65,7 +64,6 @@ class TestRemoteDisplay:
     @allure.feature("白天和黑夜>白天彩色")
     @allure.story("需人工核查日志和录屏")
     @allure.title("测试 白天彩色 主页功能项，遍历白天彩色下的选项")
-    @pytest.mark.skip
     def test_remote_day_color(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['display']['items']['display']
@@ -88,7 +86,6 @@ class TestRemoteDisplay:
     @allure.feature("白天和黑夜>黑白")
     @allure.story("需人工核查日志和录屏")
     @allure.title("测试 黑白 主页功能项，遍历黑白下的选项")
-    @pytest.mark.skip
     def test_remote_day_black_white(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['display']['items']['display']
@@ -111,7 +108,6 @@ class TestRemoteDisplay:
     @allure.feature("白天和黑夜>夜视彩色")
     @allure.story("需人工核查日志和录屏")
     @allure.title("测试 夜视彩色 主页功能项，遍历夜视彩色下的选项")
-    @pytest.mark.skip
     def test_remote_night_vision_color(self, device_config):
         # 检查键是否存在，存在则执行当前用例，否则跳过
         remote_items = device_config['ipc']['display']['items']['display']
