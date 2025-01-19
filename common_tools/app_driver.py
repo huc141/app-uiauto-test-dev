@@ -219,12 +219,12 @@ class Driver:
 
     def clear_app_cache(self):
         """
-        清除app缓存
+        清除app所有数据
         :return:
         """
         if self._driver:
             self._driver.app_clear(self._apk_name)
-            logger.info("清除reolink app缓存成功···")
+            logger.info("清除reolink app数据成功···")
 
     @staticmethod
     def get_wifi_status():
