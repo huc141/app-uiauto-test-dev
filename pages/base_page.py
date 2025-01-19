@@ -772,7 +772,7 @@ class BasePage:
                     pytest.skip("设备未登录，跳过当前用例！")
                 else:
                     logger.info('loading中，继续等待')
-                    # time.sleep(5)
+                    # time.sleep(3)
             else:
                 pytest.fail(f'已重试 {num_retries} 次，未能连接上该设备！')
 
@@ -1109,7 +1109,7 @@ class BasePage:
                 start_y = rect.y  # 滑块的坐标y起点
 
                 # 模拟拖动操作
-                self.driver.swipe(start_x, start_y, start_x + iteration, start_y, 0.5)  # 1秒完成滑动
+                self.driver.swipe(start_x, start_y, start_x + iteration, start_y, 0.5)  # 0.5秒完成滑动
 
         except Exception as err:
             pytest.fail(f"函数执行出错: {str(err)}")
